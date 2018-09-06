@@ -8,28 +8,9 @@
     <MiddleTemplate
         class="root_main"
     />
-    <div
+    <RightTemplate
         class="root_right"
-    >
-        <component
-            :is="currentRightRouter"
-        ></component>
-        <!-- <StockATemp
-                v-if="isAStock"
-            />
-            <StockBTemp
-                v-if="isBStock"
-            />
-            <FundTemp
-                v-if="isFund"
-            />
-            <BondTemp
-                v-if="isBond"
-            />
-            <MarketTemp
-                v-if="isHSIndex"
-            /> -->
-    </div>
+    />
     <TapeSet
         v-show="isShowTape"
         :isHide="isBStock"
@@ -43,6 +24,7 @@
 import {
     mapState,
     mapGetters,
+    mapMutations,
 } from 'vuex'
 import {
     getUrlParam,
@@ -53,23 +35,25 @@ import {
     STOCK_CODE,
     SOURCE,
     FULL_CODE,
+    LEFT_STATE,
+    RIGHT_STATE,
+    MAIN_STATE,
 } from '@store/stock-detail-store/config/mutation-types'
 import * as TYPE from '@formatter/config/stock-type-config'
 import {
     LOCAL_LATEST_CODE,
+    LOCAL_IS_LEFT_SHOW,
+    LOCAL_IS_RIGHT_SHOW,
+    LOCAL_IS_INFO_FULL,
+    EVENT_CHANGE_LEFT_RIGHT,
     EVENT_CHANGES_CODE,
     EVENT_KEY_BOARD,
 } from './storage'
 
 // vue template --------------------------------------
-import LeftTemplate from './left/Left'
-import MiddleTemplate from './middle/Middle'
-// 右侧
-import StockATemp from './right/StockA'
-import StockBTemp from './right/StockB'
-import FundTemp from './right/Fund'
-import BondTemp from './right/Bond'
-import MarketTemp from './right/Market'
+import LeftTemplate from './left/LeftMain'
+import MiddleTemplate from './middle/MiddleMain'
+import RightTemplate from './right/RightMain'
 // 盘口设置
 import TapeSet from './tape/TapeSet'
 // 成交明细过滤
@@ -142,11 +126,13 @@ export default {
         }
     },
     created() {
-        goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.ws.onmessage = this.socketOnMessage
+        goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
+        goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
         this.$eventBus.$on(this.tapeSetName, this.changeTapeSetState)
 
+        this.initState()
         this.init()
     },
     data() {
@@ -160,12 +146,8 @@ export default {
     components: {
         LeftTemplate,
         MiddleTemplate,
+        RightTemplate,
         TapeSet,
-        StockATemp,
-        StockBTemp,
-        FundTemp,
-        BondTemp,
-        MarketTemp,
         TransaFilter,
         ShortElvesFilter,
     },
@@ -173,22 +155,28 @@ export default {
         ...mapGetters([
             'isAStock',
             'isBStock',
-            'isFund',
-            'isBond',
-            'isHSIndex',
         ]),
-        currentRightRouter() {
-            return this.isAStock ? 'StockATemp' :
-                this.isBStock ? 'StockBTemp' :
-                this.isFund ? 'FundTemp' :
-                this.isBond ? 'BondTemp' :
-                this.isHSIndex ? 'MarketTemp' : 'StockATemp'
-        },
+        // currentRightRouter() {
+        //     return this.isAStock ? 'StockATemp' :
+        //         this.isBStock ? 'StockBTemp' :
+        //         this.isFund ? 'FundTemp' :
+        //         this.isBond ? 'BondTemp' :
+        //         this.isHSIndex ? 'MarketTemp' : 'StockATemp'
+        // },
         isShowTape() {
             return this.tapeState && (this.isAStock || this.isBStock)
         },
     },
     methods: {
+        ...mapMutations([
+            STOCK_CODE,
+            SOURCE,
+            FULL_CODE,
+            CURRENT_TYPE,
+            LEFT_STATE,
+            RIGHT_STATE,
+            MAIN_STATE,
+        ]),
         init() {
             let hash = location.hash.substr(1)
             if (hash) {
@@ -199,12 +187,74 @@ export default {
                 window.location.hash = `#${stock_code}`
             }
         },
+        initState() {
+            this[LEFT_STATE] = this.initLeftState()
+            this[RIGHT_STATE] = this.initRightState()
+            this[MAIN_STATE] = this.initMiddleBottomState()
+        },
+        initLeftState() {
+            let state = localStorage.getItem(LOCAL_IS_LEFT_SHOW)
+            if (!state) {
+                // 第一次加载默认展开
+                this.setLeftState(true)
+                return true
+            } else {
+                // true 为 展开
+                return Object.is(state, 'true')
+            }
+        },
+        initRightState() {
+            let state = localStorage.getItem(LOCAL_IS_RIGHT_SHOW)
+            if (!state) {
+                // 第一次加载默认展开
+                this.setRightState(true)
+                return true
+            } else {
+                // true 为 展开
+                return Object.is(state, 'true')
+            }
+        },
+        initMiddleBottomState() {
+            let state = localStorage.getItem(LOCAL_IS_INFO_FULL)
+            if (!state) {
+                // 第一次加载默认收起
+                this.setBottomState(false)
+                return false
+            } else {
+                // true 为 展开
+                return Object.is(state, 'true')
+            }
+        },
+        changeLeftRight(d) {
+            let data = JSON.parse(d)
+            if (data.left) {
+
+            } else if (data.right) {
+
+            } else if (Object.is(data.fullScreen, 'true')) {
+
+            } else if (Object.is(data.fullScreen, 'false')) {
+
+            }
+        },
+        setLeftState(state) {
+            this[LEFT_STATE] = state
+            localStorage.setItem(LOCAL_IS_LEFT_SHOW, state)
+        },
+        setRightState(state) {
+            this[RIGHT_STATE] = state
+            localStorage.setItem(LOCAL_IS_RIGHT_SHOW, state)
+        },
+        setBottomState(state) {
+            this[MAIN_STATE] = state
+            localStorage.setItem(LOCAL_IS_INFO_FULL, state)
+        },
         changeTapeSetState() {
             // 改变盘口设置状态
             this.tapeState = !this.tapeState
         },
         getSource(stock_code) {
-            // 获取A、B股证券前缀
+            // 获取 A、B 股证券前缀
             let code = stock_code.substr(0, 2)
             if (['60', '90'].includes(code)) {
                 return 'sh'
@@ -262,10 +312,11 @@ export default {
             let info = this.getInfo(type, hash)
 
             localStorage.setItem(LOCAL_LATEST_CODE, hash)
-            this.$store.commit(STOCK_CODE, info.stock_code)
-            this.$store.commit(SOURCE, info.source)
-            this.$store.commit(FULL_CODE, info.full_code)
-            this.$store.commit(CURRENT_TYPE, type)
+            // 提交到 vuex
+            this[STOCK_CODE](info.stock_code)
+            this[SOURCE](info.source)
+            this[FULL_CODE](info.full_code)
+            this[CURRENT_TYPE](type)
         },
         itemVerify(arr, hash) {
             return arr.regexp.test(hash)

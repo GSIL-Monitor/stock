@@ -8,6 +8,9 @@ const state = {
     stock_code: null,
     source: null,
     full_code: null,
+    leftState: true,  // 左侧栏展开收起状态
+    rightState: true, // 右侧栏展开收起状态
+    mainState: false,
     tag_data: {
         zyyx_score: null, // 确定性评分
         tags: null, //公司荣誉

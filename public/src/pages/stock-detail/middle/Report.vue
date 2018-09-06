@@ -36,7 +36,10 @@
                     <td
                         class="info_ico_td"
                     >
-
+                        <span
+                            :class="['stockDetial-read-pdf', formatIco(item.file_type)]"
+                        >
+                        </span>
                     </td>
                     <td
                         class="info_org_td"
@@ -68,6 +71,7 @@ import {
     getResearchReport,
 } from '@service/'
 import formatInfoDate from '@formatter/information/date'
+import fileType from '@formatter/information/fileType'
 
 export default {
     name: 'Report',
@@ -154,6 +158,9 @@ export default {
         },
         formatDate(date) {
             return formatInfoDate(date)
+        },
+        formatIco(type) {
+            return fileType(type)
         },
         openContent(data) {
             // TODO: open-content

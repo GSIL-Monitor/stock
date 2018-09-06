@@ -8,6 +8,9 @@ import {
     STOCK_CODE,
     SOURCE,
     FULL_CODE,
+    LEFT_STATE,
+    RIGHT_STATE,
+    MAIN_STATE,
 } from './config/mutation-types'
 
 export default {
@@ -34,5 +37,14 @@ export default {
     },
     [FULL_CODE](state, payLoad) {
         state.full_code = payLoad
+    },
+    [LEFT_STATE](state, payLoad) {
+        state.leftState = payLoad
+    },
+    [RIGHT_STATE](state, payLoad) {
+        state.rightState = payLoad
+    },
+    [MAIN_STATE](state, payLoad) {
+        state.mainState = payLoad
     },
 }

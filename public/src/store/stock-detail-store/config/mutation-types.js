@@ -14,3 +14,9 @@ export const STOCK_CODE = 'STOCK_CODE'
 export const SOURCE = 'SOURCE'
 // full_code
 export const FULL_CODE = 'FULL_CODE'
+// 左侧栏状态
+export const LEFT_STATE = 'LEFT_STATE'
+// 右侧栏状态
+export const RIGHT_STATE = 'RIGHT_STATE'
+// 中间栏状态
+export const MAIN_STATE = 'MAIN_STATE'

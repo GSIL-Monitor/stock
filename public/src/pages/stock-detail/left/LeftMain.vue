@@ -1,5 +1,8 @@
 <template>
-    <div :class="leftClasses">
+    <div
+        :class="leftClasses"
+        v-if="leftState"
+    >
         <Tabs
             activeStyle="underline"
             ref="leftTabs"
@@ -33,6 +36,7 @@
 <script>
 import {
     mapState,
+    mapGetters,
 } from 'vuex'
 import {
     LOCAL_LEFT_TAB,
@@ -47,6 +51,7 @@ export default {
     name: 'Left',
     created() {
         this.initState()
+
         window.addEventListener('resize', this.resizeWindow)
     },
     mounted() {
@@ -61,13 +66,17 @@ export default {
         }
     },
     computed: {
+        ...mapGetters([
+            'isAStock'
+        ]),
         ...mapState([
-            'current_type'
+            'current_type',
+            'leftState',
         ]),
         leftClasses() {
             return [
                 {
-                    root_left_ShowTag: this.$parent.isAStock
+                    root_left_ShowTag: this.isAStock
                 },
             ]
         },

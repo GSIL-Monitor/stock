@@ -10,6 +10,10 @@ const MODULE_NAME = 'stockDetail'
 export const LOCAL_TAPE_SET_DFT = `${MODULE_NAME}-tapeSet-default`
 // 盘口设置 -- 功能显隐
 export const LOCAL_TAPE_SET_FUNC = `${MODULE_NAME}-tapeSet-func`
+// 左侧显隐
+export const LOCAL_IS_LEFT_SHOW = `${MODULE_NAME}-left-content-state`
+// 右侧显隐
+export const LOCAL_IS_RIGHT_SHOW = `${MODULE_NAME}-right-content-state`
 // 左侧 tab
 export const LOCAL_LEFT_TAB = `${MODULE_NAME}-left-tab`
 // 股票代码
@@ -46,6 +50,7 @@ export const EVENT_CHANGES_CODE = `changeScode`
 export const EVENT_KEY_BOARD = `keyBoardEvent`
 export const EVENT_CHANGE_STOCK = `changeMystock`
 export const EVENT_TRANSATION_CHANGE = `transcation-change`
+export const EVENT_CHANGE_LEFT_RIGHT = `${MODULE_NAME}-leftRight`
 
 // ==============================================================================
 /**
