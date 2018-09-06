@@ -23,9 +23,7 @@
 	serve with hot reload at http://localhost:8080
 	# 现在有如下页面：
 	# http://localhost:8080/login.html
-	# http://localhost:8080/private.html
-	# http://localhost:8080/indexPage.html
-	# http://localhost:8080/strategy.html
+	# http://localhost:8080/stockDetail.html
 	...
 
 	npm run dev
@@ -36,9 +34,7 @@
 	# build for production with minification
 	# start with the url:
 	# http://localhost:8094/login.html
-	# http://localhost:8094/private.html
-	# http://localhost:8094/indexPage.html
-	# http://localhost:8094/strategy.html
+	# http://localhost:8094/stockDetail.html
 	...
 
 	npm run build
