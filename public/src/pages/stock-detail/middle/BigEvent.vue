@@ -77,6 +77,11 @@ export default {
             busy: true,
             noData: false,
             noDataMsg: '暂无大事件',
+            filterFields: [
+                'id',
+                'title',
+                'declare_date',
+            ],
         }
     },
     computed: {
@@ -93,6 +98,7 @@ export default {
                     stock_code: this.stock_code,
                     rows: this.rows,
                     page: this.page,
+                    fields: this.filterFields.join(';'),
                 },
                 callback0: data => {
                     this.dataStore = this.dataStore.concat(data)

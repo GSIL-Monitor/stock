@@ -89,6 +89,7 @@ export default {
     computed: {
         ...mapState([
             'stock_code',
+            'full_code',
         ]),
     },
     methods: {
