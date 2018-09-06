@@ -31,7 +31,7 @@
         :type="question"
         :active="activeKey === question"
     >
-
+        <InvestQA/>
     </TabPane>
     <TabPane
         label="大事件"
@@ -64,11 +64,12 @@
 <script>
 import Tabs from '../tabs/'
 import TabPane from '../tab-pane/'
+import LoadMore from '../components/LoadMore'
+import XqdownToUp from '../components/XqdownToUp'
 import News from './News'
 import Notice from './Notice'
 import Report from './Report'
-import LoadMore from '../components/LoadMore'
-import XqdownToUp from '../components/XqdownToUp'
+import InvestQA from './InvestQA'
 
 export default {
     name: 'InfoStockA',
@@ -88,11 +89,12 @@ export default {
     components: {
         Tabs,
         TabPane,
+        LoadMore,
+        XqdownToUp,
         News,
         Notice,
         Report,
-        LoadMore,
-        XqdownToUp,
+        InvestQA,
     },
     methods: {
         tabClicked() {

@@ -67,7 +67,7 @@ export default {
     },
     data() {
         return {
-            rows: 7,
+            rows: 10,
             page: 1,
             dataStore: [],
             busy: true,

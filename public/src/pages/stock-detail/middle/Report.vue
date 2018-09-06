@@ -75,7 +75,7 @@ export default {
     },
     data() {
         return {
-            rows: 7,
+            rows: 10,
             page: 1,
             dataStore: [],
             busy: true,
@@ -162,9 +162,13 @@ export default {
             const target = event.target
 
             if (target.className.includes('td-openContent')) {
+                // 原生弹框
                 const index = target.dataset.index
                 const targetData = this.dataStore[index]
                 this.openContent(targetData)
+            } else if (target.className.includes('info_ico_td')) {
+                // TODO:原文
+
             }
         },
     },
@@ -178,12 +182,13 @@ export default {
 .info_ico_td {
     width: 40px;
 }
+@width: 90px;
 .info_org_td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    min-width: 81px;
-    width: 81px;
-    max-width: 81px;
+    min-width: @width;
+    width: @width;
+    max-width: @width;
 }
 </style>
