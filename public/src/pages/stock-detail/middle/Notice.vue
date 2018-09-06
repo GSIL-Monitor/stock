@@ -78,6 +78,14 @@ export default {
             busy: true,
             noData: false,
             noDataMsg: '暂无相关公告',
+            filterFields: [
+                'date',
+                'format',
+                'guid',
+                'has_read',
+                'title',
+                'text_id',
+            ],
         }
     },
     computed: {
@@ -93,6 +101,7 @@ export default {
             return {
                 rows: this.ROWS,
                 page: this.page,
+                fields: this.filterFields.join(';'),
             }
         },
         stockParam() {
@@ -100,6 +109,7 @@ export default {
                 stock_code: this.stock_code,
                 rows: this.ROWS,
                 page: this.page,
+                fields: this.filterFields.join(';'),
             }
         },
         getParams() {

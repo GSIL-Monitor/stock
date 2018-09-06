@@ -74,6 +74,11 @@ export default {
             busy: true,
             noData: false,
             noDataMsg: '暂无相关新闻',
+            filterFields: [
+                'date',
+                'id',
+                'title',
+            ],
         }
     },
     computed: {
@@ -91,12 +96,14 @@ export default {
                 stock_code: this.stock_code,
                 rows: this.ROWS,
                 page: this.page,
+                fields: this.filterFields.join(';'),
             }
         },
         hsIndexParam() {
             return {
                 rows: this.ROWS,
                 page: this.page,
+                fields: this.filterFields.join(';'),
             }
         },
         stockParam() {
@@ -104,6 +111,7 @@ export default {
                 stock_code: this.stock_code,
                 rows: this.ROWS,
                 page: this.page,
+                fields: this.filterFields.join(';'),
             }
         },
         getParams() {
