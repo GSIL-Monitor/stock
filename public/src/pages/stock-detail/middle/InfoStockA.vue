@@ -48,13 +48,16 @@
 
     </TabPane>
     <TabPane
-        label="同业股票"
+        label="关联品种"
         :type="related"
         :active="activeKey === related"
     >
 
     </TabPane>
-    <LoadMore slot="navNext" text="更多" />
+    <LoadMore
+        slot="navNext"
+
+    />
 </Tabs>
 </template>
 

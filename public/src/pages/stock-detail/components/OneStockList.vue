@@ -35,7 +35,6 @@
         FRAME_MYSTOCK_LIST,
     } from '../storage'
     import {
-        getToken,
         hasMyStockCache,
     } from '@c/utils/util'
     import {
@@ -251,7 +250,6 @@
                 var param = {
                     options: {
                         group_id: this.group_id,
-                        token: getToken(),
                         fields: this.APIFilterFields.join(';')
                     },
                     callback0: response => {

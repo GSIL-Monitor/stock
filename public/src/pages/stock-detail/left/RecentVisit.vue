@@ -31,9 +31,6 @@
         FRAME_RECENT_LIST,
     } from '../storage'
     import StockItem from '../components/StockItem'
-    import {
-        getToken,
-    } from '@c/utils/util'
 
     export default {
         name: 'RecentVisit',
@@ -64,7 +61,6 @@
             fetchRecentList() {
                 let param = {
                     options: {
-                        token: getToken()
                     },
                     callback0: response => {
                         const selectData = response.map((element) => {

@@ -23,8 +23,7 @@
                 />
                 <LoadMore
                     class="transa_title_right_more"
-                    text="更多"
-                    @moreClick="toDetailPage"
+                    @on-click="toDetailPage"
                 />
             </div>
         </div>

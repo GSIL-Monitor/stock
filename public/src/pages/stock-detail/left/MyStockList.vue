@@ -32,7 +32,6 @@ import {
     STOCK_GROUP_LIST,
 } from '@store/stock-detail-store/config/mutation-types'
 import {
-    getToken,
     hasMyStockCache,
 } from '@c/utils/util'
 import OneStockList from '../components/OneStockList'
@@ -105,7 +104,6 @@ export default {
             let param = {
                 options: {
                     get_sum: 1,
-                    token: getToken(),
                 },
                 callback0: res => {
                     this.commitGroupList()

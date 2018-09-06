@@ -4,6 +4,7 @@ import {
 } from './XHR'
 import {
     getToken,
+    getReportLine,
 } from '@c/utils/util'
 
 /**
@@ -25,16 +26,20 @@ export const getStocktag = param => {
 /**
  * @description 个股 -- 获取自选股分组
 */
-export const getMyStockGroup = param => {
+export const getMyStockGroup = (param = {}) => {
     let APIName = 'v1/mystock/get_group'
+    Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 
 /**
  * @description 个股 -- 获取自选股分组详情
 */
-export const getMyStocks = param => {
+export const getMyStocks = (param = {}) => {
     let APIName = 'v1/mystock/mystock_list'
+    Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 
@@ -121,8 +126,10 @@ export const getMyStockIsAdd = param => {
 /**
  * @description 个股 -- 获取股票所属板块
 */
-export const getIndustryBelongPlate = param => {
+export const getIndustryBelongPlate = (param = {}) => {
     let APIName = 'v1/hq/get_stock_plate_component'
+    Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 
@@ -139,14 +146,18 @@ export const getCompanyHonor = param => {
 */
 export const getStockRecent = (param = {}) => {
     let APIName = 'v1/user/get_visit_recent'
+    Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 
 /**
  * @description 个股 -- A股新闻
 */
-export const getStockNews = param => {
+export const getStockNews = (param = {}) => {
     let APIName = 'v1/news/get_newmystock_info'
+    Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 
@@ -156,6 +167,7 @@ export const getStockNews = param => {
 export const getNoticeList = (param = {}) => {
     let APIName = 'v1/announcement/get_stock_new_announcement_list'
     Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 
@@ -165,6 +177,8 @@ export const getNoticeList = (param = {}) => {
 export const getResearchReport = (param = {}) => {
     let APIName = 'v1/report/search'
     Reflect.set(param, 'token', getToken())
+    Reflect.set(param, 'product_line', getReportLine())
+
     return get(APIName, param)
 }
 
@@ -251,8 +265,9 @@ export const getOtherIndicators = param => {
 /**
  * @description 个股 -- 沪深指数新闻
 */
-export const getHSIndexNews = param => {
+export const getHSIndexNews = (param = {}) => {
     let APIName = 'v1/news/get_ask_news_info'
+    Reflect.set(param, 'token', getToken())
     return get(APIName, param)
 }
 
@@ -262,6 +277,7 @@ export const getHSIndexNews = param => {
 export const getIndexNotice = (param = {}) => {
     let APIName = 'v1/announcement/search_new_announcement'
     Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 
@@ -271,6 +287,7 @@ export const getIndexNotice = (param = {}) => {
 export const getHKStockNews = (param = {}) => {
     let APIName = 'v1/news/get_hk_newmystock_info'
     Reflect.set(param, 'token', getToken())
+
     return get(APIName, param)
 }
 

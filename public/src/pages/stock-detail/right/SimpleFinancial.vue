@@ -2,9 +2,7 @@
     <div class="right_bottom_container">
         <div class="view_title">
             <span class="financial_title_dsc">简易财务</span>
-            <LoadMore class="financial_title_more"
-                text="更多"
-            />
+            <LoadMore class="financial_title_more"/>
         </div>
         <div class="view_vessel">
             <ul

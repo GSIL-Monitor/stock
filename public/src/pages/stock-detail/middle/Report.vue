@@ -59,13 +59,12 @@ import {
     mapGetters,
 } from 'vuex'
 import {
-    getNoticeList,
-    getIndexNotice,
+    getResearchReport,
 } from '@service/'
 import formatInfoDate from '@formatter/information/date'
 
 export default {
-    name: 'Notice',
+    name: 'Report',
     created() {
         this.fetchData()
     },
@@ -76,29 +75,35 @@ export default {
             dataStore: [],
             busy: true,
             noData: false,
-            noDataMsg: '暂无相关公告',
+            noDataMsg: '暂无相关研报',
+            filterFields: [
+                'create_date',
+                'file_type',
+                'guid',
+                'read_mark',
+                'report_title',
+                'organ_name',
+                'organ_id',
+                'has_read',
+                'count',
+            ],
         }
     },
     computed: {
         ...mapGetters([
             'isAStock',
-            'isHSIndex',
         ]),
         ...mapState([
             'stock_code',
             'full_code',
         ]),
-        hsIndexParam() {
-            return {
-                rows: this.rows,
-                page: this.page,
-            }
-        },
         stockParam() {
             return {
                 stock_code: this.stock_code,
                 rows: this.rows,
                 page: this.page,
+                has_read: 1,
+                fields: this.filterFields.join(';'),
             }
         },
         getParams() {
@@ -110,9 +115,7 @@ export default {
         },
         getApi() {
             if (this.isAStock) {
-                return getNoticeList
-            } else if (this.isHSIndex) {
-                return getIndexNotice
+                return getResearchReport
             }
         },
     },

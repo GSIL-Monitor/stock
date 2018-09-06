@@ -1,5 +1,9 @@
-import {isNumber} from './utility'
-import {dataFixed} from '../components/utils/util'
+import {
+    isNumber,
+} from './utility'
+import {
+    dataFixed,
+} from '../components/utils/util'
 
 const companyTagFormatter = {
     zyyx_score(value, list) {

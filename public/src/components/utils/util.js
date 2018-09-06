@@ -141,6 +141,7 @@ export const isVariableBlank = function(variable) {
         variable == []
     )
 }
+
 export const getCookie = function(name, encodeUrl) {
     if (!name) {
         var name = 'ton'
@@ -226,5 +227,42 @@ export const hasMyStockCache = () => {
     const MYSTOCK_CACHE = 'mystock_cache'
     const cache = getCookie(MYSTOCK_CACHE)
 
-    return String(cache) === '1'
+    return Object.is(String(cache), '1')
+}
+
+const isZyzt = () => {
+    const ZYZT = 'zyzt'
+    return navigator
+                .userAgent
+                .toLowerCase()
+                .includes(ZYZT)
+}
+
+const isZytg = () => {
+    const ZYTG = 'zytg'
+    return navigator
+            .userAgent
+            .toLowerCase()
+            .includes(ZYTG)
+}
+
+// 智投、投顾，是否是内部用户
+export const isInnerUser = ()=> {
+    let user_type = getCookie('userType')
+    let is_inner = user_type ? JSON.parse(user_type).is_inner : 0
+
+    return Object.is(String(is_inner), '1')
+}
+
+/**
+ * @description 研报产品线参数
+*/
+export const getReportLine = () => {
+    if (isZyzt()) {
+        return 28
+    } else if (isZytg()) {
+        return 901
+    } else {
+        return 4
+    }
 }

@@ -1,10 +1,9 @@
 <template>
     <div
         class="load_more"
-        :class="[className]"
         @click="moreClick"
     >
-        <div>{{text}}</div>
+        <div>{{label}}</div>
         <div>&gt;</div>
     </div>
 </template>
@@ -14,21 +13,18 @@ export default {
     name: 'loadMore',
     methods: {
         moreClick() {
-            this.$emit('moreClick')
+            this.$emit('on-lick')
         }
     },
     props: {
-        text: {
+        label: {
             type: String,
-            default: '',
+            default: '更多',
         },
-        className: {
-            type: String,
-            default: '',
-        }
     }
 }
 </script>
+
 <style lang="less" scoped>
 .load_more {
     display: flex;

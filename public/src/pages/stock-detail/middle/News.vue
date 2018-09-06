@@ -44,7 +44,7 @@
     <div
         v-if="noData"
         class="extend_nodata"
-    >暂无新闻</div>
+    >{{noDataMsg}}</div>
 </div>
 </template>
 
@@ -58,9 +58,6 @@ import {
     getHSIndexNews,
     getHKStockNews,
 } from '@service/'
-import {
-    getToken,
-} from '@c/utils/util'
 import formatInfoDate from '@formatter/information/date'
 
 export default {
@@ -75,6 +72,7 @@ export default {
             dataStore: [],
             busy: true,
             noData: false,
+            noDataMsg: '暂无相关新闻',
         }
     },
     computed: {
@@ -92,7 +90,6 @@ export default {
                 stock_code: this.stock_code,
                 rows: this.rows,
                 page: this.page,
-                token: getToken(),
             }
         },
         hsIndexParam() {
@@ -106,7 +103,6 @@ export default {
                 stock_code: this.stock_code,
                 rows: this.rows,
                 page: this.page,
-                token: getToken(),
             }
         },
         getParams() {

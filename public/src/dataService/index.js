@@ -227,9 +227,3 @@ exports.loginIn = params => {
 exports.getReportAuth = params => {
     return get('v1/gpoints/get_gpoint_report_read', params)
 }
-
-// 个股 -- 获取推荐标签
-// export const getStocktag = params => {
-//     let api = 'v1/zt/get_stock_tags'
-//     return get(api, params)
-// }

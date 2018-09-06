@@ -26,12 +26,15 @@
 </template>
 
 <script>
-import { getIndustryBelongPlate } from '@service/index.js'
-import { getToken } from '@c/utils/util.js';
-import { toType } from '@formatter/utility.js'
+import {
+    getIndustryBelongPlate,
+} from '@service/index'
+import {
+    toType,
+} from '@formatter/utility'
 
 export default {
-    name: "belongIndustry",
+    name: "BelongIndustry",
     data() {
         return {
             plateData: []
@@ -45,7 +48,6 @@ export default {
             const params = {
                 options: {
                     stock_code: this.stock_code,
-                    token: getToken(),
                 },
                 callback0: (data) => {
                     let maps = []
