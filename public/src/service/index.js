@@ -28,7 +28,7 @@ export const getStocktag = param => {
 */
 export const getMyStockGroup = (param = {}) => {
     const APIName = 'v1/mystock/get_group'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -38,7 +38,7 @@ export const getMyStockGroup = (param = {}) => {
 */
 export const getMyStocks = (param = {}) => {
     const APIName = 'v1/mystock/mystock_list'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -128,7 +128,7 @@ export const getMyStockIsAdd = param => {
 */
 export const getIndustryBelongPlate = (param = {}) => {
     const APIName = 'v1/hq/get_stock_plate_component'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -146,7 +146,7 @@ export const getCompanyHonor = param => {
 */
 export const getStockRecent = (param = {}) => {
     const APIName = 'v1/user/get_visit_recent'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -156,7 +156,7 @@ export const getStockRecent = (param = {}) => {
 */
 export const getStockNews = (param = {}) => {
     const APIName = 'v1/news/get_newmystock_info'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -166,7 +166,7 @@ export const getStockNews = (param = {}) => {
 */
 export const getNoticeList = (param = {}) => {
     const APIName = 'v1/announcement/get_stock_new_announcement_list'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -176,8 +176,8 @@ export const getNoticeList = (param = {}) => {
 */
 export const getResearchReport = (param = {}) => {
     const APIName = 'v1/report/search'
-    Reflect.set(param, 'token', getToken())
-    Reflect.set(param, 'product_line', getReportLine())
+    Reflect.set(param.options, 'token', getToken())
+    Reflect.set(param.options, 'product_line', getReportLine())
 
     return get(APIName, param)
 }
@@ -267,7 +267,7 @@ export const getOtherIndicators = param => {
 */
 export const getHSIndexNews = (param = {}) => {
     const APIName = 'v1/news/get_ask_news_info'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -277,7 +277,7 @@ export const getHSIndexNews = (param = {}) => {
 */
 export const getIndexNotice = (param = {}) => {
     const APIName = 'v1/announcement/search_new_announcement'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }
@@ -287,7 +287,7 @@ export const getIndexNotice = (param = {}) => {
 */
 export const getHKStockNews = (param = {}) => {
     const APIName = 'v1/news/get_hk_newmystock_info'
-    Reflect.set(param, 'token', getToken())
+    Reflect.set(param.options, 'token', getToken())
 
     return get(APIName, param)
 }

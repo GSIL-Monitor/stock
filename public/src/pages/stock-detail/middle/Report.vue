@@ -27,9 +27,9 @@
                         <span
                             class="td-openContent"
                             :data-index="index"
-                            :title="item.title"
+                            :title="item.report_title"
                         >
-                            {{item.title}}
+                            {{item.report_title || '--'}}
                         </span>
                     </td>
                     <td
@@ -38,9 +38,14 @@
 
                     </td>
                     <td
+                        class="info_org_td"
+                    >
+                        {{item.organ_name || '--'}}
+                    </td>
+                    <td
                         class="info_date_td"
                     >
-                        {{formatDate(item.date)}}
+                        {{formatDate(item.create_date)}}
                     </td>
                 </tr>
             </tbody>
@@ -99,7 +104,7 @@ export default {
         ]),
         stockParam() {
             return {
-                stock_code: this.stock_code,
+                code: this.stock_code,
                 rows: this.rows,
                 page: this.page,
                 has_read: 1,
@@ -109,8 +114,6 @@ export default {
         getParams() {
             if (this.isAStock) {
                 return this.stockParam
-            } else if (this.isHSIndex) {
-                return this.hsIndexParam
             }
         },
         getApi() {
@@ -125,7 +128,7 @@ export default {
             let api = this.getApi
             const params = {
                 options: param,
-                callback0: (data) => {
+                callback0: data => {
                     this.dataStore = this.dataStore.concat(data)
                     this.$nextTick(() => {
                         this.busy = false
@@ -138,7 +141,9 @@ export default {
                     }
                 },
             }
-            api(params)
+            if (api) {
+                api(params)
+            }
         },
         loadMoreData() {
             // 滚动加载
@@ -172,5 +177,13 @@ export default {
 }
 .info_ico_td {
     width: 40px;
+}
+.info_org_td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 81px;
+    width: 81px;
+    max-width: 81px;
 }
 </style>

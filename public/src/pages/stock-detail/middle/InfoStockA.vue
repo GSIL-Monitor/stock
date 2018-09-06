@@ -24,7 +24,7 @@
         :type="report"
         :active="activeKey === report"
     >
-
+        <Report/>
     </TabPane>
     <TabPane
         label="投资问答"
@@ -66,6 +66,7 @@ import Tabs from '../tabs/'
 import TabPane from '../tab-pane/'
 import News from './News'
 import Notice from './Notice'
+import Report from './Report'
 import LoadMore from '../components/LoadMore'
 import XqdownToUp from '../components/XqdownToUp'
 
@@ -89,6 +90,7 @@ export default {
         TabPane,
         News,
         Notice,
+        Report,
         LoadMore,
         XqdownToUp,
     },
