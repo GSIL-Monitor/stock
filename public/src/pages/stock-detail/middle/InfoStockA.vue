@@ -1,5 +1,8 @@
 <template>
-<Tabs active-style="underline" @on-click="tabClicked">
+<Tabs
+    active-style="underline"
+    @on-click="tabClicked"
+>
     <XqdownToUp
         @on-click="changeContainerState"
         slot="navPrev"
@@ -38,7 +41,7 @@
         :type="bigevent"
         :active="activeKey === bigevent"
     >
-
+        <BigEvent/>
     </TabPane>
     <TabPane
         label="同业股票"
@@ -56,7 +59,6 @@
     </TabPane>
     <LoadMore
         slot="navNext"
-
     />
 </Tabs>
 </template>
@@ -70,6 +72,7 @@ import News from './News'
 import Notice from './Notice'
 import Report from './Report'
 import InvestQA from './InvestQA'
+import BigEvent from './BigEvent'
 
 export default {
     name: 'InfoStockA',
@@ -94,6 +97,7 @@ export default {
         News,
         Notice,
         Report,
+        BigEvent,
         InvestQA,
     },
     methods: {
@@ -110,7 +114,7 @@ export default {
             type: Boolean,
             default: false,
         }
-    }
+    },
 }
 </script>
 
