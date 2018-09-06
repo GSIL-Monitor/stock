@@ -1,0 +1,213 @@
+// out:false
+//线索表格大事记标签
+.big-event-popup{
+  display: none;
+  width: 460px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: fixed;
+  top: 0px;
+}
+.big-event-popup-box{
+  width:458px;
+  max-height: 288px;
+  border: 1px solid @popupWindow-line;//@color-boder-1;
+  background: @popup-list-background;//@dropbox-bg;
+  position: relative;
+}
+.event-list{
+  width: 100%;
+  max-height: 264px;
+  padding-left: 20px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  p{
+    margin: 0;
+    padding: 0;
+  }
+}
+.big-event-popup-head{
+  height: 30px;
+  line-height: 30px;
+  color:@color-white;
+  background: @popup-table-th;
+}
+.big-event-popup-title{
+  padding-left: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#big-event-popup-close{
+  float: right;
+  width: 30px;
+  height: 30px;
+  color: @popup-table-th;
+  background: url("../../assets/lALOTbw6oxAQ_16_16.png") no-repeat center;
+  cursor: default;
+}
+#big-event-popup-close:hover{
+  color: @color-red;
+  background: @color-red  url("../../assets/lALOTbw6oxAQ_16_16.png") no-repeat center;
+}
+.event-list-item{
+  height: 115px;
+  overflow: hidden;
+}
+.event-list-item-left{
+  width: 13px;
+  height: 100%;
+  float: left;
+  .left-spot{
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background: rgba(21,164,250,0.3);
+  }
+  .left-center-spot{
+    width: 7px;
+    height: 7px;
+    position: relative;
+//    top: 3px;
+//    left: 3px;
+    border-radius: 50%;
+    border: 3px solid #15A4FA;
+  }
+  .left-line{
+    width: 7px;
+    height: e('calc(100% - 19px)');
+    border-right: 1px solid #15A4FA;
+    margin-top: 3px;
+  }
+}
+.event-list-item-right{
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  margin-left: 13px;
+  ul{
+    width: 100%;
+    overflow: hidden;
+    margin: 4px 0;
+    li{
+      line-height: 16px;
+      color: #a9a9a9;//@color-gray2;
+      padding: 0 2px;
+      list-style: none;
+      float: left;
+      margin-right: 8px;
+//      background: @color-tag-normal2;
+    }
+  }
+}
+.event-list-item-title{
+  font-size: 14px;
+  line-height: 22px;
+//  letter-spacing:2.1px;
+  color: @item-text-color;
+}
+.event-list-item-content{
+  color: #999999;// @color-gray2;
+}
+.event-list-item-date{
+  line-height: 30px;
+  color: @color-gray2;
+}
+.event-hint{
+  padding-left: 12px;
+  box-sizing: border-box;
+  background: @table-rows-even;
+  p{
+    font-size: 12px;
+    line-height: 22px;
+    color: @color-gray4;
+    padding: 0;
+    margin: 0;
+  }
+}
+.big-event-popup-ico{
+  width:20px;
+  height: 10px;
+  position: absolute;
+  top: -10px;
+  left: 225.5px;
+  background: url('../../assets/arrows-b-up.png')no-repeat center;
+}
+.big-event-popup-down-ico{
+  width:20px;
+  height: 10px;
+  position: absolute;
+  bottom: -10px;
+  left: 225.5px;
+  background: url('../../assets/arrows-b-down.png')no-repeat center;
+}
+.big-event-popup-box{
+  //  border: 1px solid @color-boder-1;
+
+  background: @modal-bg-color;
+
+  ::-webkit-scrollbar-track-piece{
+    background: @axis-background-white;
+  }
+  ::-webkit-scrollbar-track-piece{
+    background-color: @axis-background-white;
+  }
+  ::-webkit-scrollbar {
+    width:16px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height:16px;
+  }
+  ::-webkit-scrollbar-thumb:horizontal{
+    border-top: 3px solid @axis-background-white;
+    border-bottom: 3px solid @axis-background-white;
+  }
+  ::-webkit-scrollbar-button{
+    height: 12px;
+    width:16px;
+  }
+  ::-webkit-scrollbar-button:horizontal:start{
+    background:@axis-background-white url("../../assets/axis-left-8x4.png") no-repeat center center;
+    //  background-size: 100% 100%;
+  }
+  ::-webkit-scrollbar-button:horizontal:end{
+
+    background:@axis-background-white url("../../assets/axis-right-8x4.png") no-repeat center center;
+    //  background-size: 100% 100%;
+  }
+  ::-webkit-scrollbar-button:vertical:start{
+
+    background:@axis-background-white url("../../assets/axis-top-8x4.png") no-repeat center center;
+    //  background-size: 100% 100%;
+  }
+  ::-webkit-scrollbar-button:vertical:end{
+
+    background:@axis-background-white url("../../assets/axis-bottom-8x4.png") no-repeat center center;
+    //  background-size: 100% 100%;
+  }
+  ::-webkit-scrollbar-track {
+
+  }
+  ::-webkit-scrollbar-track-piece {
+    background-color: @axis-background-white;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-left: 3px solid @axis-background-white;
+    border-right: 3px solid @axis-background-white;
+    border-top: none;
+    border-bottom: none;
+    background: @axis-color-white;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: @axis-color-white;
+  }
+  ::-webkit-scrollbar-corner{
+    background-color: @scrollbar-bg;
+  }
+  ::-webkit-resizer{
+  }
+}

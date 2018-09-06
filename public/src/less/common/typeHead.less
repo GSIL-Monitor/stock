@@ -1,0 +1,71 @@
+@import 'variables.less';
+.typehead{
+    background-color: @bg-dropdown;
+    border: 1px solid @border-stroke1;
+    text-align:left;
+    margin-left:-1px;
+    position:absolute;
+    top:0;
+    left:0;
+    overflow: auto;
+    overflow-x: hidden;
+    padding:0;
+    .selected {
+        background:@select_active;
+    }
+    li{
+        color:@color-gray1;
+        padding:3px 10px;
+        white-space:nowrap;
+        list-style:none;
+        cursor: pointer;
+        .sCount{
+            float:right;
+            color:@color-gray3;
+        }
+        span{
+            display: inline-block;
+            //			width: 25%;
+            text-align: left;
+            min-width: 4em;
+            padding-right: 6px;
+        }
+        .left{
+            float: left;
+            margin-right: 5px;
+        }
+        .right{
+            float: right;
+        }
+        &:after{
+            content: '';
+            display: block;
+            height: 1px;
+            clear: both;
+            visibility: hidden;
+        }
+    }
+}
+.typehead{
+    li{
+        span{
+            min-width: 5em;
+        }
+        span:nth-child(3){
+            display: none;
+        }
+    }
+}
+.submitSearch{
+    margin-left: 10px;
+}
+.typehead.white{
+    border-color:@popup-border-color;
+    background:@popup-list-background;
+}
+.typehead.white li{
+    color:@item-text-color;
+}
+.typehead.white .selected{
+    background:@popup-select-hover;
+}

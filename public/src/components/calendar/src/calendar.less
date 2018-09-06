@@ -1,0 +1,248 @@
+@import '../../../less/common/variables.less';
+@import '../../../less/common/mixins.less';
+.ht-calendar,
+.ht-date-picker-calendar {
+    /*width: 655px;*/
+    position: relative;
+    user-select: none;
+}
+.ht-date-picker-calendar{
+    display: inline-block;
+}
+.ht-calendar-container{
+    display:inline-block;
+}
+.ht-date-picker-calendar span,
+.ht-date-range-calendar span {
+    text-align: center;
+}
+.ht-calendar-text {
+    font-size: 12px;
+}
+.ht-calendar-date-range-text,
+.ht-calendar-date-picker-text {
+    width: 180px;
+    font-size: 13px;
+    padding: 0 !important;
+    border:1px solid @border-stroke1;
+    line-height: 20px;
+    text-indent: 5px;
+    background-color: @index_background;
+    cursor:pointer;
+    user-select:none;
+    color: #fff;
+    background: url('../../../assets/dateIco_16x16.png') no-repeat 163px center;
+}
+.ht-calendar-date-picker-text{
+    width: 80px;
+    // background: url('../../../assets/datepicker-b.png') no-repeat 75px center;
+}
+.ht-calendar-popup,
+.ht-calendar-date-picker-popup {
+    width: 554px;
+    border: 1px solid @border-stroke1;
+    box-shadow: 0px 3px 5px @border-stroke1;
+    position: absolute;
+    top: 25px;
+    left: -301px;
+    background: @color-card-background;
+    z-index: 100;
+}
+.ht-date-range-calendar .ht-calendar-popup{
+    top: 33px;
+}
+.ht-calendar-date-picker-popup{
+    width:234px;
+    padding: 12px 10px;
+}
+.ht-calendar-left,
+.ht-calendar-center,
+.ht-calendar-right {
+    float: left;
+    margin: 10px 12px;
+}
+.ht-calendar-right {
+    width: 60px;
+    height: 200px;
+    position: relative;
+    p {
+        margin: 0;
+        line-height: 20px;
+    }
+}
+.ht-calendar-ctrl,
+.ht-calendar-month,
+.ht-calendar-year,
+.ht-calendar-date {
+    width: 210px;
+    margin: 0;
+}
+.ht-calendar-ctrl {
+    margin-bottom: 20px;
+    height: 24px;
+    position: relative
+}
+.ht-calendar-ctrl span {
+    /*display: inline-block;*/
+    /*line-height: 24px;*/
+    /*vertical-align: middle;*/
+    color: @color-gray2;
+    position: absolute;
+}
+.ht-calendar-left-arrow,
+.ht-calendar-right-arrow {
+    border: 8px solid transparent;
+    margin: 2px;
+    cursor: pointer;
+}
+.ht-calendar-left-arrow {
+    border-right-color: @color-gray1;
+    left: 10px;
+}
+.ht-calendar-ctrl-text {
+    font: 18px/20px 'Microsoft YaHei';
+    width: 110px;
+    left: 30px;
+    margin: 0 20px;
+    cursor: pointer;
+}
+.ht-calendar-right-arrow {
+    right: 10px;
+    border-left-color: @color-gray1;
+}
+.ht-calendar-month span,
+.ht-calendar-year span {
+    display: inline-block;
+    width: 52px;
+    height: 56px;
+    line-height: 56px;
+    cursor: pointer;
+}
+.ht-available{
+    cursor: pointer;
+}
+.ht-unavailable {
+    color: @color-gray8;
+    cursor: default;
+}
+.ht-calendar-week {
+    // font: 12px 'Microsoft YaHei';
+    cursor: default;
+    color: @color-gray2;
+}
+.ht-calendar-popup .ht-calendar-date,
+.ht-calendar-date-picker-popup .ht-calendar-date {
+    margin-top: 20px;
+    line-height: 20px;
+}
+.ht-calendar-date span {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin: 1px 4px;
+    line-height: 22px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+.ht-calendar-date .current {
+    color: @color-gray1;
+    cursor: pointer;
+    &.ht-calendarchosen{
+        background: @color-blue;
+        color: @color-gray7;
+    }
+    &.ht-calendar-chosed-start-date{
+        background: @color-btn-click;
+        color: @color-gray7;
+    }
+}
+.ht-calendar-date .previous,
+.ht-calendar-date .current,
+.ht-calendar-date .next {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.ht-calendar-date .previous,
+.ht-calendar-date .next {
+    color: @color-gray8;
+    cursor: default;
+}
+/*.chosen:before{
+    content: '';
+    display: block;
+    width: 4px;
+    height: 2px;
+    background: #006fcc;
+    position: absolute;
+    left: 0;
+    top:10px;
+    margin-left: -4px;
+}
+.chosen:after{
+    content: '';
+    display: block;
+    width: 4px;
+    height: 2px;
+    background: #006fcc;
+    position: absolute;
+    right: 0;
+    top:10px;
+    margin-right: -4px;
+}*/
+.ht-calendar-long-btn,
+.ht-calendar-confirm,
+.ht-calendar-cancel {
+    height: 22px;
+    font-size: 12px;
+    margin: 0;
+    border-width: 0;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}
+.ht-calendar-long-btn {
+    width: 124px;
+    background: @bg-title1;
+    color: @color-gray1;
+    margin: 5px;
+    &.active {
+        background: @color-backbg7;
+        border: 1px solid @border-stroke;
+        color: @color-blue;
+    }
+}
+.ht-calendar-confirm-cancel-btns {
+    position: absolute;
+    bottom: 0;
+}
+.ht-calendar-confirm,
+.ht-calendar-cancel {
+    width: 60px;
+    border-radius: 3px;
+    color: @color-white;
+}
+.ht-calendar-confirm {
+    margin-bottom: 20px;
+    background: @color-blue;
+    // color: @color-gray1;
+    /*// &:hover {
+    //     background: @color-btn-bg2;
+    // }
+    // &:active {
+    //     background: @color-btn-click;
+    // }*/
+}
+.ht-calendar-confirm-unactive{
+    background: @color-gray3;
+    cursor: @cursor-disabled;
+}
+.ht-calendar-cancel {
+    border: 1px solid @color-btn-bg3;
+    background: @color-btn-bg3;
+    // color: @color-gray2;
+    /*// &:hover {
+    //     background: @color-btn-bg4;
+    // }
+    // &:active {
+    //     background: @color-btn-click;
+    // }*/
+}

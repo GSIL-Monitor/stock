@@ -1,0 +1,12 @@
+
+
+#图片上传
+*       /file/uploader                          controllers.FileUploaderAction.upload
+*       /file/upload_image                      controllers.FileUploaderAction.uploadImage
+
+
+
+
+*		/api/{version}/{namespace}/{method}		controllers.gogoalweb.DataHandler.execute
+GET		/favicon.ico							404
+GET		/							 staticDir:cdn
