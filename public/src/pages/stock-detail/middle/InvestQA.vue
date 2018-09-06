@@ -9,6 +9,7 @@
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="80"
+        ref="scrollContainer"
     >
         <li
             v-for="(item, index) of dataStore"
@@ -77,7 +78,7 @@ export default {
     },
     data() {
         return {
-            rows: 3,
+            ROWS: 3,
             page: 1,
             dataStore: [],
             busy: true,
@@ -95,7 +96,7 @@ export default {
             let param = {
                 options: {
                     stock_code: this.stock_code,
-                    rows: this.rows,
+                    rows: this.ROWS,
                     page: this.page,
                 },
                 callback0: data => {
@@ -121,6 +122,19 @@ export default {
         },
         formatDate(date) {
             return subDate(date)
+        },
+        resetState() {
+            this.page = 1
+            this.busy = true
+            this.noData = false
+            this.$refs.scrollContainer.scrollTop = 0
+            this.dataStore = []
+        },
+    },
+    watch: {
+        full_code() {
+            this.resetState()
+            this.fetchData()
         },
     },
 }

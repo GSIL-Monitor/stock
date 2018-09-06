@@ -9,6 +9,7 @@
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="80"
+        ref="scrollContainer"
     >
         <li
             v-for="(item, index) of dataStore"
@@ -17,10 +18,21 @@
         >
             <svg
                 width="10"
-                height="26"
             >
-                <line x1="5" y1="0" x2="5" y2="26" stroke-width="1px" stroke="#C0C0C0"></line>
-                <circle r="5" cx="5" cy="12" fill="#C0C0C0"></circle>
+                <line
+                    x1="5"
+                    y1="0"
+                    x2="5"
+                    y2="26"
+                    stroke-width="1px"
+                    stroke="#C0C0C0"
+                ></line>
+                <circle
+                    r="5"
+                    cx="5"
+                    cy="12"
+                    fill="#C0C0C0"
+                ></circle>
             </svg>
             <span
                 class="bigevent_item_date"
@@ -64,12 +76,13 @@ export default {
             dataStore: [],
             busy: true,
             noData: false,
-            noDataMsg: '暂无相关研报',
+            noDataMsg: '暂无大事件',
         }
     },
     computed: {
         ...mapState([
             'stock_code',
+            'full_code',
         ]),
     },
     methods: {
@@ -105,6 +118,19 @@ export default {
         },
         formatDate(date) {
             return subDate(date)
+        },
+        resetState() {
+            this.page = 1
+            this.busy = true
+            this.noData = false
+            this.$refs.scrollContainer.scrollTop = 0
+            this.dataStore = []
+        },
+    },
+    watch: {
+        full_code() {
+            this.resetState()
+            this.fetchData()
         },
     },
 }

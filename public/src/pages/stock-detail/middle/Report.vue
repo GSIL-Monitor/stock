@@ -9,6 +9,7 @@
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="80"
+        ref="scrollContainer"
     >
         <table
             v-if="dataStore.length"
@@ -75,7 +76,7 @@ export default {
     },
     data() {
         return {
-            rows: 10,
+            ROWS: 10,
             page: 1,
             dataStore: [],
             busy: true,
@@ -105,7 +106,7 @@ export default {
         stockParam() {
             return {
                 code: this.stock_code,
-                rows: this.rows,
+                rows: this.ROWS,
                 page: this.page,
                 has_read: 1,
                 fields: this.filterFields.join(';'),
@@ -170,6 +171,19 @@ export default {
                 // TODO:原文
 
             }
+        },
+        resetState() {
+            this.page = 1
+            this.busy = true
+            this.noData = false
+            this.$refs.scrollContainer.scrollTop = 0
+            this.dataStore = []
+        },
+    },
+    watch: {
+        full_code() {
+            this.resetState()
+            this.fetchData()
         },
     },
 }
