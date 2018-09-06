@@ -1,7 +1,7 @@
-**智投 web (zyzt - web)**
+**行情**
 
 
-> Pure Vue front-end project 
+> Pure Vue front-end project
 
 
 

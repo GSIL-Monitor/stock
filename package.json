@@ -1,7 +1,6 @@
 {
-    "name": "zyzt-web",
+    "name": "market-web",
     "version": "1.0.0",
-    "description": "朝阳智投",
     "private": true,
     "scripts": {
         "start": "nodemon --watch public -e html,vue,js,less build/build.js",
