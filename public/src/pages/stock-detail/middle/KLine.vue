@@ -32,6 +32,7 @@ export default {
     },
     computed: {
         ...mapState([
+            'source',
             'full_code',
             'current_type',
             'leftState',
@@ -68,7 +69,7 @@ export default {
                 [TYPE.HKBOND]: 'bond_H',
                 [TYPE.HKWARRANT]: 'warrants',
                 [TYPE.HKCBBC]: 'cbbc',
-                // [TYPE.FUTURES]: ''
+                [TYPE.FUTURES]: this.source,
             }
 
             return maps[this.current_type]
@@ -88,6 +89,7 @@ export default {
             this.setKlineState(KLINE_BOTTOM, state)
         },
         lineParams(jump) {
+            // TODO: 跳转指标设置
             let curIndex,
                 indicator;
             if (this.isAStock) {
@@ -139,9 +141,6 @@ export default {
                 console.error(error)
             }
         },
-        initHeight() {
-
-        },
         setKlineState(direction, status) {
             try {
                 const FUNC_NAME = 'SetElementVisibleState'
@@ -189,7 +188,7 @@ export default {
         },
     },
     beforeDestroy() {
-
+        this.$eventBus.$off('klineStateChange', this.changeKlineState)
     },
     watch: {
         full_code() {

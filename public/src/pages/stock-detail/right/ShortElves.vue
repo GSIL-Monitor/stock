@@ -32,6 +32,7 @@
         infinite-scroll-throttle-delay="80"
         @dblclick="dblclickLi"
         v-show="line_data.length"
+        ref="scrollContainer"
     >
         <ShortElvesItem
             v-for="(item, index) of line_data"
@@ -184,10 +185,11 @@ export default {
             return o
         },
         resetComponent() {
-            this.line_data = []
             this.busy = true
             this.end_date = null
             this.noData = false
+            this.$refs.scrollContainer.scrollTop = 0
+            this.line_data = []
         },
         watchOnly() {
             this.stock_only = !this.stock_only

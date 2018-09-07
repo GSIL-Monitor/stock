@@ -35,6 +35,7 @@
             infinite-scroll-throttle-delay="80"
             @dblclick="dblclickLi"
             v-show="transation.length"
+            ref="scrollContainer"
         >
             <TransactionLi
                 v-for="(item, index) of transation"
@@ -66,9 +67,6 @@ import LoadMore from '../components/LoadMore'
 import {
     LOCAL_TRANSATION_STORE,
 } from '../storage'
-import {
-    ASTOCK,
-} from '@formatter/config/stock-type-config'
 
 export default {
     name: 'stockTransation',
@@ -231,7 +229,6 @@ export default {
             console.log('timeShareDetail')
         },
         resetComponent() {
-            this.transation = []
             this.update_time = null
             this.busy = true
             this.noData = false
@@ -239,6 +236,8 @@ export default {
             this.filterType = 1
             this.min = null
             this.max = null
+            this.$refs.scrollContainer.scrollTop = 0
+            this.transation = []
         },
         filerPushData(volume) {
             if (Object.is(this.filterType, 1)) {
@@ -281,6 +280,9 @@ export default {
             this.getData()
         },
     },
+    beforeDestroy() {
+        this.$eventBus.$off('transationFilter', this.filterParams)
+    },
     watch: {
         full_code() {
             if (this.isAStock) {
@@ -289,9 +291,6 @@ export default {
                 this.getData()
             }
         }
-    },
-    beforeDestroy() {
-        this.$eventBus.$off('transationFilter', this.filterParams)
     },
 }
 </script>

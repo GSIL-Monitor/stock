@@ -149,11 +149,12 @@ export default {
             console.log('timeShareDetail')
         },
         resetComponent() {
-            this.transation = []
             this.update_time = null
             this.busy = true
             this.noData = false
             this.latestTime = 0
+            this.$refs.scrollContainer.scrollTop = 0
+            this.transation = []
         },
         pushData(data) {
             // 推送

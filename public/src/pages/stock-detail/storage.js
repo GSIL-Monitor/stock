@@ -1,7 +1,6 @@
 
 const MODULE_NAME = 'stockDetail'
 
-
 // ==============================================================================
 /**
  * Local Storage
@@ -88,3 +87,8 @@ export const SOCKET_A_FLOW = `${MODULE_NAME}-stock-money`
 export const SOCKET_SHORT_LINE = `${MODULE_NAME}-short-line`
 // 沪深指数 -- 涨跌分布
 export const SOCKET_RANGE_SCOPE = `${MODULE_NAME}-range-scope`
+
+// ==============================================================================
+/**
+ * EventBus Id
+*/
