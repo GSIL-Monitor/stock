@@ -55,15 +55,8 @@ export default {
             'isBond',
             'isHSIndex',
             'isHkIndex',
-            'isHkStock',
-            'isHkFund',
-            'isHkBond',
-            'isHkWarrant',
-            'isHkCbbc',
+            'isHkNormal',
         ]),
-        isHkNormal() {
-            return this.isHkStock || this.isHkFund || this.isHkBond || this.isHkWarrant || this.isHkCbbc
-        },
     },
     components: {
         StockATemp,

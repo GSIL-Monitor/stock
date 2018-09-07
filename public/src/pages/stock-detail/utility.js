@@ -7,7 +7,7 @@ export const subDate = (date) => {
     return date.substr(0, 11)
 }
 
-// 港股是否为实时行情
+// 是否为实时行情
 export const isHkRealTime = () => {
     let hk_now = getCookie('hk_now')
 

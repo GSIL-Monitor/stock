@@ -22,6 +22,7 @@
             infinite-scroll-throttle-delay="80"
             @dblclick="dblclickLi"
             v-show="transation.length"
+            ref="scrollContainer"
         >
             <TransactionLi
                 v-for="(item, index) of transation"
@@ -44,6 +45,9 @@ import {
     mapState,
     mapGetters,
 } from 'vuex'
+import {
+    isHkRealTime,
+} from '../utility'
 import {
     getTransaction,
     getHKTransaction,
@@ -71,24 +75,28 @@ export default {
         LoadMore,
     },
     computed: {
-        ...mapGetters([
-            'isBStock',
-            'isFund',
-            'isBond',
-            'isHkIndex',
-        ]),
         ...mapState([
             'stock_code',
             'current_type',
             'full_code',
         ]),
+        ...mapGetters([
+            'isBStock',
+            'isFund',
+            'isBond',
+            'isHkIndex',
+            'isHkNormal',
+        ]),
+        isForbiddenHkLoad() {
+            return this.isHkNormal && !isHkRealTime()
+        },
         showMore() {
             return this.isBStock || this.isFund || this.isBond
         },
         getCurrentApi() {
             if (this.isBStock || this.isFund || this.isBond) {
                 return getTransaction
-            } else if (this.isHkIndex) {
+            } else if (this.isHkIndex || this.isHkNormal) {
                 return getHKTransaction
             }
         },
@@ -98,16 +106,20 @@ export default {
             return new Date(time.replace(/\-/g, '/'))
                    .getTime()
         },
+        stockBParams() {
+            let o = {
+                stock_code: this.stock_code
+            }
+            if (this.update_time) {
+                o.end_date = this.update_time
+            }
+            return o
+        },
+
         getCurrentParams() {
             if (this.isBStock) {
-                let o = {
-                    stock_code: this.stock_code
-                }
-                if (this.update_time) {
-                    o.end_date = this.update_time
-                }
-                return o
-            } else if (this.isFund || this.isBond || this.isHkIndex) {
+                return this.stockBParams
+            } else {
                 let o = {
                     fullcode: this.full_code
                 }
@@ -131,10 +143,15 @@ export default {
                     this.transation = this.transation.concat(data)
                     this.update_time = data[data.length - 1].update_time
 
-                    // 待 dom 状态更新之后，设回可加载
-                    this.$nextTick(() => {
-                        this.busy = false;
-                    })
+                    if (this.isForbiddenHkLoad) {
+                        // 非实时行情禁用滚动加载
+                        this.busy = true
+                    } else {
+                        // 待 dom 状态更新之后，设回可加载
+                        this.$nextTick(() => {
+                            this.busy = false;
+                        })
+                    }
                 },
                 callback1001: () => {
                     this.busy = true
@@ -173,6 +190,12 @@ export default {
             }
             if (nowTimeStamp > this.latestTime) {
                 this.transation.unshift(data)
+                // 非实时行情保留4条数据
+                if (this.isForbiddenHkLoad) {
+                    if (this.transation.length > 4) {
+                        this.transation.splice(this.transation.length - 1, 1)
+                    }
+                }
                 this.latestTime = nowTimeStamp
             }
         },
@@ -189,7 +212,7 @@ export default {
     },
     watch: {
         full_code() {
-            if (this.isBStock || this.isFund || this.isBond || this.isHkIndex) {
+            if (this.isBStock || this.isFund || this.isBond || this.isHkIndex || this.isHkNormal) {
                 this.resetComponent()
                 this.getData()
             }

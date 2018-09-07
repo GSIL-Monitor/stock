@@ -20,6 +20,15 @@ export default {
     isBond(state) {
         return Object.is(TYPE.BOND, state.current_type)
     },
+    isHkNormal(state) {
+        return [
+            TYPE.HKSTOCK,
+            TYPE.HKFUND,
+            TYPE.HKBOND,
+            TYPE.HKWARRANT,
+            TYPE.HKCBBC,
+        ].includes(state.current_type)
+    },
     // 港股股票
     isHkStock(state) {
         return Object.is(TYPE.HKSTOCK, state.current_type)

@@ -161,7 +161,9 @@
         :style="extendStyles"
         ref="detailExtend"
     >
-
+        <StockTransaction
+            ref="transactionComponent"
+        />
     </div>
 </div>
 </template>
@@ -284,15 +286,47 @@ export default {
                     this.open_price = data.open_price
                 },
                 afterResponse: () => {
-                    // this.sendLink(this.linkAddress)
-                    // this.rememberLink(this.linkAddress, this.linkIndex)
+                    this.sendLink(this.linkAddress)
+                    this.rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
             getHkStockData(params)
         },
         receiveSocketData(...args) {
+            let data = args[0][0]
+            // 清空
+            this.mark = Object.is(data.mark, 1) ? true : false
+            // 继承推送数据
+            this.socketData = Object.assign({}, this.socketData, data)
+            let socketData = this.socketData
 
+            this.price = socketData.price
+            this.price_change = socketData.price_change
+            this.price_change_rate = socketData.price_change_rate
+
+            this.close_price = socketData.close_price
+            this.avg_price = socketData.avg_price
+            this.turnover_rate = socketData.turnover_rate
+            this.volume = socketData.volume
+            this.turnover = socketData.turnover ? socketData.turnover * 10000 : socketData.turnover
+            this.hk_tcap = socketData.hk_tcap
+            this.tcap = socketData.tcap
+            this.high_price = socketData.high_price
+            this.low_price = socketData.low_price
+            this.open_price = socketData.open_price
+
+            if (data.transaction_type && data.transaction_volume) {
+                let one = {
+                    update_time: data.date,
+                    price: socketData.price,
+                    price_change: socketData.price_change,
+                    volume: data.transaction_volume,
+                    transaction_type: data.transaction_type,
+                    deal_count: socketData.deal_count,
+                }
+                this.$refs.transactionComponent.pushData(one)
+            }
         },
     },
     beforeDestroy() {
