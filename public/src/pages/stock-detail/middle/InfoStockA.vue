@@ -6,7 +6,7 @@
     <XqdownToUp
         @on-click="changeContainerState"
         slot="navPrev"
-        :is-on="vesselState"
+        :is-on="titleState"
     />
     <TabPane
         label="新闻"
@@ -86,7 +86,6 @@ export default {
             bigevent: 'bigevent',
             related: 'related',
             trade: 'trade',
-            vesselState: this.titleState,
         }
     },
     components: {
@@ -105,7 +104,6 @@ export default {
 
         },
         changeContainerState(state) {
-            this.vesselState = state
             this.$eventBus.$emit('changeInfoState', state)
         },
     },
@@ -113,7 +111,7 @@ export default {
         titleState: {
             type: Boolean,
             default: false,
-        }
+        },
     },
 }
 </script>

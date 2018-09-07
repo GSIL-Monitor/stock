@@ -1,7 +1,7 @@
 <template>
     <div
         class="root_right"
-        v-if="rightState"
+        v-show="rightState"
     >
         <StockATemp
             v-if="isAStock"

@@ -10,7 +10,7 @@ const state = {
     full_code: null,
     leftState: true,  // 左侧栏展开收起状态
     rightState: true, // 右侧栏展开收起状态
-    mainState: false,
+    infoState: false,
     tag_data: {
         zyyx_score: null, // 确定性评分
         tags: null, //公司荣誉

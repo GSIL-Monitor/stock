@@ -8,11 +8,6 @@
 <script>
 export default {
     name: 'XqdownToUp',
-    data() {
-        return {
-            is_on: this.isOn
-        }
-    },
     computed: {
         icoClasses() {
             let prefixCls = 'ico_enfoldment'
@@ -20,15 +15,15 @@ export default {
             return [
                 prefixCls,
                 {
-                    [`${prefixCls}_On`]: this.is_on
+                    [`${prefixCls}_On`]: this.isOn
                 },
             ]
         },
     },
     methods: {
         icoClick() {
-            this.is_on = !this.is_on
-            this.$emit('on-click', this.is_on)
+            let state = !this.isOn
+            this.$emit('on-click', state)
         },
     },
     props: {

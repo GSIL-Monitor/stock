@@ -12,15 +12,15 @@
         v-if="hasInformation"
     >
         <InfoStockATemp
-            :titleState="infoStoreState"
+            :titleState="infoState"
             v-if="isAStock"
         />
         <InfoHSIndexTemp
-            :titleState="infoStoreState"
+            :titleState="infoState"
             v-if="isHSIndex"
         />
         <InfoHkStockTemp
-            :titleState="infoStoreState"
+            :titleState="infoState"
             v-if="isHkStock"
         />
     </div>
@@ -31,7 +31,11 @@
 import {
     mapState,
     mapGetters,
+    mapMutations,
 } from 'vuex'
+import {
+    INFO_STATE,
+} from '@store/stock-detail-store/config/mutation-types'
 import KLine from './KLine'
 import InfoStockATemp from './InfoStockA'
 import InfoHSIndexTemp from './InfoHSIndex'
@@ -45,30 +49,23 @@ export default {
     name: 'Middle',
     created() {
         this.$eventBus.$on('changeInfoState', this.changeInfoState)
-        this.initState()
-    },
-    data() {
-        return {
-            infoStoreState: false,
-        }
     },
     computed: {
+        ...mapState([
+            'full_code',
+            'current_type',
+            'infoState',
+        ]),
         ...mapGetters([
             'isAStock',
             'isHSIndex',
             'isHkStock',
+            'hasInformation',
         ]),
-        ...mapState([
-            'full_code',
-            'current_type',
-        ]),
-        hasInformation() {
-            return this.isAStock || this.isHSIndex || this.isHkStock
-        },
         mainClasses() {
             let classes
             if (this.hasInformation) {
-                if (this.infoStoreState) {
+                if (this.infoState) {
                     classes = 'stock_chart_infoFull'
                 } else {
                     classes = 'stock_chart_infoTitle'
@@ -81,16 +78,12 @@ export default {
         },
     },
     methods: {
-        initState() {
-            this.infoStoreState = this.isInfoFullHeight()
-        },
-        isInfoFullHeight() {
-            let state = getInfoState()
-
-            return Object.is(state, 'true')
-        },
+        ...mapMutations([
+            INFO_STATE,
+        ]),
         changeInfoState(state) {
-            this.infoStoreState = state
+            this[INFO_STATE](state)
+            this.$eventBus.$emit('klineStateChange', 'bottom', state)
             setInfoState(state)
         },
     },

@@ -1,7 +1,7 @@
 <template>
     <div
         :class="leftClasses"
-        v-if="leftState"
+        v-show="leftState"
     >
         <Tabs
             activeStyle="underline"
@@ -66,12 +66,12 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'isAStock'
-        ]),
         ...mapState([
             'current_type',
             'leftState',
+        ]),
+        ...mapGetters([
+            'isAStock'
         ]),
         leftClasses() {
             return [

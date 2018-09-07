@@ -37,7 +37,7 @@ import {
     FULL_CODE,
     LEFT_STATE,
     RIGHT_STATE,
-    MAIN_STATE,
+    INFO_STATE,
 } from '@store/stock-detail-store/config/mutation-types'
 import * as TYPE from '@formatter/config/stock-type-config'
 import {
@@ -152,17 +152,15 @@ export default {
         ShortElvesFilter,
     },
     computed: {
+        ...mapState([
+            'leftState',
+            'rightState',
+            'infoState',
+        ]),
         ...mapGetters([
             'isAStock',
             'isBStock',
         ]),
-        // currentRightRouter() {
-        //     return this.isAStock ? 'StockATemp' :
-        //         this.isBStock ? 'StockBTemp' :
-        //         this.isFund ? 'FundTemp' :
-        //         this.isBond ? 'BondTemp' :
-        //         this.isHSIndex ? 'MarketTemp' : 'StockATemp'
-        // },
         isShowTape() {
             return this.tapeState && (this.isAStock || this.isBStock)
         },
@@ -175,51 +173,57 @@ export default {
             CURRENT_TYPE,
             LEFT_STATE,
             RIGHT_STATE,
-            MAIN_STATE,
+            INFO_STATE,
         ]),
         init() {
             let hash = location.hash.substr(1)
             if (hash) {
                 this.changeCurrentStockState(hash)
             } else {
-                let stock_code = getUrlParam('stock_code') || localStorage.getItem(LOCAL_LATEST_CODE) || '000001'
+                let stock_code = getUrlParam('stock_code') || this.getLocalStorage(LOCAL_LATEST_CODE) || '000001'
                 // 第一次无 hash 改写 hash，触发 hashchange 事件
                 window.location.hash = `#${stock_code}`
             }
         },
         initState() {
-            this[LEFT_STATE] = this.initLeftState()
-            this[RIGHT_STATE] = this.initRightState()
-            this[MAIN_STATE] = this.initMiddleBottomState()
+            this[LEFT_STATE](this.initLeftState())
+            this[RIGHT_STATE](this.initRightState())
+            this[INFO_STATE](this.initInforState())
+        },
+        getLocalStorage(name) {
+            return localStorage.getItem(name)
         },
         initLeftState() {
-            let state = localStorage.getItem(LOCAL_IS_LEFT_SHOW)
+            let state = this.getLocalStorage(LOCAL_IS_LEFT_SHOW)
             if (!state) {
                 // 第一次加载默认展开
-                this.setLeftState(true)
-                return true
+                const DEFAULT_STATE = true
+                localStorage.setItem(LOCAL_IS_LEFT_SHOW, DEFAULT_STATE)
+                return DEFAULT_STATE
             } else {
                 // true 为 展开
                 return Object.is(state, 'true')
             }
         },
         initRightState() {
-            let state = localStorage.getItem(LOCAL_IS_RIGHT_SHOW)
+            let state = this.getLocalStorage(LOCAL_IS_RIGHT_SHOW)
             if (!state) {
                 // 第一次加载默认展开
-                this.setRightState(true)
-                return true
+                const DEFAULT_STATE = true
+                localStorage.setItem(LOCAL_IS_RIGHT_SHOW, DEFAULT_STATE)
+                return DEFAULT_STATE
             } else {
                 // true 为 展开
                 return Object.is(state, 'true')
             }
         },
-        initMiddleBottomState() {
-            let state = localStorage.getItem(LOCAL_IS_INFO_FULL)
+        initInforState() {
+            let state = this.getLocalStorage(LOCAL_IS_INFO_FULL)
             if (!state) {
                 // 第一次加载默认收起
-                this.setBottomState(false)
-                return false
+                const DEFAULT_STATE = false
+                localStorage.setItem(LOCAL_IS_INFO_FULL, DEFAULT_STATE)
+                return DEFAULT_STATE
             } else {
                 // true 为 展开
                 return Object.is(state, 'true')
@@ -228,25 +232,50 @@ export default {
         changeLeftRight(d) {
             let data = JSON.parse(d)
             if (data.left) {
-
+                let state = Object.is(data.left, 'true')
+                this.setLeftState(state)
+                this.$eventBus.$emit('klineStateChange', 'left', state)
             } else if (data.right) {
-
-            } else if (Object.is(data.fullScreen, 'true')) {
-
-            } else if (Object.is(data.fullScreen, 'false')) {
-
+                let state = Object.is(data.right, 'true')
+                this.setRightState(state)
+                this.$eventBus.$emit('klineStateChange', 'right', state)
+            } else if (data.fullScreen) {
+                let nextState = data.fullScreen
+                if (Object.is(nextState, 'true')) {
+                    let state = false
+                    if (this.leftState) {
+                        this.setLeftState(state)
+                    }
+                    if (this.rightState) {
+                        this.setRightState(state)
+                    }
+                    if (this.infoState) {
+                        this.setInfoState(state)
+                    }
+                } else if (Object.is(nextState, 'false')) {
+                    let state = true
+                    if (!this.leftState) {
+                        this.setLeftState(state)
+                    }
+                    if (!this.rightState) {
+                        this.setRightState(state)
+                    }
+                    if (!this.infoState) {
+                        this.setInfoState(state)
+                    }
+                }
             }
         },
         setLeftState(state) {
-            this[LEFT_STATE] = state
+            this[LEFT_STATE](state)
             localStorage.setItem(LOCAL_IS_LEFT_SHOW, state)
         },
         setRightState(state) {
-            this[RIGHT_STATE] = state
+            this[RIGHT_STATE](state)
             localStorage.setItem(LOCAL_IS_RIGHT_SHOW, state)
         },
-        setBottomState(state) {
-            this[MAIN_STATE] = state
+        setInfoState(state) {
+            this[INFO_STATE](state)
             localStorage.setItem(LOCAL_IS_INFO_FULL, state)
         },
         changeTapeSetState() {
@@ -385,7 +414,7 @@ export default {
         },
     },
     beforeDestroy() {
-        goGoal.ws.onmessage = null
+        // goGoal.ws.onmessage = null
         this.$eventBus.$off(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.remove(EVENT_KEY_BOARD, this.keyBoardEvent)

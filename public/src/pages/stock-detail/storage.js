@@ -14,19 +14,18 @@ export const LOCAL_TAPE_SET_FUNC = `${MODULE_NAME}-tapeSet-func`
 export const LOCAL_IS_LEFT_SHOW = `${MODULE_NAME}-left-content-state`
 // 右侧显隐
 export const LOCAL_IS_RIGHT_SHOW = `${MODULE_NAME}-right-content-state`
+// 资讯栏显隐
+export const LOCAL_IS_INFO_FULL = `${MODULE_NAME}-info-content-state`
 // 左侧 tab
 export const LOCAL_LEFT_TAB = `${MODULE_NAME}-left-tab`
 // 股票代码
 export const LOCAL_LATEST_CODE = `${MODULE_NAME}-stock-code`
 // 行情图状态
 export const LOCAL_MAP_STATE = `${MODULE_NAME}-map-state`
-// 资讯栏显隐
-export const LOCAL_IS_INFO_FULL = `${MODULE_NAME}-info-state`
 // 成交明细过滤
 export const LOCAL_TRANSATION_STORE = `${MODULE_NAME}-transation-store`
 // 短信精灵设置
 export const LOCAL_SHORT_LINE_SET = `${MODULE_NAME}-short-line-set`
-
 
 // ==============================================================================
 /**

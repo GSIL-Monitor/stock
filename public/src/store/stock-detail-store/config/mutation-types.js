@@ -18,5 +18,5 @@ export const FULL_CODE = 'FULL_CODE'
 export const LEFT_STATE = 'LEFT_STATE'
 // 右侧栏状态
 export const RIGHT_STATE = 'RIGHT_STATE'
-// 中间栏状态
-export const MAIN_STATE = 'MAIN_STATE'
+// 底部资讯栏状态
+export const INFO_STATE = 'INFO_STATE'

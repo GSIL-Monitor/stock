@@ -48,4 +48,11 @@ export default {
     isFuture(state) {
         return Object.is(TYPE.FUTURES, state.current_type)
     },
+    hasInformation(state) {
+        return [
+            TYPE.ASTOCK,
+            TYPE.INDEX,
+            TYPE.HKSTOCK,
+        ].includes(state.current_type)
+    },
 }

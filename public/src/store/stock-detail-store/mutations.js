@@ -10,7 +10,7 @@ import {
     FULL_CODE,
     LEFT_STATE,
     RIGHT_STATE,
-    MAIN_STATE,
+    INFO_STATE,
 } from './config/mutation-types'
 
 export default {
@@ -44,7 +44,7 @@ export default {
     [RIGHT_STATE](state, payLoad) {
         state.rightState = payLoad
     },
-    [MAIN_STATE](state, payLoad) {
-        state.mainState = payLoad
+    [INFO_STATE](state, payLoad) {
+        state.infoState = payLoad
     },
 }
