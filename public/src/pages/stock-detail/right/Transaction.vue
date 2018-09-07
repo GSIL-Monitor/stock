@@ -10,6 +10,7 @@
                 <LoadMore
                     class="transa_title_right_more"
                     @on-click="toDetailPage"
+                    v-if="showMore"
                 />
             </div>
         </div>
@@ -45,6 +46,7 @@ import {
 } from 'vuex'
 import {
     getTransaction,
+    getHKTransaction,
 } from '@service/'
 
 import TransactionLi from './TransactionLi'
@@ -73,15 +75,21 @@ export default {
             'isBStock',
             'isFund',
             'isBond',
+            'isHkIndex',
         ]),
         ...mapState([
             'stock_code',
             'current_type',
             'full_code',
         ]),
+        showMore() {
+            return this.isBStock || this.isFund || this.isBond
+        },
         getCurrentApi() {
             if (this.isBStock || this.isFund || this.isBond) {
                 return getTransaction
+            } else if (this.isHkIndex) {
+                return getHKTransaction
             }
         },
     },
@@ -99,8 +107,7 @@ export default {
                     o.end_date = this.update_time
                 }
                 return o
-            }
-            else if (this.isFund || this.isBond) {
+            } else if (this.isFund || this.isBond || this.isHkIndex) {
                 let o = {
                     fullcode: this.full_code
                 }
@@ -112,6 +119,8 @@ export default {
         },
         getData() {
             let api = this.getCurrentApi
+            if (!api) return
+
             const param = {
                 options: this.getCurrentParams(),
                 callback0: data => {
@@ -180,7 +189,7 @@ export default {
     },
     watch: {
         full_code() {
-            if (this.isBStock || this.isFund || this.isBond) {
+            if (this.isBStock || this.isFund || this.isBond || this.isHkIndex) {
                 this.resetComponent()
                 this.getData()
             }

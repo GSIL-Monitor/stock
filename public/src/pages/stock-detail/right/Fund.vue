@@ -140,11 +140,11 @@
 import {
     mapState
 } from 'vuex'
-import DefaultBtn from './DefaultBtn.vue'
-import TitleTopMarket from './TitleTopMarket.vue'
+import DefaultBtn from './DefaultBtn'
+import TitleTopMarket from './TitleTopMarket'
 import {
     getFundData,
-} from '@service/index.js'
+} from '@service/index'
 
 import {
     SOCKET_FUND_MARKET,
@@ -153,22 +153,21 @@ import socketMixin from './socket-mixin'
 import fiveOrderMixin from './five-order-mixin'
 import rightResizeMixin from './right-resize-mixin'
 
-import StockName from '@formatter/market-base/StockName.vue'
-import StockCode from '@formatter/market-base/StockCode.vue'
+import StockName from '@formatter/market-base/StockName'
+import StockCode from '@formatter/market-base/StockCode'
+import CompareClose from '@formatter/market-base/CompareClose'
+import QuantityRatio from '@formatter/market-base/QuantityRatio'
+import Volume from '@formatter/market-base/Volume'
+import Turnover from '@formatter/market-base/Turnover'
+import ClosePrice from '@formatter/market-base/ClosePrice'
+import HighLimit from '@formatter/market-base/HighLimit'
+import LowLimit from '@formatter/market-base/LowLimit'
+import VolumeOuter from '@formatter/market-base/VolumeOuter'
+import VolumeInner from '@formatter/market-base/VolumeInner'
 
-import CompareClose from '@formatter/market-base/CompareClose.vue'
-import QuantityRatio from '@formatter/market-base/QuantityRatio.vue'
-import Volume from '@formatter/market-base/Volume.vue'
-import Turnover from '@formatter/market-base/Turnover.vue'
-import ClosePrice from '@formatter/market-base/ClosePrice.vue'
-import HighLimit from '@formatter/market-base/HighLimit.vue'
-import LowLimit from '@formatter/market-base/LowLimit.vue'
-import VolumeOuter from '@formatter/market-base/VolumeOuter.vue'
-import VolumeInner from '@formatter/market-base/VolumeInner.vue'
-
-import OldFiveOrder from './OldFiveOrder.vue'
-import StockTransaction from './Transaction.vue'
-import MarketInfo from './MarketInfo.vue'
+import OldFiveOrder from './OldFiveOrder'
+import StockTransaction from './Transaction'
+import MarketInfo from './MarketInfo'
 
 export default {
     name: 'FundTemp',

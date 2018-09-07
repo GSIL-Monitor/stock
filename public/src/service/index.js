@@ -94,7 +94,7 @@ export const getBondData = param => {
 /**
  * @description 个股 -- 获取 港股股票/指数/基金/债券/涡轮/牛熊证 行情数据
 */
-export const getHKStockData = param => {
+export const getHkStockData = param => {
     const APIName = 'v1/hq/hk_data'
     return get(APIName, param)
 }

@@ -7,16 +7,19 @@
             v-if="isAStock"
         />
         <MarketTemp
-            v-if="isHSIndex"
+            v-else-if="isHSIndex"
+        />
+        <HkIndexTemp
+            v-else-if="isHkIndex"
         />
         <StockBTemp
-            v-if="isBStock"
+            v-else-if="isBStock"
         />
         <FundTemp
-            v-if="isFund"
+            v-else-if="isFund"
         />
         <BondTemp
-            v-if="isBond"
+            v-else-if="isBond"
         />
     </div>
 </template>
@@ -33,6 +36,7 @@ import StockBTemp from './StockB'
 import FundTemp from './Fund'
 import BondTemp from './Bond'
 import MarketTemp from './Market'
+import HkIndexTemp from './HkIndex'
 
 export default {
     name: 'RightMain',
@@ -46,6 +50,7 @@ export default {
             'isFund',
             'isBond',
             'isHSIndex',
+            'isHkIndex'
         ]),
     },
     components: {
@@ -54,6 +59,7 @@ export default {
         FundTemp,
         BondTemp,
         MarketTemp,
+        HkIndexTemp,
     },
 }
 </script>
