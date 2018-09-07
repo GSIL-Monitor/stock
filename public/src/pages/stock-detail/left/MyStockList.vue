@@ -16,6 +16,7 @@
 import {
     mapState,
     mapActions,
+    mapMutations,
 } from 'vuex'
 import {
     SESSION_SELECT_STOCK_GROUP,
@@ -57,6 +58,9 @@ export default {
         ]),
     },
     methods: {
+        ...mapMutations([
+            STOCK_GROUP_LIST,
+        ]),
         ...mapActions({
             getStockGroupData: GET_STOCK_GROUP_DATA,
         }),
@@ -84,8 +88,8 @@ export default {
                 this.fetchMyStockGroupData()
             }, TIMEOUT)
         },
-        commitGroupList(res) {
-            this.$store.commit(STOCK_GROUP_LIST, [...res])
+        commitGroupList(data) {
+            this[STOCK_GROUP_LIST](data)
         },
         fetchMyStockGroup() {
             if (hasMyStockCache()) {

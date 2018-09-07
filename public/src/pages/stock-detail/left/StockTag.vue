@@ -12,6 +12,7 @@
 import {
     mapState,
     mapActions,
+    mapMutations,
 } from 'vuex'
 import {
     GET_STOCK_TAG,
@@ -117,6 +118,9 @@ export default {
         TagList,
     },
     methods: {
+        ...mapMutations([
+            GET_STOCK_TAG,
+        ]),
         ...mapActions({
             getStockTagData: GET_STOCK_TAG_DATA,
         }),
@@ -126,8 +130,8 @@ export default {
                     type: 1,
                     full_code: this.full_code,
                 },
-                callback0: res => {
-                    this.$store.commit(GET_STOCK_TAG, res)
+                callback0: data => {
+                    this[GET_STOCK_TAG](data)
                 },
             }
 

@@ -6,6 +6,9 @@
 </template>
 
 <script>
+import {
+    mapState,
+} from 'vuex'
 import companyFormatter from '@formatter/company-tag'
 
 export default {
@@ -16,11 +19,14 @@ export default {
         },
     },
     computed: {
+        ...mapState([
+            'tag_data',
+        ]),
         formatter() {
             if (!this.fields) return '--'
             return companyFormatter[this.fields](
-                this.$store.state.tag_data[this.fields],
-                this.$store.state.tag_data
+                this.tag_data[this.fields],
+                this.tag_data,
             )
         },
     },

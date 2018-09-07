@@ -15,6 +15,7 @@
     import {
         mapState,
         mapActions,
+        mapMutations,
     } from 'vuex'
     import subMixin from './sub-scription-mixin'
     import {
@@ -50,6 +51,9 @@
             ])
         },
         methods: {
+            ...mapMutations([
+                STOCK_RECENT_LIST,
+            ]),
             ...mapActions([
                 'getRecentListData'
             ]),
@@ -80,7 +84,7 @@
                             return element
                         })
 
-                        this.$store.commit(STOCK_RECENT_LIST, selectData)
+                        this[STOCK_RECENT_LIST](selectData)
 
                         this.$nextTick(() => {
                             let codeList = this.getSubCodeList()

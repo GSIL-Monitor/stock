@@ -23,6 +23,7 @@
     import {
         mapState,
         mapActions,
+        mapMutations,
     } from 'vuex'
     import {
         GET_SELECT_GROUP_DATA,
@@ -105,6 +106,9 @@
             },
         },
         methods: {
+            ...mapMutations([
+                SELECT_GROUP_DATA,
+            ]),
             ...mapActions({
                 getSelectGroupData: GET_SELECT_GROUP_DATA,
             }),
@@ -184,7 +188,7 @@
                 this.removeBgColor(changList)
             },
             clearGroupData() {
-                this.$store.commit(SELECT_GROUP_DATA, [])
+                this[SELECT_GROUP_DATA]([])
             },
             groupClick() {
                 if (!this.is_active) {
@@ -195,7 +199,7 @@
                 }
             },
             commitSelectList(arr) {
-                this.$store.commit(SELECT_GROUP_DATA, arr)
+                this[SELECT_GROUP_DATA](arr)
                 // 在 dom 状态更新之后订阅
                 this.$nextTick(() => {
                     this.$emit('active_id', this.group_id)
