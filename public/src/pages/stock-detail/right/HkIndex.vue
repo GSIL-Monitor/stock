@@ -2,26 +2,27 @@
 <div class="detail">
     <div class="detail_head">
         <div class="detail_head_title">
-                <div class="title_left">
-                    <StockName
-                        class="title_left_name"
-                        :val="stock_name"
-                        :current_type="current_type"
-                    />
-                    <StockCode
-                        class="title_left_code"
-                        :val="stock_code"
-                    />
-                </div>
+            <div class="title_left">
+                <StockName
+                    class="title_left_name"
+                    :val="stock_name"
+                    :current_type="current_type"
+                />
+                <StockCode
+                    class="title_left_code"
+                    :val="stock_code"
+                />
             </div>
-            <TitleTopMarket
-                class="detail_head_market"
-                :source="source"
-                :symbol_type="symbol_type"
-                :price="price"
-                :price_change="price_change"
-                :price_change_rate="price_change_rate"
-            />
+        </div>
+        <TitleTopMarket
+            class="detail_head_market"
+            :source="source"
+            :symbol_type="symbol_type"
+            :price="price"
+            :price_change="price_change"
+            :price_change_rate="price_change_rate"
+        />
+        <HkTimeBox/>
     </div>
     <div class="detail_info">
         <MarketInfo
@@ -101,14 +102,16 @@ import {
 import socketMixin from './socket-mixin'
 import rightResizeMixin from './right-resize-mixin'
 
+import HkTimeBox from './HkTimeBox'
+import TitleTopMarket from './TitleTopMarket'
+import MarketInfo from './MarketInfo'
+import StockTransaction from './Transaction'
+
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'
 import CompareClose from '@formatter/market-base/CompareClose'
 import ClosePrice from '@formatter/market-base/ClosePrice'
 import Turnover from '@formatter/market-base/Turnover'
-import TitleTopMarket from './TitleTopMarket'
-import MarketInfo from './MarketInfo'
-import StockTransaction from './Transaction'
 
 export default {
     name: 'HkIndex',
@@ -148,6 +151,7 @@ export default {
         TitleTopMarket,
         MarketInfo,
         StockTransaction,
+        HkTimeBox,
     },
     computed: {
         ...mapState([
@@ -213,7 +217,6 @@ export default {
                     price_change: socketData.price_change,
                     volume: data.transaction_volume,
                     transaction_type: data.transaction_type,
-                    deal_count: socketData.deal_count,
                 }
                 this.$refs.transactionComponent.pushData(one)
             }

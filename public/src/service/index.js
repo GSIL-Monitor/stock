@@ -311,7 +311,7 @@ export const getHKRelatedStock = param => {
 /**
  * @description 个股 -- 判断传入日期是否是交易日
 */
-export const isDealDay = param => {
+export const isBusinessDay = param => {
     const APIName = 'v1/hq/is_edate'
     return get(APIName, param)
 }
