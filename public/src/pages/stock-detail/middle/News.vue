@@ -78,6 +78,7 @@ export default {
                 'date',
                 'id',
                 'title',
+                'guid',
             ],
         }
     },

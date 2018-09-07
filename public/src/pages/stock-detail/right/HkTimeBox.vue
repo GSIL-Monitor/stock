@@ -51,7 +51,7 @@ export default {
     },
     computed: {
         isShowDealyHint() {
-            return this.isInBusiness && !this.isReal
+            return !this.isReal
         },
     },
     methods: {

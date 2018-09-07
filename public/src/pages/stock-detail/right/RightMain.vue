@@ -9,6 +9,9 @@
         <MarketTemp
             v-else-if="isHSIndex"
         />
+        <HkNormalTemp
+            v-else-if="isHkNormal"
+        />
         <HkIndexTemp
             v-else-if="isHkIndex"
         />
@@ -37,6 +40,7 @@ import FundTemp from './Fund'
 import BondTemp from './Bond'
 import MarketTemp from './Market'
 import HkIndexTemp from './HkIndex'
+import HkNormalTemp from './HkNormal'
 
 export default {
     name: 'RightMain',
@@ -50,8 +54,16 @@ export default {
             'isFund',
             'isBond',
             'isHSIndex',
-            'isHkIndex'
+            'isHkIndex',
+            'isHkStock',
+            'isHkFund',
+            'isHkBond',
+            'isHkWarrant',
+            'isHkCbbc',
         ]),
+        isHkNormal() {
+            return this.isHkStock || this.isHkFund || this.isHkBond || this.isHkWarrant || this.isHkCbbc
+        },
     },
     components: {
         StockATemp,
@@ -60,6 +72,7 @@ export default {
         BondTemp,
         MarketTemp,
         HkIndexTemp,
+        HkNormalTemp,
     },
 }
 </script>

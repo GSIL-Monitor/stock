@@ -9,11 +9,13 @@
         <PriceChange
             class="top_market_value"
             :val="price_change"
+            :price="price"
             :current_type="current_type"
         ></PriceChange>
         <PriceChangeRate
             class="top_market_rate"
             :val="price_change_rate"
+            :price="price"
             :price_change="price_change"
             :current_type="current_type"
         ></PriceChangeRate>
