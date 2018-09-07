@@ -53,7 +53,7 @@
     <TabPane
         label="关联品种"
         :type="related"
-        :active="isTradeActive"
+        :active="isRelatedActive"
     >
 
     </TabPane>
@@ -118,11 +118,11 @@ export default {
         isReportActive() {
             return Object.is(this.activeKey, this.report)
         },
-        isTradeActive() {
-            return Object.is(this.activeKey, this.trade)
+        isRelatedActive() {
+            return Object.is(this.activeKey, this.related)
         },
         isShowMore() {
-            return !this.isTradeActive
+            return !this.isRelatedActive
         },
     },
     methods: {
