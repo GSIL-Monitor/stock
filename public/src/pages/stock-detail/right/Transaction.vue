@@ -144,7 +144,7 @@ export default {
                     this.update_time = data[data.length - 1].update_time
 
                     if (this.isForbiddenHkLoad) {
-                        // 非实时行情禁用滚动加载
+                        // 港股非实时行情禁用滚动加载
                         this.busy = true
                     } else {
                         // 待 dom 状态更新之后，设回可加载
@@ -190,7 +190,7 @@ export default {
             }
             if (nowTimeStamp > this.latestTime) {
                 this.transation.unshift(data)
-                // 非实时行情保留4条数据
+                // 港股非实时行情保留4条数据
                 if (this.isForbiddenHkLoad) {
                     if (this.transation.length > 4) {
                         this.transation.splice(this.transation.length - 1, 1)

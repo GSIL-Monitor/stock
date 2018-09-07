@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: 'loadMore',
+    name: 'LoadMore',
     methods: {
         moreClick() {
             this.$emit('on-lick')

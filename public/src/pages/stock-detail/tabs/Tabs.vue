@@ -146,6 +146,7 @@
     }
     .gg_tabs_wrap {
         display: flex;
+        position: relative;
         font-size: 12px;
         align-items: center;
     }

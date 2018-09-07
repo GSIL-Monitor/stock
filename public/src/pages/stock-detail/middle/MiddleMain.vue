@@ -184,5 +184,10 @@ export default {
     .info_vessel_table {
         width: 100%;
     }
+    .load_more {
+        position: absolute;
+        right: 14px;
+        top: 6px;
+    }
 }
 </style>

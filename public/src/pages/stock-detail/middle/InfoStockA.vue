@@ -11,21 +11,21 @@
     <TabPane
         label="新闻"
         :type="news"
-        :active="activeKey === news"
+        :active="isNewsActive"
     >
         <News/>
     </TabPane>
     <TabPane
         label="公告"
         :type="notice"
-        :active="activeKey === notice"
+        :active="isNoticeActive"
     >
         <Notice/>
     </TabPane>
     <TabPane
         label="研报"
         :type="report"
-        :active="activeKey === report"
+        :active="isReportActive"
     >
         <Report/>
     </TabPane>
@@ -53,11 +53,13 @@
     <TabPane
         label="关联品种"
         :type="related"
-        :active="activeKey === related"
+        :active="isTradeActive"
     >
 
     </TabPane>
     <LoadMore
+        v-show="isShowMore"
+        :label="loadMoreLabel"
         slot="navNext"
     />
 </Tabs>
@@ -99,9 +101,33 @@ export default {
         BigEvent,
         InvestQA,
     },
+    computed: {
+        loadMoreLabel() {
+            let prefix = '更多'
+            return this.isNewsActive ? `${prefix}新闻` :
+                    this.isNoticeActive ? `${prefix}公告`:
+                    this.isReportActive ? `${prefix}研报`:
+                    prefix
+        },
+        isNewsActive() {
+            return Object.is(this.activeKey, this.news)
+        },
+        isNoticeActive() {
+            return Object.is(this.activeKey, this.notice)
+        },
+        isReportActive() {
+            return Object.is(this.activeKey, this.report)
+        },
+        isTradeActive() {
+            return Object.is(this.activeKey, this.trade)
+        },
+        isShowMore() {
+            return !this.isTradeActive
+        },
+    },
     methods: {
-        tabClicked() {
-
+        tabClicked(type) {
+            this.activeKey = type
         },
         changeContainerState(state) {
             this.$eventBus.$emit('changeInfoState', state)
