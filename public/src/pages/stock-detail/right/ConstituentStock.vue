@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="index_constituent">
         <div class="constituent_title">
             <span>成分股</span>
         </div>
@@ -144,10 +144,30 @@ export default {
 </script>
 
 <style lang="less">
+.index_constituent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .constituent_title {
-    height: 26px;
+    flex: 0 0 26px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.el-table {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.el-table__header-wrapper {
+    flex-shrink: 0;
+}
+
+.el-table__body-wrapper {
+    flex: 1;
 }
 </style>

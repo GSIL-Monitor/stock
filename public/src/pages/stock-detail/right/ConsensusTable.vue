@@ -56,15 +56,15 @@
 <script>
 import {
     getSelfConsensus,
-} from "@service/index.js"
+} from "@service/index"
 import {
     getFixedNum,
     getPercentNum,
     getYearSuffix,
-} from '@formatter/market-fields/consensus.js'
+} from '@formatter/market-fields/consensus'
 import {
     getMixedYen,
-} from '@formatter/market-fields/financial.js'
+} from '@formatter/market-fields/financial'
 import {
     cloneDeep,
 } from 'lodash'
