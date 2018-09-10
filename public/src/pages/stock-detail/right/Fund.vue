@@ -149,9 +149,9 @@ import {
 import {
     SOCKET_FUND_MARKET,
 } from '../storage'
-import socketMixin from './socket-mixin'
-import fiveOrderMixin from './five-order-mixin'
-import rightResizeMixin from './right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin'
+import fiveOrderMixin from '../mixins/five-order-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'

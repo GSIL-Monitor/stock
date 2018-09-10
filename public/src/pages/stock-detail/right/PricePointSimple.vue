@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Props from './price-point-mixin'
+import Props from '../mixins/price-point-mixin'
 import {
     dataFixed,
 } from '@c/utils/util'

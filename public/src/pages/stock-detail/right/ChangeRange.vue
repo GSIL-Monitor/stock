@@ -42,7 +42,7 @@ import RangeListItem from './ChangeRangeListItem'
 import {
     SOCKET_RANGE_SCOPE,
 } from '../storage'
-import socketMixin from './socket-mixin'
+import socketMixin from '../mixins/socket-mixin'
 
 import { evenRound } from '@c/utils/util';
 export default {

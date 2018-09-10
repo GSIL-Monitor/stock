@@ -121,6 +121,7 @@ const promise = (url = '', param, type = 'get') => {
             resolve(data)
         })
         .catch((error) => {
+            console.error(url, param)
             console.error(error)
             // reject(error)
         })

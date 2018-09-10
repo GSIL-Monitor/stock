@@ -30,6 +30,7 @@ import {
     getUrlParam,
     getCookie,
 } from '@c/utils/util'
+import stockVerifyMixin from './mixins/stock-verify-mixin'
 import {
     CURRENT_TYPE,
     STOCK_CODE,
@@ -39,7 +40,6 @@ import {
     RIGHT_STATE,
     INFO_STATE,
 } from '@store/stock-detail-store/config/mutation-types'
-import * as TYPE from '@formatter/config/stock-type-config'
 import {
     LOCAL_LATEST_CODE,
     LOCAL_IS_LEFT_SHOW,
@@ -61,62 +61,11 @@ import TransaFilter from './right/TransaFilter'
 // 短线精灵设置
 import ShortElvesFilter from './right/ShortElvesFilter'
 
-const stockVerify = [{
-        type: TYPE.ASTOCK,
-        regexp: /^[01345678][0-9]{5}/,
-    },
-    {
-        type: TYPE.SHBSTOCK,
-        regexp: /^900\d{3}$/,
-    },
-    {
-        type: TYPE.SZBSTOCK,
-        regexp: /^200\d{3}$/,
-    },
-    {
-        type: TYPE.FUND,
-        regexp: /^fund(\w+)?[0-9]{1,}$/,
-    },
-    {
-        type: TYPE.BOND,
-        regexp: /^bond(\w+)?[0-9]{1,}$/,
-    },
-    {
-        type: TYPE.HKSTOCK,
-        regexp: /^hk[0-9]{1,}/,
-    },
-    {
-        type: TYPE.HKINDEX,
-        regexp: /^hk[a-zA-Z]+[0-9]*/,
-    },
-    {
-        type: TYPE.HKFUND,
-        regexp: /^fund_H\w+/,
-    },
-    {
-        type: TYPE.HKBOND,
-        regexp: /^bond_H\w+/,
-    },
-    {
-        type: TYPE.HKWARRANT,
-        regexp: /^warrants\w+/,
-    },
-    {
-        type: TYPE.HKCBBC,
-        regexp: /^cbbc\w+/,
-    },
-    {
-        type: TYPE.INDEX,
-        regexp: /^[a-zA-Z]{2,}[0-9]{1,}$/,
-    },
-    {
-        type: TYPE.FUTURES,
-        regexp: /^qh_\w+/,
-    },
-]
-
 export default {
     name: 'App',
+    mixins: [
+        stockVerifyMixin,
+    ],
     beforeCreate() {
         // 监听 hash 改变
         window.onhashchange = event => {
@@ -160,6 +109,12 @@ export default {
         ...mapGetters([
             'isAStock',
             'isBStock',
+            'isHkFund',
+            'isHkBond',
+            'isHkWarrant',
+            'isHkCbbc',
+            'isHSIndex',
+            'isFuture',
         ]),
         isShowTape() {
             return this.tapeState && (this.isAStock || this.isBStock)
@@ -291,40 +246,39 @@ export default {
                 return 'sz'
             }
         },
-        getInfo(type, hash) {
+        getInfo(hash) {
             // 获取当前 hash 类型 具体字段
             let full_code, source, stock_code
-            if ([TYPE.ASTOCK, TYPE.SHBSTOCK, TYPE.SZBSTOCK, TYPE.BSTOCK].includes(type)) {
+            if (this.isAStock || this.isBStock) {
                 // 拼接 source
                 source = this.getSource(hash)
                 stock_code = hash
                 full_code = `${source}${stock_code}`
             } else if (
-                [
-                    TYPE.FUND,
-                    TYPE.BOND,
-                    TYPE.HKFUND,
-                    TYPE.HKBOND,
-                    TYPE.HKWARRANT,
-                    TYPE.HKCBBC,
-                ].includes(type)
+                this.isFund ||
+                this.isBond ||
+                this.isHkFund ||
+                this.isHkBond ||
+                this.isHkWarrant ||
+                this.isHkCbbc
             ) {
                 // 抹去前缀
                 full_code = hash.replace(/fund|bond|fund_H|bond_H|warrants|cbbc/, '')
                 source = full_code.substr(0, 2)
                 stock_code = full_code.substr(2)
-            } else if (Object.is(type, TYPE.FUTURES)) {
+            } else if (this.isFuture) {
                 // 期货
                 let splitArr = hash.split(';')
                 full_code = splitArr.join('')
                 source = splitArr[0]
                 stock_code = splitArr[1]
-            } else if (Object.is(type, TYPE.INDEX)) {
+            } else if (this.isHSIndex) {
                 // 沪深指数里 source 有 sh sz BK csi
                 full_code = hash
                 source = hash.match(/[A-Za-z]{2,}/)[0]
                 stock_code = hash.replace(source, '')
             } else {
+                // 默认
                 full_code = hash
                 source = full_code.substr(0, 2)
                 stock_code = full_code.substr(2)
@@ -338,24 +292,14 @@ export default {
         },
         changeCurrentStockState(hash) {
             let type = this.enSureStockType(hash)
-            let info = this.getInfo(type, hash)
+            this[CURRENT_TYPE](type)
 
-            localStorage.setItem(LOCAL_LATEST_CODE, hash)
+            let info = this.getInfo(hash)
             // 提交到 vuex
             this[STOCK_CODE](info.stock_code)
             this[SOURCE](info.source)
             this[FULL_CODE](info.full_code)
-            this[CURRENT_TYPE](type)
-        },
-        itemVerify(arr, hash) {
-            return arr.regexp.test(hash)
-        },
-        enSureStockType(hash) {
-            let ele = stockVerify.find(ele => {
-                return this.itemVerify(ele, hash)
-            })
-
-            return ele.type
+            localStorage.setItem(LOCAL_LATEST_CODE, hash)
         },
         changeScode(data) {
             var d = JSON.parse(data)

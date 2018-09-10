@@ -5,7 +5,7 @@ import ReconnectingWebSocket from './web-socket'
 
 const goGoal = window.goGoal || {};
 
-goGoal.detectSelectedTheme = () => {}
+goGoal.changeTheme = () => {}
 // var changeThemeFun = function (theme) {
 //     const styleLink = document.getElementsByTagName('link')[0];
 //     if (theme === 'd') {

@@ -99,8 +99,8 @@ import {
 import {
     SOCKET_HKINDEX_MARKET,
 } from '../storage'
-import socketMixin from './socket-mixin'
-import rightResizeMixin from './right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import HkTimeBox from './HkTimeBox'
 import TitleTopMarket from './TitleTopMarket'

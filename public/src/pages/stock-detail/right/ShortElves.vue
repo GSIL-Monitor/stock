@@ -60,7 +60,7 @@ import {
 } from '@service/index'
 import SetIco from '../components/SetIco'
 import ShortElvesItem from './ShortElvesItem'
-import socketMixin from './socket-mixin'
+import socketMixin from '../mixins/socket-mixin'
 import {
     SOCKET_SHORT_LINE,
     LOCAL_SHORT_LINE_SET,
@@ -69,7 +69,7 @@ import {
     ASTOCK,
     INDEX,
 } from '@formatter/config/stock-type-config'
-
+// TODO: 清空时段加载问题
 export default {
     name: 'ShortElves',
     mixins: [

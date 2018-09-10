@@ -14,7 +14,7 @@
 
 <script>
 
-import Props from './price-point-mixin'
+import Props from '../mixins/price-point-mixin'
 export default {
     name: 'PricePointDetail',
     mixins: [

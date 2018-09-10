@@ -8,6 +8,7 @@
 </template>
 
 <script>
+// TODO: 不显示
 let xData = ['净特大单', '净大单', '净中单', '净小单']
 let defaultOptions = {
     tooltip: {

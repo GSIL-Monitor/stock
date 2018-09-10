@@ -136,9 +136,9 @@ import {
 import {
     SOCKET_BOND_MARKET,
 } from '../storage'
-import socketMixin from './socket-mixin'
-import fiveOrderMixin from './five-order-mixin'
-import rightResizeMixin from './right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin'
+import fiveOrderMixin from '../mixins/five-order-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import DefaultBtn from './DefaultBtn'
 import TitleTopMarket from './TitleTopMarket'

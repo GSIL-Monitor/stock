@@ -300,9 +300,9 @@ import {
 import {
     throttle
 } from '@c/utils/util'
-import socketMixin from './socket-mixin'
-import fiveOrderMixin from './five-order-mixin'
-import rightResizeMixin from './right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin'
+import fiveOrderMixin from '../mixins/five-order-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
 
 // 盘口一致预期
 import ConsensusTable from './ConsensusTable'

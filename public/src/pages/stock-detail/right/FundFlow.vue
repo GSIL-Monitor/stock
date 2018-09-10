@@ -49,7 +49,7 @@ import {
 import FundFlowPie from './FundFlowPie'
 import FundFlowBar from './FundFlowBar'
 import FundFlowList from './FundFlowList'
-import socketMixin from "./socket-mixin";
+import socketMixin from "../mixins/socket-mixin";
 
 export default {
     name: 'fundFlow',

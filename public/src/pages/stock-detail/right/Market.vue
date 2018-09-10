@@ -167,8 +167,8 @@ import Fall from '@formatter/market-base/Fall'
 
 import Tabs from '../tabs/'
 import TabPane from '../tab-pane/'
-import rightResizeMixin from './right-resize-mixin'
-import socketMixin from './socket-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin'
 
 import MarketInfo from './MarketInfo'
 
