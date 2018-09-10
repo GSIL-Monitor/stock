@@ -165,8 +165,8 @@ import Flat from '@formatter/market-base/Flat'
 import Rose from '@formatter/market-base/Rose'
 import Fall from '@formatter/market-base/Fall'
 
-import Tabs from '../tabs/'
-import TabPane from '../tab-pane/'
+import Tabs from '../components/tabs/'
+import TabPane from '../components/tab-pane/'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 import socketMixin from '../mixins/socket-mixin'
 

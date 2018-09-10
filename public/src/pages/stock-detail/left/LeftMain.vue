@@ -41,8 +41,8 @@ import {
 import {
     LOCAL_LEFT_TAB,
 } from '../storage'
-import Tabs from '../tabs/'
-import TabPane from '../tab-pane/'
+import Tabs from '../components/tabs/'
+import TabPane from '../components/tab-pane/'
 import StockTag from './StockTag'
 import MyStockList from './MyStockList'
 import RecentVisit from './RecentVisit'

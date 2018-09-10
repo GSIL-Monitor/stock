@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import Tabs from '../tabs/'
-import TabPane from '../tab-pane/'
+import Tabs from '../components/tabs/'
+import TabPane from '../components/tab-pane/'
 import LoadMore from '../components/LoadMore'
 import XqdownToUp from '../components/XqdownToUp'
 import News from './News'
