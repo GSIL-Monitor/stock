@@ -245,7 +245,6 @@ export default {
   },
 
   created() {
-    console.log("created");
     this.tableId = "el-table_" + tableIdSeed + "_";
     this.debouncedLayout = debounce(50, () => this.doLayout());
     this.$root.eventHub &&

@@ -98,6 +98,7 @@ export default {
             tapeSetName: 'tapeSet',
             sendClientId: false,
             client_id: null,
+            keyBoardTimer: null,
         }
     },
     components: {
@@ -447,8 +448,31 @@ export default {
                 this.$eventBus.$emit(id, receiveContent, requestContent)
             }
         },
+        keyBoardSpace() {
+            let state = !this.leftState
+            this.setLeftState(state)
+        },
+        keyBoardF10() {
+
+        },
+        keyBoardF1() {
+
+        },
+        // 全局快捷键
         keyBoardEvent(data) {
-            console.log(data)
+            clearTimeout(this.keyBoardTimer)
+            this.keyBoardTimer = setTimeout(() => {
+                if (['Up', 'Down'].includes(data)) {
+                    return false
+                }
+                if (Object.is(data, 'Space')) {
+                    this.keyBoardSpace()
+                } else if (Object.is(data, 'F10')) {
+                    this.keyBoardF10()
+                } else if (Object.is(data, 'F1')) {
+                    this.keyBoardF1()
+                }
+            }, 50)
         },
     },
     beforeDestroy() {
