@@ -8,7 +8,6 @@
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
-        :infinite-scroll-immediate-check="false"
         infinite-scroll-throttle-delay="100"
         ref="scrollContainer"
     >

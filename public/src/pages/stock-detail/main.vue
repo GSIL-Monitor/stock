@@ -118,11 +118,13 @@ export default {
         ...mapGetters([
             'isAStock',
             'isBStock',
+            'isHSIndex',
+            'isFund',
+            'isBond',
             'isHkFund',
             'isHkBond',
             'isHkWarrant',
             'isHkCbbc',
-            'isHSIndex',
             'isFuture',
         ]),
         isShowTape() {
@@ -324,12 +326,12 @@ export default {
                 stock_code = hash
                 full_code = `${source}${stock_code}`
             } else if (
-                this.isFund ||
-                this.isBond ||
-                this.isHkFund ||
-                this.isHkBond ||
-                this.isHkWarrant ||
-                this.isHkCbbc
+                this.isFund
+                || this.isBond
+                || this.isHkFund
+                || this.isHkBond
+                || this.isHkWarrant
+                || this.isHkCbbc
             ) {
                 // 抹去前缀
                 full_code = hash.replace(/fund|bond|fund_H|bond_H|warrants|cbbc/, '')

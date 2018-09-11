@@ -156,6 +156,12 @@
             </tbody>
         </MarketInfo>
     </div>
+    <HkOrder
+        class="detail_order"
+        :orderData="orderData"
+        :close_price="close_price"
+        :stockType="current_type"
+    />
     <div
         class="detail_extend"
         :style="extendStyles"
@@ -177,6 +183,8 @@ import rightResizeMixin from '../mixins/right-resize-mixin'
 import {
     getHkStockData,
 } from '@service/'
+import HkOrder from './HkOrder'
+
 import {
     SOCKET_HKSTOCK_MARKET,
 } from '../storage'
@@ -218,6 +226,11 @@ export default {
             price_change_rate: null,
             mark: false,
 
+            buy1_price: null,
+            sell1_price: null,
+            buy1_volume: null,
+            sell1_volume: null,
+
             close_price: null,
             avg_price: null,
             turnover_rate: null,
@@ -235,6 +248,7 @@ export default {
         DefaultBtn,
         TitleTopMarket,
         MarketInfo,
+        HkOrder,
         StockTransaction,
         StockName,
         StockCode,
@@ -255,6 +269,22 @@ export default {
         linkAddress() {
             return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
         },
+        orderData() {
+            return {
+                buy: [
+                    {
+                        now_price: this.buy1_price,
+                        now_volume: this.buy1_volume,
+                    },
+                ],
+                sell: [
+                    {
+                        now_price: this.sell1_price,
+                        now_volume: this.sell1_volume,
+                    },
+                ],
+            }
+        },
     },
     methods: {
         skipF10() {
@@ -273,6 +303,11 @@ export default {
                     this.price = data.price
                     this.price_change = data.change_value
                     this.price_change_rate = data.change_rate
+
+                    this.buy1_price = data.buy1_price
+                    this.sell1_price = data.sell1_price
+                    this.buy1_volume = data.buy1_volume
+                    this.sell1_volume = data.sell1_volume
 
                     this.close_price = data.close_price
                     this.avg_price = data.avg_price
@@ -304,8 +339,13 @@ export default {
             this.price = socketData.price
             this.price_change = socketData.price_change
             this.price_change_rate = socketData.price_change_rate
-
             this.close_price = socketData.close_price
+
+            this.buy1_price = socketData.buy1_price
+            this.sell1_price = socketData.sell1_price
+            this.buy1_volume = socketData.buy1_volume
+            this.sell1_volume = socketData.sell1_volume
+
             this.avg_price = socketData.avg_price
             this.turnover_rate = socketData.turnover_rate
             this.volume = socketData.volume
