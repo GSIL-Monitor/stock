@@ -8,7 +8,7 @@
         v-infinite-scroll="loadMoreData"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
-        infinite-scroll-throttle-delay="80"
+        infinite-scroll-throttle-delay="100"
         ref="scrollContainer"
     >
         <table
@@ -182,8 +182,10 @@ export default {
         resetState() {
             this.page = 1
             this.busy = true
+            if (Object.is(this.noData, false)) {
+                this.$refs.scrollContainer.scrollTop = 0
+            }
             this.noData = false
-            this.$refs.scrollContainer.scrollTop = 0
             this.dataStore = []
         },
     },

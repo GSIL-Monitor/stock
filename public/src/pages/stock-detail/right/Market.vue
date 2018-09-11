@@ -105,6 +105,7 @@
             </MarketInfo>
         </div>
         <Tabs
+            :activeKey="activeKey"
             average
             ref="marketDetailTabs"
             @on-click="tabClicked"
@@ -112,31 +113,26 @@
             <TabPane
                 label="成分股"
                 :type="constituent"
-                :active="activeKey === constituent"
             >
                 <ConstituentStock
                     :plate_code="full_code"
-                    :current_type="current_type"
                 />
             </TabPane>
             <TabPane
                 label="涨跌分布"
                 :type="rangeScope"
-                :active="activeKey === rangeScope"
             >
                 <ChangeRange/>
             </TabPane>
             <TabPane
                 label="其他指数"
                 :type="otherIndex"
-                :active="activeKey === otherIndex"
             >
                 <div>3</div>
             </TabPane>
             <TabPane
                 label="短线精灵"
                 :type="shortLine"
-                :active="activeKey === shortLine"
             >
                 <ShortElves/>
             </TabPane>
@@ -147,12 +143,24 @@
 <script>
 import {
     mapState,
+    mapActions,
+    mapMutations,
 } from 'vuex'
 import DefaultBtn from './DefaultBtn'
 import TitleTopMarket from './TitleTopMarket'
+// import {
+//     getIndexData,
+// } from '@service/index'
 import {
-    getIndexData,
-} from '@service/index'
+    SOCKET_HSINDEX_MARKET,
+    SESSION_INDEX_FUNC_TAB,
+} from '../storage'
+import {
+    GET_HS_INDEX_MARKET_DATA,
+} from '@store/stock-detail-store/config/action-types'
+// import {
+//     HSINDEX_CATEGORY,
+// } from '@store/stock-detail-store/config/mutation-types'
 
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'
@@ -174,11 +182,8 @@ import MarketInfo from './MarketInfo'
 
 import ConstituentStock from './ConstituentStock'
 import ChangeRange from './ChangeRange'
+import OtherIndex from './OtherIndex'
 import ShortElves from './ShortElves'
-import {
-    SOCKET_HKINDEX_MARKET,
-    SESSION_INDEX_FUNC_TAB,
-} from '../storage'
 
 export default {
     name: 'MarketTemp',
@@ -188,7 +193,7 @@ export default {
     ],
     created() {
         this.initState()
-        this.$eventBus.$on(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
+        this.$eventBus.$on(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
@@ -199,6 +204,7 @@ export default {
             otherIndex: 'otherIndex',
             shortLine: 'shortLine',
             activeKey: null,
+            category_type: null,
 
             linkIndex: 0,
             socketData: {},
@@ -237,10 +243,11 @@ export default {
         Flat,
         Rose,
         Fall,
-        ChangeRange,
-        ConstituentStock,
         Tabs,
         TabPane,
+        ConstituentStock,
+        ChangeRange,
+        OtherIndex,
         ShortElves,
     },
     computed: {
@@ -257,10 +264,22 @@ export default {
             return Object.is(this.source, 'BK')
         },
         linkAddress() {
-            return `request_name:push/hq/list_info|first_push:true|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKINDEX_MARKET}`
+            return `request_name:push/hq/list_info|first_push:true|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HSINDEX_MARKET}`
+        },
+        isConstituentActive() {
+            return Object.is(this.activeKey, this.constituent)
+        },
+        isAwaitCase() {
+            return this.isConstituentActive
         },
     },
     methods: {
+        // ...mapMutations([
+        //     HSINDEX_CATEGORY,
+        // ]),
+        ...mapActions({
+            getIndexData: GET_HS_INDEX_MARKET_DATA,
+        }),
         resizeWindow() {
             let $panes = this.$refs.marketDetailTabs.$refs.panes
             let top = $panes.getBoundingClientRect().top
@@ -282,6 +301,7 @@ export default {
                     fullcode: this.full_code
                 },
                 callback0: data => {
+                    // this[HSINDEX_CATEGORY](data.category)
                     this.stock_name = data.name
                     this.symbol_type = data.symbol_type
 
@@ -308,7 +328,7 @@ export default {
                 },
             }
 
-            getIndexData(params)
+            this.getIndexData(params)
         },
         receiveSocketData(...args) {
             let data = args[0][0]
@@ -341,7 +361,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
+        this.$eventBus.$off(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
     },
     watch: {
         full_code() {

@@ -19,7 +19,7 @@
             v-infinite-scroll="loadMoreData"
             infinite-scroll-disabled="busy"
             infinite-scroll-distance="60"
-            infinite-scroll-throttle-delay="80"
+            infinite-scroll-throttle-delay="100"
             @dblclick="dblclickLi"
             v-show="transation.length"
             ref="scrollContainer"
@@ -149,7 +149,7 @@ export default {
                     } else {
                         // 待 dom 状态更新之后，设回可加载
                         this.$nextTick(() => {
-                            this.busy = false;
+                            this.busy = false
                         })
                     }
                 },
@@ -177,9 +177,11 @@ export default {
         resetComponent() {
             this.update_time = null
             this.busy = true
-            this.noData = false
             this.latestTime = 0
-            this.$refs.scrollContainer.scrollTop = 0
+            if (Object.is(this.noData, false)) {
+                this.$refs.scrollContainer.scrollTop = 0
+            }
+            this.noData = false
             this.transation = []
         },
         pushData(data) {

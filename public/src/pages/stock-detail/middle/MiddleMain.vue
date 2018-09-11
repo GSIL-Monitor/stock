@@ -5,7 +5,7 @@
     <div
         class="stock_chart"
     >
-        <!-- <KLine/> -->
+        <KLine/>
     </div>
     <div
         class="stock_info"
@@ -83,7 +83,7 @@ export default {
         ]),
         changeInfoState(state) {
             this[INFO_STATE](state)
-            this.$eventBus.$emit('klineStateChange', 'bottom', state)
+            this.$eventBus.$emit('setKlineStyle', 'bottom', state)
             setInfoState(state)
         },
     },

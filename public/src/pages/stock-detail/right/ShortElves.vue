@@ -29,7 +29,7 @@
         v-infinite-scroll="loadMoreData"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
-        infinite-scroll-throttle-delay="80"
+        infinite-scroll-throttle-delay="100"
         @dblclick="dblclickLi"
         v-show="line_data.length"
         ref="scrollContainer"
@@ -187,8 +187,10 @@ export default {
         resetComponent() {
             this.busy = true
             this.end_date = null
+            if (Object.is(this.noData, false)) {
+                this.$refs.scrollContainer.scrollTop = 0
+            }
             this.noData = false
-            this.$refs.scrollContainer.scrollTop = 0
             this.line_data = []
         },
         watchOnly() {

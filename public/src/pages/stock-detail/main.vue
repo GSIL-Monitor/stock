@@ -29,6 +29,7 @@ import {
 import {
     getUrlParam,
     getCookie,
+    changeUrlParam,
 } from '@c/utils/util'
 import stockVerifyMixin from './mixins/stock-verify-mixin'
 import {
@@ -39,15 +40,18 @@ import {
     LEFT_STATE,
     RIGHT_STATE,
     INFO_STATE,
+    KLINE_JUMP_PARAM,
 } from '@store/stock-detail-store/config/mutation-types'
 import {
     LOCAL_LATEST_CODE,
     LOCAL_IS_LEFT_SHOW,
     LOCAL_IS_RIGHT_SHOW,
     LOCAL_IS_INFO_FULL,
+    LOCAL_LEFT_TAB,
     EVENT_CHANGE_LEFT_RIGHT,
     EVENT_CHANGES_CODE,
     EVENT_KEY_BOARD,
+    SESSION_ASTOCK_FUNC_TAB,
 } from './storage'
 
 // vue template --------------------------------------
@@ -129,6 +133,7 @@ export default {
             LEFT_STATE,
             RIGHT_STATE,
             INFO_STATE,
+            KLINE_JUMP_PARAM,
         ]),
         init() {
             let hash = location.hash.substr(1)
@@ -140,7 +145,49 @@ export default {
                 window.location.hash = `#${stock_code}`
             }
         },
+        initUrlState() {
+            this.initUrlKlineJump()
+            this.initUrlPositionModule()
+        },
+        initUrlKlineJump() {
+            const URL_KLINE_JUMP_PARAMS = 'jump'
+            let klineJump = getUrlParam(URL_KLINE_JUMP_PARAMS)
+            if (klineJump) {
+                this.setJumpStoreState(klineJump)
+                changeUrlParam(URL_KLINE_JUMP_PARAMS, '')
+            }
+        },
+        initUrlPositionModule() {
+            const URL_POSITION_MODULE = 'positionModule'
+            let position = getUrlParam(URL_POSITION_MODULE)
+            if (position) {
+                this.setPositionModule(position.positionModule)
+                changeUrlParam(URL_POSITION_MODULE, '')
+            }
+        },
+        // setKlineJumpState() {
+
+        // },
+        setPositionModule(data) {
+            if (Object.is(data, 'tags')) {
+                // 若左侧为收起状态，则设置为展开状态
+                if (Object.is(this.leftState, false)) {
+                    let state = true
+                    this.setLeftState(state)
+                }
+                // 左侧选中设置为推荐标签
+                localStorage.setItem(LOCAL_LEFT_TAB, 'tags')
+            }
+        },
+        setJumpStoreState(jump) {
+            this[KLINE_JUMP_PARAM](jump)
+            // 若为资金流向，A股右下方定位到资金流向
+            if (Object.is(jump, 'flow')) {
+                sessionStorage.setItem(SESSION_ASTOCK_FUNC_TAB, 'fund_flow')
+            }
+        },
         initState() {
+            this.initUrlState()
             this[LEFT_STATE](this.initLeftState())
             this[RIGHT_STATE](this.initRightState())
             this[INFO_STATE](this.initInforState())
@@ -189,11 +236,11 @@ export default {
             if (data.left) {
                 let state = Object.is(data.left, 'true')
                 this.setLeftState(state)
-                this.$eventBus.$emit('klineStateChange', 'left', state)
+                this.$eventBus.$emit('setKlineStyle', 'left', state)
             } else if (data.right) {
                 let state = Object.is(data.right, 'true')
                 this.setRightState(state)
-                this.$eventBus.$emit('klineStateChange', 'right', state)
+                this.$eventBus.$emit('setKlineStyle', 'right', state)
             } else if (data.fullScreen) {
                 let nextState = data.fullScreen
                 if (Object.is(nextState, 'true')) {
@@ -301,11 +348,27 @@ export default {
             this[FULL_CODE](info.full_code)
             localStorage.setItem(LOCAL_LATEST_CODE, hash)
         },
-        changeScode(data) {
-            var d = JSON.parse(data)
+        changeScode(d) {
+            var data = JSON.parse(d)
+            if (data.jump) {
+                this.setJumpStoreState(data.jump)
+                if (Object.is(location.hash.substr(1), data.stock_code)) {
+                    // 与之前相同的股票，设置 K 线图状态，不同的股票则等到full_code改变时设置
+                    this.$eventBus.$emit('setKlineTabs')
+                }
+            }
+            if (data.stock_code) {
+                location.hash = data.stock_code
+            }
+            if (data.codeList) {
+                // TODO:设置K线图滚轮列表，与快捷键一起开发
 
-            if (d.stock_code) {
-                location.hash = d.stock_code
+            }
+            if (data.positionModule) {
+                this.setPositionModule(data.positionModule)
+                if (Object.is(data.positionModule, 'tags') ) {
+                    this.$eventBus.$emit('changeSelectKey', 'tags')
+                }
             }
         },
         getNewLink(client_id) {

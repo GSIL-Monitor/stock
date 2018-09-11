@@ -19,13 +19,15 @@ import * as TYPE from '@formatter/config/stock-type-config'
 export default {
     name: 'KLine',
     created() {
-        this.$eventBus.$on('klineStateChange', this.changeKlineState)
+        this.$eventBus.$on('setKlineTabs', this.setKlineTabs)
+        this.$eventBus.$on('setKlineStyle', this.changeKlineState)
     },
     mounted() {
         this.initKLine()
         this.isShowLeft(this.leftState)
         this.isShowRight(this.rightState)
         this.isShowBottom(this.klineBottomState)
+
         if (this.full_code) {
             this.setKlineCode()
         }
@@ -38,6 +40,7 @@ export default {
             'leftState',
             'rightState',
             'infoState',
+            'klineJumpState',
         ]),
         ...mapGetters([
             'isAStock',
@@ -88,7 +91,7 @@ export default {
             const KLINE_BOTTOM = 'bottom'
             this.setKlineState(KLINE_BOTTOM, state)
         },
-        lineParams(jump) {
+        lineParams() {
             // TODO: 跳转指标设置
             let curIndex,
                 indicator;
@@ -96,15 +99,17 @@ export default {
                 const TURN_NINE = 'turnNine' // 九转指标
                 const SHORT_TRADER = 'shortTrader' // 多空操盘
                 const FLOW = 'flow' // 资金流向
-                if (Object.is(jump, TURN_NINE)) {
-                    curIndex = ''
-                    indicator = 'NINE_TURN'
-                } else if (Object.is(jump, SHORT_TRADER)) {
-                    curIndex = ''
-                    indicator = 'BBTRADING'
-                } else if (Object.is(jump, FLOW)) {
-                    curIndex = 'ONE_DAY_MINUTE'
-                    indicator = 'MAIN_FUND'
+                if (this.klineJumpState) {
+                    if (Object.is(this.klineJumpState, TURN_NINE)) {
+                        curIndex = ''
+                        indicator = 'NINE_TURN'
+                    } else if (Object.is(this.klineJumpState, SHORT_TRADER)) {
+                        curIndex = ''
+                        indicator = 'BBTRADING'
+                    } else if (Object.is(this.klineJumpState, FLOW)) {
+                        curIndex = 'ONE_DAY_MINUTE'
+                        indicator = 'MAIN_FUND'
+                    }
                 } else {
                     curIndex = ''
                     indicator = ''
@@ -186,9 +191,13 @@ export default {
         changeKlineState(direction, status) {
             this.setKlineState(direction, status)
         },
+        setKlineTabs() {
+            this.setKlineCode()
+        },
     },
     beforeDestroy() {
-        this.$eventBus.$off('klineStateChange', this.changeKlineState)
+        this.$eventBus.$off('setKlineTabs', this.setKlineTabs)
+        this.$eventBus.$off('setKlineStyle', this.changeKlineState)
     },
     watch: {
         full_code() {

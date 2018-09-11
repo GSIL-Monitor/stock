@@ -73,6 +73,8 @@ export const FRAME_MYSTOCK_LIST = `${MODULE_NAME}-get-mystock-list`
 export const SOCKET_A_MARKET = `${MODULE_NAME}-stockData-astock`
 // B股 -- 行情字段
 export const SOCKET_B_MARKET = `${MODULE_NAME}-stockData-bstock`
+// 沪深指数 -- 行情字段
+export const SOCKET_HSINDEX_MARKET = `${MODULE_NAME}-stockData-hsindex`
 // 基金 -- 行情字段
 export const SOCKET_FUND_MARKET = `${MODULE_NAME}-stockData-fund`
 // 债券 -- 行情字段
@@ -80,7 +82,7 @@ export const SOCKET_BOND_MARKET = `${MODULE_NAME}-stockData-bond`
 // 港股股票、基金、涡轮、债券、牛熊证 -- 行情字段
 export const SOCKET_HKSTOCK_MARKET = `${MODULE_NAME}-stockData-hkstock`
 // 港股指数 -- 行情字段
-export const SOCKET_HKINDEX_MARKET = `${MODULE_NAME}-stockData-hkstock`
+export const SOCKET_HKINDEX_MARKET = `${MODULE_NAME}-stockData-hkindex`
 // A股 -- 资金流向
 export const SOCKET_A_FLOW = `${MODULE_NAME}-stock-money`
 // A股 / 指数 -- 短线精灵

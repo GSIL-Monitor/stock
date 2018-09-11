@@ -11,6 +11,8 @@ const state = {
     leftState: true,  // 左侧栏展开收起状态
     rightState: true, // 右侧栏展开收起状态
     infoState: false,
+    // hsIndexCategory: null,
+    klineJumpState: null,
     tag_data: {
         zyyx_score: null, // 确定性评分
         tags: null, //公司荣誉

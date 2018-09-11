@@ -3,19 +3,40 @@
         <div class="constituent_title">
             <span>成分股</span>
         </div>
-        <sunTable
-            :data="tableData"
-            v-if="tableData.length"
+        <!-- <sunTable
+            :data="dataStore"
             style="width: 100%;"
             @needMoreData="loadMore"
-            @cell-dblclick="dblclick"
-            ref="sunTableRef"
+            @cell-dblclick="dblClick"
+            @sort-change="sortChange"
+            :default-sort="{
+                prop: 'price_change_rate',
+                order: 'descending',
+            }"
+            :isInfiniteScrollDisabled="disableInfiniteScroll"
             class="constituent_table"
+            ref="sunTableRef"
+        > -->
+         <sunTable
+            v-if="dataStore.length"
+            :data="dataStore"
+            style="width: 100%;"
+            @needMoreData="loadMore"
+            @cell-dblclick="dblClick"
+            @sort-change="sortChange"
+            :isInfiniteScrollDisabled="disableInfiniteScroll"
+            class="constituent_table"
+            ref="sunTableRef"
         >
+            <template slot="empty">
+                <div class="loading"></div>
+            </template>
             <sunTableColumn
                 prop="name"
                 label="名称"
                 width="100"
+                sortable="custom"
+                :sort-orders="['descending', 'ascending']"
             >
                 <template scope="scope">
                     <StockName
@@ -28,6 +49,8 @@
                 prop="mcap"
                 label="总市值"
                 width="100"
+                sortable="custom"
+                :sort-orders="['descending', 'ascending']"
             >
                 <template scope="scope">
                     <MarketValue
@@ -39,6 +62,8 @@
                 prop="price_change_rate"
                 label="涨跌幅"
                 width="100"
+                sortable="custom"
+                :sort-orders="['descending', 'ascending']"
             >
                 <template scope="scope">
                     <PriceChangeRate
@@ -49,89 +74,145 @@
                 </template>
             </sunTableColumn>
         </sunTable>
+        <div
+            v-if="noData"
+            class="extend_nodata"
+        >
+            暂无成分股
+        </div>
     </div>
 </template>
 <script>
-import StockName from '@formatter/market-base/StockName.vue'
-import MarketValue from '@formatter/market-base/MarketValue.vue'
-import PriceChangeRate from '@formatter/market-base/PriceChangeRate.vue'
+import {
+    mapState,
+    mapActions,
+} from 'vuex'
+import {
+    GET_HS_INDEX_CONSTITUENT_LIST,
+} from '@store/stock-detail-store/config/action-types'
 
 import {
     sunTable,
     sunTableColumn
 } from '@c/table'
-import { getIndexStocks } from '@service/index'
+import StockName from '@formatter/market-base/StockName'
+import MarketValue from '@formatter/market-base/MarketValue'
+import PriceChangeRate from '@formatter/market-base/PriceChangeRate'
 
 export default {
     name: 'ConstituentStock',
-    mounted() {
-        window.addEventListener('resize', this.resizeTable)
-        if (this.plate_code) {
-            this.getTableData()
+    created() {
+        if (this.full_code) {
+            this.fetchData()
         }
-    },
-    updated() {
-        this.resizeTable()
     },
     data() {
         return {
-            sort_fields: 'price_change_rate',
-            order_type: -1,
+            sortFields: 'price_change_rate',
+            orderType: -1,
             page: 1,
-            tableData: [],
+            busy: true,
+            dataStore: [],
+            noData: false,
+            ROWS: 30,
         }
     },
-    props: {
-        plate_code: {
-            type: String
+    computed: {
+        ...mapState([
+            'current_type',
+            'full_code',
+            'source',
+        ]),
+        paramType() {
+            return Object.is(this.source, 'BK') ? 3 : 9
         },
-        current_type: {
-            default: null,
-        }
+        disableInfiniteScroll() {
+            return this.busy
+        },
     },
     methods: {
-        getTableData(number) {
-            const fields = ['source', 'symbol_type', 'name', 'mcap', 'price_change', 'price_change_rate', 'code']
+        ...mapActions({
+            getIndexStocks: GET_HS_INDEX_CONSTITUENT_LIST,
+        }),
+        fetchData() {
+            const fields = [
+                'source', 'symbol_type', 'name', 'code',
+                'price_change', 'price_change_rate', 'mcap',
+            ]
             const param = {
                 options: {
-                    rows: 30,
-                    type: 9,
-                    order: 'price_change_rate',
-                    order_type: -1,
+                    rows: this.ROWS,
                     first_flag: 0,
-                    plate_code: 'sh000001',
+                    type: this.paramType,
+                    order: this.sortFields,
+                    order_type: this.orderType,
+                    plate_code: this.full_code,
                     fields: fields.join(';'),
-                    page: 1,
+                    page: this.page,
                 },
                 callback0: data => {
                     data.forEach((n) => {
                         n.mcap = n.mcap ? n.mcap * 10000 : n.mcap
                     })
-                    this.tableData = this.tableData.concat(data)
-                }
+                    this.dataStore = this.dataStore.concat(data)
+
+                    if (data.length < this.ROWS) {
+                        this.busy = true
+                    } else {
+                        // 待 dom 状态更新之后，设回可加载
+                        this.$nextTick(() => {
+                            this.busy = false
+                        })
+                    }
+                },
+                callback1001: () => {
+                    this.busy = true
+                    // 无数据提示
+                    if (Object.is(this.page, 1)) {
+                        this.noData = true
+                    }
+                },
             }
 
-            getIndexStocks(param)
+            this.getIndexStocks(param)
         },
         loadMore() {
-            console.log(1)
+            this.busy = true
+            this.page++
+            // 加载数据
+            this.fetchData()
         },
-        dblclick(args) {
+        dblClick(args) {
             console.log(args)
             console.log('dblclick')
         },
-        resizeTable() {
-            this.$eventBus.$emit('resizeChange', this.$refs.sunTableRef.$refs.bodyWrapper)
+        sortChange(args) {
+            let { order, prop } = args
+            if (this.dataStore.length !== 0) {
+                this.resetState()
+            }
+            this.sortFields = prop
+            this.orderType = Object.is('ascending', order) ? 1 : -1
+            this.fetchData()
+        },
+        resetState() {
+            this.page = 1
+            this.busy = true
+            if (Object.is(this.noData, false)) {
+                this.$refs.sunTableRef.$refs.bodyWrapper.scrollTop = 0
+            }
+            this.noData = false
+            this.dataStore = []
         },
     },
-
     watch: {
-        plate_code() {
-            this.getTableData(1)
-        }
+        full_code() {
+            this.resetState()
+            this.fetchData()
+        },
     },
     beforeDestroy() {
-        window.removeEventListener('resize', this.resizeTable)
+
     },
     components: {
         sunTable,

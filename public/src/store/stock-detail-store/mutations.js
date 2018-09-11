@@ -11,6 +11,8 @@ import {
     LEFT_STATE,
     RIGHT_STATE,
     INFO_STATE,
+    // HSINDEX_CATEGORY,
+    KLINE_JUMP_PARAM,
 } from './config/mutation-types'
 
 export default {
@@ -47,4 +49,10 @@ export default {
     [INFO_STATE](state, payLoad) {
         state.infoState = payLoad
     },
+    [KLINE_JUMP_PARAM](state, payLoad) {
+        state.klineJumpState = payLoad
+    },
+    // [HSINDEX_CATEGORY](state, payLoad) {
+    //     state.hsIndexCategory = payLoad
+    // },
 }

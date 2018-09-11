@@ -20,30 +20,6 @@ import {
     GET_SELECT_GROUP_DATA,
 } from '@store/stock-detail-store/config/action-types'
 
-const APIFilterFields = [
-    'change_rate',
-    'change_value',
-    'full_code',
-    'price',
-    'source',
-    'stock_code',
-    'stock_name',
-    'stock_type',
-    'symbol_type',
-]
-
-const subFilterFields = [
-    'price_change',
-    'price_change_rate',
-    'full_code',
-    'price',
-    'source',
-    'code',
-    'stock_name',
-    'stock_type',
-    'symbol_type',
-]
-
 let listTimeoutTimer = null
 
 export default {
@@ -99,6 +75,11 @@ export default {
             this.subScriptionList(codeList)
         },
         subScriptionList(codeList) {
+            const subFilterFields = [
+                'full_code', 'source', 'code', 'stock_name', 'symbol_type',
+                'stock_type', 'price_change', 'price_change_rate', 'price',
+            ]
+
             pushData(FRAME_MY_STOCK, {
                 code: codeList.join(';'),
                 field: subFilterFields.join(';'),
@@ -164,7 +145,12 @@ export default {
             })
         },
         fetchSelectGroupData() {
-            var param = {
+            const APIFilterFields = [
+                'source', 'stock_code', 'stock_name', 'symbol_type', 'stock_type',
+                'full_code', 'price', 'change_rate', 'change_value',
+            ]
+
+            const param = {
                 options: {
                     group_id: this.paramGroupId,
                     fields: APIFilterFields.join(';')
@@ -184,16 +170,10 @@ export default {
                     })
 
                     this.commitSelectData(selectData)
-                    // this[SELECT_GROUP_DATA]()
                 },
                 callback1001: () => {
                     this[SELECT_GROUP_DATA]([])
-                    // this.$emit('active_id', null)
-                    // this.subFullCode = []
                 },
-                // afterResponse: () => {
-
-                // }
             }
 
             this.getSelectGroupData(param)

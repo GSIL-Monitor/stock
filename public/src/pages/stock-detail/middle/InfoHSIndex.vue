@@ -1,5 +1,6 @@
 <template>
 <Tabs
+    :activeKey="activeKey"
     active-style="underline"
     @on-click="tabClicked"
 >
@@ -11,14 +12,12 @@
     <TabPane
         label="新闻"
         :type="news"
-        :active="activeKey === news"
     >
         <News/>
     </TabPane>
     <TabPane
         label="公告"
         :type="notice"
-        :active="activeKey === notice"
     >
         <Notice/>
     </TabPane>
@@ -29,6 +28,8 @@
 </template>
 
 <script>
+import informationMixin from '../mixins/information-mixin'
+
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
 import LoadMore from '../components/LoadMore'
@@ -38,6 +39,9 @@ import Notice from './Notice'
 
 export default {
     name: 'InfoHSIndexTemp',
+    mixins: [
+        informationMixin,
+    ],
     data() {
         return {
             activeKey: 'news',
@@ -53,23 +57,5 @@ export default {
         News,
         Notice,
     },
-    methods: {
-        tabClicked() {
-
-        },
-        changeContainerState(state) {
-            this.$eventBus.$emit('changeInfoState', state)
-        },
-    },
-    props: {
-        titleState: {
-            type: Boolean,
-            default: false,
-        },
-    },
 }
 </script>
-
-<style lang="less">
-
-</style>

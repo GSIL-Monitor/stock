@@ -1,7 +1,8 @@
 <template>
 <Tabs
-    active-style="underline"
+    :activeKey="activeKey"
     @on-click="tabClicked"
+    active-style="underline"
 >
     <XqdownToUp
         @on-click="changeContainerState"
@@ -11,49 +12,42 @@
     <TabPane
         label="新闻"
         :type="news"
-        :active="isNewsActive"
     >
         <News/>
     </TabPane>
     <TabPane
         label="公告"
         :type="notice"
-        :active="isNoticeActive"
     >
         <Notice/>
     </TabPane>
     <TabPane
         label="研报"
         :type="report"
-        :active="isReportActive"
     >
         <Report/>
     </TabPane>
     <TabPane
         label="投资问答"
         :type="question"
-        :active="activeKey === question"
     >
         <InvestQA/>
     </TabPane>
     <TabPane
         label="大事件"
         :type="bigevent"
-        :active="activeKey === bigevent"
     >
         <BigEvent/>
     </TabPane>
     <TabPane
         label="同业股票"
         :type="trade"
-        :active="activeKey === trade"
     >
 
     </TabPane>
     <TabPane
         label="关联品种"
         :type="related"
-        :active="isRelatedActive"
     >
 
     </TabPane>
@@ -66,6 +60,8 @@
 </template>
 
 <script>
+import informationMixin from '../mixins/information-mixin'
+
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
 import LoadMore from '../components/LoadMore'
@@ -78,6 +74,9 @@ import BigEvent from './BigEvent'
 
 export default {
     name: 'InfoStockA',
+    mixins: [
+        informationMixin,
+    ],
     data() {
         return {
             activeKey: 'news',
@@ -125,23 +124,5 @@ export default {
             return !this.isRelatedActive
         },
     },
-    methods: {
-        tabClicked(type) {
-            this.activeKey = type
-        },
-        changeContainerState(state) {
-            this.$eventBus.$emit('changeInfoState', state)
-        },
-    },
-    props: {
-        titleState: {
-            type: Boolean,
-            default: false,
-        },
-    },
 }
 </script>
-
-<style lang="less">
-
-</style>

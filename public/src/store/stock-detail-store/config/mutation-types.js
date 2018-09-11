@@ -20,3 +20,7 @@ export const LEFT_STATE = 'LEFT_STATE'
 export const RIGHT_STATE = 'RIGHT_STATE'
 // 底部资讯栏状态
 export const INFO_STATE = 'INFO_STATE'
+// 沪深指数 category 字段
+export const HSINDEX_CATEGORY = 'HSINDEX_CATEGORY'
+// K线参数
+export const KLINE_JUMP_PARAM = 'KLINE_JUMP_PARAM'

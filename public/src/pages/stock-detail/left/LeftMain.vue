@@ -4,28 +4,26 @@
         v-show="leftState"
     >
         <Tabs
+            :activeKey="activeKey"
+            @on-click="tabClicked"
             activeStyle="underline"
             ref="leftTabs"
-            @on-click="tabClicked"
         >
             <TabPane
                 label="推荐标签"
                 :type="recommendTags"
-                :active="activeKey === recommendTags"
             >
                 <StockTag/>
             </TabPane>
             <TabPane
                 label="自选股"
                 :type="mystock"
-                :active="activeKey === mystock"
             >
                 <MyStockList/>
             </TabPane>
             <TabPane
                 label="最近访问"
                 :type="recentVisited"
-                :active="activeKey === recentVisited"
             >
                 <RecentVisit/>
             </TabPane>
@@ -41,6 +39,9 @@ import {
 import {
     LOCAL_LEFT_TAB,
 } from '../storage'
+import {
+    ASTOCK,
+} from '@formatter/config/stock-type-config'
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
 import StockTag from './StockTag'
@@ -52,6 +53,7 @@ export default {
     created() {
         this.initState()
 
+        this.$eventBus.$on('changeSelectKey', this.changeSelectKey)
         window.addEventListener('resize', this.resizeWindow)
     },
     mounted() {
@@ -59,7 +61,7 @@ export default {
     },
     data() {
         return {
-            recommendTags: 'tag',
+            recommendTags: 'tags',
             mystock: 'stock',
             recentVisited: 'recent',
             activeKey: 'stock',
@@ -111,17 +113,21 @@ export default {
 
             $panes.style.height = residue + 'px'
         },
-    },
-    // beforeDestroy() {
-
-    // },
-    watch: {
-        current_type(value, oldValue) {
-
+        changeSelectKey(key) {
+            // 只记录，不设置本地存储
+            this.activeKey = key
         },
     },
-    destroyed() {
+    beforeDestroy() {
+        this.$eventBus.$off('changeSelectKey', this.changeSelectKey)
         window.removeEventListener('resize', this.resizeWindow)
+    },
+    watch: {
+        current_type(value, oldValue) {
+            if (Object.is(ASTOCK, oldValue) && Object.is(this.recommendTags, this.activeKey)) {
+                this.activeKey = this.mystock
+            }
+        },
     },
 }
 </script>

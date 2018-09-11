@@ -5,10 +5,11 @@
     <div
         class="info_vessel"
         v-show="dataStore.length"
-        v-infinite-scroll="loadMoreData"
+        v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
-        infinite-scroll-throttle-delay="80"
+        :infinite-scroll-immediate-check="false"
+        infinite-scroll-throttle-delay="100"
         ref="scrollContainer"
     >
         <table
@@ -155,7 +156,7 @@ export default {
             }
             api(params)
         },
-        loadMoreData() {
+        loadMore() {
             // 滚动加载
             this.busy = true
             this.page++
@@ -180,8 +181,10 @@ export default {
         resetState() {
             this.page = 1
             this.busy = true
+            if (Object.is(this.noData, false)) {
+                this.$refs.scrollContainer.scrollTop = 0
+            }
             this.noData = false
-            this.$refs.scrollContainer.scrollTop = 0
             this.dataStore = []
         },
     },

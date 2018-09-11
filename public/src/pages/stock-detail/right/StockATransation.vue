@@ -32,7 +32,7 @@
             v-infinite-scroll="loadMoreData"
             infinite-scroll-disabled="busy"
             infinite-scroll-distance="60"
-            infinite-scroll-throttle-delay="80"
+            infinite-scroll-throttle-delay="100"
             @dblclick="dblclickLi"
             v-show="transation.length"
             ref="scrollContainer"
@@ -231,12 +231,14 @@ export default {
         resetComponent() {
             this.update_time = null
             this.busy = true
-            this.noData = false
             this.latestTime = 0
             this.filterType = 1
             this.min = null
             this.max = null
-            this.$refs.scrollContainer.scrollTop = 0
+            if (Object.is(this.noData, false)) {
+                this.$refs.scrollContainer.scrollTop = 0
+            }
+            this.noData = false
             this.transation = []
         },
         filerPushData(volume) {

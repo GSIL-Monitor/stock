@@ -31,10 +31,13 @@
     export default {
         name: 'Tabs',
         mounted() {
-            this.initActive()
+            // this.initActive()
             this.updateNav()
         },
         props: {
+            activeKey: {
+                default: 0,
+            },
             activeStyle: {
                 type: String,
                 default: 'normal',
@@ -51,7 +54,7 @@
             return {
                 prefixCls,
                 navList: [],
-                activeKey: null,
+                // activeKey: null,
             }
         },
         computed: {
@@ -83,13 +86,13 @@
             getTabIndex(paneType){
                 return this.navList.findIndex(nav => nav.paneType === paneType);
             },
-            initActive() {
-                this.getTabs().forEach((pane, index) => {
-                    if (pane.active) {
-                        this.activeKey = pane.paneType || index
-                    }
-                })
-            },
+            // initActive() {
+            //     this.getTabs().forEach((pane, index) => {
+            //         if (pane.active) {
+            //             this.activeKey = pane.paneType || index
+            //         }
+            //     })
+            // },
             updateNav() {
                 this.navList = []
                 this.getTabs().forEach((pane, index) => {
@@ -99,33 +102,33 @@
                     })
 
                     if (Object.is(pane.paneType, void 0)) {
-                        pane.paneType = index;
+                        pane.paneType = index
                     }
-                    if (index === 0) {
-                        if (!this.activeKey) this.activeKey = pane.paneType || index;
-                    }
+                    // if (index === 0) {
+                    //     if (!this.activeKey) this.activeKey = pane.paneType || index
+                    // }
                 })
-                this.updateStatus();
+                this.updateStatus()
             },
             updateStatus() {
                 const tabs = this.getTabs();
-                tabs.forEach(tab =>
-                    {
-                        tab.show = (tab.paneType === this.activeKey)
-                    });
+                tabs.forEach(tab => {
+                    tab.show = Object.is(tab.paneType, this.activeKey)
+                })
             },
             handleChange(index) {
-                const nav = this.navList[index];
+                const nav = this.navList[index]
                 if (Object.is(this.activeKey, nav.paneType)) return
-                this.activeKey = nav.paneType
+                // this.activeKey = nav.paneType
                 this.$emit('on-click', nav.paneType)
             },
             tabCls(item) {
+                let isActive = Object.is(item.paneType, this.activeKey)
                 return [
                     `${prefixCls}_tab`,
                     {
-                        [`${prefixCls}_tab_active`]: item.paneType === this.activeKey,
-                        [`${prefixCls}_tab_active_${this.activeStyle}`]: item.paneType === this.activeKey,
+                        [`${prefixCls}_tab_active`]: isActive,
+                        [`${prefixCls}_tab_active_${this.activeStyle}`]: isActive,
                     },
                 ]
             },

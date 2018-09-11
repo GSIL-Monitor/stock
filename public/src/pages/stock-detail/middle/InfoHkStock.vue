@@ -1,5 +1,6 @@
 <template>
 <Tabs
+    :activeKey="activeKey"
     active-style="underline"
     @on-click="tabClicked"
 >
@@ -11,20 +12,17 @@
     <TabPane
         label="新闻"
         :type="news"
-        :active="activeKey === news"
     >
         <News/>
     </TabPane>
     <TabPane
         label="同业股票"
         :type="trade"
-        :active="activeKey === trade"
     >
     </TabPane>
     <TabPane
         label="关联品种"
         :type="related"
-        :active="activeKey === related"
     >
     </TabPane>
     <LoadMore
@@ -34,6 +32,8 @@
 </template>
 
 <script>
+import informationMixin from '../mixins/information-mixin'
+
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
 import LoadMore from '../components/LoadMore'
@@ -42,6 +42,9 @@ import News from './News'
 
 export default {
     name: 'InfoHkStockTemp',
+    mixins: [
+        informationMixin,
+    ],
     data() {
         return {
             activeKey: 'news',
@@ -57,23 +60,5 @@ export default {
         XqdownToUp,
         News,
     },
-    methods: {
-        tabClicked() {
-
-        },
-        changeContainerState(state) {
-            this.$eventBus.$emit('changeInfoState', state)
-        },
-    },
-    props: {
-        titleState: {
-            type: Boolean,
-            default: false,
-        },
-    },
 }
 </script>
-
-<style lang="less">
-
-</style>
