@@ -50,25 +50,24 @@
 import {
     LOCAL_TAPE_SET_DFT,
     LOCAL_TAPE_SET_FUNC,
-} from '../storage.js'
+} from '../storage'
 import {
     TAPE_ROWS,
     TAPE_CONTENT,
     TAPE_STYLE,
     FUNC_PERFORMANCE,
-} from './tape-set-config.js'
+} from './tape-set-config'
 import {
     initTapeDefault,
     initTapeFunc,
-} from './tape-public-func.js'
-import TapeSectionItem from './TapeSectionItem.vue'
-import TapeFuncStyle from './TapeFuncStyle.vue'
-import DefaultBtn from '../right/DefaultBtn.vue'
+} from './tape-public-func'
+import TapeSectionItem from './TapeSectionItem'
+import TapeFuncStyle from './TapeFuncStyle'
+import DefaultBtn from '../right/DefaultBtn'
 
 export default {
-    name: 'tapeSet',
+    name: 'TapeSet',
     created() {
-        // TODO: 根据 localStorage 设置状态
         this.initState()
 
         this.$eventBus.$on('dataChanged', (o) => {

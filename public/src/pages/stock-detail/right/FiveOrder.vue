@@ -59,11 +59,10 @@ export default {
             return this.orderData.sell
         },
         calcRatio() {
-            // TODO: 切换三挡
-            let buy_all = this.orderData.buy.reduce((sum, next) => {
+            let buy_all = this.orderData.buy.slice(0, Number(this.row)).reduce((sum, next) => {
                 return sum + next.now_volume
             }, 0)
-            let sell_all = this.orderData.sell.reduce((sum, next) => {
+            let sell_all = this.orderData.sell.slice(0, Number(this.row)).reduce((sum, next) => {
                 return sum + next.now_volume
             }, 0)
             let sum = buy_all + sell_all

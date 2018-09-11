@@ -10,12 +10,14 @@ axios.defaults.timeout = 10000
 axios.defaults.headers = {
     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 }
+
 //去除 passed = true 重新登录
 const revertPassed = () => {
-    let userInfo = localStorage.getItem('zyztUser')
+    const STORAGE_USER = 'stock-user'
+    let userInfo = localStorage.getItem(STORAGE_USER)
     userInfo = userInfo ? JSON.parse(userInfo) : {}
     userInfo.passed = false
-    localStorage.setItem('zyztUser', JSON.stringify(userInfo))
+    localStorage.setItem(STORAGE_USER, JSON.stringify(userInfo))
 }
 
 let cancel, promiseArr = {}

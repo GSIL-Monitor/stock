@@ -16,16 +16,7 @@
 
 <script>
 export default {
-    name: 'tapeSectionItem',
-    // created() {
-    // },
-    // data() {
-    //     return {
-    //     }
-    // },
-    computed: {
-
-    },
+    name: 'TapeSectionItem',
     methods: {
         itemClick(type) {
             if (this.activeType === type) {
