@@ -71,6 +71,7 @@ export default {
         ...mapState([
             'current_type',
             'leftState',
+            'full_code',
         ]),
         ...mapGetters([
             'isAStock'
@@ -97,6 +98,7 @@ export default {
         },
         getStore() {
             let record = localStorage.getItem(LOCAL_LEFT_TAB)
+
             return record || this.mystock
         },
         setStore() {
@@ -124,7 +126,10 @@ export default {
     },
     watch: {
         current_type(value, oldValue) {
-            if (Object.is(ASTOCK, oldValue) && Object.is(this.recommendTags, this.activeKey)) {
+            if (
+                Object.is(ASTOCK, oldValue)
+                && Object.is(this.recommendTags, this.activeKey)
+            ) {
                 this.activeKey = this.mystock
             }
         },

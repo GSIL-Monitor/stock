@@ -25,6 +25,7 @@ import {
     mapState,
     mapGetters,
     mapMutations,
+    mapActions,
 } from 'vuex'
 import {
     getUrlParam,
@@ -42,6 +43,9 @@ import {
     INFO_STATE,
     KLINE_JUMP_PARAM,
 } from '@store/stock-detail-store/config/mutation-types'
+import {
+    ADD_TO_RECENT_LIST
+} from '@store/stock-detail-store/config/action-types'
 import {
     LOCAL_LATEST_CODE,
     LOCAL_IS_LEFT_SHOW,
@@ -109,6 +113,7 @@ export default {
             'leftState',
             'rightState',
             'infoState',
+            'full_code',
         ]),
         ...mapGetters([
             'isAStock',
@@ -135,6 +140,9 @@ export default {
             INFO_STATE,
             KLINE_JUMP_PARAM,
         ]),
+        ...mapActions([
+            ADD_TO_RECENT_LIST,
+        ]),
         init() {
             let hash = location.hash.substr(1)
             if (hash) {
@@ -144,6 +152,13 @@ export default {
                 // 第一次无 hash 改写 hash，触发 hashchange 事件
                 window.location.hash = `#${stock_code}`
             }
+
+            // 添加最近访问列表
+            this[ADD_TO_RECENT_LIST]({
+                options: {
+                    full_code: this.full_code,
+                }
+            })
         },
         initUrlState() {
             this.initUrlKlineJump()
@@ -370,6 +385,13 @@ export default {
                     this.$eventBus.$emit('changeSelectKey', 'tags')
                 }
             }
+
+            // 添加最近访问列表
+            this[ADD_TO_RECENT_LIST]({
+                options: {
+                    full_code: this.full_code,
+                }
+            })
         },
         getNewLink(client_id) {
             let index = goGoal.sockets.findIndex((element) => {

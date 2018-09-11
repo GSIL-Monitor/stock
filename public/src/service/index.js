@@ -112,6 +112,8 @@ export const getSelfConsensus = param => {
 */
 export const addMyRecent = param => {
     const APIName = 'v1/mystock/add_recent'
+    Reflect.set(param.options, 'token', getToken())
+
     return post(APIName, param)
 }
 

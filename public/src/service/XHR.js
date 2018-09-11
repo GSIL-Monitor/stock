@@ -1,7 +1,5 @@
 import axios from 'axios'
-import {
-    stringify,
-} from 'qs'
+import qs from 'qs'
 import {
     relogin,
 } from '@c/utils/callQt'
@@ -10,7 +8,7 @@ import {
 axios.defaults.baseURL = '/api/'
 axios.defaults.timeout = 10000
 axios.defaults.headers = {
-    'X-Requested-With': 'XMLHttpRequest'
+    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 }
 //去除 passed = true 重新登录
 const revertPassed = () => {
@@ -104,14 +102,26 @@ const dealResponseData = (data, param) => {
 const promise = (url = '', param, type = 'get') => {
     return new Promise((resolve, reject) => {
         let options = Reflect.get(param, 'options')
-        axios({
+
+        const axiosParams = {
             method: type,
-            url,
-            params: type === 'post' ? stringify(options) : options,
             cancelToken: new CancelToken(c => {
                 cancel = c
             })
-        })
+        }
+
+        if (Object.is(type, 'get')) {
+            Object.assign(axiosParams, {
+                url: `${url}?${qs.stringify(options)}`,
+            })
+        } else if (Object.is(type, 'post')) {
+            Object.assign(axiosParams, {
+                url,
+                data: qs.stringify(options),
+            })
+        }
+
+        axios(axiosParams)
         .then(response => {
             if (!response) return
             let data = Reflect.get(response, 'data')

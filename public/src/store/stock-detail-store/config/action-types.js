@@ -10,3 +10,5 @@ export const GET_RECENT_LIST_DATA = 'getRecentListData'
 export const GET_HS_INDEX_MARKET_DATA = 'getHSIndexMarketData'
 // 获取沪深指数成分股列表
 export const GET_HS_INDEX_CONSTITUENT_LIST = 'getHSIndexConstituentList'
+// 添加最进访问列表
+export const ADD_TO_RECENT_LIST = 'ADD_TO_RECENT_LIST'

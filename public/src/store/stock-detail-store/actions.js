@@ -5,6 +5,7 @@ import {
     getStockRecent,
     getIndexData,
     getIndexStocks,
+    addMyRecent,
 } from '@service/'
 import {
     GET_STOCK_TAG_DATA,
@@ -13,6 +14,7 @@ import {
     GET_RECENT_LIST_DATA,
     GET_HS_INDEX_MARKET_DATA,
     GET_HS_INDEX_CONSTITUENT_LIST,
+    ADD_TO_RECENT_LIST,
 } from './config/action-types'
 // import {
 //     HSINDEX_CATEGORY,
@@ -57,5 +59,8 @@ export default {
         //     param.options.type = 9
         // }
         await getIndexStocks(param)
+    },
+    [ADD_TO_RECENT_LIST](context, param) {
+        addMyRecent(param)
     },
 }
