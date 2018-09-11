@@ -145,6 +145,7 @@ export default {
         ]),
         init() {
             let hash = location.hash.substr(1)
+
             if (hash) {
                 this.changeCurrentStockState(hash)
             } else {
@@ -254,6 +255,9 @@ export default {
                 this.$eventBus.$emit('setKlineStyle', 'left', state)
             } else if (data.right) {
                 let state = Object.is(data.right, 'true')
+                if (Object.is(state, false) && this.tapeState) {
+                    this.changeTapeSetState()
+                }
                 this.setRightState(state)
                 this.$eventBus.$emit('setKlineStyle', 'right', state)
             } else if (data.fullScreen) {
@@ -268,6 +272,9 @@ export default {
                     }
                     if (this.infoState) {
                         this.setInfoState(state)
+                    }
+                    if (this.tapeState) {
+                        this.changeTapeSetState()
                     }
                 } else if (Object.is(nextState, 'false')) {
                     let state = true
