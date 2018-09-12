@@ -4,8 +4,16 @@
         <div class="detail_head">
             <div class="detail_head_title">
                 <div class="title_left">
-                    <span class="title_left_name">{{formatName}}</span>
-                    <span class="title_left_code">{{formatCode}}</span>
+                    <StockName
+                        :val="stock_name"
+                        :current_type="current_type"
+                        class="title_left_name"
+                    />
+                    <StockCode
+                        :val="stock_code"
+                        :source="source"
+                        class="title_left_code"
+                    />
                     <CompanyHonorBtn
                         :stock_code="stock_code"
                     />
@@ -47,17 +55,10 @@
                         @click="skipF10"
                     />
                 </div>
-                <div v-if="isNotEmpty" class="detail_head_btn_identify">
-                    <IdentifyIco
-                        v-for="(item, index) of identify_list"
-                        v-if="identify_ico[item]"
-                        :key="index"
-                        :className="listIcoConfig[item].class_name"
-                        :title="listIcoConfig[item].title"
-                        :type="listIcoConfig[item].type"
-                        :code="identify_ico[item]"
-                    />
-                </div>
+                <StockIdentify
+                    v-if="loadIdentify"
+                    :full_code="full_code"
+                />
             </div>
         </div>
         <!-- 买卖五档 -->
@@ -65,7 +66,7 @@
             class="detail_order"
             :orderData="orderData"
             :close_price="close_price"
-            :stockType="stockType"
+            :stockType="current_type"
             :row="row"
         />
         <!-- 字段详情 -->
@@ -255,34 +256,9 @@
 import {
     mapState,
 } from 'vuex'
-import CompanyHonorBtn from './CompanyHonorBtn'
-import BelongIndustry from './BelongIndustry'
-import TitleTopMarket from './TitleTopMarket'
-import DefaultBtn from './DefaultBtn'
-import IdentifyIco from './IdentifyIco'
-import FiveOrder from './FiveOrder'
-import ToggleBtn from './ToggleBtn'
-import TabSwitch from './TabSwitch'
-import SetIco from '../components/SetIco'
-
-// 底部 tab
-import StockTransaction from './StockATransation'
-import PricePoint from './PricePoint'
-import FundFlow from './FundFlow'
-import ShortElves from './ShortElves'
-import SimpleFinancial from './SimpleFinancial'
-
 import {
     getLimitStockData,
-    getStockIdentity,
 } from '@service/'
-import {
-    formatStockName,
-    formatShowCode,
-} from '@formatter/format-data'
-
-import listIcoConfig from './identify-config'
-import { ASTOCK } from '@formatter/config/stock-type-config'
 import {
     TAPE_ROWS,
     TAPE_CONTENT,
@@ -304,11 +280,29 @@ import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
+import CompanyHonorBtn from './CompanyHonorBtn'
+import BelongIndustry from './BelongIndustry'
+import TitleTopMarket from './TitleTopMarket'
+import DefaultBtn from './DefaultBtn'
+import IdentifyIco from './IdentifyIco'
+import FiveOrder from './FiveOrder'
+import ToggleBtn from './ToggleBtn'
+import TabSwitch from './TabSwitch'
+import SetIco from '../components/SetIco'
+import StockIdentify from './StockIdentify'
+// 底部 tab
+import StockTransaction from './StockATransation'
+import PricePoint from './PricePoint'
+import FundFlow from './FundFlow'
+import ShortElves from './ShortElves'
+import SimpleFinancial from './SimpleFinancial'
 // 盘口一致预期
 import ConsensusTable from './ConsensusTable'
 // 盘口内容
 import MarketInfo from './MarketInfo'
 // 盘口内容 -- 字段详情
+import StockCode from '@formatter/market-base/StockCode'
+import StockName from '@formatter/market-base/StockName'
 import Turnover from '@formatter/market-base/Turnover'
 import TurnoverRate from '@formatter/market-base/TurnoverRate'
 import Volume from '@formatter/market-base/Volume'
@@ -355,7 +349,7 @@ export default {
             price_change: null,
             price_change_rate: null,
             stock_type: null,
-            identify_ico: {},
+            loadIdentify: false,
             close_price: null,
 
             turnover: null,
@@ -376,8 +370,6 @@ export default {
             mark: false,
 
             showFilterPopUp: true,
-            identify_list: ['sh', 'sz', 'rzrq', 'sz_50', 'hs_300'],
-            listIcoConfig,
             bottomHideList: [],
             bottomTabConfig: {
                 activeType: 'transaction',
@@ -416,6 +408,7 @@ export default {
         ToggleBtn,
         TabSwitch,
         SetIco,
+        StockIdentify,
 
         SimpleFinancial,
         StockTransaction,
@@ -425,6 +418,9 @@ export default {
 
         ConsensusTable,
         MarketInfo,
+
+        StockCode,
+        StockName,
         Turnover,
         TurnoverRate,
         Volume,
@@ -457,9 +453,6 @@ export default {
         detailInfo() {
             return this[TAPE_CONTENT]
         },
-        stockType() {
-            return ASTOCK
-        },
         tabSwitchList() {
             let list = this.bottomTabConfig.list.filter((ele) => {
                 return !this.bottomHideList.some((n) => {
@@ -471,28 +464,6 @@ export default {
                 activeType: this.bottomTabConfig.activeType,
                 list,
             }
-        },
-        formatParam() {
-            return {
-                source: this.source,
-                symbol_type: this.symbol_type,
-                stock_type: this.stock_type,
-                close_price: this.close_price,
-            }
-        },
-        formatName() {
-            return formatStockName(this.stock_name, {
-                source: this.source,
-                symbol_type: this.symbol_type,
-            })
-        },
-        formatCode() {
-            return formatShowCode(this.stock_code, {
-                source: this.source,
-            })
-        },
-        isNotEmpty() {
-            return Object.keys(this.identify_ico).length !== 0
         },
         isTransationShow() {
             return Object.is(this.bottomTabConfig.activeType, 'transaction')
@@ -587,7 +558,7 @@ export default {
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
                     // TODO: 获取基础属性信息
-                    this.getStockIdentity()
+                    this.loadIdentify = true
                 },
             }
 
@@ -643,20 +614,6 @@ export default {
                 this.$refs.transactionComponent.pushData(one)
             }
        },
-        getStockIdentity() {
-            let param = {
-                options: {
-                    full_code: this.full_code,
-                },
-                callback0: data => {
-                    this.identify_ico = data
-                },
-                callback1001: () => {
-                    this.identify_ico = {}
-                },
-            }
-            getStockIdentity(param)
-        },
         initState() {
             initTapeDefault((key, val) => {
                 this[key] = val
@@ -733,6 +690,7 @@ export default {
     watch: {
         full_code() {
             if (this.$parent.isAStock) {
+                this.loadIdentify = false
                 this.cancleSocket(this.linkIndex)
                 this.socketData = {}
                 this.getInfoData()
@@ -789,37 +747,7 @@ export default {
         margin-left: 0;
     }
 }
-.detail_head_btn_identify {
-    font-size: 12px;
-    .identify_ico {
-        margin-left: 1px;
-        &:first-child {
-            margin-left: 0;
-        }
-    }
-    .general-ico {
-        background-color: #e03c43;
-        color: #fff;
-        &:after {
-            content: '通';
-        }
-    }
-    .melt-ico {
-        background-color: #efa440;
-        &:after {
-            content: '融';
-        }
-    }
-    .hsi-ico {
-        // background: url("../ico/hsi-ico.png") no-repeat;
-    }
-    .sz-50 {
-        // background: url("../ico/sz50-ico.png") no-repeat;
-    }
-    .hs-300 {
-        // background: url("../ico/hs300-ico.png") no-repeat;
-    }
-}
+
 .detail_info {
     display: flex;
     font-size: 13px;

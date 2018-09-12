@@ -42,6 +42,10 @@
                     @click="skipF10"
                 />
             </div>
+            <StockIdentify
+                v-if="loadSelfIdentify"
+                :full_code="full_code"
+            />
         </div>
         <HkTimeBox/>
     </div>
@@ -177,14 +181,13 @@
 <script>
 import {
     mapState,
+    mapGetters,
 } from 'vuex'
 import socketMixin from '../mixins/socket-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 import {
     getHkStockData,
 } from '@service/'
-import HkOrder from './HkOrder'
-
 import {
     SOCKET_HKSTOCK_MARKET,
 } from '../storage'
@@ -193,6 +196,8 @@ import HkTimeBox from './HkTimeBox'
 import DefaultBtn from './DefaultBtn'
 import TitleTopMarket from './TitleTopMarket'
 import MarketInfo from './MarketInfo'
+import StockIdentify from './StockIdentify'
+import HkOrder from './HkOrder'
 import StockTransaction from './Transaction'
 
 import StockName from '@formatter/market-base/StockName'
@@ -221,6 +226,8 @@ export default {
             symbol_type: null,
             stock_name: null,
 
+            loadIdentify: false,
+
             price: null,
             price_change: null,
             price_change_rate: null,
@@ -246,6 +253,7 @@ export default {
     components: {
         HkTimeBox,
         DefaultBtn,
+        StockIdentify,
         TitleTopMarket,
         MarketInfo,
         HkOrder,
@@ -266,8 +274,14 @@ export default {
             'full_code',
             'current_type',
         ]),
+        ...mapGetters([
+            'isHkStock'
+        ]),
         linkAddress() {
             return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
+        },
+        loadSelfIdentify() {
+            return this.loadIdentify && this.isHkStock
         },
         orderData() {
             return {
@@ -323,6 +337,7 @@ export default {
                 afterResponse: () => {
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
+                    this.loadIdentify = true
                 },
             }
 
