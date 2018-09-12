@@ -187,12 +187,16 @@ export default {
         // setKlineJumpState() {
 
         // },
-        setPositionModule(data) {
+        setPositionModule(data, sendState) {
             if (Object.is(data, 'tags')) {
                 // 若左侧为收起状态，则设置为展开状态
                 if (Object.is(this.leftState, false)) {
                     let state = true
                     this.setLeftState(state)
+                    // 行情图状态
+                    if (sendState) {
+                        this.$eventBus.$emit('setKlineStyle', 'left', state)
+                    }
                 }
                 // 左侧选中设置为推荐标签
                 localStorage.setItem(LOCAL_LEFT_TAB, 'tags')
@@ -390,7 +394,7 @@ export default {
 
             }
             if (data.positionModule) {
-                this.setPositionModule(data.positionModule)
+                this.setPositionModule(data.positionModule, true)
                 if (Object.is(data.positionModule, 'tags') ) {
                     this.$eventBus.$emit('changeSelectKey', 'tags')
                 }
@@ -451,6 +455,7 @@ export default {
         keyBoardSpace() {
             let state = !this.leftState
             this.setLeftState(state)
+            this.$eventBus.$emit('setKlineStyle', 'left', state)
         },
         keyBoardF10() {
 
