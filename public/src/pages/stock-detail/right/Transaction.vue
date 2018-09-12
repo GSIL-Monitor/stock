@@ -107,7 +107,7 @@ export default {
                    .getTime()
         },
         stockBParams() {
-            let o = {
+            const o = {
                 stock_code: this.stock_code
             }
             if (this.update_time) {
@@ -115,12 +115,11 @@ export default {
             }
             return o
         },
-
         getCurrentParams() {
             if (this.isBStock) {
-                return this.stockBParams
+                return this.stockBParams()
             } else {
-                let o = {
+                const o = {
                     fullcode: this.full_code
                 }
                 if (this.update_time) {

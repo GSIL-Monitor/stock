@@ -23,12 +23,10 @@ map.set('sz_50', {
     type: "sz50",
 })
 
-
 map.set('hs_300', {
     class_name: "hs-300",
     title: "沪深300成分股",
     type: "hs300",
 })
-
 
 export default map

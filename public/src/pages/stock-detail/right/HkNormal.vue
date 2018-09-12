@@ -275,7 +275,7 @@ export default {
             'current_type',
         ]),
         ...mapGetters([
-            'isHkStock'
+            'isHkStock',
         ]),
         linkAddress() {
             return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
@@ -391,6 +391,7 @@ export default {
     },
     watch: {
         full_code() {
+            this.loadIdentify = false
             this.cancleSocket(this.linkIndex)
             this.socketData = {}
             this.getInfoData()

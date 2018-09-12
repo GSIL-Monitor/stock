@@ -4,8 +4,16 @@
         <div class="detail_head">
             <div class="detail_head_title">
                 <div class="title_left">
-                    <span class="title_left_name">{{formatName}}</span>
-                    <span class="title_left_code">{{formatCode}}</span>
+                    <StockName
+                        :val="stock_name"
+                        :current_type="current_type"
+                        class="title_left_name"
+                    />
+                    <StockCode
+                        :val="stock_code"
+                        :source="source"
+                        class="title_left_code"
+                    />
                 </div>
                 <SetIco
                     class="title_right_set"
@@ -202,16 +210,12 @@
 import {
     mapState,
 } from 'vuex'
-
-import SetIco from '../components/SetIco'
-import TitleTopMarket from './TitleTopMarket'
-import DefaultBtn from './DefaultBtn'
-import FiveOrder from './FiveOrder'
-import StockTransaction from './Transaction'
 import {
-    formatStockName,
-    formatShowCode,
-} from '@formatter/format-data'
+    getLimitStockData,
+} from '@service/index'
+import socketMixin from '../mixins/socket-mixin'
+import fiveOrderMixin from '../mixins/five-order-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
 import {
     TAPE_ROWS,
     TAPE_STYLE,
@@ -220,19 +224,19 @@ import {
     initTapeDefault,
 } from '../tape/tape-public-func'
 import {
-    getLimitStockData,
-} from '@service/index'
-
-import {
     SOCKET_B_MARKET,
 } from '../storage'
-import socketMixin from '../mixins/socket-mixin'
-import fiveOrderMixin from '../mixins/five-order-mixin'
-import rightResizeMixin from '../mixins/right-resize-mixin'
 
+import SetIco from '../components/SetIco'
+import TitleTopMarket from './TitleTopMarket'
+import DefaultBtn from './DefaultBtn'
+import FiveOrder from './FiveOrder'
+import StockTransaction from './Transaction'
 // 盘口内容
 import MarketInfo from './MarketInfo'
 // 盘口内容 -- 字段详情
+import StockCode from '@formatter/market-base/StockCode'
+import StockName from '@formatter/market-base/StockName'
 import Turnover from '@formatter/market-base/Turnover'
 import TurnoverRate from '@formatter/market-base/TurnoverRate'
 import Volume from '@formatter/market-base/Volume'
@@ -304,6 +308,9 @@ export default {
         StockTransaction,
 
         MarketInfo,
+
+        StockCode,
+        StockName,
         Turnover,
         TurnoverRate,
         Volume,
@@ -326,17 +333,6 @@ export default {
         ]),
         row() {
             return this[TAPE_ROWS]
-        },
-        formatName() {
-            return formatStockName(this.stock_name, {
-                source: this.source,
-                symbol_type: this.symbol_type,
-            })
-        },
-        formatCode() {
-            return formatShowCode(this.stock_code, {
-                source: this.source,
-            })
         },
         detailInfoClass() {
             return this[TAPE_STYLE] === 'off' ? 'detail_info_Limit' :
