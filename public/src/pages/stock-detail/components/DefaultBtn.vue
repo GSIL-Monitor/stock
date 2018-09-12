@@ -1,12 +1,11 @@
 <template>
     <button
-        v-if="text"
+        v-if="label"
         class="btn-link-default"
-        :class="[className || '']"
         @click="emitClick"
         type="button"
     >
-        {{text}}
+        {{label}}
     </button>
 </template>
 
@@ -16,13 +15,15 @@ export default {
     name: "DefaultBtn",
     methods: {
         emitClick() {
-            this.$emit('click')
+            this.$emit('on-click')
         }
     },
-    props: [
-        'text',
-        'className',
-    ]
+    props: {
+        label: {
+            type: String,
+            default: '',
+        },
+    },
 }
 </script>
 

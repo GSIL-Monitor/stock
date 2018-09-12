@@ -36,14 +36,12 @@
             <div
                 class="detail_head_btn_skip"
             >
-                <DefaultBtn
-                    text="F10"
-                    className="btn-content"
-                    @click="skipF10"
+                <ButtonF10
+                    v-if="isShowF10"
                 />
             </div>
             <StockIdentify
-                v-if="loadSelfIdentify"
+                v-if="canLoadSelfIdentify"
                 :full_code="full_code"
             />
         </div>
@@ -193,7 +191,7 @@ import {
 } from '../storage'
 
 import HkTimeBox from './HkTimeBox'
-import DefaultBtn from './DefaultBtn'
+import ButtonF10 from '../components/ButtonF10'
 import TitleTopMarket from './TitleTopMarket'
 import MarketInfo from './MarketInfo'
 import StockIdentify from './StockIdentify'
@@ -252,7 +250,7 @@ export default {
     },
     components: {
         HkTimeBox,
-        DefaultBtn,
+        ButtonF10,
         StockIdentify,
         TitleTopMarket,
         MarketInfo,
@@ -280,8 +278,11 @@ export default {
         linkAddress() {
             return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
         },
-        loadSelfIdentify() {
+        canLoadSelfIdentify() {
             return this.loadIdentify && this.isHkStock
+        },
+        isShowF10() {
+            return this.isHkStock
         },
         orderData() {
             return {
@@ -301,9 +302,6 @@ export default {
         },
     },
     methods: {
-        skipF10() {
-
-        },
         getInfoData() {
             const params = {
                 options: {

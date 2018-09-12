@@ -1,6 +1,6 @@
 import Vue from 'vue'
-// import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+// import VueRouter from 'vue-router'
 import infiniteScroll from 'vue-infinite-scroll'
 
 import App from './pages/stock-detail/index'
@@ -20,6 +20,16 @@ Vue.component('chart', Echarts)
 Vue.use(Vuex)
 Vue.use(infiniteScroll)
 Vue.use(eventBus)
+
+// Vue.config.performance = process.env.NODE_ENV !== 'production'
+
+// handle error
+Vue.config.errorHandler = function (err, vm, info) {
+    console.log("@ ", err)
+    console.log("@@ ", vm)
+    console.log("@@@ ", info)
+}
+
 // Vue.use(VueRouter)
 
 // const router = new VueRouter({

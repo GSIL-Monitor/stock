@@ -25,7 +25,7 @@
             />
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
-                    <DefaultBtn text="F10" className="btn-content" @click="skipF10"/>
+                    <ButtonF10/>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@ import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
-import DefaultBtn from './DefaultBtn'
+import ButtonF10 from '../components/ButtonF10'
 import TitleTopMarket from './TitleTopMarket'
 
 import StockName from '@formatter/market-base/StockName'
@@ -198,7 +198,7 @@ export default {
     },
     components: {
         TitleTopMarket,
-        DefaultBtn,
+        ButtonF10,
         OldFiveOrder,
         StockTransaction,
         MarketInfo,
@@ -226,9 +226,6 @@ export default {
     methods: {
         volumeDiff(val, oldVal) {
             return Math.floor((val - oldVal))
-        },
-        skipF10() {
-
         },
         getInfoData() {
             const params = {

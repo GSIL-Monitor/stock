@@ -43,13 +43,15 @@
 import {
     mapState,
 } from 'vuex'
+import socketMixin from "../mixins/socket-mixin"
 import {
     SOCKET_A_FLOW,
 } from '../storage'
+
 import FundFlowPie from './FundFlowPie'
 import FundFlowBar from './FundFlowBar'
 import FundFlowList from './FundFlowList'
-import socketMixin from "../mixins/socket-mixin";
+
 
 export default {
     name: 'fundFlow',

@@ -40,20 +40,16 @@
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
                     <DefaultBtn
-                        text="诊股"
-                        className="btn-content"
-                        @click="skipDiagnose"
+                        label="诊股"
+                        class="btn-content"
+                        @on-click="skipDiagnose"
                     />
                     <DefaultBtn
-                        text="研报"
-                        className="btn-content"
-                        @click="skipReport"
+                        label="研报"
+                        class="btn-content"
+                        @on-click="skipReport"
                     />
-                    <DefaultBtn
-                        text="F10"
-                        className="btn-content"
-                        @click="skipF10"
-                    />
+                    <ButtonF10/>
                 </div>
                 <StockIdentify
                     v-if="loadIdentify"
@@ -283,7 +279,8 @@ import rightResizeMixin from '../mixins/right-resize-mixin'
 import CompanyHonorBtn from './CompanyHonorBtn'
 import BelongIndustry from './BelongIndustry'
 import TitleTopMarket from './TitleTopMarket'
-import DefaultBtn from './DefaultBtn'
+import DefaultBtn from '../components/DefaultBtn'
+import ButtonF10 from '../components/ButtonF10'
 import IdentifyIco from './IdentifyIco'
 import FiveOrder from './FiveOrder'
 import ToggleBtn from './ToggleBtn'
@@ -403,6 +400,7 @@ export default {
         BelongIndustry,
         TitleTopMarket,
         DefaultBtn,
+        ButtonF10,
         IdentifyIco,
         FiveOrder,
         ToggleBtn,
@@ -662,9 +660,6 @@ export default {
         },
         skipReport() {
             console.log('skipReport')
-        },
-        skipF10() {
-            console.log('f10')
         },
         tapeSettings() {
             this.$eventBus.$emit('tapeSet')

@@ -31,7 +31,7 @@
             />
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
-                    <DefaultBtn text="F10" className="btn-content" @click="skipF10"/>
+                    <ButtonF10/>
                 </div>
             </div>
         </div>
@@ -229,7 +229,7 @@ import {
 
 import SetIco from '../components/SetIco'
 import TitleTopMarket from './TitleTopMarket'
-import DefaultBtn from './DefaultBtn'
+import ButtonF10 from '../components/ButtonF10'
 import FiveOrder from './FiveOrder'
 import StockTransaction from './Transaction'
 // 盘口内容
@@ -303,7 +303,7 @@ export default {
     components: {
         SetIco,
         TitleTopMarket,
-        DefaultBtn,
+        ButtonF10,
         FiveOrder,
         StockTransaction,
 
@@ -353,9 +353,6 @@ export default {
         },
         tapeDefaultChanged(key, val) {
             this[key] = val
-        },
-        skipF10() {
-
         },
         tapeSettings() {
             this.$eventBus.$emit('tapeSet')

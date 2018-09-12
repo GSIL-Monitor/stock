@@ -26,11 +26,8 @@
             />
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
-                    <DefaultBtn
+                    <ButtonF10
                         v-if="isImportantCode"
-                        text="F10"
-                        className="btn-content"
-                        @click="skipF10"
                     />
                 </div>
             </div>
@@ -146,7 +143,7 @@ import {
     mapActions,
     mapMutations,
 } from 'vuex'
-import DefaultBtn from './DefaultBtn'
+import ButtonF10 from '../components/ButtonF10'
 import TitleTopMarket from './TitleTopMarket'
 // import {
 //     getIndexData,
@@ -231,7 +228,7 @@ export default {
     },
     components: {
         TitleTopMarket,
-        DefaultBtn,
+        ButtonF10,
         MarketInfo,
         StockName,
         StockCode,
@@ -287,9 +284,6 @@ export default {
             let residue = window.innerHeight - top - tabHeight
 
             $panes.style.height = residue + 'px'
-        },
-        skipF10() {
-
         },
         initState() {
             var item = sessionStorage.getItem(SESSION_INDEX_FUNC_TAB)

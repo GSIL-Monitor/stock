@@ -25,7 +25,7 @@
             />
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
-                    <DefaultBtn text="F10" className="btn-content" @click="skipF10"/>
+                    <ButtonF10/>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@
 import {
     mapState
 } from 'vuex'
-import DefaultBtn from './DefaultBtn'
+import ButtonF10 from '../components/ButtonF10'
 import TitleTopMarket from './TitleTopMarket'
 import {
     getFundData,
@@ -206,7 +206,7 @@ export default {
     },
     components: {
         TitleTopMarket,
-        DefaultBtn,
+        ButtonF10,
         OldFiveOrder,
         StockTransaction,
         MarketInfo,
@@ -234,9 +234,6 @@ export default {
         },
     },
     methods: {
-        skipF10() {
-
-        },
         getInfoData() {
             const params = {
                 options: {

@@ -33,13 +33,13 @@
         </div>
         <div class="set_tape_bottom">
             <DefaultBtn
-                text="完成"
-                @click="tapeComplete"
+                label="完成"
+                @on-click="tapeComplete"
                 class="tape_btn tape_btn_Sure"
             />
             <DefaultBtn
-                text="重置"
-                @click="tapeReset"
+                label="重置"
+                @on-click="tapeReset"
                 class="tape_btn tape_btn_Reset"
             />
         </div>
@@ -63,7 +63,7 @@ import {
 } from './tape-public-func'
 import TapeSectionItem from './TapeSectionItem'
 import TapeFuncStyle from './TapeFuncStyle'
-import DefaultBtn from '../right/DefaultBtn'
+import DefaultBtn from '../components/DefaultBtn'
 
 export default {
     name: 'TapeSet',

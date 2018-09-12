@@ -3,7 +3,8 @@
         <keep-alive>
             <chart
                 class="fund_flow_chart"
-                :options="chartOptions"
+                :manual-update="true"
+                ref="mychart"
             ></chart>
         </keep-alive>
     </div>
@@ -11,12 +12,11 @@
 
 <script>
 export default {
-    name: 'fundFlowPie',
+    name: 'FundFlowPie',
     data() {
         return {
             RED_COLOR: '#ff2b49',
             GREEN_COLOR: '#32a55f',
-            loading: true,
         }
     },
     computed: {
@@ -185,6 +185,11 @@ export default {
         pieData: {
             type: Object,
             required: true,
+        },
+    },
+    watch: {
+        pieData() {
+            this.$refs.mychart.mergeOptions(this.chartOptions)
         },
     },
 }
