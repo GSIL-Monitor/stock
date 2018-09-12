@@ -330,16 +330,17 @@ export default {
                 source = this.getSource(hash)
                 stock_code = hash
                 full_code = `${source}${stock_code}`
-            } else if (
-                this.isFund
-                || this.isBond
-                || this.isHkFund
+            } else if (this.isFund || this.isBond) {
+                full_code = hash.replace(/fund|bond/, '')
+                source = full_code.substr(0, 2)
+                stock_code = full_code.substr(2)
+            } else if (this.isHkFund
                 || this.isHkBond
                 || this.isHkWarrant
                 || this.isHkCbbc
             ) {
                 // 抹去前缀
-                full_code = hash.replace(/fund|bond|fund_H|bond_H|warrants|cbbc/, '')
+                full_code = hash.replace(/fund_H|bond_H|warrants|cbbc/, '')
                 source = full_code.substr(0, 2)
                 stock_code = full_code.substr(2)
             } else if (this.isFuture) {

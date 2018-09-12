@@ -15,11 +15,11 @@ const stockVerify = [
     },
     {
         type: TYPE.FUND,
-        regexp: /^fund(\w+)?[0-9]{1,}$/,
+        regexp: /^fund([a-z]{2})(\d{6})$/,
     },
     {
         type: TYPE.BOND,
-        regexp: /^bond(\w+)?[0-9]{1,}$/,
+        regexp: /^bond[a-z]{2}[0-9]{6}$/,
     },
     {
         type: TYPE.HKSTOCK,
