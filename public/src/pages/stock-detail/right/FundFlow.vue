@@ -2,7 +2,10 @@
     <div class="right_bottom_container">
         <div class="view_title">
             <span class="fund_flow_dsc">资金流向</span>
-
+            <DefaultBtn
+                label="资金选股"
+                @on-click="selectStock"
+            />
         </div>
         <div class="view_vessel">
             <div
@@ -43,15 +46,18 @@
 import {
     mapState,
 } from 'vuex'
+import {
+    JsToQtEventInterface,
+} from '@c/utils/callQt'
 import socketMixin from "../mixins/socket-mixin"
 import {
     SOCKET_A_FLOW,
 } from '../storage'
 
+import DefaultBtn from '../components/DefaultBtn'
 import FundFlowPie from './FundFlowPie'
 import FundFlowBar from './FundFlowBar'
 import FundFlowList from './FundFlowList'
-
 
 export default {
     name: 'fundFlow',
@@ -68,6 +74,7 @@ export default {
         }
     },
     components: {
+        DefaultBtn,
         FundFlowPie,
         FundFlowBar,
         FundFlowList,
@@ -147,6 +154,12 @@ export default {
                      this.socketData[this.sell + i] = 0
                 }
             }
+        },
+        selectStock() {
+            const FUNC_NAME = 'MainFundSelStock'
+            JsToQtEventInterface(JSON.stringify({
+                fun: FUNC_NAME,
+            }))
         },
     },
     beforeDestroy() {

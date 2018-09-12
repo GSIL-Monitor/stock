@@ -2,7 +2,7 @@
     <button
         v-if="label"
         class="btn-link-default"
-        @click="emitClick"
+        @click.stop="emitClick"
         type="button"
     >
         {{label}}
