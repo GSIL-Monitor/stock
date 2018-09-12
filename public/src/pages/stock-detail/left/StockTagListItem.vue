@@ -12,7 +12,7 @@ import {
 import companyFormatter from '@formatter/company-tag'
 
 export default {
-    name: 'oneTag',
+    name: 'OneTag',
     methods: {
         tagClick() {
             console.log(this.fields)

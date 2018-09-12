@@ -48,10 +48,11 @@
 </template>
 
 <script>
-import FiveOrderItem from './FiveOrderItem'
 import {
     evenRound,
 } from '@c/utils/util'
+
+import FiveOrderItem from './FiveOrderItem'
 
 export default {
     name: 'OldFiveOrder',

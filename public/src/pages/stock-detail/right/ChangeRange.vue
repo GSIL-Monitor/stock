@@ -37,14 +37,16 @@
 </template>
 
 <script>
-import RangeBodyItem from './ChangeRangeBodyItem'
-import RangeListItem from './ChangeRangeListItem'
+import { evenRound } from '@c/utils/util'
 import {
     SOCKET_RANGE_SCOPE,
 } from '../storage'
+
 import socketMixin from '../mixins/socket-mixin'
 
-import { evenRound } from '@c/utils/util';
+import RangeBodyItem from './ChangeRangeBodyItem'
+import RangeListItem from './ChangeRangeListItem'
+
 export default {
     name: 'ChangeRange',
     created() {

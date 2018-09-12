@@ -32,7 +32,6 @@ import {
     getCookie,
     changeUrlParam,
 } from '@c/utils/util'
-import stockVerifyMixin from './mixins/stock-verify-mixin'
 import {
     CURRENT_TYPE,
     STOCK_CODE,
@@ -57,6 +56,8 @@ import {
     EVENT_KEY_BOARD,
     SESSION_ASTOCK_FUNC_TAB,
 } from './storage'
+
+import stockVerifyMixin from './mixins/stock-verify-mixin'
 
 // vue template --------------------------------------
 import LeftTemplate from './left/LeftMain'

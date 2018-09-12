@@ -13,12 +13,14 @@
 </template>
 
 <script>
-import TabSwitchItem from './TabSwitchItem'
 import {
     initTapeFunc,
-} from '../tape/tape-public-func.js'
+} from '../tape/tape-public-func'
+
+import TabSwitchItem from './TabSwitchItem'
+
 export default {
-    name: 'tabSwitch',
+    name: 'TabSwitch',
     computed: {
         getWidth() {
             return 100 / this.configArr.length

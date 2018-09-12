@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'funcStyleItem',
+    name: 'FuncStyleItem',
     methods: {
         icoClick() {
             var emitOn = !this.on

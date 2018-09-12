@@ -143,11 +143,6 @@ import {
     mapActions,
     mapMutations,
 } from 'vuex'
-import ButtonF10 from '../components/ButtonF10'
-import TitleTopMarket from './TitleTopMarket'
-// import {
-//     getIndexData,
-// } from '@service/index'
 import {
     SOCKET_HSINDEX_MARKET,
     SESSION_INDEX_FUNC_TAB,
@@ -159,6 +154,11 @@ import {
 //     HSINDEX_CATEGORY,
 // } from '@store/stock-detail-store/config/mutation-types'
 
+import rightResizeMixin from '../mixins/right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin'
+
+import ButtonF10 from '../components/ButtonF10'
+import TitleTopMarket from './TitleTopMarket'
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'
 import CompareClose from '@formatter/market-base/CompareClose'
@@ -169,14 +169,9 @@ import Amplitude from '@formatter/market-base/Amplitude'
 import Flat from '@formatter/market-base/Flat'
 import Rose from '@formatter/market-base/Rose'
 import Fall from '@formatter/market-base/Fall'
-
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
-import rightResizeMixin from '../mixins/right-resize-mixin'
-import socketMixin from '../mixins/socket-mixin'
-
 import MarketInfo from './MarketInfo'
-
 import ConstituentStock from './ConstituentStock'
 import ChangeRange from './ChangeRange'
 import OtherIndex from './OtherIndex'

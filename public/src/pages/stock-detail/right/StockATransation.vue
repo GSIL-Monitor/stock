@@ -58,15 +58,16 @@ import {
     mapState,
     mapGetters,
 } from 'vuex'
-import TransactionLi from './TransactionLi'
 import {
     getTransaction,
 } from '@service/'
-import SetIco from '../components/SetIco'
-import LoadMore from '../components/LoadMore'
 import {
     LOCAL_TRANSATION_STORE,
 } from '../storage'
+
+import TransactionLi from './TransactionLi'
+import SetIco from '../components/SetIco'
+import LoadMore from '../components/LoadMore'
 
 export default {
     name: 'stockTransation',

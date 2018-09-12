@@ -34,16 +34,17 @@ import {
     mapMutations,
 } from 'vuex'
 import {
+    getInfoState,
+    setInfoState,
+} from './info-storage-state'
+import {
     INFO_STATE,
 } from '@store/stock-detail-store/config/mutation-types'
+
 import KLine from './KLine'
 import InfoStockATemp from './InfoStockA'
 import InfoHSIndexTemp from './InfoHSIndex'
 import InfoHkStockTemp from './InfoHkStock'
-import {
-    getInfoState,
-    setInfoState,
-} from './info-storage-state'
 
 export default {
     name: 'Middle',

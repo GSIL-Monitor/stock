@@ -42,6 +42,7 @@ import {
 import {
     ASTOCK,
 } from '@formatter/config/stock-type-config'
+
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
 import StockTag from './StockTag'

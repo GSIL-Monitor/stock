@@ -38,24 +38,25 @@ import {
     mapActions,
     mapMutations,
 } from 'vuex'
-import oneStockList from './one-stock-list-mixin'
 import {
-    SESSION_SELECT_STOCK_GROUP,
-    FRAME_MYSTOCK_GROUP,
-} from '../storage'
+    hasMyStockCache,
+} from '@c/utils/util'
 import {
     pushData,
     UnSubscriptSockets,
 } from '@c/utils/callQt'
+import {
+    SESSION_SELECT_STOCK_GROUP,
+    FRAME_MYSTOCK_GROUP,
+} from '../storage'
 import {
     GET_STOCK_GROUP_DATA,
 } from '@store/stock-detail-store/config/action-types'
 import {
     STOCK_GROUP_LIST,
 } from '@store/stock-detail-store/config/mutation-types'
-import {
-    hasMyStockCache,
-} from '@c/utils/util'
+
+import oneStockList from './one-stock-list-mixin'
 
 import StockItem from '../components/StockItem'
 

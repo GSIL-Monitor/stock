@@ -58,9 +58,6 @@ import {
 import {
     getShortLine,
 } from '@service/index'
-import SetIco from '../components/SetIco'
-import ShortElvesItem from './ShortElvesItem'
-import socketMixin from '../mixins/socket-mixin'
 import {
     SOCKET_SHORT_LINE,
     LOCAL_SHORT_LINE_SET,
@@ -69,6 +66,12 @@ import {
     ASTOCK,
     INDEX,
 } from '@formatter/config/stock-type-config'
+
+import socketMixin from '../mixins/socket-mixin'
+
+import SetIco from '../components/SetIco'
+import ShortElvesItem from './ShortElvesItem'
+
 // TODO: 清空时段加载问题
 export default {
     name: 'ShortElves',

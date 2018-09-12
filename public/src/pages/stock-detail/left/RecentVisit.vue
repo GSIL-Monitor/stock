@@ -17,7 +17,10 @@
         mapActions,
         mapMutations,
     } from 'vuex'
-    import subMixin from './sub-scription-mixin'
+    import {
+        pushData,
+        UnSubscriptSockets,
+    } from '@c/utils/callQt'
     import {
         STOCK_RECENT_LIST,
     } from '@store/stock-detail-store/config/mutation-types'
@@ -25,12 +28,11 @@
         GET_RECENT_LIST_DATA,
     } from '@store/stock-detail-store/config/action-types'
     import {
-        pushData,
-        UnSubscriptSockets,
-    } from '@c/utils/callQt'
-    import {
         FRAME_RECENT_LIST,
     } from '../storage'
+
+    import subMixin from './sub-scription-mixin'
+
     import StockItem from '../components/StockItem'
 
     export default {

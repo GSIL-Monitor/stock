@@ -17,9 +17,10 @@
 </template>
 
 <script>
-import FuncStyleItem from './FuncStyleItem.vue'
+import FuncStyleItem from './FuncStyleItem'
+
 export default {
-    name: 'tapeFuncStyle',
+    name: 'TapeFuncStyle',
     components: {
         FuncStyleItem,
     },

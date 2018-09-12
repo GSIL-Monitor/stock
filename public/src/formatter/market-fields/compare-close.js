@@ -32,7 +32,7 @@ const formatNormal = (value, list, bit) => {
 }
 
 const formatCompareClose = (value, list, current_type) => {
-    if (isClearCase(value, list)) {
+    if (isClearCase(value, list) || Object.is(value, 0)) {
         return { val: '--', color: DEFAULT }
     } else {
         const type = current_type || stockToType(

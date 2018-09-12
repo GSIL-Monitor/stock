@@ -48,6 +48,10 @@
 
 <script>
 import {
+    initTapeDefault,
+    initTapeFunc,
+} from './tape-public-func'
+import {
     LOCAL_TAPE_SET_DFT,
     LOCAL_TAPE_SET_FUNC,
 } from '../storage'
@@ -57,10 +61,7 @@ import {
     TAPE_STYLE,
     FUNC_PERFORMANCE,
 } from './tape-set-config'
-import {
-    initTapeDefault,
-    initTapeFunc,
-} from './tape-public-func'
+
 import TapeSectionItem from './TapeSectionItem'
 import TapeFuncStyle from './TapeFuncStyle'
 import DefaultBtn from '../components/DefaultBtn'

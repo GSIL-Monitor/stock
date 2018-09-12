@@ -24,9 +24,10 @@
 </template>
 
 <script>
-import SimpleFinancialItem from './SimpleFinancialItem.vue'
-import LoadMore from '../components/LoadMore.vue'
-import { getStockFinance } from '@service/index.js'
+import {
+    mapState,
+} from 'vuex'
+import { getStockFinance } from '@service/index'
 import {
     getReportShow,
     getCapitalStock,
@@ -36,13 +37,13 @@ import {
     getYellowPercent,
     getMixedPercent,
     getYellowNumber,
-} from '@formatter/market-fields/financial.js'
-import {
-    mapState,
-} from 'vuex'
+} from '@formatter/market-fields/financial'
+
+import SimpleFinancialItem from './SimpleFinancialItem'
+import LoadMore from '../components/LoadMore'
 
 export default {
-    name: 'simpleFinancial',
+    name: 'SimpleFinancial',
     created() {
         this.getFinancialData()
     },

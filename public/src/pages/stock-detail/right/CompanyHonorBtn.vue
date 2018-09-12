@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import { getCompanyHonor } from '@service/index.js'
+import { getCompanyHonor } from '@service/index'
 
 export default {
-    name: 'companyHonorBtn',
+    name: 'CompanyHonorBtn',
     data() {
         return {
             showMsg: '',

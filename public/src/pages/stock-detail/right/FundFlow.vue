@@ -49,10 +49,11 @@ import {
 import {
     JsToQtEventInterface,
 } from '@c/utils/callQt'
-import socketMixin from "../mixins/socket-mixin"
 import {
     SOCKET_A_FLOW,
 } from '../storage'
+
+import socketMixin from "../mixins/socket-mixin"
 
 import DefaultBtn from '../components/DefaultBtn'
 import FundFlowPie from './FundFlowPie'

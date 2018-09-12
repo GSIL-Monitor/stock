@@ -27,10 +27,12 @@
 </template>
 
 <script>
-import Props from '../mixins/price-point-mixin'
 import {
     dataFixed,
 } from '@c/utils/util'
+
+import Props from '../mixins/price-point-mixin'
+
 export default {
     name: 'PricePointSimple',
     mixins: [

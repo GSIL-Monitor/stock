@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: 'toggleBtn',
+    name: 'ToggleBtn',
     computed: {
         arrow() {
             return this.rowToRight ? 'toggle_ico_right' : 'toggle_ico_left'

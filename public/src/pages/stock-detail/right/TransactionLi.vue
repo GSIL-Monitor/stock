@@ -39,10 +39,11 @@ import {
     getArrow,
     formatCount,
 } from '@formatter/market-fields/transaction'
+
 import Price from '@formatter/market-base/Price'
 
 export default {
-    name: 'transactionLi',
+    name: 'TransactionLi',
     components: {
         Price,
     },

@@ -52,10 +52,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import PopUp from '@c/popUp'
+import {
+    mapState,
+} from 'vuex'
 import { ASTOCK } from '@formatter/config/stock-type-config'
 import { LOCAL_TRANSATION_STORE } from '../storage'
+
+import PopUp from '@c/popUp'
 
 const defaults = {
     equal: {

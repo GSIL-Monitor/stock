@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import formatPrice from '@formatter/market-fields/price'
 import {
     RED,
     GREEN,
@@ -34,7 +35,6 @@ import {
     FUND,
     BOND,
 } from '@formatter/config/stock-type-config'
-import formatPrice from '@formatter/market-fields/price'
 
 export default {
     name: 'FiveOrderItem',

@@ -256,22 +256,23 @@ import {
     getLimitStockData,
 } from '@service/'
 import {
+    throttle,
+} from '@c/utils/util'
+import {
+    initTapeDefault,
+    initTapeFunc,
+} from '../tape/tape-public-func'
+import {
     TAPE_ROWS,
     TAPE_CONTENT,
     TAPE_STYLE,
     FUNC_PERFORMANCE,
 } from '../tape/tape-set-config'
 import {
-    initTapeDefault,
-    initTapeFunc,
-} from '../tape/tape-public-func'
-import {
     SESSION_ASTOCK_FUNC_TAB,
     SOCKET_A_MARKET,
 } from '../storage'
-import {
-    throttle
-} from '@c/utils/util'
+
 import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'

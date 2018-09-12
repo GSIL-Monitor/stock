@@ -70,7 +70,7 @@ import {
 } from 'lodash'
 
 export default {
-    name: 'consensusTable',
+    name: 'ConsensusTable',
     created() {
         if (this.stock_code) {
             this.getConsensusData()

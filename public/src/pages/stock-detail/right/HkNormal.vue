@@ -181,14 +181,15 @@ import {
     mapState,
     mapGetters,
 } from 'vuex'
-import socketMixin from '../mixins/socket-mixin'
-import rightResizeMixin from '../mixins/right-resize-mixin'
 import {
     getHkStockData,
 } from '@service/'
 import {
     SOCKET_HKSTOCK_MARKET,
 } from '../storage'
+
+import socketMixin from '../mixins/socket-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import HkTimeBox from './HkTimeBox'
 import ButtonF10 from '../components/ButtonF10'
@@ -197,7 +198,6 @@ import MarketInfo from './MarketInfo'
 import StockIdentify from './StockIdentify'
 import HkOrder from './HkOrder'
 import StockTransaction from './Transaction'
-
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'
 import CompareClose from '@formatter/market-base/CompareClose'

@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: 'tabSwitchItem',
+    name: 'TabSwitchItem',
     methods: {
         emitType() {
             this.$emit('switch', this.type)

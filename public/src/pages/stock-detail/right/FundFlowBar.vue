@@ -85,12 +85,16 @@ export default {
             let two = this.barData.buy_1 - this.barData.sell_1
             let three = this.barData.buy_2 - this.barData.sell_2
             let four = this.barData.buy_3 - this.barData.sell_3
+            one = isNumber(one) ? one : null
+            two = isNumber(two) ? two : null
+            three = isNumber(three) ? three : null
+            four = isNumber(four) ? four : null
             let sericeData = []
 
-            sericeData.push(this.eachSerice(one || null, xData[0], '0.4'))
-            sericeData.push(this.eachSerice(two || null, xData[1], '0.6'))
-            sericeData.push(this.eachSerice(three || null, xData[2], '0.8'))
-            sericeData.push(this.eachSerice(four || null, xData[3], '1.0'))
+            sericeData.push(this.eachSerice(one, xData[0], '0.4'))
+            sericeData.push(this.eachSerice(two, xData[1], '0.6'))
+            sericeData.push(this.eachSerice(three, xData[2], '0.8'))
+            sericeData.push(this.eachSerice(four, xData[3], '1.0'))
 
             return sericeData
         },
@@ -123,12 +127,7 @@ export default {
                         position: 'top',
                         formatter(data) {
                             let val = data.value
-                            let value
-                            if (isNumber(val)) {
-                                value = Math.abs(val) >= 100 ? val.toFixed(0) : val.toFixed(1)
-                            } else {
-                                value = '--'
-                            }
+                            let value = value = Math.abs(val) >= 100 ? val.toFixed(0) : val.toFixed(1)
 
                             return value
                         },

@@ -140,19 +140,22 @@
 import {
     mapState
 } from 'vuex'
-import ButtonF10 from '../components/ButtonF10'
-import TitleTopMarket from './TitleTopMarket'
 import {
     getFundData,
 } from '@service/index'
-
 import {
     SOCKET_FUND_MARKET,
 } from '../storage'
+
 import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
+import ButtonF10 from '../components/ButtonF10'
+import TitleTopMarket from './TitleTopMarket'
+import OldFiveOrder from './OldFiveOrder'
+import StockTransaction from './Transaction'
+import MarketInfo from './MarketInfo'
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'
 import CompareClose from '@formatter/market-base/CompareClose'
@@ -164,10 +167,6 @@ import HighLimit from '@formatter/market-base/HighLimit'
 import LowLimit from '@formatter/market-base/LowLimit'
 import VolumeOuter from '@formatter/market-base/VolumeOuter'
 import VolumeInner from '@formatter/market-base/VolumeInner'
-
-import OldFiveOrder from './OldFiveOrder'
-import StockTransaction from './Transaction'
-import MarketInfo from './MarketInfo'
 
 export default {
     name: 'FundTemp',

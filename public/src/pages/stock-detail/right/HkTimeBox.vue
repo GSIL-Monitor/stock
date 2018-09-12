@@ -55,9 +55,6 @@ export default {
         },
     },
     methods: {
-        getNowDateFormat() {
-
-        },
         formatIntradayHint(timeStamp) {
             let date = new Date(timeStamp),
                 month = date.getMonth() + 1,

@@ -46,12 +46,12 @@ import {
     mapGetters,
 } from 'vuex'
 import {
-    isHkRealTime,
-} from '../utility'
-import {
     getTransaction,
     getHKTransaction,
 } from '@service/'
+import {
+    isHkRealTime,
+} from '../utility'
 
 import TransactionLi from './TransactionLi'
 import LoadMore from '../components/LoadMore'

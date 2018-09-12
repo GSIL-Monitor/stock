@@ -37,13 +37,14 @@
 </template>
 
 <script>
-import FiveOrderItem from './FiveOrderItem'
 import {
     evenRound,
 } from '@c/utils/util'
 import {
     isNumber,
 } from '@formatter/utility'
+
+import FiveOrderItem from './FiveOrderItem'
 
 export default {
     name: 'FiveOrder',

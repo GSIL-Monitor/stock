@@ -213,19 +213,20 @@ import {
 import {
     getLimitStockData,
 } from '@service/index'
-import socketMixin from '../mixins/socket-mixin'
-import fiveOrderMixin from '../mixins/five-order-mixin'
-import rightResizeMixin from '../mixins/right-resize-mixin'
+import {
+    initTapeDefault,
+} from '../tape/tape-public-func'
 import {
     TAPE_ROWS,
     TAPE_STYLE,
 } from '../tape/tape-set-config'
 import {
-    initTapeDefault,
-} from '../tape/tape-public-func'
-import {
     SOCKET_B_MARKET,
 } from '../storage'
+
+import socketMixin from '../mixins/socket-mixin'
+import fiveOrderMixin from '../mixins/five-order-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import SetIco from '../components/SetIco'
 import TitleTopMarket from './TitleTopMarket'

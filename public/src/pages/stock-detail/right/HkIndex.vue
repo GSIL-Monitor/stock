@@ -99,6 +99,7 @@ import {
 import {
     SOCKET_HKINDEX_MARKET,
 } from '../storage'
+
 import socketMixin from '../mixins/socket-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
@@ -106,7 +107,6 @@ import HkTimeBox from './HkTimeBox'
 import TitleTopMarket from './TitleTopMarket'
 import MarketInfo from './MarketInfo'
 import StockTransaction from './Transaction'
-
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'
 import CompareClose from '@formatter/market-base/CompareClose'

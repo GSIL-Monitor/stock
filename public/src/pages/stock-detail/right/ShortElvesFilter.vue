@@ -19,8 +19,9 @@ import {
     LOCAL_SHORT_LINE_SET,
 } from '../storage'
 import shortLineType from '@formatter/config/short-line-config'
-import ShortElvesFilterItem from './ShortElvesFilterItem'
+
 import PopUp from '@c/popUp'
+import ShortElvesFilterItem from './ShortElvesFilterItem'
 
 export default {
     name: 'ShortElvesFilter',

@@ -62,14 +62,14 @@
 
 <script>
 import {
+    mapState,
+} from 'vuex'
+import {
     getInvestmentQAData,
 } from '@service/'
 import {
     subDate,
 } from '../utility'
-import {
-    mapState,
-} from 'vuex'
 
 export default {
     name: 'InvestQA',

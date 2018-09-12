@@ -20,6 +20,7 @@ import {
 import {
     GET_STOCK_TAG_DATA,
 } from '@store/stock-detail-store/config/action-types'
+
 import TagList from './StockTagList'
 
 const tagShowData = [

@@ -19,12 +19,6 @@
             :price_change="price_change"
             :current_type="current_type"
         ></PriceChangeRate>
-        <!-- <span
-            class="top_market_rate"
-            :class="[formatPriceChangeRate.color]"
-        >
-            {{formatPriceChangeRate.val}}
-        </span> -->
     </div>
 </template>
 

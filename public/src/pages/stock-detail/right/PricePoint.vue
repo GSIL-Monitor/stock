@@ -34,17 +34,16 @@
 import {
     mapState,
 } from 'vuex'
-import PricePointSimple from './PricePointSimple.vue'
-import PricePointDetail from './PricePointDetail.vue'
-
 import {
     pushData,
     UnSubscriptSockets,
 } from '@c/utils/callQt'
-
 import {
     FRAME_PRICE_POINT,
 } from '../storage'
+
+import PricePointSimple from './PricePointSimple'
+import PricePointDetail from './PricePointDetail'
 
 export default {
     name: 'pricePoint',

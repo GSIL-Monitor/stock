@@ -129,23 +129,24 @@
 import {
     mapState
 } from 'vuex'
-
 import {
     getBondData,
 } from '@service/index'
 import {
     SOCKET_BOND_MARKET,
 } from '../storage'
+
 import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import ButtonF10 from '../components/ButtonF10'
 import TitleTopMarket from './TitleTopMarket'
-
+import OldFiveOrder from './OldFiveOrder'
+import StockTransaction from './Transaction'
+import MarketInfo from './MarketInfo'
 import StockName from '@formatter/market-base/StockName'
 import StockCode from '@formatter/market-base/StockCode'
-
 import CompareClose from '@formatter/market-base/CompareClose'
 import QuantityRatio from '@formatter/market-base/QuantityRatio'
 import Volume from '@formatter/market-base/Volume'
@@ -153,10 +154,6 @@ import Turnover from '@formatter/market-base/Turnover'
 import ClosePrice from '@formatter/market-base/ClosePrice'
 import VolumeOuter from '@formatter/market-base/VolumeOuter'
 import VolumeInner from '@formatter/market-base/VolumeInner'
-
-import OldFiveOrder from './OldFiveOrder'
-import StockTransaction from './Transaction'
-import MarketInfo from './MarketInfo'
 
 export default {
     name: 'BondTemp',
