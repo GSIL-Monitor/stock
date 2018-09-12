@@ -38,7 +38,7 @@
                 sortable="custom"
                 :sort-orders="['descending', 'ascending']"
             >
-                <template scope="scope">
+                <template slot-scope="scope">
                     <StockName
                         :val="scope.row.name"
                         :current_type="current_type"
@@ -52,7 +52,7 @@
                 sortable="custom"
                 :sort-orders="['descending', 'ascending']"
             >
-                <template scope="scope">
+                <template slot-scope="scope">
                     <MarketValue
                         :val="scope.row.mcap"
                     ></MarketValue>
@@ -65,7 +65,7 @@
                 sortable="custom"
                 :sort-orders="['descending', 'ascending']"
             >
-                <template scope="scope">
+                <template slot-scope="scope">
                     <PriceChangeRate
                         :val="scope.row.price_change_rate"
                         :price_change="scope.row.price_change"

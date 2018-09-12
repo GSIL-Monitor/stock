@@ -57,7 +57,7 @@ import TransactionLi from './TransactionLi'
 import LoadMore from '../components/LoadMore'
 
 export default {
-    name: 'stockTransation',
+    name: 'StockTransation',
     created() {
         this.getData()
     },
