@@ -30,10 +30,9 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/api': {
-                // target: 'http://zyzt.gofund.cn:8093',
-                // target: 'http://zyzt-pre.gofund.cn:8093',
-                target: 'http://investpre.gofund.cn:8093',
-                // target: 'http://zweb.66966.cn',
+                // target: 'http://investtest.gofund.cn:8093',
+                // target: 'http://investpre.gofund.cn:8093',
+                target: 'http://zyzt.66966.cn',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/api',
