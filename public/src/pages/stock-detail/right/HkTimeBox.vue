@@ -29,12 +29,12 @@ export default {
     name: 'HkTimeBox',
     created() {
         // TODO: 日期切换，调用接口判断是否是交易日
-
         this.isRealDay()
         this.fetchData()
     },
     data() {
         return {
+            lastDate: null, // 记录最近一个日期的时间戳，刷新是否是交易日
             isReal: false,
             isMarketDay: null,
             intervalTimer: null,
@@ -105,7 +105,18 @@ export default {
                 return this.hasClosed
             }
         },
+        dateChangedRefresh() {
+            let date = new Date().getDate()
+            if (!this.lastDate) {
+                this.lastDate = date
+            }
+            if (!Object.is(this.lastDate, date) && navigator.onLine) {
+                this.stopInterval()
+                this.fetchData()
+            }
+        },
         formatHint() {
+            this.dateChangedRefresh()
             if (!this.isMarketDay) {
                 this.isInBusiness = false
                 this.hint = this.stopBusiness
@@ -146,6 +157,7 @@ export default {
         stopInterval() {
             if (this.intervalTimer) {
                 clearInterval(this.intervalTimer)
+                this.intervalTimer = null
             }
         },
     },
