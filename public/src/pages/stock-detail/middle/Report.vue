@@ -5,7 +5,7 @@
     <div
         class="info_vessel"
         v-show="dataStore.length"
-        v-infinite-scroll="loadMoreData"
+        v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
@@ -73,8 +73,13 @@ import {
 import formatInfoDate from '@formatter/information/date'
 import fileType from '@formatter/information/fileType'
 
+import informationBusyMixin from '../mixins/information-busy-mixin'
+
 export default {
     name: 'Report',
+    mixins: [
+        informationBusyMixin,
+    ],
     created() {
         this.fetchData()
     },
@@ -83,7 +88,6 @@ export default {
             ROWS: 10,
             page: 1,
             dataStore: [],
-            busy: true,
             noData: false,
             noDataMsg: '暂无相关研报',
             filterFields: [
@@ -135,9 +139,7 @@ export default {
                 options: param,
                 callback0: data => {
                     this.dataStore = this.dataStore.concat(data)
-                    this.$nextTick(() => {
-                        this.busy = false
-                    })
+                    this.setBusyState(data.length)
                 },
                 callback1001: () => {
                     this.busy = true
@@ -149,12 +151,6 @@ export default {
             if (api) {
                 api(params)
             }
-        },
-        loadMoreData() {
-            // 滚动加载
-            this.busy = true
-            this.page++
-            this.fetchData()
         },
         formatDate(date) {
             return formatInfoDate(date)
@@ -178,15 +174,6 @@ export default {
                 // TODO:原文
 
             }
-        },
-        resetState() {
-            this.page = 1
-            this.busy = true
-            if (Object.is(this.noData, false)) {
-                this.$refs.scrollContainer.scrollTop = 0
-            }
-            this.noData = false
-            this.dataStore = []
         },
     },
     watch: {

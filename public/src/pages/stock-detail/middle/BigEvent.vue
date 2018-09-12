@@ -5,7 +5,7 @@
     <ul
         class="info_vessel"
         v-show="dataStore.length"
-        v-infinite-scroll="loadMoreData"
+        v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
@@ -64,17 +64,21 @@ import {
     getEventList,
 } from '@service/'
 
+import informationBusyMixin from '../mixins/information-busy-mixin'
+
 export default {
     name: 'BigEvent',
+    mixins: [
+        informationBusyMixin,
+    ],
     created() {
         this.fetchData()
     },
     data() {
         return {
-            rows: 10,
+            ROWS: 10,
             page: 1,
             dataStore: [],
-            busy: true,
             noData: false,
             noDataMsg: '暂无大事件',
             filterFields: [
@@ -96,15 +100,13 @@ export default {
                 options: {
                     is_details: false,
                     stock_code: this.stock_code,
-                    rows: this.rows,
+                    rows: this.ROWS,
                     page: this.page,
                     fields: this.filterFields.join(';'),
                 },
                 callback0: data => {
                     this.dataStore = this.dataStore.concat(data)
-                    this.$nextTick(() => {
-                        this.busy = false
-                    })
+                    this.setBusyState(data.length)
                 },
                 callback1001: () => {
                     this.busy = true
@@ -116,23 +118,8 @@ export default {
 
             getEventList(params)
         },
-        loadMoreData() {
-            // 滚动加载
-            this.busy = true
-            this.page++
-            this.fetchData()
-        },
         formatDate(date) {
             return subDate(date)
-        },
-        resetState() {
-            this.page = 1
-            this.busy = true
-            if (Object.is(this.noData, false)) {
-                this.$refs.scrollContainer.scrollTop = 0
-            }
-            this.noData = false
-            this.dataStore = []
         },
     },
     watch: {

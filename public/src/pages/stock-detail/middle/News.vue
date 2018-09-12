@@ -61,8 +61,13 @@ import {
 } from '@service/'
 import formatInfoDate from '@formatter/information/date'
 
+import informationBusyMixin from '../mixins/information-busy-mixin'
+
 export default {
     name: 'News',
+    mixins: [
+        informationBusyMixin,
+    ],
     created() {
         this.fetchData()
     },
@@ -71,7 +76,6 @@ export default {
             ROWS: 10,
             page: 1,
             dataStore: [],
-            busy: true,
             noData: false,
             noDataMsg: '暂无相关新闻',
             filterFields: [
@@ -142,9 +146,7 @@ export default {
                 options: param,
                 callback0: (data) => {
                     this.dataStore = this.dataStore.concat(data)
-                    this.$nextTick(() => {
-                        this.busy = false
-                    })
+                    this.setBusyState(data.length)
                 },
                 callback1001: () => {
                     this.busy = true
@@ -154,12 +156,6 @@ export default {
                 },
             }
             api(params)
-        },
-        loadMore() {
-            // 滚动加载
-            this.busy = true
-            this.page++
-            this.fetchData()
         },
         formatDate(date) {
             return formatInfoDate(date, true)
@@ -177,15 +173,6 @@ export default {
                 this.openContent(targetData)
             }
         },
-        resetState() {
-            this.page = 1
-            this.busy = true
-            if (Object.is(this.noData, false)) {
-                this.$refs.scrollContainer.scrollTop = 0
-            }
-            this.noData = false
-            this.dataStore = []
-        },
     },
     watch: {
         full_code() {
@@ -198,6 +185,6 @@ export default {
 
 <style lang="less" scoped>
 .info_ellipsis_td {
-    max-width: 18em !important
+    max-width: 18em;
 }
 </style>

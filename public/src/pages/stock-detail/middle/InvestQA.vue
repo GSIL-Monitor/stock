@@ -5,7 +5,7 @@
     <ul
         class="info_vessel"
         v-show="dataStore.length"
-        v-infinite-scroll="loadMoreData"
+        v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
@@ -71,8 +71,13 @@ import {
     subDate,
 } from '../utility'
 
+import informationBusyMixin from '../mixins/information-busy-mixin'
+
 export default {
     name: 'InvestQA',
+    mixins: [
+        informationBusyMixin,
+    ],
     created() {
         this.fetchData()
     },
@@ -81,7 +86,6 @@ export default {
             ROWS: 3,
             page: 1,
             dataStore: [],
-            busy: true,
             noData: false,
             noDataMsg: '暂无投资问答',
         }
@@ -102,9 +106,7 @@ export default {
                 },
                 callback0: data => {
                     this.dataStore = this.dataStore.concat(data)
-                    this.$nextTick(() => {
-                        this.busy = false
-                    })
+                    this.setBusyState(data.length)
                 },
                 callback1001: () => {
                     this.busy = true
@@ -115,23 +117,8 @@ export default {
             }
             getInvestmentQAData(param)
         },
-        loadMoreData() {
-            // 滚动加载
-            this.busy = true
-            this.page++
-            this.fetchData()
-        },
         formatDate(date) {
             return subDate(date)
-        },
-        resetState() {
-            this.page = 1
-            this.busy = true
-            if (Object.is(this.noData, false)) {
-                this.$refs.scrollContainer.scrollTop = 0
-            }
-            this.noData = false
-            this.dataStore = []
         },
     },
     watch: {
