@@ -27,9 +27,6 @@ export default {
         commonStyle,
         searchBtn,
     },
-    beforeCreate() {
-        goGoal.detectSelectedTheme();//检查皮肤
-    },
     mounted() {
         document.addEventListener('keydown', (e) => {
             if (e.keyCode == 13) {

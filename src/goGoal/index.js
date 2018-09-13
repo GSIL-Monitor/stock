@@ -3,30 +3,17 @@ import {
 } from '@c/utils/util'
 import ReconnectingWebSocket from './web-socket'
 
-const goGoal = window.goGoal || {};
+const goGoal = window.goGoal || {}
 
-goGoal.detectSelectedTheme = () => {}
-
-goGoal.changeTheme = () => {}
-// var changeThemeFun = function (theme) {
-//     const styleLink = document.getElementsByTagName('link')[0];
-//     if (theme === 'd') {
-//         styleLink.href = styleLink.href.replace(/\-w|\-d/, '');
-//     } else {
-//         const reg = /css\/\w+(\-w|\-d)?\./;
-//         const match = styleLink.href.match(reg);
-//         const match0 = match[0];
-//         const match1 = match[1];
-//         if (match1) {
-//             styleLink.href = styleLink.href.replace(/\-w|\-d/, '-' + theme);
-//         } else {
-//             styleLink.href = styleLink.href.replace(match0, (s) => {
-//                 return s.split('.')[0] + '-' + theme + '.';
-//             });
-//         }
-//     }
-//     document.documentElement.style.display = 'block';
-// }
+goGoal.changeTheme = (theme) => {
+    const WHITE_SKIN = 'w'
+    const WHITE_SKIN_CLASS_NAME = 'skin_white'
+    if (Obejct.is(theme, WHITE_SKIN)) {
+        document.documentElement.classList.add(WHITE_SKIN_CLASS_NAME)
+    } else {
+        document.documentElement.classList.remove(WHITE_SKIN_CLASS_NAME)
+    }
+}
 
 goGoal.event = (function() {
     var clientList = {};
