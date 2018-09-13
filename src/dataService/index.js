@@ -1,229 +1,319 @@
-import callQt from '@c/utils/callQt'
-const timeout = 10000
-const APIprefix = '/api/'
+import {
+    get,
+    post,
+} from './XHR'
+import {
+    getToken,
+    getReportLine,
+} from '@c/utils/util'
 
-//获取token
-let getToken = function() {
-    const reg = new RegExp('(^| )token=([^;]*)(;|$)')
-    const arr = document.cookie.match(reg)
-    if (arr.length > 0) {
-        return decodeURIComponent(arr[2])
-    } else {
-        return null
-    }
-}
-//获取cookie
-let getCookie = function(name) {
-    var arr,
-        reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
-    if ((arr = document.cookie.match(reg))) {
-        return decodeURIComponent(arr[2])
-    } else {
-        return null
-    }
-}
-//get
-let get = function(api, params) {
-    if (!params._this) {
-        console.log('请添加 `_this` 参数')
-        return
-    }
-    if (!params.options) {
-        params.options = {}
-    }
-
-    return params._this.$http
-        .get(APIprefix + api, { params: params.options, timeout: timeout })
-        .then(
-            function(res) {
-                var handle = handleDataResponse(params)
-                if (!res || !res.body) {
-                    handle.callback1001(res)
-                } else {
-                    switch (res.body.code) {
-                        case 0:
-                            handle.callback0(res)
-                            break
-                        case 1001:
-                            handle.callback1001(res)
-                            break
-                        case 1009:
-                            handle.callback1009(res)
-                            break
-                        case 1100:
-                            handle.callback1100(res)
-                            break
-                        case 405:
-                            handle.callback405(res)
-                            break
-                        default:
-                            break
-                    }
-                }
-                handle.afterResponse(res)
-            },
-            function(res) {
-                console.log('res: ', res)
-                if (params.fail) {
-                    params.fail(res)
-                    console.log('fail')
-                }
-            }
-        )
-}
-//post
-let post = function(api, params) {
-    if (!params._this) {
-        console.log('请添加 `_this` 参数')
-        return
-    }
-    if (!params.options) {
-        params.options = {}
-    }
-    var formData = new FormData()
-    for (var key in params.options) {
-        if (params.options[key] !== '' && params.options[key] !== undefined) {
-            formData.append(key, params.options[key])
-        }
-    }
-    return params._this.$http.post(APIprefix + api, formData, { timeout: timeout }).then(
-        function(res) {
-            var handle = handleDataResponse(params)
-            switch (res.body.code) {
-                case 0:
-                    handle.callback0(res)
-                    break
-                case 1001:
-                    handle.callback1001(res)
-                    break
-                case 1009:
-                    handle.callback1009(res)
-                    break
-                default:
-                    break
-            }
-            handle.afterResponse(res)
-        },
-        function(res) {
-            console.log('res: ', res)
-            if (params.fail) {
-                params.fail(res)
-            }
-        }
-    )
-}
-//处理数据
-let handleDataResponse = function(callback) {
-    let callback0 = callback.callback0,
-        callback400 = callback.callback400,
-        callback401 = callback.callback401,
-        callback405 = callback.callback405,
-        callback1001 = callback.callback1001,
-        callback1009 = callback.callback1009,
-        callback1100 = callback.callback1100,
-        callback1101 = callback.callback1101,
-        callbackUnknownError = callback.callbackUnknownError,
-        afterResponse = callback.afterResponse
-    if (!callback0) {
-        callback0 = function() {}
-    }
-    if (!afterResponse) {
-        afterResponse = function() {}
-    }
-    if (!callback400) {
-        callback400 = function() {}
-    }
-    if (!callback401) {
-        callback401 = function() {}
-    }
-    if (!callback1001) {
-        callback1001 = function() {}
-    }
-    if (!callback1009) {
-        callback1009 = function() {
-            // alert('您的电脑系统时间不正确,请修改！');
-        }
-    }
-    if (!callback1100) {
-        callback1100 = function() {
-            revertPassed()
-            if (location.hostname == 'localhost') {
-                location.href = location.origin //回到登录页
-            }
-            try {
-                callQt.relogin()
-            } catch (error) {}
-        }
-    }
-    if (!callback405) {
-        callback405 = function() {
-            console.log('非法请求')
-            callback1100()
-        }
-    }
-    if (!callback1101) {
-        callback1101 = function() {}
-    }
-    if (!callbackUnknownError) {
-        callbackUnknownError = function() {}
-    }
-    return {
-        callback0: callback0,
-        callback400: callback400,
-        callback405: callback405,
-        callback401: callback401,
-        callback1001: callback1001,
-        callback1009: callback1009,
-        callback1100: callback1100,
-        callback1101: callback1101,
-        afterResponse: afterResponse,
-    }
-}
-//去除passed = true 重新登录
-let revertPassed = () => {
-    let userInfo = localStorage.getItem('zyztUser')
-    userInfo = userInfo ? JSON.parse(userInfo) : {}
-    userInfo.passed = false
-    localStorage.setItem('zyztUser', JSON.stringify(userInfo))
-}
 /**
- * 格式化日期
- * @param format
- * @returns {*}
- */
-Date.prototype.format = function(format) {
-    var o = {
-        'M+': this.getMonth() + 1, //month
-        'd+': this.getDate(), //day
-        'h+': this.getHours(), //hour
-        'm+': this.getMinutes(), //minute
-        's+': this.getSeconds(), //second
-        'q+': Math.floor((this.getMonth() + 3) / 3), //quarter
-        S: this.getMilliseconds(), //millisecond
-    }
-    if (/(y+)/.test(format)) {
-        format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length))
-    }
-    for (var k in o) {
-        if (new RegExp('(' + k + ')').test(format)) {
-            format = format.replace(
-                RegExp.$1,
-                RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
-            )
-        }
-    }
-    return format
+ * @description 网页登录
+*/
+export const loginIn = param => {
+    const APIName = 'v1/user/login'
+    return get(APIName, param)
 }
-exports.getToken = getToken
-exports.getCookie = getCookie
-exports.get = get
-exports.post = post
 
-// 登录
-exports.loginIn = params => {
-    return get('v1/user/login', params)
+/**
+ * @description 个股 -- 获取推荐标签
+*/
+export const getStocktag = param => {
+    const APIName = 'v1/zt/get_stock_tags'
+    return get(APIName, param)
 }
-//权限
-exports.getReportAuth = params => {
-    return get('v1/gpoints/get_gpoint_report_read', params)
+
+/**
+ * @description 个股 -- 获取自选股分组
+*/
+export const getMyStockGroup = (param = {}) => {
+    const APIName = 'v1/mystock/get_group'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取自选股分组详情
+*/
+export const getMyStocks = (param = {}) => {
+    const APIName = 'v1/mystock/mystock_list'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 关联品种折溢价
+*/
+export const getDiscountPremium = param => {
+    const APIName = 'v1/zt/get_stock_discount'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 个股标识
+*/
+export const getStockIdentity = param => {
+    const APIName = 'v1/zt/get_stock_buoy'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取 A股/B股 行情数据
+*/
+export const getLimitStockData = param => {
+    const APIName = 'v1/stock/data'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取指数行情数据
+*/
+export const getIndexData = param => {
+    const APIName = 'v1/hq/details'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取基金行情数据
+*/
+export const getFundData = param => {
+    const APIName = 'v1/hq/fund_data'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取债券行情数据
+*/
+export const getBondData = param => {
+    const APIName = 'v1/hq/bond_data'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取 港股股票/指数/基金/债券/涡轮/牛熊证 行情数据
+*/
+export const getHkStockData = param => {
+    const APIName = 'v1/hq/hk_data'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 一致预期数据
+*/
+export const getSelfConsensus = param => {
+    const APIName = 'v1/zt/get_dm_con_sensus'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 添加到最近访问
+*/
+export const addMyRecent = param => {
+    const APIName = 'v1/mystock/add_recent'
+    Reflect.set(param.options, 'token', getToken())
+
+    return post(APIName, param)
+}
+
+/**
+ * @description 个股 -- 判断股票是否在我的自选股分组
+*/
+export const getMyStockIsAdd = param => {
+    const APIName = 'v1/mystock/get_isdefined'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取股票所属板块
+*/
+export const getIndustryBelongPlate = (param = {}) => {
+    const APIName = 'v1/hq/get_stock_plate_component'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取公司荣誉信息
+*/
+export const getCompanyHonor = param => {
+    const APIName = 'v1/stock/get_tag_v2'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取最近访问列表
+*/
+export const getStockRecent = (param = {}) => {
+    const APIName = 'v1/user/get_visit_recent'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股新闻
+*/
+export const getStockNews = (param = {}) => {
+    const APIName = 'v1/news/get_newmystock_info'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股公告
+*/
+export const getNoticeList = (param = {}) => {
+    const APIName = 'v1/announcement/get_stock_new_announcement_list'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股研报
+*/
+export const getResearchReport = (param = {}) => {
+    const APIName = 'v1/report/search'
+    Reflect.set(param.options, 'token', getToken())
+    Reflect.set(param.options, 'product_line', getReportLine())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股投资问答
+*/
+export const getInvestmentQAData = param => {
+    const APIName = 'v1/news/get_investment_qa'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股大事件
+*/
+export const getEventList = param => {
+    const APIName = 'v1/stock/get_announcement_notice'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股同业股票
+*/
+export const getSameIndustryStock = param => {
+    const APIName = 'v1/stock/get_same_industry_stock_data'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股关联品种
+*/
+export const getRelatedStock = param => {
+    const APIName = 'v1/stock/get_associated_varieties'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取 A股/B股/基金/债券 成交明细
+*/
+export const getTransaction = param => {
+    const APIName = 'v1/hq/get_transaction'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 获取 港股股票/指数/基金/债券/涡轮/牛熊证 成交明细
+*/
+export const getHKTransaction = param => {
+    const APIName = 'v1/hq/get_transaction_hk'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股 / 沪深指数 短线精灵获取历史数据
+*/
+export const getShortLine = param => {
+    const APIName = 'v1/hq/get_stock_history_dynamic'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- A股简易财务
+*/
+export const getStockFinance = param => {
+    const APIName = 'v1/stock/get_hq_header_list'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 沪深指数 -- 成分股
+*/
+export const getIndexStocks = param => {
+    const APIName = 'v1/hq/list'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 沪深指数 -- 其他指数
+*/
+export const getOtherIndicators = param => {
+    const APIName = 'v1/hq/fullcodes'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 沪深指数新闻
+*/
+export const getHSIndexNews = (param = {}) => {
+    const APIName = 'v1/news/get_ask_news_info'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 沪深指数公告
+*/
+export const getIndexNotice = (param = {}) => {
+    const APIName = 'v1/announcement/search_new_announcement'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 港股股票新闻
+*/
+export const getHKStockNews = (param = {}) => {
+    const APIName = 'v1/news/get_hk_newmystock_info'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 港股股票同业股票
+*/
+export const getHKSameIndustryStock = param => {
+    const APIName = 'v1/stock/get_hk_same_industry_stock_data'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 港股股票关联品种
+*/
+export const getHKRelatedStock = param => {
+    const APIName = 'v1/stock/get_associated_varieties'
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 判断传入日期是否是交易日
+*/
+export const isBusinessDay = param => {
+    const APIName = 'v1/hq/is_edate'
+    return get(APIName, param)
 }
