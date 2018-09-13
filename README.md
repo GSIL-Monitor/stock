@@ -1,59 +1,18 @@
-**行情**
+```bash
 
+# 开发
+yarn dev
+## OR
+npm run dev
 
-> Pure Vue front-end project
+# 打包 cdn 文件
+yarn build
+## OR
+npm run build
 
+# 检查打包文件中大小分布情况
+yarn report
 
-
-
-**Build Setup**
-
-``` bash
-
-> 安装依赖
-
-    npm install
-
-> 实时编译
-
-    npm start
-
-> 启动项目
-
-	serve with hot reload at http://localhost:8080
-	# 现在有如下页面：
-	# http://localhost:8080/login.html
-	# http://localhost:8080/stockDetail.html
-	...
-
-	npm run dev
-
-> 打包构建
-
-
-	# build for production with minification
-	# start with the url:
-	# http://localhost:8094/login.html
-	# http://localhost:8094/stockDetail.html
-	...
-
-	npm run build
-
-
-
-> For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-> 相关资料 etc **:**
-
-
-1. [vue](https://cn.vuejs.org/)
-
-2. [vue-infinite-scroll](https://github.com/ElemeFE/vue-infinite-scroll)
-
-3. [vue-resource](https://github.com/pagekit/vue-resource)
-
-4. [vue-router](https://router.vuejs.org/zh-cn/)
-
-5. [vuex](https://vuex.vuejs.org/zh-cn/)
-
-
+# 本地运行 cdn 的打包文件
+node server.js
+```
