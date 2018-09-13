@@ -13,6 +13,9 @@
 <script>
 export default {
     name: 'FundFlowPie',
+    mounted() {
+        this.mergeOptions()
+    },
     data() {
         return {
             RED_COLOR: '#ff2b49',
@@ -181,6 +184,11 @@ export default {
             return this.defaultOptions
         },
     },
+    methods: {
+        mergeOptions() {
+            this.$refs.mychart.mergeOptions(this.chartOptions)
+        },
+    },
     props: {
         pieData: {
             type: Object,
@@ -189,7 +197,7 @@ export default {
     },
     watch: {
         pieData() {
-            this.$refs.mychart.mergeOptions(this.chartOptions)
+            this.mergeOptions()
         },
     },
 }

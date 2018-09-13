@@ -148,7 +148,6 @@ export default {
                 if (this.noData) {
                     this.noData = false
                 }
-                console.log('push data')
             }
         },
         setDefaultValue() {

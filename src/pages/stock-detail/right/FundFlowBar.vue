@@ -1,12 +1,12 @@
 <template>
     <div class="flow_bar">
-        <keep-alive>
+        <!-- <keep-alive> -->
             <chart
                 class="fund_flow_bar"
                 :manual-update="true"
                 ref="mychart"
             ></chart>
-        </keep-alive>
+        <!-- </keep-alive> -->
     </div>
 </template>
 
@@ -73,6 +73,9 @@ const defaultOptions = {
 
 export default {
     name: 'FundFlowBar',
+    mounted() {
+        this.mergeOptions()
+    },
     data() {
         return {
             RED_COLOR: '#ff2b49',
@@ -90,7 +93,6 @@ export default {
             three = isNumber(three) ? three : null
             four = isNumber(four) ? four : null
             let sericeData = []
-
             sericeData.push(this.eachSerice(one, xData[0], '0.4'))
             sericeData.push(this.eachSerice(two, xData[1], '0.6'))
             sericeData.push(this.eachSerice(three, xData[2], '0.8'))
@@ -127,7 +129,7 @@ export default {
                         position: 'top',
                         formatter(data) {
                             let val = data.value
-                            let value = value = Math.abs(val) >= 100 ? val.toFixed(0) : val.toFixed(1)
+                            let value = Math.abs(val) >= 100 ? val.toFixed(0) : val.toFixed(1)
 
                             return value
                         },
@@ -139,6 +141,9 @@ export default {
                     },
                 },
             }
+        },
+        mergeOptions() {
+            this.$refs.mychart.mergeOptions(this.chartOptions)
         },
     },
     props: {
