@@ -9,7 +9,7 @@
         </div>
         <div class="view_vessel">
             <div
-                v-if="clear"
+                v-if="noData"
                 class="extend_nodata"
             >
                 暂无数据
@@ -72,6 +72,7 @@ export default {
             buy: 'buy_',
             sell: 'sell_',
             fieldsCount: 4,
+            noData: true,
         }
     },
     components: {
@@ -93,10 +94,6 @@ export default {
             'current_type',
             'full_code',
         ]),
-        clear() {
-            // TODO -- 清空机制
-            return false
-        },
         buyList() {
             let arr = []
             for (let i = 0; i < this.fieldsCount; i++) {
@@ -140,8 +137,19 @@ export default {
     },
     methods: {
         receiveSocketData(...args) {
-            this.socketData = Object.assign({}, this.socketData, args[0][0])
-            this.setDefaultValue()
+            let data = args[0][0]
+            if (Object.is(data.mark, 1)) {
+                // clear
+                this.noData = true
+                this.socketData = {}
+            } else {
+                this.socketData = Object.assign({}, this.socketData, data)
+                this.setDefaultValue()
+                if (this.noData) {
+                    this.noData = false
+                }
+                console.log('push data')
+            }
         },
         setDefaultValue() {
             let count = this.fieldsCount

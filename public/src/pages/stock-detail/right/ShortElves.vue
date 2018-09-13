@@ -31,11 +31,11 @@
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
         @dblclick="dblclickLi"
-        v-show="line_data.length"
+        v-show="dataStore.length"
         ref="scrollContainer"
     >
         <ShortElvesItem
-            v-for="(item, index) of line_data"
+            v-for="(item, index) of dataStore"
             :key="index"
             :type="item.type"
             :tdate="item.tdate"
@@ -87,7 +87,7 @@ export default {
     data() {
         return {
             stock_only: false,
-            line_data: [],
+            dataStore: [],
             busy: true,
             rows: 50,
             end_date: null,
@@ -194,7 +194,7 @@ export default {
                 this.$refs.scrollContainer.scrollTop = 0
             }
             this.noData = false
-            this.line_data = []
+            this.dataStore = []
         },
         watchOnly() {
             this.stock_only = !this.stock_only
@@ -204,7 +204,7 @@ export default {
             const param = {
                 options: p,
                 callback0: data => {
-                    this.line_data = this.line_data.concat(data)
+                    this.dataStore = this.dataStore.concat(data)
                     this.end_date = data[data.length - 1].tdate
 
                     this.$nextTick(() => {
@@ -245,7 +245,7 @@ export default {
             data.forEach((element) => {
                 element.tdate = element.date
             })
-            this.line_data.unshift(...data)
+            this.dataStore.unshift(...data)
         },
         loadMoreData() {
             // 滚动加载

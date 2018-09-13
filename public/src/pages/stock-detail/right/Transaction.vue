@@ -21,11 +21,11 @@
             infinite-scroll-distance="60"
             infinite-scroll-throttle-delay="100"
             @dblclick="dblclickLi"
-            v-show="transation.length"
+            v-show="dataStore.length"
             ref="scrollContainer"
         >
             <TransactionLi
-                v-for="(item, index) of transation"
+                v-for="(item, index) of dataStore"
                 :key="index"
                 :item="item"
                 :current_type="current_type"
@@ -64,7 +64,7 @@ export default {
     data() {
         return {
             latestTime: 0,
-            transation: [],
+            dataStore: [],
             update_time: null,
             busy: true,
             noData: false,
@@ -135,11 +135,11 @@ export default {
             const param = {
                 options: this.getCurrentParams(),
                 callback0: data => {
-                    if (!this.update_time && Object.is(this.transation.length, 0)) {
+                    if (!this.update_time && Object.is(this.dataStore.length, 0)) {
                         this.latestTime = this.getTimeStamp(data[0].update_time)
                     }
 
-                    this.transation = this.transation.concat(data)
+                    this.dataStore = this.dataStore.concat(data)
                     this.update_time = data[data.length - 1].update_time
 
                     if (this.isForbiddenHkLoad) {
@@ -181,7 +181,7 @@ export default {
                 this.$refs.scrollContainer.scrollTop = 0
             }
             this.noData = false
-            this.transation = []
+            this.dataStore = []
         },
         pushData(data) {
             // 推送
@@ -190,11 +190,11 @@ export default {
                 this.noData = false
             }
             if (nowTimeStamp > this.latestTime) {
-                this.transation.unshift(data)
+                this.dataStore.unshift(data)
                 // 港股非实时行情保留4条数据
                 if (this.isForbiddenHkLoad) {
-                    if (this.transation.length > 4) {
-                        this.transation.splice(this.transation.length - 1, 1)
+                    if (this.dataStore.length > 4) {
+                        this.dataStore.splice(this.dataStore.length - 1, 1)
                     }
                 }
                 this.latestTime = nowTimeStamp
