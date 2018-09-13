@@ -5,7 +5,7 @@
     <div
         class="stock_chart"
     >
-        <!-- <KLine/> -->
+        <KLine/>
     </div>
     <div
         class="stock_info"
@@ -104,6 +104,8 @@ export default {
 
 .root_main {
     height: 100%;
+    border-left: 2px solid var(--color-background);
+    border-right: 2px solid var(--color-background);
     flex-direction: column;
     &.stock_chart_infoFull {
         .stock_chart {

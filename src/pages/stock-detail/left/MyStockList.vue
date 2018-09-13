@@ -221,10 +221,10 @@ export default {
         display: flex;
         flex: 0 0 26px;
         align-items: center;
-        background-color: #292929;
-        border-bottom: 1px solid;
+        background-color: var(--color-card-background);
+        border-bottom: 1px solid var(--color-dividers);
         padding: 0 5px;
-        color: #f8f8f8;
+        color: var(--color-primary-text);
         cursor: pointer;
     }
     .market_list {
@@ -245,6 +245,7 @@ export default {
         overflow: auto;
     }
     .market_list_item {
+        border-bottom: 1px solid var(--color-dividers);
         &.background-red {
             background: linear-gradient(left, transparent, rgba(245, 29, 39, 0.1) 60%, rgba(245, 29, 39, 0.15));
         }
