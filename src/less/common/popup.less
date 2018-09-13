@@ -1,110 +1,105 @@
-@import './variables.less';
-.popup .check-box{
-    background:@popup-check-bg;
-    border-color:@popup-check-border;
+// out: false
+.popup .check-box {
+    background: var(--modal-bg-color);
+    border-color: var(--color-backbg3);
 }
-.popup .checked-box{
-    background:@checked center;
+
+.popup .checked-box {
+    background: url('~@assets/checked.png') center;
 }
-.alert-text{
+
+.alert-text {
     text-align: center;
-    height:100%;
-    line-height:85px;
+    height: 100%;
+    line-height: 85px;
 }
-.popup{
+
+.popup {
     //  border: 1px solid @color-boder-1;
-    background: @modal-bg-color;
-    ::-webkit-scrollbar-track-piece{
-        background: @axis-background-white;
+    background: var(--modal-bg-color);
+    ::-webkit-scrollbar-track-piece {
+        background: var(--axis-background-white);
     }
-    ::-webkit-scrollbar-track-piece{
-        background-color: @axis-background-white;
+    ::-webkit-scrollbar-track-piece {
+        background-color: var(--axis-background-white);
     }
     ::-webkit-scrollbar {
-        width:16px;
+        width: 16px;
     }
     ::-webkit-scrollbar:horizontal {
-        height:16px;
+        height: 16px;
     }
-    ::-webkit-scrollbar-thumb:horizontal{
-        border-top: 3px solid @axis-background-white;
-        border-bottom: 3px solid @axis-background-white;
+    ::-webkit-scrollbar-thumb:horizontal {
+        border-top: 3px solid var(--axis-background-white);
+        border-bottom: 3px solid var(--axis-background-white);
     }
-    ::-webkit-scrollbar-button{
+    ::-webkit-scrollbar-button {
         height: 12px;
         width:16px;
     }
     ::-webkit-scrollbar-button:horizontal:start{
-        background:@axis-background-white url("../../assets/axis-left-8x4.png") no-repeat center center;
+        background: var(--axis-background-white) url("~@assets/axis-left-8x4.png") no-repeat center center;
         //  background-size: 100% 100%;
     }
-    ::-webkit-scrollbar-button:horizontal:end{
-
-        background:@axis-background-white url("../../assets/axis-right-8x4.png") no-repeat center center;
+    ::-webkit-scrollbar-button:horizontal:end {
+        background: var(--axis-background-white) url("~@assets/axis-right-8x4.png") no-repeat center center;
         //  background-size: 100% 100%;
     }
-    ::-webkit-scrollbar-button:vertical:start{
-
-        background:@axis-background-white url("../../assets/axis-top-8x4.png") no-repeat center center;
+    ::-webkit-scrollbar-button:vertical:start {
+        background: var(--axis-background-white) url("~@assets/axis-top-8x4.png") no-repeat center center;
         //  background-size: 100% 100%;
     }
-    ::-webkit-scrollbar-button:vertical:end{
-
-        background:@axis-background-white url("../../assets/axis-bottom-8x4.png") no-repeat center center;
+    ::-webkit-scrollbar-button:vertical:end {
+        background: var(--axis-background-white) url("~@assets/axis-bottom-8x4.png") no-repeat center center;
         //  background-size: 100% 100%;
-    }
-    ::-webkit-scrollbar-track {
-
     }
     ::-webkit-scrollbar-track-piece {
-        background-color: @axis-background-white;
+        background-color: var(--axis-background-white);
     }
     ::-webkit-scrollbar-thumb {
-        border-left: 3px solid @axis-background-white;
-        border-right: 3px solid @axis-background-white;
+        border-left: 3px solid var(--axis-background-white);
+        border-right: 3px solid var(--axis-background-white);
         border-top: none;
         border-bottom: none;
-        background: @axis-color-white;
+        background: var(--axis-color-white);
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: @axis-color-white;
+        background: var(--axis-color-white);
     }
-    ::-webkit-scrollbar-corner{
-        background-color: @scrollbar-bg;
+    ::-webkit-scrollbar-corner {
+        background-color: var(--scrollbar-bg);
     }
-    ::-webkit-resizer{
+    .typehead {
+        border-color: var(--popupWindow-line);
+        background: var(--popup-list-background);
+        color: var(--item-text-color) !important;
     }
-    .typehead{
-        border-color:@popup-border-color;
-        background:@popup-list-background;
-        color:@item-text-color !important;
+    .typehead .selected {
+        background:var(--popup-select-hover) !important;
+        color: var(--item-text-color) !important;
     }
-    .typehead .selected{
-        background:@popup-select-hover !important;
-        color:@item-text-color !important;
+    .option-item:hover {
+        background: var(--popup-select-hover);
     }
-    .option-item:hover{
-        background:@popup-select-hover;
+    input {
+        color: var(--item-text-color);
+        background: var(--color-white);
+        border-color: var(--popupWindow-line);
     }
-    input{
-        color: @item-text-color;
-        background: @color-white;
-        border-color: @popupWindow-line;
+    .select-box {
+        color:var(--item-text-color);
     }
-    .select-box{
-        color:@item-text-color;
+    .select-value {
+        border-color: var(--popupWindow-line);
+        background: var(--color-white);
     }
-    .select-value{
-        border-color:@popupWindow-line;
-        background:@color-white;
+    .option-list {
+        border-color:var(--popupWindow-line);
+        background: var(--popup-list-background);
     }
-    .option-list{
-        border-color:@popupWindow-line;
-        background:@popup-list-background
-    }
-    textarea{
-        color: @item-text-color;
-        background: @color-white;
-        border-color: @popupWindow-line;
+    textarea {
+        color: var(--item-text-color);
+        background: var(--color-white);
+        border-color: var(--popupWindow-line);
     }
 }

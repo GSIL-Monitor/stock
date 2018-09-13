@@ -85,20 +85,20 @@
         outline: none;
     }
     .search-btn.btn-blue:hover{
-        background: @color-btn-bg2;
+        background: var(--color-btn-bg2);
     }
     .search-btn.btn-blue:active{
         background: @color-btn-click;
     }
     .search-btn.btn-blue{
-        background:@color-blue;
-        color:@color-white;
+        background: var(--color-blue);
+        color: var(--color-white);
         border-color:transparent;
     }
     .search-btn.btn-white{
-        background:@color-white;
-        color:@color-blue;
-        border-color:@color-blue;
+        background: var(--color-white);
+        color: var(--color-blue);
+        border-color: var(--color-blue);
     }
     .search-btn.btn-white:hover{
         background:@item-texthover-color;

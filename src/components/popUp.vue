@@ -36,6 +36,8 @@
     </div>
 </template>
 <script>
+import searchBtn from '@c/button.vue';
+
 export default {
     name: 'popUp',
     props: {
@@ -121,7 +123,7 @@ export default {
         }
     },
     components: {
-        searchBtn: require('./button.vue')
+        searchBtn,
     },
     computed: {
         node_main() {

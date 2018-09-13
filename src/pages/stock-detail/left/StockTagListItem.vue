@@ -35,7 +35,6 @@ export default {
 </script>
 
 <style lang="less">
-@import '../../../less/market/variables-d.less';
 .tool_list {
     padding: 0 12px;
     li {
@@ -53,7 +52,7 @@ export default {
         border-radius: 6px;
         margin: 0 auto;
         cursor: pointer;
-        color: @white;
+        color: var(--white);
         &:hover {
             border-color: #c7c7c7;
         }
@@ -71,7 +70,7 @@ export default {
     }
     .tag-ico-authen-num {
         font-size: 12px;
-        color: @color-white;
+        color: var(--color-white);
     }
     .two-line {
         line-height: 21px;
@@ -148,14 +147,14 @@ export default {
     .point-default {
         cursor: default;
     }
-    .common-honor {
-        // background: url("../ico/honor-common.png") no-repeat -2px -2px;
-    }
-    .good-honor {
-        // background: url("../ico/honor-good.png") no-repeat -2px -2px;
-    }
-    .hope-honor {
-        // background: url("../ico/honor-hope.png") no-repeat -2px -2px;
-    }
+    // .common-honor {
+    //     // background: url("../ico/honor-common.png") no-repeat -2px -2px;
+    // }
+    // .good-honor {
+    //     // background: url("../ico/honor-good.png") no-repeat -2px -2px;
+    // }
+    // .hope-honor {
+    //     // background: url("../ico/honor-hope.png") no-repeat -2px -2px;
+    // }
 }
 </style>

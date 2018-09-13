@@ -8,9 +8,9 @@ import stores from './store/stock-detail-store/'
 // import routes from './router/stock-detail-router/'
 import eventBus from './plugins/eventBus/'
 import goGoal from './goGoal/'
+import '@less/common/theme.less'
 
 import Echarts from 'vue-echarts/components/ECharts'
-
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/chart/pie'
