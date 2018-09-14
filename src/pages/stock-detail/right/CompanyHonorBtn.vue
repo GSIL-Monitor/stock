@@ -1,30 +1,32 @@
 <template>
     <button
-        id="company-honor-tag"
         class="company_honor"
         :class="honorClass"
         :title="remark"
         type="button"
+        v-if="showMsg"
     >
         {{showMsg}}
     </button>
 </template>
 
 <script>
-import { getCompanyHonor } from '@service/index'
+import {
+    getCompanyHonor,
+} from '@service/index'
 
 export default {
     name: 'CompanyHonorBtn',
+    created() {
+        if (this.stock_code) {
+            this.getHonorData()
+        }
+    },
     data() {
         return {
             showMsg: '',
             remark: '',
             type: null,
-        }
-    },
-    mounted() {
-        if (this.stock_code) {
-            this.getHonorData()
         }
     },
     computed: {
@@ -47,7 +49,7 @@ export default {
     },
     methods: {
         getHonorData() {
-            var params = {
+            const params = {
                 options: {
                     stock_code: this.stock_code,
                 },
@@ -66,7 +68,15 @@ export default {
             getCompanyHonor(params)
         },
     },
-    props: ['stock_code'],
+    props: [
+        'stock_code'
+    ],
+    watch: {
+        stock_code() {
+            this.showMsg = ''
+            this.getHonorData()
+        },
+    },
 }
 </script>
 
@@ -76,11 +86,12 @@ export default {
     }
     .btn-tips {
         cursor: pointer;
-        padding: 0;
+        padding: 1px 3px;
         text-align: center;
-        color: #fff;
+        color: var(--white);
         font-size: 12px;
         border-radius: 3px;
+        border: 0;
     }
     .btn-tips-Red {
         background-color: #FB3E1B;
