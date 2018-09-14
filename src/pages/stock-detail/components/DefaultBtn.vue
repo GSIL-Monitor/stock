@@ -10,7 +10,6 @@
 </template>
 
 <script>
-
 export default {
     name: "DefaultBtn",
     methods: {
@@ -32,12 +31,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1px 5px;
-    color: var(--white);
+    color: var(--color-white);
+    background-color: var(--color-button-normal);
+    border-color: transparent;
+    padding: 1px var(--border-radius-base);
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-h6);
     border: 0;
-    font-size: 12px;
-    border-radius: 3px;
-    background-color: #1890FF;
     cursor: pointer;
+    &:hover {
+        background-color: var(--color-btn-bg2);
+    }
 }
 </style>
