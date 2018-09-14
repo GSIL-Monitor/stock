@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div class="tool_title" v-if="showTitle">
+        <div
+            class="tool_title"
+            v-if="showTitle"
+        >
             <span class="tool_title_circle"></span>
             <span class="tool_title_dsc">{{title}}</span>
         </div>
@@ -22,7 +25,6 @@ export default {
     data() {
         return {}
     },
-    methods: {},
     components: {
         OneTag,
     },

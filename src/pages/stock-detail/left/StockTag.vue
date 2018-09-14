@@ -2,6 +2,7 @@
     <div class="lt_detail_tool">
         <TagList
             v-for="(item, index) of dataList"
+            :class="toolClasses(index)"
             :key="index"
             v-bind="item"
         />
@@ -138,6 +139,9 @@ export default {
 
             this.getStockTagData(param)
         },
+        toolClasses(index) {
+            return [`tool_title_${index}`]
+        },
     },
     watch: {
         full_code() {
@@ -157,19 +161,29 @@ export default {
         height: 20px;
         align-items: center;
         margin-top: 13px;
-        background-color: #2E2E2E;
-        border-top: 1px solid #272727;
-        border-bottom: 1px solid #272727;
+        background-color: var(--color-smallcard-background);
+        color: var(--color-primary-text);
+        border-top: 1px solid var(--color-dividers);
+        border-bottom: 1px solid var(--color-dividers);
+        font-size: 12px;
         .tool_title_circle {
             width: 5px;
             height: 5px;
             border-radius: 50%;
-            background: #fff;
             margin-left: 13px;
         }
         .tool_title_dsc {
             margin-left: 7px;
-            color: #D8D8D8
+        }
+    }
+    .tool_title_1 {
+        .tool_title_circle {
+            background-color: #FE943D;
+        }
+    }
+    .tool_title_2 {
+        .tool_title_circle {
+            background-color: #DA4F4A;
         }
     }
     .tool_list{
