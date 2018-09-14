@@ -108,7 +108,6 @@ export default {
             } else {
                 this.localStore.push(type)
             }
-            console.log(this.localStore)
         }
     },
     beforeDestroy() {

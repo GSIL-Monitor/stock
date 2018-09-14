@@ -260,9 +260,10 @@ export default {
         height: 14px;
         cursor: pointer;
         background-color: #267;
+        background: url('~@assets/select-box.png') no-repeat center center;
         margin-right: 2px;
         &.on {
-            background-color: #634;
+            background-image: url('~@assets/select-box-on.png');
         }
     }
     .filter_item_label {

@@ -55,10 +55,10 @@ export default {
     cursor: pointer;
     width: 14px;
     height: 14px;
-    background-color: #634;
+    background: url('~@assets/select-box.png') no-repeat center center;
     margin-right: 5px;
     &.on {
-        background-color: #429;
+        background-image: url('~@assets/select-box-on.png');
     }
 }
 </style>
