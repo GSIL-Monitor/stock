@@ -285,6 +285,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     flex: 0 0 140px;
+    border-left: 1px solid var(--color-border);
 }
 .set_tape_Hide {
     .tape_footer,
@@ -299,6 +300,8 @@ export default {
     align-items: center;
     padding-left: 5px;
     padding-right: 8px;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-card-background);
 }
 .tape_header_title {
     font-size: 14px;
@@ -326,5 +329,11 @@ export default {
 }
 .tape_btn_Reset {
     margin-top: 10px;
+}
+.tape-case-entrust {
+    border-bottom: 1px solid var(--color-border);
+}
+.function_style {
+     border-top: 1px solid var(--color-border);
 }
 </style>

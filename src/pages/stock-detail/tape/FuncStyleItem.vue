@@ -58,11 +58,10 @@ export default {
     width: 37px;
     height: 23px;
     margin-right: 15px;
-    background-color: #fff;
+    background: url('~@assets/simple-ico.png') no-repeat center center;
     cursor: pointer;
 }
 .func_item_ico_On {
-    background-color: #634;
+    background: url('~@assets/meticulous-ico.png') no-repeat center center;
 }
 </style>
-

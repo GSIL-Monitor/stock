@@ -46,8 +46,8 @@ export default {
     padding-bottom: 16px;
 }
 .case_item_title {
-    cursor: default;
     font-size: 12px;
+    color: var(--color-primary-text);
     padding: 14px 3px 9px 3px;
 }
 .case_content_title {
@@ -60,14 +60,15 @@ export default {
         align-items: center;
         justify-content: center;
         margin-left: 1px;
-        background-color: rgba(255, 255, 255, 0.09);
+        color: var(--color-primary-text);
+        background-color: var(--color-smallcard-background);
         cursor: pointer;
         &:first-child {
             margin-left: 0;
         }
         &.active {
-            background-color: #2E5373;
-            color: #1890FF;
+            color: var(--color-white);
+            background-color: var(--color-selected);
         }
     }
 }
