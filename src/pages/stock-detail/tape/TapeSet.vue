@@ -327,8 +327,14 @@ export default {
     border-radius: 4px;
     font-size: 14px;
 }
+.tape_btn_Sure {
+    background-color: var(--color-smallcard-background);
+    color: var(--color-primary-text);
+}
 .tape_btn_Reset {
     margin-top: 10px;
+    background-color: var(--color-button-normal);
+    color: var(--color-white);
 }
 .tape-case-entrust {
     border-bottom: 1px solid var(--color-border);

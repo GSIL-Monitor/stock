@@ -368,12 +368,23 @@ export default {
     }
     .gg_tabs_wrap {
         height: 30px;
+        border-top: none;
+        border-bottom: none;
+        background: var(--color-smallcard-background);
     }
     .gg_tabs_tab_text {
         height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .gg_tabs_tab {
+        border-right: 1px solid var(--color-border);
+        color: var(--color-primary-text);
+    }
+    .gg_tabs_tab_active {
+        background: var(--color-card-background);
+        color: var(--color-selected);
     }
 }
 </style>

@@ -78,22 +78,20 @@ export default {
 .range_list_count {
     flex: 0 0 50px;
 }
-@red: #FF2B48;
-@green: #06B45F;
 .range_list_Red {
     .range_list_process_bar {
-        background-color: @red;
+        background-color: var(--color-red);
     }
     .range_list_count {
-        color: @red;
+        color: var(--color-red);
     }
 }
 .range_list_Green {
     .range_list_process_bar {
-        background-color: @green;
+        background-color: var(--color-green);
     }
     .range_list_count {
-        color: @green;
+        color: var(--color-green);
     }
 }
 </style>

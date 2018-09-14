@@ -28,10 +28,12 @@ export default {
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        background-color: rgba(255,255,255,.09);
+        border-right: 1px solid var(--color-border);
+        color: var(--color-primary-text);
+
     }
     .tab_switch_one.active {
-        background-color: #252527;
-        color: #1890FF;
+        background: var(--color-card-background);
+        color: var(--color-selected);
     }
 </style>

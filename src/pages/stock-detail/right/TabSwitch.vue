@@ -61,5 +61,6 @@ export default {
         display: flex;
         font-size: 12px;
         height: 30px;
+        background: var(--color-smallcard-background);
     }
 </style>

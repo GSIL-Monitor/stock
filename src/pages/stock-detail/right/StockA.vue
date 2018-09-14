@@ -239,7 +239,6 @@
             <ShortElves v-if="bottomTabConfig.activeType === 'short_line'"/>
         </div>
         <TabSwitch
-            class="tab_switch"
             :configArr="tabSwitchList.list"
             :activeType="tabSwitchList.activeType"
             @tabClick="changeBottomActiveTab"

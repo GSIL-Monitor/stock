@@ -1,6 +1,6 @@
 <template>
     <div class="index_constituent">
-        <div class="constituent_title">
+        <div class="view_title">
             <span>成分股</span>
         </div>
         <!-- <sunTable
@@ -229,13 +229,6 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-}
-
-.constituent_title {
-    flex: 0 0 26px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .el-table {

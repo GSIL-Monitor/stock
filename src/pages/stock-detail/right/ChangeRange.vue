@@ -1,6 +1,6 @@
 <template>
     <div class="range_mod">
-        <div class="range_mod_title">涨跌分布</div>
+        <div class="view_title">涨跌分布</div>
         <div class="range_mod_body">
             <RangeBodyItem
                 v-for="(item, index) of bodyOrder"
@@ -335,16 +335,11 @@ export default {
         flex-direction: column;
         height: 100%;
     }
-    .range_mod_title {
-        flex: 0 0 26px;
-        display: flex;
-        align-items: center;
-        padding-left: 10px;
-    }
     .range_mod_body {
         display: flex;
         flex: 0 0 148px;
         flex-wrap: wrap;
+        border-bottom: 1px solid var(--color-border);
     }
     .range_item {
         flex: 0 0 50%;

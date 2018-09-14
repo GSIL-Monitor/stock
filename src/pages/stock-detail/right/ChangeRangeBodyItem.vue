@@ -48,9 +48,9 @@ export default {
     justify-content: center;
 }
 .bg-red {
-    background-color: #832126;
+    background: rgba(245, 29, 39, 0.45);
 }
 .bg-green {
-    background-color: #266722;
+    background: rgba(41, 184, 30, 0.45);
 }
 </style>
