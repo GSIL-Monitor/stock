@@ -5,14 +5,23 @@ import ReconnectingWebSocket from './web-socket'
 
 const goGoal = window.goGoal || {}
 
-goGoal.changeTheme = (theme) => {
+const changeThemeFun = (theme) => {
     const WHITE_SKIN = 'w'
     const WHITE_SKIN_CLASS_NAME = 'skin_white'
-    if (Obejct.is(theme, WHITE_SKIN)) {
+    if (Object.is(theme, WHITE_SKIN)) {
         document.documentElement.classList.add(WHITE_SKIN_CLASS_NAME)
     } else {
         document.documentElement.classList.remove(WHITE_SKIN_CLASS_NAME)
     }
+}
+
+goGoal.detectSelectedTheme = () => {
+    let skin = getCookie('skin')
+    changeThemeFun(skin)
+}
+
+goGoal.changeTheme = (theme) => {
+    changeThemeFun(theme)
 }
 
 goGoal.event = (function() {

@@ -184,6 +184,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.info_date_td {
+    width: 113px;
+}
+
 .info_ellipsis_td {
     max-width: 18em;
 }

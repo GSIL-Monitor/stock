@@ -1,5 +1,6 @@
 // out: false
 :root {
+    cursor: default;
     /****基准皮肤base color****/
     --black: #000000;
     @black: #000000;
@@ -141,26 +142,46 @@
     --compress-img: url("~@assets/compress12X12.png") no-repeat center; //压缩文件图标
     --elseFile-img: url("~@assets/elseFile12x12.png") no-repeat center; //其他文件图标
     --textFile-img: url("~@assets/TXT12x12.png") no-repeat center; //text文件图标
-    .compress-img {
+    --pdf-img: url("~@assets/rc-pdf.png") no-repeat center;
+    --word-img: url('~@assets/rc-word.png') no-repeat center;
+    --excel-img: url("~@assets/rc-excel.png") no-repeat center;
+    .information-ico() {
         display: inline-block;
         width: 12px;
         height: 12px;
-        background: var(--compress-img);
         vertical-align: middle;
+    }
+    .ico-read-pdf {
+        .information-ico();
+        background: var(--pdf-img);
+    }
+
+    .readingPDF-img {
+        .information-ico();
+        background: var(--pdf-img);
+    }
+
+    .readingDOC-img {
+        .information-ico();
+        background: var(--word-img);
+    }
+
+    .readingXLSX-img {
+        .information-ico();
+        background: var(--excel-img);
+    }
+
+    .compress-img {
+        .information-ico();
+        background: var(--compress-img);
     }
     .elseFile-img {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
+        .information-ico();
         background: var(--elseFile-img);
-        vertical-align: middle;
     }
     .textFile-img {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
+        .information-ico();
         background: var(--textFile-img);
-        vertical-align: middle;
     }
     //基础颜色
     --color-red: var(--color-rise-color); //涨 红色

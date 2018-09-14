@@ -152,6 +152,8 @@
         position: relative;
         font-size: 12px;
         align-items: center;
+        border-top: 1px solid var(--color-backbg3);
+        border-bottom: 1px solid var(--color-backbg3);
     }
     .gg_tabs_tab {
         position: relative;

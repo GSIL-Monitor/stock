@@ -37,7 +37,7 @@
                         class="info_ico_td"
                     >
                         <span
-                            :class="['stockDetial-read-pdf', formatIco(item.file_type)]"
+                            :class="['stockDetial-read-pdf', formatIco(item.format).imgClass]"
                         >
                         </span>
                     </td>
@@ -187,7 +187,11 @@ export default {
 .info_ellipsis_td {
     max-width: 18em !important
 }
+.info_date_td {
+    width: 90px;
+}
 .info_ico_td {
     width: 40px;
+    text-align: center;
 }
 </style>

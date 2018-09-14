@@ -76,6 +76,7 @@ export default {
         stockVerifyMixin,
     ],
     beforeCreate() {
+        goGoal.detectSelectedTheme()
         // 监听 hash 改变
         window.onhashchange = event => {
             let hash = location.hash.substr(1)

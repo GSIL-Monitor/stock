@@ -131,7 +131,8 @@ export default {
     .load_more {
         position: absolute;
         right: 14px;
-        top: 6px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 
@@ -145,6 +146,31 @@ export default {
     .gg_tabs_tab {
         padding: 0 15px;
     }
+    .td-openContent {
+        cursor: pointer;
+        &:hover {
+            color: #096DD9;
+        }
+    }
+    td {
+        color: var(--color-primary-text);
+    }
+    .info_ellipsis_td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-left: 10px;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            width: 2px;
+            height: 2px;
+            background-color: #d8d8d8;
+            margin-right: 5px;
+            vertical-align: 3px;
+        }
+    }
 }
 .stock_chart_infoFull {
     .gg_tabs {
@@ -156,34 +182,15 @@ export default {
     .info_wrap {
         height: 100%;
     }
-    .td-openContent {
-        cursor: pointer;
-        &:hover {
-            color: #096DD9;
-        }
-    }
-    .info_ellipsis_td {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding-left: 10px;
-        &:before {
-            content: '';
-            display: inline-block;
-            width: 2px;
-            height: 2px;
-            background-color: #d8d8d8;
-            margin-right: 5px;
-            vertical-align: 3px;
-        }
-    }
     .info_date_td {
-        width: 113px;
         white-space: nowrap;
         text-align: right;
     }
     .info_tr {
         height: 28px;
+        &.visited {
+            color: var(--color-secondary-text);
+        }
     }
     .info_vessel {
         height: 100%;

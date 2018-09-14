@@ -118,14 +118,16 @@
             flex-direction: column;
             justify-content: space-between;
             font-size: 12px;
-            color: rgba(255,255,255,.75);
             padding: 3px 8px;
+        }
+        .item_right_bottom_code {
+            color: #828282;
         }
         .bg-common() {
             height: 12px;
             line-height: 12px;
             opacity: .8;
-            color: #fff;
+            color: var(--color-white);
             margin-top: 3px;
         }
         .sz-bg {

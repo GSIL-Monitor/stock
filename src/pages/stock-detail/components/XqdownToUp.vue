@@ -39,10 +39,16 @@ export default {
 .ico_enfoldment {
     width: 34px;
     height: 25px;
-    background-color: #fff;
+    background: url('~@assets/upToDown.png') no-repeat center center;
     cursor: pointer;
+    &:hover {
+        background-image: url('~@assets/upToDownHover.png');
+    }
 }
 .ico_enfoldment_On {
-    background-color: #634;
+    background: url('~@assets/downToUp.png') no-repeat center center;
+    &:hover {
+        background-image: url('~@assets/downToUpHover.png');
+    }
 }
 </style>

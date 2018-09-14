@@ -143,8 +143,10 @@ export default {
     height: 26px;
     display: flex;
     flex-grow: 1;
+    width: 100%;
     align-items: center;
 }
+
 .investqa_item_question_text,
 .investqa_item_answewr_text {
     flex-grow: 1;
@@ -152,6 +154,7 @@ export default {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 .investqa_ico {
     flex: 0 0 16px;
