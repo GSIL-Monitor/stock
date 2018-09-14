@@ -288,15 +288,15 @@ export default {
 
 <style lang="less">
 .line_title_right_only {
-    border: 1px solid rgba(255, 255, 255, .2);
-    padding: 4px 10px;
+    border: 1px solid var(--color-border);
+    padding: 1px 5px;
     border-radius: 4px;
     margin-right: 9px;
     cursor: pointer;
     &.on {
         border: 1px solid transparent;
-        background-color: #1890FF;
-        color: #FFF;
+        background: var(--color-button-normal);
+        color: var(--white);
     }
 }
 
