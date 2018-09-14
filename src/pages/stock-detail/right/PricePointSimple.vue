@@ -109,27 +109,25 @@ export default {
     .pirce_point_process_bar {
         height: 14px;
     }
-    @color-red:#ff2b48;
-    @color-green: #06B45F;
     .pirce_point_li_Red {
         .pirce_point_price, .pirce_point_num {
-            color: @color-red;
+            color: var(--color-red);
         }
         .pirce_point_process_bar {
-            background-color: @color-red;
+            background-color: var(--color-red);
         }
     }
     .pirce_point_li_Green {
         .pirce_point_price, .pirce_point_num {
-            color: @color-green;
+            color: var(--color-green);
         }
         .pirce_point_process_bar {
-            background-color: @color-green;
+            background-color: var(--color-green);
         }
     }
     .pirce_point_li_Default {
         .pirce_point_process_bar {
-            background-color: rgba(255,255,255,0.75);
+            background-color: var(--color-primary-text);
         }
     }
 </style>

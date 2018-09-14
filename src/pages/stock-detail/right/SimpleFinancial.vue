@@ -313,7 +313,6 @@ export default {
 <style lang="less">
 .financial_list_one {
     padding: 5px 10px;
-    color: rgba(255, 255, 255, 0.75);
 }
 .financial_list_one > li {
     height: 24px;

@@ -134,9 +134,9 @@ export default {
     cursor: pointer;
 }
 .financial_title_switch_On {
-    background-color: #fff;
+    background: url('~@assets/time-price-off.png') no-repeat center center;
 }
 .financial_title_switch_Off {
-    background-color: #634;
+    background: url('~@assets/time-price-on.png') no-repeat center center;
 }
 </style>
