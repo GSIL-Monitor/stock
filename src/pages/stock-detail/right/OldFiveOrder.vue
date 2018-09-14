@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="old_order">
         <ul class="order_title">
             <li>买盘五档</li>
             <li>卖盘五档</li>
@@ -117,15 +117,27 @@ export default {
 </script>
 
 <style lang="less">
-.order_title {
-    display: flex;
-    font-size: 12px;
-    height: 25px;
-    font-weight: bold;
-    align-items: center;
-    li {
-        flex: 1;
-        padding: 0 10px;
+.old_order {
+    .order_radio {
+        color: var(--color-white);
+    }
+    .order_title {
+        display: flex;
+        font-size: 12px;
+        height: 25px;
+        font-weight: bold;
+        align-items: center;
+        border-top: 1px solid var(--color-dividers);
+        li {
+            flex: 1;
+            padding: 0 10px;
+        }
+    }
+    .order_info_buy .item_index {
+        background-color: var(--color-red);
+    }
+    .order_info_sell .item_index {
+        background-color: var(--color-green);
     }
 }
 .order_radio {
@@ -150,17 +162,13 @@ export default {
 .order_radio_green .order_radio_item_label{
     right: 5px;
 }
-@buy-bg: #F53C44;
-@sell-bg: #06B45F;
 .order_radio_red {
-    background-color: @buy-bg;
+    background-color: var(--color-red);
     justify-content: flex-start;
-    // padding-left: 5px;
 }
 .order_radio_green {
-    background-color: @sell-bg;
+    background-color: var(--color-green);
     justify-content: flex-end;
-    // padding-right: 5px;
 }
 .order_info {
     display: flex;
@@ -179,16 +187,6 @@ export default {
     }
     .order_item_count, .order_item_incre {
         text-align: left;
-    }
-}
-.order_info_buy {
-    .item_index {
-        background-color: @buy-bg;
-    }
-}
-.order_info_sell {
-    .item_index {
-        background-color: @sell-bg;
     }
 }
 </style>

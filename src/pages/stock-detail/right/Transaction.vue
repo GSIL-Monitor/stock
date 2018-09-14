@@ -227,15 +227,6 @@ export default {
     display: flex;
     align-items: center;
 }
-.transa_title_left_msg {
-    margin-left: 10px;
-    padding: 3px 5px;
-    border-radius: 2px;
-    background-color: rgba(255,255,255,.09);
-}
-.transa_title_left_msg_close {
-    cursor: pointer;
-}
 .transa_title_right {
     padding-right: 10px;
 }

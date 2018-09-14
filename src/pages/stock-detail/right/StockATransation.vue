@@ -305,9 +305,9 @@ export default {
 }
 .transa_title_left_msg {
     margin-left: 10px;
-    padding: 3px 5px;
+    padding: 1px 5px;
     border-radius: 2px;
-    background-color: rgba(255,255,255,.09);
+    background-color: var(--color-smallcard-background);
 }
 .transa_title_left_msg_close {
     cursor: pointer;

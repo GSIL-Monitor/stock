@@ -122,7 +122,7 @@ export default {
     margin: 0 auto;
     font-size: 11px;
     border-radius: 3px;
-    color: #fff;
+    color: var(--color-white);
     margin: 0 auto;
 }
 .order_item_price, .order_item_count {

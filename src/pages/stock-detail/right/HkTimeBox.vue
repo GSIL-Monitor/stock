@@ -169,6 +169,7 @@ export default {
     height: 22px;
     display: flex;
     align-items: center;
+    color: var(--color-secondary-text);
 }
 @space: 7px;
 .hk_timehint_first {

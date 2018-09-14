@@ -344,9 +344,8 @@ export default {
             this.fall = socketData.fall
         },
         tabClicked(type) {
-            if (type) {
-                sessionStorage.setItem(SESSION_INDEX_FUNC_TAB, type)
-            }
+            this.activeKey = type
+            sessionStorage.setItem(SESSION_INDEX_FUNC_TAB, type)
         },
     },
     beforeDestroy() {

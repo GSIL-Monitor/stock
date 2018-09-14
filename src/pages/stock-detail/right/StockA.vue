@@ -724,10 +724,7 @@ export default {
 .belong_industry {
     margin-left: 5px;
 }
-.detail_head_market,
-.detail_head_btn {
-    margin-top: 5px;
-}
+
 .detail_head_btn_skip,
 .detail_head_btn_identify {
     display: flex;

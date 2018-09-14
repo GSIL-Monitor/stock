@@ -107,6 +107,9 @@ export default {
 </script>
 
 <style lang="less">
+.five_order {
+    border-bottom: 1px solid var(--color-dividers);
+}
 .five_order_sell,
 .five_order_buy {
     display: flex;

@@ -64,9 +64,26 @@ export default {
 </script>
 
 <style lang="less">
-@buy-bg: #F53C44;
-@sell-bg: #06B45F;
+.hk_order {
+    .order_title {
+        display: flex;
+        font-size: 12px;
+        height: 25px;
+        font-weight: bold;
+        align-items: center;
+        border-top: 1px solid var(--color-dividers);
+        border-bottom: 1px solid var(--color-dividers);
+        li {
+            flex: 1;
+            padding: 0 10px;
+        }
+    }
+}
 
+.order_info {
+    display: flex;
+    align-items: center;
+}
 .hk_order_buy,
 .hk_order_sell {
     flex: 1;
@@ -86,13 +103,13 @@ export default {
 
 .hk_order_buy {
     .item_index {
-        background-color: #F53C44;
+        background-color: var(--color-red);
     }
 }
 
 .hk_order_sell {
     .item_index {
-        background-color: #06B45F;
+        background-color: var(--color-green);
     }
 }
 </style>
