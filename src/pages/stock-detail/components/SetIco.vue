@@ -22,7 +22,7 @@ export default {
 .set_tool_ico {
     width: 14px;
     height: 14px;
-    background-color: #fff;
+    background: url('~@assets/set-ico.png') no-repeat center center;
     cursor: pointer;
 }
 </style>

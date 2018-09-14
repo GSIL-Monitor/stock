@@ -46,7 +46,7 @@
                     class="consensus_table_more"
                     @click="toDiagnose"
                 >
-                    更多数据<span>&gt;&gt;</span>
+                    更多数据<span class="consensus_table_more_deep">&gt;&gt;</span>
                 </td>
             </tr>
         </tfoot>
@@ -225,9 +225,10 @@ export default {
 
 <style lang="less">
 .consensus_table {
+    color: var(--color-primary-text);
     cursor: pointer;
     thead {
-        background-color: #2F2F31;
+        background: var(--color-table-header);
     }
     tr {
         th, td {
@@ -243,8 +244,11 @@ export default {
             text-align: left;
         }
         td.consensus_table_more {
-            color: #1890FF;
+            color: var(--color-link);
             text-align: center;
+            .consensus_table_more_deep {
+                color: #B5B5B5;
+            }
         }
     }
 }

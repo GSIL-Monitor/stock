@@ -32,7 +32,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    padding: 1px 5px;
+    color: var(--white);
+    border: 0;
     font-size: 12px;
     border-radius: 3px;
     background-color: #1890FF;

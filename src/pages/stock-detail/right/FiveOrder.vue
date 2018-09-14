@@ -115,7 +115,6 @@ export default {
 .volume_info {
     display: flex;
     flex: 1;
-    color: #fff;
 }
 .five_order_sell {
     .volume_info {
@@ -132,21 +131,19 @@ export default {
     align-items: center;
     justify-content: center;
     width: 50px;
-    color: #fff;
+    color: var(--color-white);
     font-size: 12px;
 }
-@sell-color: #06b45f;
-@buy-color: #ff2b48;
 .five_order_sell {
     .volume_cont,
     .item_index {
-        background-color: @sell-color;
+        background-color: var(--color-green);
     }
 }
 .five_order_buy {
     .volume_cont,
     .item_index {
-        background-color: @buy-color;
+        background-color: var(--color-red);
     }
 }
 .three_row {

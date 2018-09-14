@@ -106,7 +106,15 @@ export default {
 .transac_item_volume_ico{
     width: 7px;
     margin-left: 5px;
-    background-color: #abc
+    &.up {
+        background: var(--transation-up);
+    }
+    &.down {
+        background: var(--transation-down);
+    }
+    &.mid {
+        background: var(--transation-mid);
+    }
 }
 </style>
 

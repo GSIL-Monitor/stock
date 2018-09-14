@@ -717,7 +717,6 @@ export default {
 .title_left_name,
 .title_left_code {
     margin-right: 5px;
-    color: rgba(255, 255, 255, 0.75);
 }
 .title_right_set {
     align-self: flex-start;
@@ -741,27 +740,6 @@ export default {
     margin-left: 8px;
     &:first-child {
         margin-left: 0;
-    }
-}
-
-.detail_info {
-    display: flex;
-    font-size: 13px;
-    overflow: hidden;
-}
-.detail_info_Limit {
-    height: 93px;
-}
-.detail_info_Full {
-    height: 209px;
-}
-.detail_info_table {
-    flex: 1;
-    table {
-        width: 100%;
-        tr {
-            height: 21px;
-        }
     }
 }
 .detail_info_toggle {

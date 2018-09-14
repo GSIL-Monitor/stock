@@ -88,10 +88,10 @@ export default {
         cursor: pointer;
     }
     .belong_industry_name {
-        background-color: rgba(255,255,255,.09);
+        background-color: var(--color-smallcard-background);
         border-radius: 2px;
         padding: 0 5px;
-        color: rgba(255,255,255,.75);
+        border: 0;
     }
     .belong_industry_list {
         position: absolute;
@@ -104,6 +104,11 @@ export default {
             height: 18px;
             padding: 0 10px 0 6px;
             white-space: nowrap;
+            &.active,
+            &:hover {
+                color: var(--color-white);
+                background-color: #166BD0;
+            }
         }
     }
 </style>

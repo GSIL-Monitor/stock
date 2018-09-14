@@ -32,10 +32,11 @@ export default {
 <style lang="less">
 .detail_info_toggle {
     position: relative;
-    background-color: rgba(255,255,255,.09);
+    background-color: var(--color-smallcard-background);
     overflow-x: hidden;
     cursor: pointer;
 }
+
 @bg-color: #6b7695;
 .detail_info_toggle_ico {
     position: absolute;
