@@ -33,6 +33,7 @@
                 <div class="detail_head_btn_skip">
                     <ButtonF10/>
                 </div>
+                <IsMyStock/>
             </div>
         </div>
         <!-- 买卖五档 -->
@@ -231,6 +232,7 @@ import rightResizeMixin from '../mixins/right-resize-mixin'
 import SetIco from '../components/SetIco'
 import TitleTopMarket from './TitleTopMarket'
 import ButtonF10 from '../components/ButtonF10'
+import IsMyStock from './IsMyStock'
 import FiveOrder from './FiveOrder'
 import StockTransaction from './Transaction'
 // 盘口内容
@@ -305,6 +307,7 @@ export default {
         SetIco,
         TitleTopMarket,
         ButtonF10,
+        IsMyStock,
         FiveOrder,
         StockTransaction,
 
@@ -498,7 +501,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .detail_table_B {
     cursor: pointer;
 }

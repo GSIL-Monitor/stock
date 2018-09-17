@@ -22,6 +22,9 @@
             :price_change="price_change"
             :price_change_rate="price_change_rate"
         />
+        <div class="detail_head_btn">
+            <IsMyStock/>
+        </div>
         <HkTimeBox/>
     </div>
     <div class="detail_info">
@@ -103,6 +106,7 @@ import {
 import socketMixin from '../mixins/socket-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
+import IsMyStock from './IsMyStock'
 import HkTimeBox from './HkTimeBox'
 import TitleTopMarket from './TitleTopMarket'
 import MarketInfo from './MarketInfo'
@@ -152,6 +156,7 @@ export default {
         MarketInfo,
         StockTransaction,
         HkTimeBox,
+        IsMyStock,
     },
     computed: {
         ...mapState([
@@ -237,7 +242,9 @@ export default {
 }
 </script>
 
-<style lang="less">
-
+<style lang="less" scoped>
+    .detail_head_btn {
+        justify-content: flex-end;
+    }
 </style>
 

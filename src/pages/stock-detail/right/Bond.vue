@@ -27,6 +27,7 @@
                 <div class="detail_head_btn_skip">
                     <ButtonF10/>
                 </div>
+                <IsMyStock/>
             </div>
         </div>
         <div class="detail_info">
@@ -141,6 +142,7 @@ import fiveOrderMixin from '../mixins/five-order-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import ButtonF10 from '../components/ButtonF10'
+import IsMyStock from './IsMyStock'
 import TitleTopMarket from './TitleTopMarket'
 import OldFiveOrder from './OldFiveOrder'
 import StockTransaction from './Transaction'
@@ -196,6 +198,7 @@ export default {
     components: {
         TitleTopMarket,
         ButtonF10,
+        IsMyStock,
         OldFiveOrder,
         StockTransaction,
         MarketInfo,

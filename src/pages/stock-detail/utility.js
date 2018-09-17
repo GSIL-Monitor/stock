@@ -63,6 +63,7 @@ export const getTimeStamp = (day = 0, hour = 0, minute = 0, second = 0) => {
 export const syncMyStockState = () => {
     const MODULE_ARR = ['mystocks', 'home', 'dataCenter', 'intelligence']
     const EVENT_NAME = 'changeMystock'
+
     MODULE_ARR.forEach(((element) => {
         sendEvent(element, EVENT_NAME, JSON.stringify({}), false)
     }))

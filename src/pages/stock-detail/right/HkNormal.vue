@@ -40,10 +40,13 @@
                     v-if="isShowF10"
                 />
             </div>
-            <StockIdentify
-                v-if="canLoadSelfIdentify"
-                :full_code="full_code"
-            />
+            <div class="detail_head_btn_right">
+                <StockIdentify
+                    v-if="canLoadSelfIdentify"
+                    :full_code="full_code"
+                />
+                <IsMyStock/>
+            </div>
         </div>
         <HkTimeBox/>
     </div>
@@ -193,6 +196,7 @@ import rightResizeMixin from '../mixins/right-resize-mixin'
 
 import HkTimeBox from './HkTimeBox'
 import ButtonF10 from '../components/ButtonF10'
+import IsMyStock from './IsMyStock'
 import TitleTopMarket from './TitleTopMarket'
 import MarketInfo from './MarketInfo'
 import StockIdentify from './StockIdentify'
@@ -251,6 +255,7 @@ export default {
     components: {
         HkTimeBox,
         ButtonF10,
+        IsMyStock,
         StockIdentify,
         TitleTopMarket,
         MarketInfo,

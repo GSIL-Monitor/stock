@@ -159,12 +159,36 @@ body {
 
 .detail_head {
     border-bottom: 1px solid var(--color-dividers);
+    padding: 8px 10px 6px;
 }
 
-// .detail_head_market,
-// .detail_head_btn {
-//     margin-top: 5px;
-// }
+.detail_head_title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title_left {
+    display: flex;
+    align-items: center;
+}
+
+.detail_head_btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title_left_name {
+    font-size: 18px;
+}
+
+.title_left_code {
+    font-size: 16px;
+}
+
+.title_left_name,
+.title_left_code {
+    margin-right: 5px;
+}
 
 .detail_info {
     display: flex;
@@ -188,6 +212,11 @@ body {
             height: 21px;
         }
     }
+}
+
+.detail_head_btn_skip,
+.detail_head_btn_right, {
+    display: flex;
 }
 
 .view_title {

@@ -700,53 +700,30 @@ export default {
 }
 </script>
 
-<style lang="less">
-.detail_head {
-    padding: 8px 10px 6px;
-}
-.detail_head_title {
-    display: flex;
-    justify-content: space-between;
-}
-.title_left {
-    display: flex;
-    align-items: center;
-}
-.title_left_name {
-    font-size: 18px;
-}
-.title_left_code {
-    font-size: 16px;
-}
-.title_left_name,
-.title_left_code {
-    margin-right: 5px;
-}
+<style lang="less" scoped>
 .title_right_set {
     align-self: flex-start;
 }
+
 .belong_industry {
     margin-left: 5px;
 }
 
-.detail_head_btn_skip,
-.detail_head_btn_right,
 .detail_head_btn_identify {
     display: flex;
 }
-.detail_head_btn {
-    display: flex;
-    justify-content: space-between;
-}
+
 .btn-content {
     margin-left: 8px;
     &:first-child {
         margin-left: 0;
     }
 }
+
 .detail_info_toggle {
     flex: 0 0 12px;
 }
+
 .detail_table_A {
     cursor: pointer;
 }
