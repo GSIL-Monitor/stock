@@ -56,8 +56,6 @@ export default {
     },
     created() {
         goGoal.event.listen(FRAME_PRICE_POINT, this.listenHanler)
-    },
-    mounted() {
         if (this.full_code) {
             this.sendFrame()
         }
@@ -124,7 +122,6 @@ export default {
         }
     }
 }
-
 </script>
 
 <style lang="less">
