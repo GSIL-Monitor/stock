@@ -1,5 +1,5 @@
 <template>
-    <li class="market_list_item" :class="itemClasses">
+    <li class="market_list_item" :class="itemClasses" :data-hash-string="hashString">
         <div class="item_left">
             <div :class="sourceClasses"></div>
         </div>
@@ -47,6 +47,9 @@
 </template>
 
 <script>
+    import {
+        mapState,
+    } from 'vuex'
     import Price from '@formatter/market-base/Price'
     import PriceChange from '@formatter/market-base/PriceChange'
     import PriceChangeRate from '@formatter/market-base/PriceChangeRate'
@@ -64,6 +67,38 @@
             StockName,
         },
         computed: {
+            ...mapState([
+                'full_code',
+            ]),
+            hashString() {
+                if (['sh', 'sz'].includes(this._source)) {
+                    if (['1', '5'].includes(this._symbol_type)) {
+                        return this.item.code
+                    } else if (Object.is(this._symbol_type, '3')) {
+                        return `fund${this.item.full_code}`
+                    } else if (Object.is(this._symbol_type, '4')) {
+                        return `bond${this.item.full_code}`
+                    } else {
+                        return this.item.full_code
+                    }
+                } else if (Object.is(this._source, 'hk')) {
+                    if (Object.is(this._symbol_type, '3')) {
+                        return `fund_H${this.item.full_code}`
+                    } else if (Object.is(this._symbol_type, '4')) {
+                        return `bond_H${this.item.full_code}`
+                    } else if (Object.is(this._symbol_type, '5')) {
+                        return `cbbc${this.item.full_code}`
+                    } else if (Object.is(this._symbol_type, '6')) {
+                        return `warrants${this.item.full_code}`
+                    } else {
+                        return this.item.full_code
+                    }
+                } else if (Object.is(this._symbol_type, '7')) {
+                    return `${this._source};${this.item.code}`
+                } else {
+                    return this.item.full_code
+                }
+            },
             sourceClasses() {
                 const maps = {
                     'sh': 'sh-bg',
@@ -90,7 +125,12 @@
                 return this.item.stock_type
             },
             itemClasses() {
-                return [this.item.classColor]
+                return [
+                    this.item.classColor,
+                    {
+                        active: Object.is(this.item.full_code, this.full_code)
+                    }
+                ]
             },
         },
         props: {
@@ -109,6 +149,9 @@
         height: 45px;
         font-size: 12px;
         cursor: pointer;
+        &.active {
+            background: var(--color-selected-bg);
+        }
         .item_left {
             flex: 0 0 15px;
         }

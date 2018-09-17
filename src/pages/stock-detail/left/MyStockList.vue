@@ -1,14 +1,20 @@
 <template>
-    <div class="lt_detail_market" id="stock-market-list" v-if="group_data.length">
+    <div
+        class="lt_detail_market"
+        v-if="group_data.length"
+        @click="changeCurrentStock"
+        ref="stockWrap"
+    >
         <div
             v-for="(item, index) of group_data"
             :key="index"
             :class="generateGroupClass(item.group_id)"
             :data-group_id="item.group_id"
+
         >
             <div
                 class="market_title"
-                @click="makeActive(item.group_id, item.sum)"
+                @click.stop="makeActive(item.group_id, item.sum)"
             >
                 <div class="market_title_ico"></div>
                 <div class="market_title_name">{{item.group_name}}</div>
@@ -200,6 +206,18 @@ export default {
             // 修改第一个分组数据的count
             this.group_data[0].sum += data ? 1 : -1
         },
+        changeCurrentStock(event) {
+            let target = event.target
+            while (target.tagName.toLowerCase() !== 'li') {
+                target = target.parentNode
+            }
+            if (target) {
+                let hash = target.dataset.hashString
+                if (hash) {
+                    location.hash = hash
+                }
+            }
+        },
     },
     beforeDestroy() {
         if (this.myStockCache) {
@@ -265,10 +283,10 @@ export default {
     .market_list_item {
         border-bottom: 1px solid var(--color-dividers);
         &.background-red {
-            background: linear-gradient(left, transparent, rgba(245, 29, 39, 0.1) 60%, rgba(245, 29, 39, 0.15));
+            background: -webkit-linear-gradient(left,transparent,rgba(245,29,39,.1) 60%,rgba(245,29,39,.15));
         }
         &.background-green {
-            background: linear-gradient(left, transparent, rgba(41, 184, 30, 0.1) 60%, rgba(41, 184, 30, 0.15));
+            background: -webkit-linear-gradient(left, transparent, rgba(41, 184, 30, 0.1) 60%, rgba(41, 184, 30, 0.15));
         }
     }
 

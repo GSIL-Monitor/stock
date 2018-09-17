@@ -1,6 +1,6 @@
 <template>
     <div class="lt_detail_recent">
-        <ul class="recent_list">
+        <ul class="recent_list" @click="changeCurrentStock">
             <StockItem
                 v-for="(item, index) of recent_list_data"
                 v-if="item"
@@ -120,6 +120,18 @@
                 })
 
                 this.removeBgColor(changList)
+            },
+            changeCurrentStock(event) {
+                let target = event.target
+                while (target.tagName.toLowerCase() !== 'li') {
+                    target = target.parentNode
+                }
+                if (target) {
+                    let hash = target.dataset.hashString
+                    if (hash) {
+                        location.hash = hash
+                    }
+                }
             },
         },
         beforeDestroy() {
