@@ -71,7 +71,8 @@ export default {
         if (this.myStockCache) {
             goGoal.event.listen(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
         }
-
+        this.$eventBus.$on('refeatchMyStockGroup', this.refeatchMyStockGroup)
+        this.$eventBus.$on('correctionData', this.correctionData)
         this.fetchMyStockGroup()
     },
     data() {
@@ -183,11 +184,28 @@ export default {
                     : null
             ]
         },
+        refeatchMyStockGroup() {
+            this.fetchMyStockGroup()
+        },
+        correctionData(data) {
+            // 有打开的分组
+            if (this.activeGroupId) {
+                const defaultId = this.group_data[0].group_id
+                if (Object.is(defaultId, this.activeGroupId)) {
+                    // 重刷分组数据
+                    this.fetchSelectGroup()
+                }
+            }
+
+            // 修改第一个分组数据的count
+            this.group_data[0].sum += data ? 1 : -1
+        },
     },
     beforeDestroy() {
         if (this.myStockCache) {
             goGoal.event.remove(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
         }
+        this.$eventBus.$off('refeatchMyStockGroup', this.refeatchMyStockGroup)
     },
 }
 </script>

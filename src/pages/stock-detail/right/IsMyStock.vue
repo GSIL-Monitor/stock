@@ -24,6 +24,7 @@ import DefaultBtn from '../components/DefaultBtn.vue'
 export default {
     name: 'IsMyStock',
     created() {
+        this.$eventBus.$on('revalidateIsMyStock', this.revalidateIsMyStock)
         this.fetchData()
     },
     data() {
@@ -95,17 +96,19 @@ export default {
         delFromMyStock() {
             const params = {
                 options: {
-                    full_code: this.full_code,
+                    full_codes: this.full_code,
                 },
                 callback0: data => {
-                    // 更新左侧状态
-
                     this.setNotInMyStockState()
+                    // 模块同步
+                    syncMyStockState()
+                    // 更新左侧状态
+                    this.$eventBus.$emit('correctionData', this.inMyStockList)
                     // 发送事件到框架
                     this.$eventBus.$emit('setKlineStockDel')
-                    syncMyStockState()
                 },
             }
+
             delMyStock(params)
         },
         addToMyStock() {
@@ -121,11 +124,12 @@ export default {
                         alert("添加失败！自选股最多添加500个！")
                     } else {
                         this.setInMyStockState()
+                        // 模块同步
+                        syncMyStockState()
                         // 更新左侧状态
-
+                        this.$eventBus.$emit('correctionData', this.inMyStockList)
                         // 发送事件到框架
                         this.$eventBus.$emit('setKlineStockAdd')
-                        syncMyStockState()
                     }
                 },
             }
@@ -142,6 +146,13 @@ export default {
             this.show = {}
             this.inMyStockList = false
         },
+        revalidateIsMyStock() {
+            this.resetState()
+            this.fetchData()
+        },
+    },
+    beforeDestroy() {
+        this.$eventBus.$off('revalidateIsMyStock', this.revalidateIsMyStock)
     },
     watch: {
         full_code() {

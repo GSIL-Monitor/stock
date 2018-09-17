@@ -54,6 +54,7 @@ import {
     EVENT_CHANGE_LEFT_RIGHT,
     EVENT_CHANGES_CODE,
     EVENT_KEY_BOARD,
+    EVENT_CHANGE_STOCK,
     SESSION_ASTOCK_FUNC_TAB,
 } from './storage'
 
@@ -89,6 +90,7 @@ export default {
         goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
+        goGoal.event.listen(EVENT_CHANGE_STOCK, this.changeMystock)
         this.$eventBus.$on(this.tapeSetName, this.changeTapeSetState)
 
         this.initState()
@@ -482,12 +484,19 @@ export default {
                 }
             }, 50)
         },
+        changeMystock(data) {
+            this.$eventBus.$emit('refeatchMyStockGroup')
+            this.$eventBus.$emit('revalidateIsMyStock')
+            //TODO: 自选股变色
+
+        },
     },
     beforeDestroy() {
         // goGoal.ws.onmessage = null
         this.$eventBus.$off(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.remove(EVENT_KEY_BOARD, this.keyBoardEvent)
+        goGoal.event.remove(EVENT_CHANGE_STOCK, this.changeMystock)
     },
     destroyed() {
         window.onhashchange = null

@@ -139,11 +139,14 @@ export const addStock = param => {
     return post(APIName, param)
 }
 
+/**
+ * @description 个股 -- 删除自选股
+*/
 export const delMyStock = param => {
-    const APIName = 'v1/mystock/delete'
+    const APIName = 'v1/mystock/delete_stocks'
     Reflect.set(param.options, 'token', getToken())
 
-    return get(APIName, param)
+    return post(APIName, param)
 }
 
 /**

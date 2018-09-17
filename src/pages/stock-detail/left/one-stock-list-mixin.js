@@ -130,7 +130,6 @@ export default {
             })
 
             this.commitSelectData(selectData)
-            // this[SELECT_GROUP_DATA](selectData)
         },
         changeActiveId() {
             this.activeGroupId = this.medianGroupId
