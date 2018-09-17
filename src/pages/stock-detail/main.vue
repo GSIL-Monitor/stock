@@ -405,12 +405,14 @@ export default {
                 }
             }
 
-            // 添加最近访问列表
-            this[ADD_TO_RECENT_LIST]({
-                options: {
-                    full_code: this.full_code,
-                }
-            })
+            if (!data.isRencent) {
+                // 添加最近访问列表
+                this[ADD_TO_RECENT_LIST]({
+                    options: {
+                        full_code: this.full_code,
+                    }
+                })
+            }
         },
         getNewLink(client_id) {
             let index = goGoal.sockets.findIndex((element) => {

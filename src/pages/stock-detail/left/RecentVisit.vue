@@ -29,6 +29,7 @@
     } from '@store/stock-detail-store/config/action-types'
     import {
         FRAME_RECENT_LIST,
+        EVENT_CHANGES_CODE,
     } from '../storage'
 
     import subMixin from './sub-scription-mixin'
@@ -129,7 +130,10 @@
                 if (target) {
                     let hash = target.dataset.hashString
                     if (hash) {
-                        location.hash = hash
+                        goGoal.event.trigger(EVENT_CHANGES_CODE, JSON.stringify({
+                            stock_code: hash,
+                            isRencent: true,
+                        }))
                     }
                 }
             },
