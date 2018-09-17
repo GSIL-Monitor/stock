@@ -266,3 +266,14 @@ export const getReportLine = () => {
         return 4
     }
 }
+
+/**
+ * @description 添加自选股api参数
+*/
+export const getMyStockLine = () => {
+    if (isZyzt()
+        || isZytg()
+    ) {
+        return 19
+    }
+}

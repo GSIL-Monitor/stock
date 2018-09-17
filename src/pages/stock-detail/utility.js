@@ -1,6 +1,9 @@
 import {
     getCookie,
 } from '@c/utils/util'
+import {
+    sendEvent,
+} from '@c/utils/callQt'
 
 // 截取新闻信息
 export const subDate = (date) => {
@@ -52,4 +55,15 @@ export const getTimeStamp = (day = 0, hour = 0, minute = 0, second = 0) => {
     const ONE_DAY_MILLISECOND = 86400 * 1000
 
     return nowDayHourStamp - ONE_DAY_MILLISECOND * day
+}
+
+/**
+ * @description 自选股状态同步到其他模块
+*/
+export const syncMyStockState = () => {
+    const MODULE_ARR = ['mystocks', 'home', 'dataCenter', 'intelligence']
+    const EVENT_NAME = 'changeMystock'
+    MODULE_ARR.forEach(((element) => {
+        sendEvent(element, EVENT_NAME, JSON.stringify({}), false)
+    }))
 }

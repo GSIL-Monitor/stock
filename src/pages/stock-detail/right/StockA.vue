@@ -51,10 +51,13 @@
                     />
                     <ButtonF10/>
                 </div>
-                <StockIdentify
-                    v-if="loadIdentify"
-                    :full_code="full_code"
-                />
+                <div class="detail_head_btn_right">
+                    <StockIdentify
+                        v-if="loadIdentify"
+                        :full_code="full_code"
+                    />
+                    <IsMyStock/>
+                </div>
             </div>
         </div>
         <!-- 买卖五档 -->
@@ -281,6 +284,7 @@ import BelongIndustry from './BelongIndustry'
 import TitleTopMarket from './TitleTopMarket'
 import DefaultBtn from '../components/DefaultBtn'
 import ButtonF10 from '../components/ButtonF10'
+import IsMyStock from './IsMyStock'
 import IdentifyIco from './IdentifyIco'
 import FiveOrder from './FiveOrder'
 import ToggleBtn from './ToggleBtn'
@@ -401,6 +405,7 @@ export default {
         TitleTopMarket,
         DefaultBtn,
         ButtonF10,
+        IsMyStock,
         IdentifyIco,
         FiveOrder,
         ToggleBtn,
@@ -725,6 +730,7 @@ export default {
 }
 
 .detail_head_btn_skip,
+.detail_head_btn_right,
 .detail_head_btn_identify {
     display: flex;
 }

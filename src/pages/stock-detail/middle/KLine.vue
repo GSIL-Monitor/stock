@@ -21,6 +21,8 @@ export default {
     created() {
         this.$eventBus.$on('setKlineTabs', this.setKlineTabs)
         this.$eventBus.$on('setKlineStyle', this.changeKlineState)
+        this.$eventBus.$on('setKlineStockAdd', this.setAddStock)
+        this.$eventBus.$on('setKlineStockDel', this.setDelStock)
     },
     mounted() {
         this.initKLine()
@@ -44,8 +46,8 @@ export default {
         ]),
         ...mapGetters([
             'isAStock',
-            'isHSIndex',
-            'isHkStock',
+            // 'isHSIndex',
+            // 'isHkStock',
             'hasInformation',
         ]),
         klineBottomState() {
@@ -163,6 +165,38 @@ export default {
                 console.error(error)
             }
         },
+        setAddStock() {
+            try {
+                const FUNC_NAME = 'MyStockAdd'
+                try {
+                    const options = {
+                        fun: FUNC_NAME,
+                        code: this.full_code,
+                    }
+                    this.$refs.stockKline.postMessage(options)
+                } catch(error) {
+                    this.$refs.stockKline[FUNC_NAME](this.full_code)
+                }
+            } catch(error) {
+                console.error(error)
+            }
+        },
+        setDelStock() {
+            try {
+                const FUNC_NAME = 'MyStockDel'
+                try {
+                    const options = {
+                        fun: FUNC_NAME,
+                        code: this.full_code,
+                    }
+                    this.$refs.stockKline.postMessage(options)
+                } catch(error) {
+                    this.$refs.stockKline[FUNC_NAME](this.full_code)
+                }
+            } catch(error) {
+                console.error(error)
+            }
+        },
         setKlineCode() {
             try {
                 const FUNC_NAME = 'SetCurrentStock'
@@ -198,6 +232,8 @@ export default {
     beforeDestroy() {
         this.$eventBus.$off('setKlineTabs', this.setKlineTabs)
         this.$eventBus.$off('setKlineStyle', this.changeKlineState)
+        this.$eventBus.$off('setKlineStockAdd', this.setAddStock)
+        this.$eventBus.$off('setKlineStockDel', this.setDelStock)
     },
     watch: {
         full_code() {

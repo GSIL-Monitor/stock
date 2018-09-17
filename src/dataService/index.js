@@ -5,6 +5,7 @@ import {
 import {
     getToken,
     getReportLine,
+    getMyStockLine,
 } from '@c/utils/util'
 
 /**
@@ -122,6 +123,26 @@ export const addMyRecent = param => {
 */
 export const getMyStockIsAdd = param => {
     const APIName = 'v1/mystock/get_isdefined'
+    Reflect.set(param.options, 'token', getToken())
+
+    return get(APIName, param)
+}
+
+/**
+ * @description 个股 -- 添加自选股
+*/
+export const addStock = param => {
+    const APIName = 'v1/mystock/add'
+    Reflect.set(param.options, 'token', getToken())
+    Reflect.set(param.options, 'source', getMyStockLine())
+
+    return post(APIName, param)
+}
+
+export const delMyStock = param => {
+    const APIName = 'v1/mystock/delete'
+    Reflect.set(param.options, 'token', getToken())
+
     return get(APIName, param)
 }
 

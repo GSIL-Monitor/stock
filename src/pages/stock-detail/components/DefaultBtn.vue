@@ -1,6 +1,5 @@
 <template>
     <button
-        v-if="label"
         class="btn-link-default"
         @click.stop="emitClick"
         type="button"
