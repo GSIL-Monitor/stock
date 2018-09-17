@@ -5,13 +5,13 @@
         <button
             type="button"
             class="belong_industry_name"
-            @click="getBelongIndustry"
+            @click.stop="fetchData"
             :stock_code="stock_code"
         >
             {{industry_name}}
         </button>
         <ul
-            v-if="this.plateData.length"
+            v-if="showSelectList"
             class="belong_industry_list"
             @click="skipMarket"
         >
@@ -35,15 +35,28 @@ import {
 
 export default {
     name: "BelongIndustry",
+    mounted() {
+        document.addEventListener('click', this.hideSelectListState)
+    },
     data() {
         return {
-            plateData: []
+            plateData: [],
+            flag: false,
         }
     },
     computed: {
-
+        showSelectList() {
+            return this.plateData.length && this.flag
+        },
     },
     methods: {
+        fetchData() {
+            if (Object.is(this.plateData.length, 0)) {
+                this.getBelongIndustry()
+            } else {
+                this.flag = !this.flag
+            }
+        },
         getBelongIndustry() {
             const params = {
                 options: {
@@ -59,10 +72,12 @@ export default {
                     }
 
                     this.plateData = maps
+                    this.flag = true
                 },
                 callback1001: () => {
                     this.plateData = []
-                }
+                    this.flag = false
+                },
             }
 
             getIndustryBelongPlate(params)
@@ -70,14 +85,23 @@ export default {
         skipMarket() {
             // 跳转行情
         },
+        hideSelectListState() {
+            this.flag = false
+        },
     },
-    destroyed() {
-
+    beforeDestroy() {
+        document.removeEventListener('click', this.hideSelectListState)
     },
     props: [
         "industry_name",
-        "stock_code"
-    ]
+        "stock_code",
+    ],
+    watch: {
+        stock_code() {
+            this.plateData = []
+            this.flag = false
+        },
+    },
 }
 </script>
 
@@ -90,8 +114,9 @@ export default {
     .belong_industry_name {
         background-color: var(--color-smallcard-background);
         border-radius: 2px;
-        padding: 0 5px;
+        padding: 2px 5px;
         border: 0;
+        outline: none;
     }
     .belong_industry_list {
         position: absolute;

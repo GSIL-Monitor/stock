@@ -92,6 +92,7 @@ export default {
         font-size: 12px;
         border-radius: 3px;
         border: 0;
+        outline: none;
     }
     .btn-tips-Red {
         background-color: #FB3E1B;
