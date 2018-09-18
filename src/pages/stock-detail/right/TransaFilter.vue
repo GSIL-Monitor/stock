@@ -55,8 +55,13 @@
 import {
     mapState,
 } from 'vuex'
-import { ASTOCK } from '@formatter/config/stock-type-config'
-import { LOCAL_TRANSATION_STORE } from '../storage'
+import popUpFiveSecond from '../components/popup-five-second'
+import {
+    ASTOCK,
+} from '@formatter/config/stock-type-config'
+import {
+    LOCAL_TRANSATION_STORE,
+} from '../storage'
 
 import PopUp from '@c/popUp.vue'
 
@@ -177,16 +182,16 @@ export default {
         },
         verifyNumber(o) {
             if (!this.isAllValidNumber(o)) {
-                // 提示 请在对应分类后输入正整数
-
+                let msg = '请在对应分类后输入正整数'
+                popUpFiveSecond(msg, false, true)
                 return false
             }
             if (Object.is(this.activeType, this.between.type)) {
                 let min = o.min
                 let max = o.max
                 if (min >= max) {
-                    // 提示 起始数据要小于结束数据
-
+                    let msg = '起始数据要小于结束数据'
+                    popUpFiveSecond(msg, false, true)
                     return false
                 }
             }

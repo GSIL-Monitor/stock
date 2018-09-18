@@ -19,6 +19,7 @@ import {
     LOCAL_SHORT_LINE_SET,
 } from '../storage'
 import shortLineType from '@formatter/config/short-line-config'
+import popUpFiveSecond from '../components/popup-five-second'
 
 import PopUp from '@c/popUp.vue'
 import ShortElvesFilterItem from './ShortElvesFilterItem.vue'
@@ -78,9 +79,10 @@ export default {
 
         },
         confirmPopUp() {
-            if (Object.is(this.localStore, 0)) {
-                // TODO:请在设置中添加预警条件
+            if (Object.is(this.localStore.length, 0)) {
+                let msg = '请在设置中添加预警条件'
 
+                popUpFiveSecond(msg, false, true)
                 return false;
             }
             // 保存当前状态
