@@ -62,9 +62,9 @@ import {
     FUNC_PERFORMANCE,
 } from './tape-set-config'
 
-import TapeSectionItem from './TapeSectionItem'
-import TapeFuncStyle from './TapeFuncStyle'
-import DefaultBtn from '../components/DefaultBtn'
+import DefaultBtn from '../components/DefaultBtn.vue'
+import TapeSectionItem from './TapeSectionItem.vue'
+import TapeFuncStyle from './TapeFuncStyle.vue'
 
 export default {
     name: 'TapeSet',

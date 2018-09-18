@@ -53,8 +53,8 @@ import {
     isHkRealTime,
 } from '../utility'
 
-import TransactionLi from './TransactionLi'
-import LoadMore from '../components/LoadMore'
+import TransactionLi from './TransactionLi.vue'
+import LoadMore from '../components/LoadMore.vue'
 
 export default {
     name: 'StockTransation',

@@ -31,7 +31,6 @@
     export default {
         name: 'Tabs',
         mounted() {
-            // this.initActive()
             this.updateNav()
         },
         props: {

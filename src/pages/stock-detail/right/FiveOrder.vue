@@ -44,7 +44,7 @@ import {
     isNumber,
 } from '@formatter/utility'
 
-import FiveOrderItem from './FiveOrderItem'
+import FiveOrderItem from './FiveOrderItem.vue'
 
 export default {
     name: 'FiveOrder',

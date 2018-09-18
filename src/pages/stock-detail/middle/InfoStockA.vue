@@ -64,13 +64,13 @@ import informationMixin from '../mixins/information-mixin'
 
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
-import LoadMore from '../components/LoadMore'
-import XqdownToUp from '../components/XqdownToUp'
-import News from './News'
-import Notice from './Notice'
-import Report from './Report'
-import InvestQA from './InvestQA'
-import BigEvent from './BigEvent'
+import LoadMore from '../components/LoadMore.vue'
+import XqdownToUp from '../components/XqdownToUp.vue'
+import News from './News.vue'
+import Notice from './Notice.vue'
+import Report from './Report.vue'
+import InvestQA from './InvestQA.vue'
+import BigEvent from './BigEvent.vue'
 
 export default {
     name: 'InfoStockA',

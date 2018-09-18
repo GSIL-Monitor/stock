@@ -65,9 +65,9 @@ import {
     LOCAL_TRANSATION_STORE,
 } from '../storage'
 
-import TransactionLi from './TransactionLi'
-import SetIco from '../components/SetIco'
-import LoadMore from '../components/LoadMore'
+import TransactionLi from './TransactionLi.vue'
+import SetIco from '../components/SetIco.vue'
+import LoadMore from '../components/LoadMore.vue'
 
 export default {
     name: 'StockTransation',

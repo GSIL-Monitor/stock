@@ -20,8 +20,8 @@ import {
 } from '../storage'
 import shortLineType from '@formatter/config/short-line-config'
 
-import PopUp from '@c/popUp'
-import ShortElvesFilterItem from './ShortElvesFilterItem'
+import PopUp from '@c/popUp.vue'
+import ShortElvesFilterItem from './ShortElvesFilterItem.vue'
 
 export default {
     name: 'ShortElvesFilter',

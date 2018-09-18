@@ -60,16 +60,15 @@ import {
 
 import stockVerifyMixin from './mixins/stock-verify-mixin'
 
-// vue template --------------------------------------
-import LeftTemplate from './left/LeftMain'
-import MiddleTemplate from './middle/MiddleMain'
-import RightTemplate from './right/RightMain'
+import LeftTemplate from './left/LeftMain.vue'
+import MiddleTemplate from './middle/MiddleMain.vue'
+import RightTemplate from './right/RightMain.vue'
 // 盘口设置
-import TapeSet from './tape/TapeSet'
+import TapeSet from './tape/TapeSet.vue'
 // 成交明细过滤
-import TransaFilter from './right/TransaFilter'
+import TransaFilter from './right/TransaFilter.vue'
 // 短线精灵设置
-import ShortElvesFilter from './right/ShortElvesFilter'
+import ShortElvesFilter from './right/ShortElvesFilter.vue'
 
 export default {
     name: 'App',

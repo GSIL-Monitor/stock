@@ -55,13 +55,13 @@ import {
 
 import socketMixin from "../mixins/socket-mixin"
 
-import DefaultBtn from '../components/DefaultBtn'
-import FundFlowPie from './FundFlowPie'
-import FundFlowBar from './FundFlowBar'
-import FundFlowList from './FundFlowList'
+import DefaultBtn from '../components/DefaultBtn.vue'
+import FundFlowPie from './FundFlowPie.vue'
+import FundFlowBar from './FundFlowBar.vue'
+import FundFlowList from './FundFlowList.vue'
 
 export default {
-    name: 'fundFlow',
+    name: 'FundFlow',
     mixins: [
         socketMixin,
     ],
@@ -140,8 +140,8 @@ export default {
             let data = args[0][0]
             if (Object.is(data.mark, 1)) {
                 // clear
-                this.noData = true
                 this.socketData = {}
+                this.noData = true
             } else {
                 this.socketData = Object.assign({}, this.socketData, data)
                 this.setDefaultValue()
@@ -163,6 +163,7 @@ export default {
                 }
             }
         },
+        // 资金选股
         selectStock() {
             const FUNC_NAME = 'MainFundSelStock'
             JsToQtEventInterface(JSON.stringify({

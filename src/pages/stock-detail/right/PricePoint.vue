@@ -42,8 +42,8 @@ import {
     FRAME_PRICE_POINT,
 } from '../storage'
 
-import PricePointSimple from './PricePointSimple'
-import PricePointDetail from './PricePointDetail'
+import PricePointSimple from './PricePointSimple.vue'
+import PricePointDetail from './PricePointDetail.vue'
 
 export default {
     name: 'pricePoint',

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import OneTag from './StockTagListItem'
+import OneTag from './StockTagListItem.vue'
 
 export default {
     name: 'TagList',

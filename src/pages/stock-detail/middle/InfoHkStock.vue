@@ -36,9 +36,9 @@ import informationMixin from '../mixins/information-mixin'
 
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
-import LoadMore from '../components/LoadMore'
-import XqdownToUp from '../components/XqdownToUp'
-import News from './News'
+import LoadMore from '../components/LoadMore.vue'
+import XqdownToUp from '../components/XqdownToUp.vue'
+import News from './News.vue'
 
 export default {
     name: 'InfoHkStockTemp',

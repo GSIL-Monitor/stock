@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: 'setIco',
+    name: 'SetIco',
     methods: {
         emitClick() {
             this.$emit('click')

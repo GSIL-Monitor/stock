@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'fundFlowList',
+    name: 'FundFlowList',
     data() {
         return {
             itemDesc: [

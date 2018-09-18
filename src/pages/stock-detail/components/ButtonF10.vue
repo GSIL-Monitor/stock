@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import DefaultBtn from './DefaultBtn'
+import DefaultBtn from './DefaultBtn.vue'
 
 export default {
     name: 'ButtonF10',

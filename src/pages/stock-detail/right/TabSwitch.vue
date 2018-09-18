@@ -17,7 +17,7 @@ import {
     initTapeFunc,
 } from '../tape/tape-public-func'
 
-import TabSwitchItem from './TabSwitchItem'
+import TabSwitchItem from './TabSwitchItem.vue'
 
 export default {
     name: 'TabSwitch',

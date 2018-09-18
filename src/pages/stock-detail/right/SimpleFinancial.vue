@@ -41,8 +41,8 @@ import {
     getYellowNumber,
 } from '@formatter/market-fields/financial'
 
-import SimpleFinancialItem from './SimpleFinancialItem'
-import LoadMore from '../components/LoadMore'
+import LoadMore from '../components/LoadMore.vue'
+import SimpleFinancialItem from './SimpleFinancialItem.vue'
 
 export default {
     name: 'SimpleFinancial',

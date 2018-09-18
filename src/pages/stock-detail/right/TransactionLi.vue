@@ -40,7 +40,7 @@ import {
     formatCount,
 } from '@formatter/market-fields/transaction'
 
-import Price from '@formatter/market-base/Price'
+import Price from '@formatter/market-base/Price.vue'
 
 export default {
     name: 'TransactionLi',

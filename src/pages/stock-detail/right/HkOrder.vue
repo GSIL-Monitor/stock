@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import HkOrderItem from './HkOrderItem'
+import HkOrderItem from './HkOrderItem.vue'
 
 export default {
     name: 'HkOrder',

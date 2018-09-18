@@ -95,9 +95,9 @@ import {
     sunTable,
     sunTableColumn
 } from '@c/table'
-import StockName from '@formatter/market-base/StockName'
-import MarketValue from '@formatter/market-base/MarketValue'
-import PriceChangeRate from '@formatter/market-base/PriceChangeRate'
+import StockName from '@formatter/market-base/StockName.vue'
+import MarketValue from '@formatter/market-base/MarketValue.vue'
+import PriceChangeRate from '@formatter/market-base/PriceChangeRate.vue'
 
 export default {
     name: 'ConstituentStock',

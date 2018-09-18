@@ -106,16 +106,16 @@ import {
 import socketMixin from '../mixins/socket-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
 
-import IsMyStock from './IsMyStock'
-import HkTimeBox from './HkTimeBox'
-import TitleTopMarket from './TitleTopMarket'
-import MarketInfo from './MarketInfo'
-import StockTransaction from './Transaction'
-import StockName from '@formatter/market-base/StockName'
-import StockCode from '@formatter/market-base/StockCode'
-import CompareClose from '@formatter/market-base/CompareClose'
-import ClosePrice from '@formatter/market-base/ClosePrice'
-import Turnover from '@formatter/market-base/Turnover'
+import IsMyStock from './IsMyStock.vue'
+import HkTimeBox from './HkTimeBox.vue'
+import TitleTopMarket from './TitleTopMarket.vue'
+import MarketInfo from './MarketInfo.vue'
+import StockTransaction from './Transaction.vue'
+import StockName from '@formatter/market-base/StockName.vue'
+import StockCode from '@formatter/market-base/StockCode.vue'
+import CompareClose from '@formatter/market-base/CompareClose.vue'
+import ClosePrice from '@formatter/market-base/ClosePrice.vue'
+import Turnover from '@formatter/market-base/Turnover.vue'
 
 export default {
     name: 'HkIndex',

@@ -58,7 +58,7 @@ import {
 import { ASTOCK } from '@formatter/config/stock-type-config'
 import { LOCAL_TRANSATION_STORE } from '../storage'
 
-import PopUp from '@c/popUp'
+import PopUp from '@c/popUp.vue'
 
 const defaults = {
     equal: {

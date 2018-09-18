@@ -34,13 +34,13 @@ import {
     mapMutations,
 } from 'vuex'
 
-import StockATemp from './StockA'
-import StockBTemp from './StockB'
-import FundTemp from './Fund'
-import BondTemp from './Bond'
-import MarketTemp from './Market'
-import HkIndexTemp from './HkIndex'
-import HkNormalTemp from './HkNormal'
+import StockATemp from './StockA.vue'
+import StockBTemp from './StockB.vue'
+import FundTemp from './Fund.vue'
+import BondTemp from './Bond.vue'
+import MarketTemp from './Market.vue'
+import HkIndexTemp from './HkIndex.vue'
+import HkNormalTemp from './HkNormal.vue'
 
 export default {
     name: 'RightMain',

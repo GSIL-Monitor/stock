@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import FuncStyleItem from './FuncStyleItem'
+import FuncStyleItem from './FuncStyleItem.vue'
 
 export default {
     name: 'TapeFuncStyle',

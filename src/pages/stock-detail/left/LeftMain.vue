@@ -45,9 +45,9 @@ import {
 
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
-import StockTag from './StockTag'
-import MyStockList from './MyStockList'
-import RecentVisit from './RecentVisit'
+import StockTag from './StockTag.vue'
+import MyStockList from './MyStockList.vue'
+import RecentVisit from './RecentVisit.vue'
 
 export default {
     name: 'Left',

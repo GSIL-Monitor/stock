@@ -22,7 +22,7 @@ import {
 import stockAIcoConfig from './stock-a-identify-config'
 import hkStockIcoConfig from './hk-stock-identify-config'
 
-import IdentifyIco from './IdentifyIco'
+import IdentifyIco from './IdentifyIco.vue'
 
 export default {
     name: 'StockIdentify',

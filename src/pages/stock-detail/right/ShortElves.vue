@@ -69,8 +69,8 @@ import {
 
 import socketMixin from '../mixins/socket-mixin'
 
-import SetIco from '../components/SetIco'
-import ShortElvesItem from './ShortElvesItem'
+import SetIco from '../components/SetIco.vue'
+import ShortElvesItem from './ShortElvesItem.vue'
 
 // TODO: 清空时段加载问题
 export default {

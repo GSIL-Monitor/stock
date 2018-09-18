@@ -37,15 +37,17 @@
 </template>
 
 <script>
-import { evenRound } from '@c/utils/util'
+import {
+    evenRound,
+} from '@c/utils/util'
 import {
     SOCKET_RANGE_SCOPE,
 } from '../storage'
 
 import socketMixin from '../mixins/socket-mixin'
 
-import RangeBodyItem from './ChangeRangeBodyItem'
-import RangeListItem from './ChangeRangeListItem'
+import RangeBodyItem from './ChangeRangeBodyItem.vue'
+import RangeListItem from './ChangeRangeListItem.vue'
 
 export default {
     name: 'ChangeRange',

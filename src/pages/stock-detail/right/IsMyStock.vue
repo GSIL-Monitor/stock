@@ -21,6 +21,7 @@ import {
 } from '../utility'
 
 import DefaultBtn from '../components/DefaultBtn.vue'
+
 export default {
     name: 'IsMyStock',
     created() {

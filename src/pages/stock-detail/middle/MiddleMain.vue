@@ -5,7 +5,7 @@
     <div
         class="stock_chart"
     >
-        <!-- <KLine/> -->
+        <KLine/>
     </div>
     <div
         class="stock_info"
@@ -41,10 +41,10 @@ import {
     INFO_STATE,
 } from '@store/stock-detail-store/config/mutation-types'
 
-import KLine from './KLine'
-import InfoStockATemp from './InfoStockA'
-import InfoHSIndexTemp from './InfoHSIndex'
-import InfoHkStockTemp from './InfoHkStock'
+import KLine from './KLine.vue'
+import InfoStockATemp from './InfoStockA.vue'
+import InfoHSIndexTemp from './InfoHSIndex.vue'
+import InfoHkStockTemp from './InfoHkStock.vue'
 
 export default {
     name: 'Middle',

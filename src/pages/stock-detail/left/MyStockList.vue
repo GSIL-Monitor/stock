@@ -65,7 +65,7 @@ import {
 
 import oneStockList from './one-stock-list-mixin'
 
-import StockItem from '../components/StockItem'
+import StockItem from '../components/StockItem.vue'
 
 let groupTimeoutTimer = null
 

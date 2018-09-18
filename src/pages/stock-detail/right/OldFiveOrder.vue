@@ -52,7 +52,7 @@ import {
     evenRound,
 } from '@c/utils/util'
 
-import FiveOrderItem from './FiveOrderItem'
+import FiveOrderItem from './FiveOrderItem.vue'
 
 export default {
     name: 'OldFiveOrder',

@@ -34,7 +34,7 @@
 
     import subMixin from './sub-scription-mixin'
 
-    import StockItem from '../components/StockItem'
+    import StockItem from '../components/StockItem.vue'
 
     export default {
         name: 'RecentVisit',
