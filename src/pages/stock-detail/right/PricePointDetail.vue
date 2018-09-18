@@ -89,7 +89,7 @@ export default {
                             color: '#c0c0c0',
                         },
                         formatter(value) {
-                            var value = value / 100
+                            value = value / 100
                             if (value >= 10000) {
                                 return value / 10000 + '万'
                             } else {
@@ -104,7 +104,7 @@ export default {
                         show: true,
                         textStyle: {
                             color(value) {
-                                var color = '#c0c0c0';
+                                let color = '#c0c0c0';
                                 if(value > closePrice.toFixed(2)){
                                     color = '#f51d27';
                                 }else if(value<closePrice.toFixed(2)){
@@ -194,7 +194,7 @@ export default {
     },
     methods: {
         calcChartHeight() {
-            var height = this.$parent.$refs.pricePointChartContainer.offsetHeight
+            let height = this.$parent.$refs.pricePointChartContainer.offsetHeight
             if (height < 150) {
                 height = 150
             }

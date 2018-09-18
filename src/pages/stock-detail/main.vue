@@ -80,7 +80,7 @@ export default {
         // 监听 hash 改变
         window.onhashchange = event => {
             let hash = location.hash.substr(1)
-
+            console.log('onhashchange: ', hash)
             this.changeCurrentStockState(hash)
         }
     },
@@ -382,7 +382,7 @@ export default {
             localStorage.setItem(LOCAL_LATEST_CODE, hash)
         },
         changeScode(d) {
-            var data = JSON.parse(d)
+            const data = JSON.parse(d)
             if (data.jump) {
                 this.setJumpStoreState(data.jump)
                 if (Object.is(location.hash.substr(1), data.stock_code)) {
@@ -498,9 +498,6 @@ export default {
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.remove(EVENT_KEY_BOARD, this.keyBoardEvent)
         goGoal.event.remove(EVENT_CHANGE_STOCK, this.changeMystock)
-    },
-    destroyed() {
-        window.onhashchange = null
     },
 }
 </script>

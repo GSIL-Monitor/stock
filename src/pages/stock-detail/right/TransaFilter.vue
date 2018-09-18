@@ -130,7 +130,7 @@ export default {
             this.showFilter = true
         },
         clickIco(data) {
-            var type = data.type
+            let type = data.type
             if (Object.is(this.activeType, data.type)) {
                 return false
             }

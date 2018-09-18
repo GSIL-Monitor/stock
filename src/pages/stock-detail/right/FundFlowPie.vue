@@ -157,7 +157,7 @@ export default {
                                 position: 'center',
                                 formatter(data) {
                                     if (data.dataIndex === 0) {
-                                        var value = Math.abs(flowNumber) >= 100 ? flowNumber.toFixed(0) : flowNumber.toFixed(1)
+                                        let value = Math.abs(flowNumber) >= 100 ? flowNumber.toFixed(0) : flowNumber.toFixed(1)
                                         return '净流入\n' + value + '\n万元'
                                     } else {
                                         return ''

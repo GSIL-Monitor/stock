@@ -16,7 +16,7 @@ export default {
     name: 'FuncStyleItem',
     methods: {
         icoClick() {
-            var emitOn = !this.on
+            let emitOn = !this.on
             this.$eventBus.$emit('dataChanged', {
                 parentType: this.parentType,
                 isList: true,

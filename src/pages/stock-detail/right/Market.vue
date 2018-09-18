@@ -277,7 +277,7 @@ export default {
             $panes.style.height = residue + 'px'
         },
         initState() {
-            var item = sessionStorage.getItem(SESSION_INDEX_FUNC_TAB)
+            let item = sessionStorage.getItem(SESSION_INDEX_FUNC_TAB)
             this.activeKey = item || this.defaultKey
         },
         getInfoData() {

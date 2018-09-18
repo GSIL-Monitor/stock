@@ -267,7 +267,7 @@ export default {
     },
     methods: {
         getFinancialData() {
-            var param = {
+            let param = {
                 options: {
                     stock_code: this.stock_code,
                 },
