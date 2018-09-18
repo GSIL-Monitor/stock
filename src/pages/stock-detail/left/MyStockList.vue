@@ -111,6 +111,11 @@ export default {
         getListData(id) {
             return this.isGroupActive(id) ? this.select_group_data : []
         },
+        getActiveGroupIndex() {
+            return this.group_data.findIndex((element) => {
+                return Object.is(element.group_id, this.activeGroupId)
+            })
+        },
         generateGroupClass(id) {
             return [
                 'market',
@@ -209,7 +214,15 @@ export default {
         },
         changeCurrentStock(event) {
             let target = event.target
-            while (target.tagName.toLowerCase() !== 'li') {
+            let activeIndex = this.getActiveGroupIndex()
+            if (activeIndex === -1) {
+                return false
+            }
+            let $scrollContainer = this.$refs.scrollContainer[activeIndex]
+            if (!($scrollContainer.compareDocumentPosition(target) & 16)) {
+                return false
+            }
+            while (target && target.tagName.toLowerCase() !== 'li') {
                 target = target.parentNode
             }
             if (target) {
@@ -221,8 +234,6 @@ export default {
                     }))
                 }
             }
-            // 添加最近访问记录
-
         },
     },
     beforeDestroy() {

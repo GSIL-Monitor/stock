@@ -42,9 +42,7 @@ export default {
             getSelectGroupData: GET_SELECT_GROUP_DATA,
         }),
         getSubScriptionEdge() {
-            const containerIndex = this.group_data.findIndex((element)=>{
-                return Object.is(element.group_id, this.activeGroupId)
-            })
+            const containerIndex = this.getActiveGroupIndex()
             let nowScrollTop = this.$refs.scrollContainer[containerIndex].scrollTop
             let height = window.screen.availHeight - 150
             let oneHeight = 40
