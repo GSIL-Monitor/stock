@@ -352,9 +352,7 @@ export default {
         },
         tapeDefaultChanged(key, val) {
             this[key] = val
-            this.$nextTick(() => {
-                this.resizeWindow()
-            })
+            this.nextResizeWindow()
         },
         tapeSettings() {
             this.$eventBus.$emit('tapeSet')
@@ -496,6 +494,7 @@ export default {
             if (this.$parent.isBStock) {
                 this.cancleSocket(this.linkIndex)
                 this.socketData = {}
+                this.nextResizeWindow()
                 this.getInfoData()
             }
         },

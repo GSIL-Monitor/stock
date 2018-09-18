@@ -16,9 +16,13 @@
                 <span
                     :class="premiumIco(item.source)"
                 ></span>
-                <div @click="changeStock(item)">
-                    <span class="stock_premium_name">{{formatName(item.name)}}</span>
-                    <span class="stock_premium_code">{{formatNormal(item.code)}}</span>
+                <div
+                    :data-source="item.source"
+                    :data-symbol_type="item.symbol_type"
+                    :data-stock_code="item.code"
+                >
+                    <span class="stock_premium_name j_premiumJump">{{formatName(item.name)}}</span>
+                    <span class="stock_premium_code j_premiumJump">{{formatNormal(item.code)}}</span>
                 </div>
                 <Price
                     class="stock_premium_price"
@@ -61,6 +65,8 @@ import {
 import formatDiscountPremium from '@formatter/market-fields/discount-premium'
 import {
     getTimeStamp,
+    switchToHashString,
+    changePageStock,
 } from '../utility'
 
 import 'swiper/dist/css/swiper.css'
@@ -106,6 +112,9 @@ export default {
                 preventClicks: true,
                 allowTouchMove: false,
                 zoom: false,
+                on: {
+                    tap: this.changeStock
+                }
             }
 
             return defaults
@@ -210,8 +219,12 @@ export default {
             this.clearIntervalTimer()
             this.dataStore = []
         },
-        changeStock(item) {
-            console.log(item)
+        changeStock(event) {
+            if (event.target.className.includes('j_premiumJump')) {
+                let { source, symbol_type, stock_code } = event.target.parentNode.dataset
+                let hash = switchToHashString(source, stock_code, symbol_type)
+                changePageStock(hash)
+            }
         },
     },
     beforeDestroy() {

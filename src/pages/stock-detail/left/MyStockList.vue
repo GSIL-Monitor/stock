@@ -52,9 +52,11 @@ import {
     UnSubscriptSockets,
 } from '@c/utils/callQt'
 import {
+    changePageStock,
+} from '../utility'
+import {
     SESSION_SELECT_STOCK_GROUP,
     FRAME_MYSTOCK_GROUP,
-    EVENT_CHANGES_CODE,
 } from '../storage'
 import {
     GET_STOCK_GROUP_DATA,
@@ -227,12 +229,7 @@ export default {
             }
             if (target) {
                 let hash = target.dataset.hashString
-                if (hash) {
-                    goGoal.event.trigger(EVENT_CHANGES_CODE, JSON.stringify({
-                        stock_code: hash,
-                        isRencent: false,
-                    }))
-                }
+                changePageStock(hash)
             }
         },
     },

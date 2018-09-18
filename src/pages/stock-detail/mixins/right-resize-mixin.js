@@ -25,6 +25,11 @@ export default {
 
             this.extendHeight = residue
         },
+        nextResizeWindow() {
+            this.$nextTick(() => {
+                this.resizeWindow()
+            })
+        },
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeWindow)

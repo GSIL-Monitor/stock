@@ -481,9 +481,7 @@ export default {
     methods: {
         tapeDefaultChanged(key, val) {
             this[key] = val
-            this.$nextTick(() => {
-                this.resizeWindow()
-            })
+            this.nextResizeWindow()
         },
         bottomSwitch(key, val) {
             if (val === false) {
@@ -504,9 +502,7 @@ export default {
                     this.bottomHideList.splice(index, 1)
                 }
             }
-            this.$nextTick(() => {
-                this.resizeWindow()
-            })
+            this.nextResizeWindow()
         },
         getInfoData() {
             let param = {
@@ -688,9 +684,7 @@ export default {
             this[TAPE_CONTENT] = 'market'
             this[TAPE_STYLE] = 'off'
             this.bottomHideList = []
-            this.$nextTick(() => {
-                this.resizeWindow()
-            })
+            this.nextResizeWindow()
         },
     },
     beforeDestroy() {
@@ -708,6 +702,7 @@ export default {
                 this.loadIdentify = false
                 this.cancleSocket(this.linkIndex)
                 this.socketData = {}
+                this.nextResizeWindow()
                 this.getInfoData()
             }
         },

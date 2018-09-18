@@ -4,6 +4,9 @@ import {
 import {
     sendEvent,
 } from '@c/utils/callQt'
+import {
+    EVENT_CHANGES_CODE,
+} from './storage'
 
 // 截取新闻信息
 export const subDate = (date) => {
@@ -66,5 +69,51 @@ export const syncMyStockState = () => {
 
     MODULE_ARR.forEach(((element) => {
         sendEvent(element, EVENT_NAME, JSON.stringify({}), false)
+    }))
+}
+
+/**
+ * @description 转换为个股的 location.hash
+*/
+export const switchToHashString = (source, stock_code, symbol_type) => {
+    symbol_type = String(symbol_type)
+    let full_code = `${source}${stock_code}`
+    if (['sh', 'sz'].includes(source)) {
+        if (['1', '5'].includes(symbol_type)) {
+            return stock_code
+        } else if (Object.is(symbol_type, '3')) {
+            return `fund${full_code}`
+        } else if (Object.is(symbol_type, '4')) {
+            return `bond${full_code}`
+        } else {
+            return full_code
+        }
+    } else if (Object.is(source, 'hk')) {
+        if (Object.is(symbol_type, '3')) {
+            return `fund_H${full_code}`
+        } else if (Object.is(symbol_type, '4')) {
+            return `bond_H${full_code}`
+        } else if (Object.is(symbol_type, '5')) {
+            return `cbbc${full_code}`
+        } else if (Object.is(symbol_type, '6')) {
+            return `warrants${full_code}`
+        } else {
+            return full_code
+        }
+    } else if (Object.is(symbol_type, '7')) {
+        return `${source};${stock_code}`
+    } else {
+        return full_code
+    }
+}
+
+/**
+ * @description 个股公共入口
+*/
+export const changePageStock = (hash, isRecent = false) => {
+    if (!hash) { return false }
+    goGoal.event.trigger(EVENT_CHANGES_CODE, JSON.stringify({
+        stock_code: hash,
+        isRencent: isRecent,
     }))
 }

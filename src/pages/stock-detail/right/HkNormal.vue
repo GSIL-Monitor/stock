@@ -168,6 +168,7 @@
         :stockType="current_type"
     />
     <AssociatedStock
+        v-if="isHkStock"
         @resizeWindow="resizeWindow"
     />
     <div
@@ -371,6 +372,7 @@ export default {
             this.loadIdentify = false
             this.cancleSocket(this.linkIndex)
             this.socketData = {}
+            this.nextResizeWindow()
             this.getInfoData()
         },
     },
