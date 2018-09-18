@@ -4,7 +4,7 @@
         @click.stop="emitClick"
         type="button"
     >
-        {{label}}
+        <slot></slot>
     </button>
 </template>
 

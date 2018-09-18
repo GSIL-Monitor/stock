@@ -32,16 +32,18 @@
             </div>
         </div>
         <div class="set_tape_bottom">
-            <DefaultBtn
-                label="完成"
+            <default-btn
                 @on-click="tapeComplete"
                 class="tape_btn tape_btn_Sure"
-            />
-            <DefaultBtn
-                label="重置"
+            >
+                完成
+            </default-btn>
+            <default-btn
                 @on-click="tapeReset"
                 class="tape_btn tape_btn_Reset"
-            />
+            >
+                重置
+            </default-btn>
         </div>
     </div>
 </template>

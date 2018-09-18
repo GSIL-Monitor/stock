@@ -1,9 +1,10 @@
 <template>
-<DefaultBtn
-    label="F10"
+<default-btn
     class="btn-content"
     @on-click="skipF10"
-/>
+>
+    F10
+</default-btn>
 </template>
 
 <script>

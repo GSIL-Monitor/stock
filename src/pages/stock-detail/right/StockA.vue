@@ -39,16 +39,18 @@
             />
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
-                    <DefaultBtn
-                        label="诊股"
+                    <default-btn
                         class="btn-content"
                         @on-click="skipDiagnose"
-                    />
-                    <DefaultBtn
-                        label="研报"
+                    >
+                        诊股
+                    </default-btn>
+                    <default-btn
                         class="btn-content"
                         @on-click="skipReport"
-                    />
+                    >
+                        研报
+                    </default-btn>
                     <ButtonF10/>
                 </div>
                 <div class="detail_head_btn_right">

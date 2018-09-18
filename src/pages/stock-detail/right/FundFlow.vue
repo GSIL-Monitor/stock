@@ -2,10 +2,11 @@
     <div class="right_bottom_container">
         <div class="view_title">
             <span class="fund_flow_dsc">资金流向</span>
-            <DefaultBtn
-                label="资金选股"
+            <default-btn
                 @on-click="selectStock"
-            />
+            >
+                资金选股
+            </default-btn>
         </div>
         <div class="view_vessel">
             <div
