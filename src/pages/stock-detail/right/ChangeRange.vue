@@ -51,38 +51,19 @@ import RangeListItem from './ChangeRangeListItem.vue'
 
 export default {
     name: 'ChangeRange',
-    created() {
-        this.$eventBus.$on(SOCKET_RANGE_SCOPE, this.receiveSocketData)
-    },
-    mounted() {
-        this.sendLink(this.linkAddress)
-        this.rememberLink(this.linkAddress, this.linkIndex)
-    },
     mixins: [
         socketMixin,
     ],
+    created() {
+        this.$eventBus.$on(SOCKET_RANGE_SCOPE, this.receiveSocketData)
+        this.sendLink(this.linkAddress)
+        this.rememberLink(this.linkAddress, this.linkIndex)
+    },
     data() {
         return {
             socketData: {},
             linkIndex: 1,
             mark: null,
-            avg_rose10_5d: null,
-            delist: null,
-            fall: null,
-            fall0_1: null,
-            fall1_2: null,
-            fall2_4: null,
-            fall4_7: null,
-            fall7_10: null,
-            fall10: null,
-            flat: null,
-            rose: null,
-            rose0_1: null,
-            rose1_2: null,
-            rose2_4: null,
-            rose4_7: null,
-            rose7_10: null,
-            rose10: null,
         }
     },
     components: {
@@ -118,88 +99,88 @@ export default {
             ]
         },
         total() {
-            return this.rose + this.fall
+            return this.socketData.rose + this.socketData.fall
         },
         isClear() {
             return Object.is(this.mark, 1)
         },
         riseRatio() {
-            return this.formatRatio(this.rose, this.total)
+            return this.formatRatio(this.socketData.rose, this.total)
         },
         fallRatio() {
-            return this.formatRatio(this.fall, this.total)
+            return this.formatRatio(this.socketData.fall, this.total)
         },
         limitUp() {
-            return this.formatNumber(this.rose10)
+            return this.formatNumber(this.socketData.rose10)
         },
         limitDown() {
-            return this.formatNumber(this.fall10)
+            return this.formatNumber(this.socketData.fall10)
         },
         rose7_10Number() {
-            return this.formatNumber(this.rose7_10)
+            return this.formatNumber(this.socketData.rose7_10)
         },
         rose4_7Number() {
-            return this.formatNumber(this.rose4_7)
+            return this.formatNumber(this.socketData.rose4_7)
         },
         rose2_4Number() {
-            return this.formatNumber(this.rose2_4)
+            return this.formatNumber(this.socketData.rose2_4)
         },
         rose1_2Number() {
-            return this.formatNumber(this.rose1_2)
+            return this.formatNumber(this.socketData.rose1_2)
         },
         rose0_1Number() {
-            return this.formatNumber(this.rose0_1)
+            return this.formatNumber(this.socketData.rose0_1)
         },
         fall7_10Number() {
-            return this.formatNumber(this.fall7_10)
+            return this.formatNumber(this.socketData.fall7_10)
         },
         fall4_7Number() {
-            return this.formatNumber(this.fall4_7)
+            return this.formatNumber(this.socketData.fall4_7)
         },
         fall2_4Number() {
-            return this.formatNumber(this.fall2_4)
+            return this.formatNumber(this.socketData.fall2_4)
         },
         fall1_2Number() {
-            return this.formatNumber(this.fall1_2)
+            return this.formatNumber(this.socketData.fall1_2)
         },
         fall0_1Number() {
-            return this.formatNumber(this.fall0_1)
+            return this.formatNumber(this.socketData.fall0_1)
         },
         rose10Ratio() {
-            return this.formatWidth(this.rose10, this.total)
+            return this.formatWidth(this.socketData.rose10, this.total)
         },
         rose7_10Ratio() {
-            return this.formatWidth(this.rose7_10, this.total)
+            return this.formatWidth(this.socketData.rose7_10, this.total)
         },
         rose4_7Ratio() {
-            return this.formatWidth(this.rose4_7, this.total)
+            return this.formatWidth(this.socketData.rose4_7, this.total)
         },
         rose2_4Ratio() {
-            return this.formatWidth(this.rose2_4, this.total)
+            return this.formatWidth(this.socketData.rose2_4, this.total)
         },
         rose1_2Ratio() {
-            return this.formatWidth(this.rose1_2, this.total)
+            return this.formatWidth(this.socketData.rose1_2, this.total)
         },
         rose0_1Ratio() {
-            return this.formatWidth(this.rose0_1, this.total)
+            return this.formatWidth(this.socketData.rose0_1, this.total)
         },
         fall0_1Ratio() {
-            return this.formatWidth(this.fall0_1, this.total)
+            return this.formatWidth(this.socketData.fall0_1, this.total)
         },
         fall1_2Ratio() {
-            return this.formatWidth(this.fall1_2, this.total)
+            return this.formatWidth(this.socketData.fall1_2, this.total)
         },
         fall2_4Ratio() {
-            return this.formatWidth(this.fall2_4, this.total)
+            return this.formatWidth(this.socketData.fall2_4, this.total)
         },
         fall4_7Ratio() {
-            return this.formatWidth(this.fall4_7, this.total)
+            return this.formatWidth(this.socketData.fall4_7, this.total)
         },
         fall7_10Ratio() {
-            return this.formatWidth(this.fall7_10, this.total)
+            return this.formatWidth(this.socketData.fall7_10, this.total)
         },
         fall10Ratio() {
-            return this.formatWidth(this.fall10, this.total)
+            return this.formatWidth(this.socketData.fall10, this.total)
         },
         riseList() {
             return {
@@ -281,23 +262,12 @@ export default {
             let data = args[0]
             this.mark = data.mark
 
-            this.avg_rose10_5d = data.avg_rose10_5d
-            this.delist = data.delist
-            this.fall = data.fall
-            this.fall0_1 = data.fall0_1
-            this.fall1_2 = data.fall1_2
-            this.fall2_4 = data.fall2_4
-            this.fall4_7 = data.fall4_7
-            this.fall7_10 = data.fall7_10
-            this.fall10 = data.fall10
-            this.flat = data.flat
-            this.rose = data.rose
-            this.rose0_1 = data.rose0_1
-            this.rose1_2 = data.rose1_2
-            this.rose2_4 = data.rose2_4
-            this.rose4_7 = data.rose4_7
-            this.rose7_10 = data.rose7_10
-            this.rose10 = data.rose10
+            if (Object.is(data.mark, 1)) {
+                // 清空
+                this.socketData = {}
+            } else {
+                this.socketData = Object.assign({}, data)
+            }
         },
         evenRoundRatio(num, total) {
             return `${evenRound(num / total * 100, 2)}%`
