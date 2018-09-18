@@ -2,7 +2,9 @@
     <div
         class="func_item"
     >
-        <span class="func_item_dsc">{{text}}</span>
+        <span
+            class="func_item_dsc"
+        >{{text}}</span>
         <span
             class="func_item_ico"
             :class="{func_item_ico_On: this.on}"
@@ -27,8 +29,6 @@ export default {
                     },
                 ],
             })
-
-            this.$eventBus.$emit('bottomSwitch', this.type, emitOn)
         },
     },
     props: [

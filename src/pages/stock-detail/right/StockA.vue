@@ -338,6 +338,7 @@ export default {
         this.$eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
         this.$eventBus.$on('tapeDefaultChanged', this.tapeDefaultChanged)
         this.$eventBus.$on('bottomSwitch', this.bottomSwitch)
+        this.$eventBus.$on('resetTapeState', this.resetTapeState)
         if (this.stock_code) {
             this.getInfoData()
         }
@@ -677,6 +678,15 @@ export default {
 
             this.extendHeight = residue
         },
+        resetTapeState() {
+            this[TAPE_ROWS] = '5'
+            this[TAPE_CONTENT] = 'market'
+            this[TAPE_STYLE] = 'off'
+            this.bottomHideList = []
+            this.$nextTick(() => {
+                this.resizeWindow()
+            })
+        },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
@@ -685,6 +695,7 @@ export default {
 
         this.$eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
         this.$eventBus.$off('bottomSwitch', this.bottomSwitch)
+        this.$eventBus.$off('resetTapeState', this.resetTapeState)
     },
     watch: {
         full_code() {

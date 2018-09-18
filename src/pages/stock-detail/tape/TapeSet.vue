@@ -240,8 +240,8 @@ export default {
         emitChanged(o) {
             if (Reflect.has(o, 'isList')) {
                 // function
-                console.log('emitChanged')
-                console.log(o)
+                let item = o.changed[0]
+                this.$eventBus.$emit('bottomSwitch', item.type, item.on)
             } else {
                 // default
                 this.$eventBus.$emit('tapeDefaultChanged', o.parentType, o.type)
@@ -269,6 +269,7 @@ export default {
             })
             localStorage.setItem(LOCAL_TAPE_SET_DFT, JSON.stringify(resetDefault))
             localStorage.setItem(LOCAL_TAPE_SET_FUNC, JSON.stringify([]))
+            this.$eventBus.$emit('resetTapeState')
         },
     },
 
