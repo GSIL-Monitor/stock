@@ -349,6 +349,9 @@ export default {
         },
         tapeDefaultChanged(key, val) {
             this[key] = val
+            this.$nextTick(() => {
+                this.resizeWindow()
+            })
         },
         tapeSettings() {
             this.$eventBus.$emit('tapeSet')

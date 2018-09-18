@@ -122,6 +122,10 @@ export default {
         .stock_info {
             height: 25px;
         }
+        .gg_tabs_content {
+            height: 0;
+            overflow: hidden;
+        }
     }
     &.stock_chart_fullHeight {
         .stock_chart {

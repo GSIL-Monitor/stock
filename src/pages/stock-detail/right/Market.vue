@@ -345,6 +345,9 @@ export default {
         full_code() {
             this.cancleSocket(this.linkIndex)
             this.socketData = {}
+            this.$nextTick(()=> {
+                this.resizeWindow()
+            })
             this.getInfoData()
         }
     },
