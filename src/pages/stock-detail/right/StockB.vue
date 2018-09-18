@@ -205,6 +205,7 @@
                 </MarketInfo>
             </div>
         </div>
+        <AssociatedStock/>
         <div
             class="detail_extend"
             :style="extendStyles"
@@ -244,6 +245,7 @@ import TitleTopMarket from './TitleTopMarket.vue'
 import ButtonF10 from '../components/ButtonF10.vue'
 import IsMyStock from './IsMyStock.vue'
 import FiveOrder from './FiveOrder.vue'
+import AssociatedStock from './AssociatedStock.vue'
 import StockTransaction from './Transaction.vue'
 // 盘口内容
 import MarketInfo from './MarketInfo.vue'
@@ -301,6 +303,7 @@ export default {
         ButtonF10,
         IsMyStock,
         FiveOrder,
+        AssociatedStock,
         StockTransaction,
 
         MarketInfo,

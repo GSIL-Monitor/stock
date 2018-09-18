@@ -239,6 +239,9 @@
                 @toggleArrow="toggle"
             />
         </div>
+        <AssociatedStock
+            @resizeWindow="resizeWindow"
+        />
         <!-- 分笔、分价表、资金流向、短线精灵、简易财务 -->
         <div class="detail_extend" :style="extendStyles" ref="detailExtend">
             <SimpleFinancial v-if="bottomTabConfig.activeType === 'simple_finance'"/>
@@ -305,6 +308,7 @@ import ShortElves from './ShortElves.vue'
 import SimpleFinancial from './SimpleFinancial.vue'
 // 盘口一致预期
 import ConsensusTable from './ConsensusTable.vue'
+import AssociatedStock from './AssociatedStock.vue'
 // 盘口内容
 import MarketInfo from './MarketInfo.vue'
 // 盘口内容 -- 字段详情
@@ -407,6 +411,7 @@ export default {
         TabSwitch,
         SetIco,
         StockIdentify,
+        AssociatedStock,
 
         SimpleFinancial,
         StockTransaction,
@@ -467,7 +472,7 @@ export default {
             return Object.is(this.bottomTabConfig.activeType, 'transaction')
         },
         arrowDirection() {
-            return this[TAPE_CONTENT] === 'market'
+            return Object.is(this[TAPE_CONTENT], 'market')
         },
         linkAddress() {
             return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_A_MARKET}|first_push:true`

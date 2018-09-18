@@ -167,6 +167,9 @@
         :close_price="close_price"
         :stockType="current_type"
     />
+    <AssociatedStock
+        @resizeWindow="resizeWindow"
+    />
     <div
         class="detail_extend"
         :style="extendStyles"
@@ -200,6 +203,7 @@ import IsMyStock from './IsMyStock.vue'
 import TitleTopMarket from './TitleTopMarket.vue'
 import MarketInfo from './MarketInfo.vue'
 import StockIdentify from './StockIdentify.vue'
+import AssociatedStock from './AssociatedStock.vue'
 import HkOrder from './HkOrder.vue'
 import StockTransaction from './Transaction.vue'
 import StockName from '@formatter/market-base/StockName.vue'
@@ -237,6 +241,7 @@ export default {
         ButtonF10,
         IsMyStock,
         StockIdentify,
+        AssociatedStock,
         TitleTopMarket,
         MarketInfo,
         HkOrder,
