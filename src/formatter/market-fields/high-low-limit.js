@@ -7,6 +7,7 @@ import {
     toType,
     stockToType,
     isClearCase,
+    getClearVal,
 } from "../utility";
 import {
     ASTOCK,
@@ -64,10 +65,7 @@ const getVal = (val, type) => {
 
 export const formatHighLimit = (value, list, current_type) => {
     if (isClearCase(value, list)) {
-        return {
-            val: '--',
-            color: RED,
-        }
+        return getClearVal()
     } else {
         const type = current_type || stockToType(
             list.source,
@@ -86,10 +84,7 @@ export const formatHighLimit = (value, list, current_type) => {
 
 export const formatLowLimit = (value, list, current_type) => {
     if (isClearCase(value, list)) {
-        return {
-            val: '--',
-            color: GREEN,
-        }
+        return getClearVal()
     } else {
         const type = current_type || stockToType(
             list.source,

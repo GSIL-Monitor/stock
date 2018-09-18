@@ -10,18 +10,16 @@ import {
     getRetainBits,
     stockToType,
     isClearCase,
+    getClearVal,
     isNumber,
 } from '../utility'
 
 // 振幅
 export const formatAmplitude = (amplitude, list) => {
-    const color = DEFAULT
     if (isClearCase(amplitude, list)) {
-        return {
-            val: '--',
-            color,
-        }
+        return getClearVal()
     } else {
+        const color = DEFAULT
         let val = Number(amplitude).toFixed(2) + '%'
         return {
             val,

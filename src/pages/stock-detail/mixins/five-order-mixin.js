@@ -100,6 +100,21 @@ export default {
         },
     },
     methods: {
+        clearFiveOrder() {
+            this.setFiveOrderFields('buy', {})
+            this.setFiveOrderFields('sell', {})
+            this.resetDiff()
+        },
+        resetDiff() {
+            for (let i = 1; i <= 5; i += 1) {
+                let buyPrefix = 'buy'
+                let sellPrefix = 'sell'
+                let buyDiffField = `${buyPrefix}${i}_diff`
+                let sellDiffField = `${sellPrefix}${i}_diff`
+                this[buyDiffField] = 0
+                this[sellDiffField] = 0
+            }
+        },
         volumeDiff(val, oldVal) {
             return Math.floor((val - oldVal) / 100)
         },

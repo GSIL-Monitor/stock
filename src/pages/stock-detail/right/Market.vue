@@ -8,21 +8,21 @@
                         class="title_left_name"
                         :val="stock_name"
                         :current_type="current_type"
-                    ></StockName>
+                    />
                     <StockCode
                         class="title_left_code"
                         :val="stock_code"
                         :source="source"
-                    ></StockCode>
+                    />
                 </div>
             </div>
             <TitleTopMarket
                 class="detail_head_market"
                 :source="source"
                 :symbol_type="symbol_type"
-                :price="price"
-                :price_change="price_change"
-                :price_change_rate="price_change_rate"
+                :price="socketData.price"
+                :price_change="socketData.price_change"
+                :price_change_rate="socketData.price_change_rate"
             />
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
@@ -39,26 +39,30 @@
                     <td>
                         <CompareClose
                             :close_price="close_price"
-                            :val="open_price"
+                            :val="socketData.open_price"
                             :current_type="current_type"
-                        ></CompareClose>
+                        />
                     </td>
                     <td class="two-letters">昨收</td>
                     <td>
                         <ClosePrice
                             :val="close_price"
                             :current_type="current_type"
-                        ></ClosePrice>
+                        />
                     </td>
                 </tr>
                 <tr>
                     <td class="two-letters">总手</td>
                     <td>
-                        <Volume :val="volume"></Volume>
+                        <Volume
+                            :val="socketData.volume"
+                        />
                     </td>
                     <td class="two-letters">金额</td>
                     <td>
-                        <Turnover :val="turnover"></Turnover>
+                        <Turnover
+                            :val="socketData.turnover"
+                        />
                     </td>
                 </tr>
                 <tr>
@@ -66,37 +70,45 @@
                     <td>
                         <CompareClose
                             :close_price="close_price"
-                            :val="high_price"
+                            :val="socketData.high_price"
                             :current_type="current_type"
-                        ></CompareClose>
+                        />
                     </td>
                     <td class="two-letters">最低</td>
                     <td>
                         <CompareClose
                             :close_price="close_price"
-                            :val="low_price"
+                            :val="socketData.low_price"
                             :current_type="current_type"
-                        ></CompareClose>
+                        />
                     </td>
                 </tr>
                 <tr>
                     <td class="two-letters">振幅</td>
                     <td>
-                        <Amplitude :val="amplitude"></Amplitude>
+                        <Amplitude
+                            :val="socketData.amplitude"
+                        />
                     </td>
                     <td class="two-letters">平盘</td>
                     <td>
-                        <Flat :val="flat"></Flat>
+                        <Flat
+                            :val="socketData.flat"
+                        />
                     </td>
                 </tr>
                 <tr>
                     <td class="two-letters">上涨</td>
                     <td>
-                        <Rose :val="rose"></Rose>
+                        <Rose
+                            :val="socketData.rose"
+                        />
                     </td>
                     <td class="two-letters">下跌</td>
                     <td>
-                        <Fall :val="fall"></Fall>
+                        <Fall
+                            :val="socketData.fall"
+                        />
                     </td>
                 </tr>
             </MarketInfo>
@@ -200,25 +212,9 @@ export default {
 
             linkIndex: 0,
             socketData: {},
-
             symbol_type: null,
             stock_name: null,
             close_price: null,
-
-            price: null,
-            price_change: null,
-            price_change_rate: null,
-
-            volume: null,
-            turnover: null,
-            high_price: null,
-            low_price: null,
-            open_price: null,
-            amplitude: null,
-
-            flat: null,
-            rose: null,
-            fall: null,
         }
     },
     components: {
@@ -293,23 +289,22 @@ export default {
                     // this[HSINDEX_CATEGORY](data.category)
                     this.stock_name = data.name
                     this.symbol_type = data.symbol_type
-
                     this.close_price = data.close_price
 
-                    this.price = data.price
-                    this.price_change = data.change_value
-                    this.price_change_rate = data.change_rate
+                    this.socketData.price = data.price
+                    this.socketData.price_change = data.change_value
+                    this.socketData.price_change_rate = data.change_rate
 
-                    this.volume = data.volume ? data.volume / 100 : data.volume
-                    this.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.high_price = data.high_price
-                    this.low_price = data.low_price
-                    this.open_price = data.open_price
-                    this.amplitude = data.amplitude
+                    this.socketData.volume = data.volume ? data.volume / 100 : data.volume
+                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
+                    this.socketData.high_price = data.high_price
+                    this.socketData.low_price = data.low_price
+                    this.socketData.open_price = data.open_price
+                    this.socketData.amplitude = data.amplitude
 
-                    this.flat = data.flat
-                    this.rose = data.rose
-                    this.fall = data.fall
+                    this.socketData.flat = data.flat
+                    this.socketData.rose = data.rose
+                    this.socketData.fall = data.fall
                 },
                 afterResponse: () => {
                     this.sendLink(this.linkAddress)
@@ -321,27 +316,22 @@ export default {
         },
         receiveSocketData(...args) {
             let data = args[0][0]
-
-            this.mark = Object.is(data.mark, 1) ? true : false
-            this.socketData = Object.assign({}, this.socketData, data)
-            let socketData = this.socketData
-
-            this.close_price = socketData.close_price
-
-            this.price = socketData.price
-            this.price_change = socketData.price_change
-            this.price_change_rate = socketData.price_change_rate
-
-            this.volume = socketData.volume ? socketData.volume / 100 : socketData.volume
-            this.turnover = socketData.turnover ? socketData.turnover * 10000 : socketData.turnover
-            this.high_price = socketData.high_price
-            this.low_price = socketData.low_price
-            this.open_price = socketData.open_price
-            this.amplitude = socketData.amplitude
-
-            this.flat = socketData.flat
-            this.rose = socketData.rose
-            this.fall = socketData.fall
+            // 清空
+            if (Object.is(data.mark, 1)) {
+                this.socketData = {}
+                return false
+            }
+            const transferData = Object.assign({}, data)
+            if (transferData.turnover) {
+                transferData.turnover = transferData.turnover * 10000
+            }
+            if (transferData.volume) {
+                transferData.volume = transferData.volume / 100
+            }
+            // 继承推送数据
+            this.socketData = Object.assign({}, this.socketData, transferData)
+            // 不清空数据
+            this.close_price = this.socketData.close_price
         },
         tabClicked(type) {
             this.activeKey = type

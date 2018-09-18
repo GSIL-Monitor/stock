@@ -70,11 +70,11 @@ import SetIco from '../components/SetIco'
 import LoadMore from '../components/LoadMore'
 
 export default {
-    name: 'stockTransation',
+    name: 'StockTransation',
     created() {
-        this.setStockState()
+        this.initStockState()
         this.$eventBus.$on('transationFilter', this.filterParams)
-        this.getData()
+        this.fetchData()
     },
     data() {
         return {
@@ -128,7 +128,7 @@ export default {
 
             localStorage.setItem(LOCAL_TRANSATION_STORE, JSON.stringify(store))
         },
-        setStockState() {
+        initStockState() {
             let store = this.getStore()
             let item = store[this.full_code]
             if (item) {
@@ -163,7 +163,7 @@ export default {
             }
         },
         getCurrentParams() {
-            let o = {
+            const o = {
                 stock_code: this.stock_code
             }
             if (this.update_time) {
@@ -182,7 +182,7 @@ export default {
 
             return o
         },
-        getData() {
+        fetchData() {
             const param = {
                 options: this.getCurrentParams(),
                 callback0: data => {
@@ -213,8 +213,8 @@ export default {
             this.max = o.max
 
             this.changeMsg()
-            this.resetComponent()
-            this.getData()
+            this.resetAll()
+            this.fetchData()
         },
         filterTransation() {
             this.$eventBus.$emit('showTransationFilter')
@@ -224,23 +224,26 @@ export default {
         },
         loadMoreData() {
             this.busy = true
-            this.getData()
+            this.fetchData()
         },
         dblclickLi() {
             console.log('timeShareDetail')
         },
-        resetComponent() {
+        resetBase() {
             this.update_time = null
             this.busy = true
             this.latestTime = 0
-            this.filterType = 1
-            this.min = null
-            this.max = null
             if (Object.is(this.noData, false)) {
                 this.$refs.scrollContainer.scrollTop = 0
             }
             this.noData = false
             this.transation = []
+        },
+        resetAll() {
+            this.resetBase()
+            this.filterType = 1
+            this.min = null
+            this.max = null
         },
         filerPushData(volume) {
             if (Object.is(this.filterType, 1)) {
@@ -272,15 +275,15 @@ export default {
         },
         clear() {
             // 清空
-            this.resetComponent()
+            this.resetBase()
             this.noData = true
         },
         resetStock() {
-            this.resetComponent()
+            this.resetAll()
             this.setStore()
             this.filterMsg = '全部'
 
-            this.getData()
+            this.fetchData()
         },
     },
     beforeDestroy() {
@@ -289,9 +292,9 @@ export default {
     watch: {
         full_code() {
             if (this.isAStock) {
-                this.resetComponent()
-                this.setStockState()
-                this.getData()
+                this.resetAll()
+                this.initStockState()
+                this.fetchData()
             }
         }
     },

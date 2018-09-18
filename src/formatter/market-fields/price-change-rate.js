@@ -4,12 +4,15 @@
  * @return {function}
 */
 import * as TYPE from '../config/stock-type-config'
-import { DEFAULT } from '../config/color-config'
+import {
+    DEFAULT,
+} from '../config/color-config'
 import {
     stockToType,
     isNumber,
     getColor,
     isClearCase,
+    getClearVal,
     getRetainBits,
 } from '../utility'
 
@@ -48,13 +51,8 @@ const formatHKStock = (price_change_rate, list) => {
         Object.is(String(price), '0') ||
         (Reflect.has(list, 'mark') && String(Reflect.get(list, 'mark')) === '1')
     ) {
-        return {
-            val: '--',
-            color: DEFAULT,
-        }
-    } else if (
-        !isNumber(price_change_rate)
-    ) {
+        return getClearVal()
+    } else if (!isNumber(price_change_rate)) {
         return {
             val: '0.00%',
             color: DEFAULT,
@@ -73,10 +71,7 @@ const formatPriceChangeRate = (price_change_rate, list, current_type) => {
         // 港股股票，港股基金，港股债券，港股涡轮，港股牛熊证
         return formatHKStock(price_change_rate, list)
     } else if (isClearCase(price_change_rate, list)) {
-        return {
-            val: '--',
-            color: DEFAULT,
-        }
+        return getClearVal()
     } else {
         const bit = getRetainBits(type)
 

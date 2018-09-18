@@ -1,5 +1,10 @@
 import * as TYPE from './config/stock-type-config'
-import * as COLOR from './config/color-config'
+// import * as COLOR from './config/color-config'
+import {
+    DEFAULT,
+    RED,
+    GREEN,
+} from './config/color-config'
 
 /**
  * @description 判断类型，总是返回一个有效的、全小写字符串
@@ -91,12 +96,12 @@ export const isClearCase = (value, list) => {
 
 export const getColor = (price_change, number = 2) => {
     if (!isNumber(price_change)) {
-        return COLOR.DEFAULT
+        return DEFAULT
     } else {
         price_change = Number(price_change).toFixed(number)
-        return price_change > 0 ? COLOR.RED :
-               price_change < 0 ? COLOR.GREEN :
-                                  COLOR.DEFAULT
+        return price_change > 0 ? RED :
+               price_change < 0 ? GREEN :
+                                  DEFAULT
     }
 }
 
@@ -107,24 +112,34 @@ export const formatNum = (val, num = 2) => {
 /**
  * @description 金融字段处理
  * @param {number} num
- * @param {boolean} integer
+ * @param {boolean} isInteger
  * @return {string}
  */
-export const formatFigure = (num, integer) => {
-    if (isNumber(num)) {
-        return formatNumber(num, integer)
+export const formatFigure = (num, isInteger) => {
+    if (isNumber(num) && Number(num) !== 0) {
+        return formatNumber(num, isInteger)
     } else {
         return '--'
     }
 }
 
 /**
+ * @description 获取清空数据
+*/
+export const getClearVal = () => {
+    return {
+        val: '--',
+        color: DEFAULT,
+    }
+}
+
+/**
  * @description 金融字段处理
  * @param {number} num
- * @param {boolean} integer
+ * @param {boolean} isInteger
  * @return {string}
  */
-export const formatNumber = (num, integer) => {
+export const formatNumber = (num, isInteger) => {
     const BASE_NUM = 10;
     const THOUSAND_HUNDRED_MILLION = Math.pow(BASE_NUM, 11); // 1000亿
     const TEN_BILLION = Math.pow(BASE_NUM, 10); // 100亿
@@ -153,7 +168,7 @@ export const formatNumber = (num, integer) => {
         return num.toFixed(0);
     } else {
         // 小于1000
-        if (integer) {
+        if (isInteger) {
             // 整数
             return num.toFixed(0);
         } else {

@@ -4,13 +4,16 @@
  * @return {function}
 */
 import * as TYPE from '../config/stock-type-config'
-import * as COLOR from '../config/color-config'
+import {
+    DEFAULT,
+} from '../config/color-config'
 import {
     stockToType,
     isNumber,
     getColor,
     getRetainBits,
     isClearCase,
+    getClearVal,
 } from '../utility'
 
 const addSymbol = (value) => {
@@ -48,14 +51,11 @@ const formatHKStock = (price_change, list) => {
         Object.is(String(price), '0') ||
         (Reflect.has(list, 'mark') && String(Reflect.get(list, 'mark')) === '1')
     ) {
-        return {
-            val: '--',
-            color: COLOR.DEFAULT,
-        }
+        return getClearVal()
     } else if (!isNumber(price_change)) {
         return {
             val: '0.000',
-            color: COLOR.DEFAULT,
+            color: DEFAULT,
         }
     } else {
         return normal(price_change, 3)
@@ -89,10 +89,7 @@ const formatPriceChange = (price_change, list, current_type) => {
         // 港股股票，港股基金，港股债券，港股涡轮，港股牛熊证
         return formatHKStock(price_change, list)
     } else if (isClearCase(price_change, list)) {
-        return {
-            val: '--',
-            color: 'black',
-        }
+        return getClearVal()
     }
     else if (type === TYPE.FUTURES) {
         return formatFutures(price_change, list)

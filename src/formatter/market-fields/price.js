@@ -4,13 +4,18 @@
  * @return {function}
 */
 import * as TYPE from '../config/stock-type-config'
-import * as COLOR from '../config/color-config'
+import {
+    RED,
+    GREEN,
+    DEFAULT,
+} from '../config/color-config'
 import {
     stockToType,
     isNumber,
     formatNum,
     getColor,
     getRetainBits,
+    getClearVal,
 } from '../utility'
 
 const getValAndColor = (value, price_change, num = 2) => {
@@ -37,7 +42,7 @@ const formatAStock = (value, price_change, list, num = 2) => {
                     Object.is(stock_type, '2') ? '暂停上市' : '--'
         return {
             val,
-            color: COLOR.DEFAULT,
+            color: DEFAULT,
         }
     }
 }
@@ -101,9 +106,9 @@ const formatPrice = (price, list, current_type) => {
     if (!isNumber(price) || Object.is(Number(price), 0)) {
         // 异常处理
         const price_change = list.price_change || list.change_value
-        const color = price_change > 0 ? COLOR.RED :
-                      price_change < 0 ? COLOR.GREEN :
-                                         COLOR.DEFAULT
+        const color = price_change > 0 ? RED :
+                      price_change < 0 ? GREEN :
+                                         DEFAULT
 
         return {
             val: '--',
@@ -111,10 +116,7 @@ const formatPrice = (price, list, current_type) => {
         }
     } else if (Object.is(String(list.mark), '1')) {
         // 清空
-        return {
-            val: '--',
-            color: COLOR.DEFAULT
-        }
+        return getClearVal()
     } else {
         let type = current_type || stockToType(
             list.source,

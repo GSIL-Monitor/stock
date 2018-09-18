@@ -25,9 +25,9 @@
                 :source="source"
                 :symbol_type="symbol_type"
                 :stock_type="stock_type"
-                :price="price"
-                :price_change="price_change"
-                :price_change_rate="price_change_rate"
+                :price="socketData.price"
+                :price_change="socketData.price_change"
+                :price_change_rate="socketData.price_change_rate"
             />
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
@@ -59,12 +59,14 @@
                         <tr>
                             <td class="two-letters">金额</td>
                             <td>
-                                <Turnover :val="turnover"/>
+                                <Turnover
+                                    :val="socketData.turnover"
+                                />
                             </td>
                             <td class="two-letters">换手</td>
                             <td>
                                 <TurnoverRate
-                                    :val="turnover_rate"
+                                    :val="socketData.turnover_rate"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -73,13 +75,13 @@
                             <td class="two-letters">总手</td>
                             <td>
                                 <Volume
-                                    :val="volume"
+                                    :val="socketData.volume"
                                 />
                             </td>
                             <td class="two-letters">量比</td>
                             <td>
                                 <QuantityRatio
-                                    :val="quantity_ratio"
+                                    :val="socketData.quantity_ratio"
                                 />
                             </td>
                         </tr>
@@ -115,7 +117,7 @@
                             <td class="two-letters">均价</td>
                             <td>
                                 <CompareClose
-                                    :val="avg_price"
+                                    :val="socketData.avg_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
                                 />
@@ -123,7 +125,7 @@
                             <td class="two-letters">振幅</td>
                             <td>
                                 <Amplitude
-                                    :val="amplitude"
+                                    :val="socketData.amplitude"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -132,7 +134,7 @@
                             <td class="two-letters">今开</td>
                             <td>
                                 <CompareClose
-                                    :val="open_price"
+                                    :val="socketData.open_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
                                 />
@@ -149,7 +151,7 @@
                             <td class="two-letters">最高</td>
                             <td>
                                 <CompareClose
-                                    :val="high_price"
+                                    :val="socketData.high_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
                                 />
@@ -157,7 +159,7 @@
                             <td class="two-letters">最低</td>
                             <td>
                                 <CompareClose
-                                    :val="low_price"
+                                    :val="socketData.low_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
                                 />
@@ -167,14 +169,14 @@
                             <td class="two-letters">外盘</td>
                             <td>
                                 <VolumeOuter
-                                    :val="volume_outer"
+                                    :val="socketData.volume_outer"
                                     :current_type="current_type"
                                 />
                             </td>
                             <td class="two-letters">内盘</td>
                             <td>
                                 <VolumeInner
-                                    :val="volume_inner"
+                                    :val="socketData.volume_inner"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -184,6 +186,7 @@
                             <td>
                                 <HighLimit
                                     :val="close_price"
+                                    :mark="mark"
                                     :stock_name="stock_name"
                                     :current_type="current_type"
                                 />
@@ -192,6 +195,7 @@
                             <td>
                                 <LowLimit
                                     :val="close_price"
+                                    :mark="mark"
                                     :stock_name="stock_name"
                                     :current_type="current_type"
                                 />
@@ -201,8 +205,14 @@
                 </MarketInfo>
             </div>
         </div>
-        <div class="detail_extend" :style="extendStyles" ref="detailExtend">
-            <StockTransaction ref="transactionComponent"/>
+        <div
+            class="detail_extend"
+            :style="extendStyles"
+            ref="detailExtend"
+        >
+            <StockTransaction
+                ref="transactionComponent"
+            />
         </div>
     </div>
 </template>
@@ -277,30 +287,12 @@ export default {
             symbol_type: null,
             stock_type: null,
             stock_name: null,
-
-            price: null,
-            price_change: null,
-            price_change_rate: null,
-            mark: false,
             close_price: null,
-
-            turnover: null,
-            turnover_rate: null,
-            volume: null,
-            quantity_ratio: null,
-
+            mark: false,
             negotiable_capital: null,
             mcap: null,
             capital: null,
             tcap: null,
-
-            avg_price: null,
-            amplitude: null,
-            open_price: null,
-            high_price: null,
-            low_price: null,
-            volume_outer: null,
-            volume_inner: null,
         }
     },
     components: {
@@ -383,44 +375,33 @@ export default {
                     this.symbol_type = data.symbol_type
                     this.stock_type = data.stock_type
                     this.stock_name = data.stock_name
-
-                    this.price = data.price
-                    this.price_change = data.change_value
-                    this.price_change_rate = data.change_rate
-
                     this.close_price = data.close_price
-
-                    this.setFiveOrderFields('buy', data)
-                    this.setFiveOrderFields('sell', data)
-
-                    this.buy1_diff = 0
-                    this.buy2_diff = 0
-                    this.buy3_diff = 0
-                    this.buy4_diff = 0
-                    this.buy5_diff = 0
-                    this.sell1_diff = 0
-                    this.sell2_diff = 0
-                    this.sell3_diff = 0
-                    this.sell4_diff = 0
-                    this.sell5_diff = 0
-
-                    this.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
-                    this.volume = data.volume ? data.volume / 100 : data.volume
-                    this.quantity_ratio = data.quantity_ratio
-
                     this.negotiable_capital = data.negotiable_capital ? data.negotiable_capital * 10000 : data.negotiable_capital
                     this.mcap = data.mcap ? data.mcap * 10000 : data.mcap
                     this.capital = data.capital ? data.capital * 10000 : data.capital
                     this.tcap = data.tcap ? data.tcap * 10000 : data.tcap
 
-                    this.avg_price = data.avg_price
-                    this.amplitude = data.amplitude
-                    this.open_price = data.open_price
-                    this.high_price = data.high_price
-                    this.low_price = data.low_price
-                    this.volume_outer = data.volume_outer ? data.volume_outer / 100 : data.volume_outer
-                    this.volume_inner = data.volume_inner ? data.volume_inner / 100 : data.volume_inner
+                    this.setFiveOrderFields('buy', data)
+                    this.setFiveOrderFields('sell', data)
+
+                    this.resetDiff()
+
+                    this.socketData.price = data.price
+                    this.socketData.price_change = data.change_value
+                    this.socketData.price_change_rate = data.change_rate
+
+                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
+                    this.socketData.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
+                    this.socketData.volume = data.volume ? data.volume / 100 : data.volume
+                    this.socketData.quantity_ratio = data.quantity_ratio
+
+                    this.socketData.avg_price = data.avg_price
+                    this.socketData.amplitude = data.amplitude
+                    this.socketData.open_price = data.open_price
+                    this.socketData.high_price = data.high_price
+                    this.socketData.low_price = data.low_price
+                    this.socketData.volume_outer = data.volume_outer ? data.volume_outer / 100 : data.volume_outer
+                    this.socketData.volume_inner = data.volume_inner ? data.volume_inner / 100 : data.volume_inner
                 },
                 afterResponse: () => {
                     this.sendLink(this.linkAddress)
@@ -432,51 +413,66 @@ export default {
         },
         receiveSocketData(...args) {
             let data = args[0][0]
-            // 清空
-            this.mark = Object.is(data.mark, 1) ? true : false
+            if (Object.is(data.mark, 1)) {
+                this.socketData = {}
+                this.mark = true
+                this.clearFiveOrder()
+                // 清空成交明细
+                this.$refs.transactionComponent.clear()
+                return false
+            }
+
+            this.mark = false
+            const transferData = Object.assign({}, data)
+            // 处理推送数据单位
+            if (transferData.turnover) {
+                transferData.turnover = transferData.turnover * 10000
+            }
+            if (transferData.volume) {
+                transferData.volume = transferData.volume / 100
+            }
+            if (transferData.negotiable_capital) {
+                transferData.negotiable_capital = transferData.negotiable_capital * 10000
+            }
+            if (transferData.mcap) {
+                transferData.mcap = transferData.mcap * 10000
+            }
+            if (transferData.tcap) {
+                transferData.tcap = transferData.tcap * 10000
+            }
+            if (transferData.capital) {
+                transferData.capital = transferData.capital * 10000
+            }
+            if (transferData.volume_outer) {
+                transferData.volume_outer = transferData.volume_outer / 100
+            }
+            if (transferData.volume_inner) {
+                transferData.volume_inner = transferData.volume_inner / 100
+            }
             // 继承推送数据
-            this.socketData = Object.assign({}, this.socketData, data)
-            let socketData = this.socketData
+            this.socketData = Object.assign({}, this.socketData, transferData)
+
+            this.negotiable_capital = this.socketData.negotiable_capital
+            this.mcap = this.socketData.mcap
+            this.capital = this.socketData.capital
+            this.tcap = this.socketData.tcap
+            this.close_price = this.socketData.close_price
 
             // 计算五档 volume 差值
             this.setDiffValue('buy')
             this.setDiffValue('sell')
 
-            this.price = socketData.price
-            this.price_change = socketData.price_change
-            this.price_change_rate = socketData.price_change_rate
-
-            this.close_price = socketData.close_price
-
-            this.setFiveOrderFields('buy', socketData)
-            this.setFiveOrderFields('sell', socketData)
-
-            this.turnover = socketData.turnover ? socketData.turnover * 10000 : socketData.turnover
-            this.turnover_rate = socketData.turnover_rate
-            this.volume = socketData.volume ? socketData.volume / 100 : socketData.volume
-            this.quantity_ratio = socketData.quantity_ratio
-
-            this.negotiable_capital = socketData.negotiable_capital ? socketData.negotiable_capital * 10000 : socketData.negotiable_capital
-            this.mcap = socketData.mcap ? socketData.mcap * 10000 : socketData.mcap
-            this.capital = socketData.capital ? socketData.capital * 10000 : socketData.capital
-            this.tcap = socketData.tcap ? socketData.tcap * 10000 : socketData.tcap
-
-            this.avg_price = socketData.avg_price
-            this.amplitude = socketData.amplitude
-            this.open_price = socketData.open_price
-            this.high_price = socketData.high_price
-            this.low_price = socketData.low_price
-            this.volume_outer = socketData.volume_outer ? socketData.volume_outer / 100 : socketData.volume_outer
-            this.volume_inner = socketData.volume_inner ? socketData.volume_inner / 100 : socketData.volume_inner
+            this.setFiveOrderFields('buy', this.socketData)
+            this.setFiveOrderFields('sell', this.socketData)
 
             if (data.transaction_type && data.transaction_volume) {
                 let one = {
                     update_time: data.date,
-                    price: socketData.price,
-                    price_change: socketData.price_change,
+                    price: this.socketData.price,
+                    price_change: this.socketData.price_change,
                     volume: Math.floor(Math.round(data.transaction_volume / 100)),
                     transaction_type: data.transaction_type,
-                    deal_count: socketData.deal_count,
+                    deal_count: this.socketData.deal_count,
                 }
                 this.$refs.transactionComponent.pushData(one)
             }

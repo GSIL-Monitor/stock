@@ -83,7 +83,8 @@ export default {
             getIndustryBelongPlate(params)
         },
         skipMarket() {
-            // 跳转行情
+            // TODO:跳转行情
+
         },
         hideSelectListState() {
             this.flag = false

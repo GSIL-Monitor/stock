@@ -6,10 +6,10 @@
 import {
     RED,
     GREEN,
-    DEFAULT,
 } from '../config/color-config'
 import {
     isClearCase,
+    getClearVal,
 } from '../utility'
 import { dataFixed } from '@c/utils/util'
 const getColor = (val) => {
@@ -21,11 +21,8 @@ const getColor = (val) => {
 }
 
 const formatQuantityRatio = (value, list) => {
-    if (isClearCase(value, list)) {
-        return {
-            val: '--',
-            color: DEFAULT,
-        }
+    if (isClearCase(value, list) || Object.is(value, 0)) {
+        return getClearVal()
     } else {
         let val = dataFixed(value)
         const color = getColor(val)

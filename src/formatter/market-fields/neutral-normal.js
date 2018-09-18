@@ -3,19 +3,19 @@
  * @see Interface::formatTurnover()、formatVolume()、formatTurnoverRate()
  * @return {object}
  */
-import { BLUE } from '../config/color-config'
+import {
+    BLUE,
+} from '../config/color-config'
 import {
     formatNumber,
     isClearCase,
+    getClearVal,
 } from '../utility'
 import { dataFixed } from '@c/utils/util';
 
 const normal = (value, list, isInteger) => {
-    if (isClearCase(value, list)) {
-        return {
-            color: BLUE,
-            val: '--'
-        }
+    if (isClearCase(value, list) || Object.is(value, 0)) {
+        return getClearVal()
     } else {
         let val = formatNumber(value, isInteger)
         return {
@@ -37,13 +37,11 @@ export const formatVolume = (value, list) => {
 
 // 换手
 export const formatTurnoverRate = (value, list) => {
-    const color = BLUE
-    if (isClearCase(value, list)) {
-        return {
-            val: '--',
-            color,
-        }
+
+    if (isClearCase(value, list) || Object.is(value, 0)) {
+        return getClearVal()
     } else {
+        const color = BLUE
         let val = dataFixed(value, '%2f')
         return {
             val,

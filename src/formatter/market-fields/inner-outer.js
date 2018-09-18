@@ -4,21 +4,18 @@
  * @return {object}
 */
 import {
-    DEFAULT,
     RED,
     GREEN,
 } from '../config/color-config'
 import {
     formatNumber,
     isClearCase,
+    getClearVal,
 } from '../utility'
 
 const normal = (value, list, color) => {
     if (isClearCase(value, list)) {
-        return {
-            val: '--',
-            color: DEFAULT,
-        }
+        return getClearVal()
     } else {
         let val = formatNumber(value, true)
         return {

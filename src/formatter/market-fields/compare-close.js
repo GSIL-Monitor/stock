@@ -4,7 +4,12 @@
  * @see Interface::formatCompareClose()
  * @return {function}
 */
-import { stockToType, getRetainBits, isClearCase } from '../utility'
+import {
+    stockToType,
+    getRetainBits,
+    isClearCase,
+    getClearVal,
+} from '../utility'
 import {
     RED,
     GREEN,
@@ -33,7 +38,7 @@ const formatNormal = (value, list, bit) => {
 
 const formatCompareClose = (value, list, current_type) => {
     if (isClearCase(value, list) || Object.is(value, 0)) {
-        return { val: '--', color: DEFAULT }
+        return getClearVal()
     } else {
         const type = current_type || stockToType(
             list.source,

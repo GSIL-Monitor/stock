@@ -5,6 +5,7 @@
 */
 import {
     isClearCase,
+    getClearVal,
 } from '../utility'
 import {
     RED,
@@ -20,37 +21,28 @@ const normal = (val, color) => {
 }
 
 export const formatFlat = (val, list) => {
-    const color = DEFAULT
     if (isClearCase(val, list)) {
-        return {
-            val: '--',
-            color,
-        }
+        return getClearVal()
     } else {
+        const color = DEFAULT
         return normal(val, color)
     }
 }
 
 export const formatFall = (val, list) => {
-    const color = GREEN
     if (isClearCase(val, list)) {
-        return {
-            val: '--',
-            color,
-        }
+        return getClearVal()
     } else {
+        const color = GREEN
         return normal(val, color)
     }
 }
 
 export const formatRose = (val, list) => {
-    const color = RED
     if (isClearCase(val, list)) {
-        return {
-            val: '--',
-            color,
-        }
+        return getClearVal()
     } else {
+        const color = RED
         return normal(val, color)
     }
 }

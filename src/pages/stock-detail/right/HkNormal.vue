@@ -26,9 +26,9 @@
             class="detail_head_market"
             :source="source"
             :symbol_type="symbol_type"
-            :price="price"
-            :price_change="price_change"
-            :price_change_rate="price_change_rate"
+            :price="socketData.price"
+            :price_change="socketData.price_change"
+            :price_change_rate="socketData.price_change_rate"
         />
         <div
             class="detail_head_btn"
@@ -64,7 +64,7 @@
                     <td>
                         <CompareClose
                             :close_price="close_price"
-                            :val="avg_price"
+                            :val="socketData.avg_price"
                             :current_type="current_type"
                         />
                     </td>
@@ -73,7 +73,7 @@
                     >换手</td>
                     <td>
                         <TurnoverRate
-                            :val="turnover_rate"
+                            :val="socketData.turnover_rate"
                             :current_type="current_type"
                         />
                     </td>
@@ -84,7 +84,7 @@
                     >总量</td>
                     <td>
                         <Volume
-                            :val="volume"
+                            :val="socketData.volume"
                         />
                     </td>
                     <td
@@ -92,7 +92,7 @@
                     >金额</td>
                     <td>
                         <Turnover
-                            :val="turnover"
+                            :val="socketData.turnover"
                         />
                     </td>
                 </tr>
@@ -102,7 +102,7 @@
                     >港值</td>
                     <td>
                         <MarketValue
-                            :val="hk_tcap"
+                            :val="socketData.hk_tcap"
                         />
                     </td>
 
@@ -111,7 +111,7 @@
                     >总值</td>
                     <td>
                         <MarketValue
-                            :val="tcap"
+                            :val="socketData.tcap"
                         />
                     </td>
                 </tr>
@@ -121,7 +121,7 @@
                     >最高</td>
                     <td>
                         <CompareClose
-                            :val="high_price"
+                            :val="socketData.high_price"
                             :close_price="close_price"
                             :current_type="current_type"
                         />
@@ -131,7 +131,7 @@
                     >最低</td>
                     <td>
                         <CompareClose
-                            :val="low_price"
+                            :val="socketData.low_price"
                             :close_price="close_price"
                             :current_type="current_type"
                         />
@@ -143,7 +143,7 @@
                     >今开</td>
                     <td>
                         <CompareClose
-                            :val="open_price"
+                            :val="socketData.open_price"
                             :close_price="close_price"
                             :current_type="current_type"
                         />
@@ -227,29 +227,9 @@ export default {
             socketData: {},
             symbol_type: null,
             stock_name: null,
+            close_price: null,
 
             loadIdentify: false,
-
-            price: null,
-            price_change: null,
-            price_change_rate: null,
-            mark: false,
-
-            buy1_price: null,
-            sell1_price: null,
-            buy1_volume: null,
-            sell1_volume: null,
-
-            close_price: null,
-            avg_price: null,
-            turnover_rate: null,
-            volume: null,
-            turnover: null,
-            hk_tcap: null,
-            tcap: null,
-            high_price: null,
-            low_price: null,
-            open_price: null,
         }
     },
     components: {
@@ -293,14 +273,14 @@ export default {
             return {
                 buy: [
                     {
-                        now_price: this.buy1_price,
-                        now_volume: this.buy1_volume,
+                        now_price: this.socketData.buy1_price,
+                        now_volume: this.socketData.buy1_volume,
                     },
                 ],
                 sell: [
                     {
-                        now_price: this.sell1_price,
-                        now_volume: this.sell1_volume,
+                        now_price: this.socketData.sell1_price,
+                        now_volume: this.socketData.sell1_volume,
                     },
                 ],
             }
@@ -317,25 +297,24 @@ export default {
                     this.close_price = data.close_price
                     this.symbol_type  = data.symbol_type
 
-                    this.price = data.price
-                    this.price_change = data.change_value
-                    this.price_change_rate = data.change_rate
+                    this.socketData.price = data.price
+                    this.socketData.price_change = data.change_value
+                    this.socketData.price_change_rate = data.change_rate
 
-                    this.buy1_price = data.buy1_price
-                    this.sell1_price = data.sell1_price
-                    this.buy1_volume = data.buy1_volume
-                    this.sell1_volume = data.sell1_volume
+                    this.socketData.buy1_price = data.buy1_price
+                    this.socketData.sell1_price = data.sell1_price
+                    this.socketData.buy1_volume = data.buy1_volume
+                    this.socketData.sell1_volume = data.sell1_volume
 
-                    this.close_price = data.close_price
-                    this.avg_price = data.avg_price
-                    this.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
-                    this.volume = data.volume
-                    this.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.hk_tcap = data.hk_tcap
-                    this.tcap = data.tcap
-                    this.high_price = data.high_price
-                    this.low_price = data.low_price
-                    this.open_price = data.open_price
+                    this.socketData.avg_price = data.avg_price
+                    this.socketData.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
+                    this.socketData.volume = data.volume
+                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
+                    this.socketData.hk_tcap = data.hk_tcap
+                    this.socketData.tcap = data.tcap
+                    this.socketData.high_price = data.high_price
+                    this.socketData.low_price = data.low_price
+                    this.socketData.open_price = data.open_price
                 },
                 afterResponse: () => {
                     this.sendLink(this.linkAddress)
@@ -349,39 +328,29 @@ export default {
         receiveSocketData(...args) {
             let data = args[0][0]
             // 清空
-            this.mark = Object.is(data.mark, 1) ? true : false
+            if (Object.is(data.mark, 1)) {
+                this.socketData = {}
+                // 清空成交明细
+                this.$refs.transactionComponent.clear()
+                return false
+            }
+            const transferData = Object.assign({}, data)
+            if (transferData.turnover) {
+                transferData.turnover = transferData.turnover * 10000
+            }
             // 继承推送数据
-            this.socketData = Object.assign({}, this.socketData, data)
-            let socketData = this.socketData
-
-            this.price = socketData.price
-            this.price_change = socketData.price_change
-            this.price_change_rate = socketData.price_change_rate
-            this.close_price = socketData.close_price
-
-            this.buy1_price = socketData.buy1_price
-            this.sell1_price = socketData.sell1_price
-            this.buy1_volume = socketData.buy1_volume
-            this.sell1_volume = socketData.sell1_volume
-
-            this.avg_price = socketData.avg_price
-            this.turnover_rate = socketData.turnover_rate
-            this.volume = socketData.volume
-            this.turnover = socketData.turnover ? socketData.turnover * 10000 : socketData.turnover
-            this.hk_tcap = socketData.hk_tcap
-            this.tcap = socketData.tcap
-            this.high_price = socketData.high_price
-            this.low_price = socketData.low_price
-            this.open_price = socketData.open_price
+            this.socketData = Object.assign({}, this.socketData, transferData)
+            // 不清空数据
+            this.close_price = this.socketData.close_price
 
             if (data.transaction_type && data.transaction_volume) {
                 let one = {
                     update_time: data.date,
-                    price: socketData.price,
-                    price_change: socketData.price_change,
+                    price: this.socketData.price,
+                    price_change: this.socketData.price_change,
                     volume: data.transaction_volume,
                     transaction_type: data.transaction_type,
-                    deal_count: socketData.deal_count,
+                    deal_count: this.socketData.deal_count,
                 }
                 this.$refs.transactionComponent.pushData(one)
             }
