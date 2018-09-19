@@ -719,10 +719,6 @@ export default {
     margin-left: 5px;
 }
 
-.detail_head_btn_identify {
-    display: flex;
-}
-
 .btn-content {
     margin-left: 8px;
     &:first-child {

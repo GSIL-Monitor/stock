@@ -112,7 +112,8 @@ export default {
 @yellow: #efa440;
 .detail_head_btn_identify {
     font-size: 12px;
-    color: #fff;
+    color: var(--color-white);
+    display: flex;
     .identify_ico {
         margin-left: 1px;
         cursor: pointer;
