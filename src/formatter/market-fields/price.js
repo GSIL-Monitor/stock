@@ -1,5 +1,5 @@
 /**
- * @description 最新价(price)
+ * @file 最新价(price)
  * @see Interface::formatPrice()
  * @return {function}
 */

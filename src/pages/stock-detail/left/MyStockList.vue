@@ -69,8 +69,6 @@ import oneStockList from './one-stock-list-mixin'
 
 import StockItem from '../components/StockItem.vue'
 
-let groupTimeoutTimer = null
-
 export default {
     name: 'MyStockList',
     mixins: [
@@ -86,6 +84,7 @@ export default {
     },
     data() {
         return {
+            groupTimeoutTimer: null,
             activeGroupId: null, // 当前选中 id
             medianGroupId: null, // 中转 id
             myStockCache: hasMyStockCache(),
@@ -148,15 +147,15 @@ export default {
             this.fetchSelectGroup()
         },
         stopPullingGroupData() {
-            if (groupTimeoutTimer) {
-                clearTimeout(groupTimeoutTimer)
-                groupTimeoutTimer = null
+            if (this.groupTimeoutTimer) {
+                clearTimeout(this.groupTimeoutTimer)
+                this.groupTimeoutTimer = null
             }
         },
         cacheGroupErrorHandle() {
             // 若在规定时间内取不到本地缓存，则调用api获取数据
             const TIMEOUT = 1500
-            groupTimeoutTimer = setTimeout(() => {
+            this.groupTimeoutTimer = setTimeout(() => {
                 this.fetchMyStockGroupData()
             }, TIMEOUT)
         },

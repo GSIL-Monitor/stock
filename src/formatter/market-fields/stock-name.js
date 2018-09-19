@@ -1,5 +1,5 @@
 /**
- * @description 名称(stock_name|name)
+ * @file 名称(stock_name|name)
  * @see Interface::formatStockName()
  * @return {function}
  */

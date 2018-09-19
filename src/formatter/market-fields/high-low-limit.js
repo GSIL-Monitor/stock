@@ -1,5 +1,5 @@
 /**
- * @description 涨停、跌停
+ * @file 涨停、跌停
  * @see Interface::formatHighLimit()、formatLowLimit()
  * @return {object}
 */

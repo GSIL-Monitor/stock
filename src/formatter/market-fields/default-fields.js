@@ -1,5 +1,5 @@
 /**
- * @description 振幅(amplitude)昨收(close_price)
+ * @file 振幅(amplitude)昨收(close_price)
  * @see Interface::formatAmplitude()、formatClosePrice()
  * @return {object}
 */

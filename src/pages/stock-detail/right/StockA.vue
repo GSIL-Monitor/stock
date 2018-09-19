@@ -547,7 +547,7 @@ export default {
                 afterResponse: () => {
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
-                    // TODO: 获取基础属性信息
+                    // 获取基础属性信息
                     this.loadIdentify = true
                 },
             }

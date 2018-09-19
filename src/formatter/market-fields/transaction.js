@@ -1,5 +1,5 @@
 /**
- * @description 成交明细相关字段处理
+ * @file 成交明细相关字段处理
  * @return {object}
 */
 

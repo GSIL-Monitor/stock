@@ -1,5 +1,5 @@
 /**
- * @description 金额(turnover)、总手(volume)、换手(turnover_rate)
+ * @file 金额(turnover)、总手(volume)、换手(turnover_rate)
  * @see Interface::formatTurnover()、formatVolume()、formatTurnoverRate()
  * @return {object}
  */

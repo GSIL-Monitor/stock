@@ -1,5 +1,5 @@
 /**
- * @description 涨跌额(price_change|change_value)
+ * @file 涨跌额(price_change|change_value)
  * @see Interface::formatPriceChange()
  * @return {function}
 */

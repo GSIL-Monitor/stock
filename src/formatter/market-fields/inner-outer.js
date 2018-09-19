@@ -1,5 +1,5 @@
 /**
- * @description 内盘(volume_inner)、外盘(volume_outer)
+ * @file 内盘(volume_inner)、外盘(volume_outer)
  * @see Interface::formatVolumeInner()、formatVolumeOuter()
  * @return {object}
 */

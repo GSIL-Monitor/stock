@@ -1,5 +1,5 @@
 /**
- * @description 一致预期相关字段
+ * @file 一致预期相关字段
  * @see Interface::
  * @return {object}
 */

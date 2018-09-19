@@ -1,5 +1,5 @@
 /**
- * @description 流通市值(mcap)、总市值(tcap)、一致预期相关字段 市盈(pe_y1)、市净(pb_y1)
+ * @file 流通市值(mcap)、总市值(tcap)、一致预期相关字段 市盈(pe_y1)、市净(pb_y1)
  * @see Interface::formatMarketValue()、formatConsensusFields()
  * @return {function}
 */

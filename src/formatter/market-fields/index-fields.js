@@ -1,5 +1,5 @@
 /**
- * @description 平盘(flat) 上涨(rose) 下跌(fall)
+ * @file 平盘(flat) 上涨(rose) 下跌(fall)
  * @see Interface::formatFlat()||formatFall()||formatRose()
  * @return {object}
 */

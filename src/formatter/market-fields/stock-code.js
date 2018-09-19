@@ -1,5 +1,5 @@
 /**
- * @description 显示的 stock_code
+ * @file 显示的 stock_code
  * @see Interface::formatShowCode()
  * @return {function}
 */

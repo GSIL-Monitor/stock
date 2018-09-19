@@ -1,5 +1,5 @@
 /**
- * @description 量比(quantity_ratio)
+ * @file 量比(quantity_ratio)
  * @see Interface::formatQuantityRatio()
  * @return {function}
 */

@@ -1,5 +1,4 @@
 import * as TYPE from './config/stock-type-config'
-// import * as COLOR from './config/color-config'
 import {
     DEFAULT,
     RED,

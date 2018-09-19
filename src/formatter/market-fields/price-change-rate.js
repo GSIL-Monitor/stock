@@ -1,5 +1,5 @@
 /**
- * @description 涨幅(price_change_rate|change_rate)
+ * @file 涨幅(price_change_rate|change_rate)
  * @see Interface::formatPriceChangeRate()
  * @return {function}
 */

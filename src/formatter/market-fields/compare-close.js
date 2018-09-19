@@ -1,6 +1,6 @@
 
 /**
- * @description 今开(open_price)、最高(high_price)、最低(low_price)、均价(average_price)、买入价(buy_price)、卖出价(sell_price)
+ * @file 今开(open_price)、最高(high_price)、最低(low_price)、均价(average_price)、买入价(buy_price)、卖出价(sell_price)
  * @see Interface::formatCompareClose()
  * @return {function}
 */

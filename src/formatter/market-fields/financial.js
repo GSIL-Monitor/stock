@@ -1,5 +1,5 @@
 /**
- * @description
+ * @file
  * @see Interface::getReportDate()、formatClosePrice()
  * @return {object}
 */
