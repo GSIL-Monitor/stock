@@ -83,7 +83,6 @@ export default {
         // 监听 hash 改变
         window.onhashchange = event => {
             let hash = location.hash.substr(1)
-            console.log('onhashchange: ', hash)
             this.changeCurrentStockState(hash)
         }
     },

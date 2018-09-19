@@ -180,7 +180,7 @@ export default {
         },
         clearIntervalTimer() {
             if (this.permissionTimer) {
-                clearInterval(this.permisssion_timer)
+                clearInterval(this.permissionTimer)
             }
         },
         ABStockControl() {
