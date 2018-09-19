@@ -11,7 +11,7 @@ const state = {
     leftState: true,  // 左侧栏展开收起状态
     rightState: true, // 右侧栏展开收起状态
     infoState: false, // 资讯栏状态
-    leftActiveKey: null,
+    leftActiveKey: null, // 左侧选中 tab
     // hsIndexCategory: null,
     klineJumpState: null,
     tag_data: {

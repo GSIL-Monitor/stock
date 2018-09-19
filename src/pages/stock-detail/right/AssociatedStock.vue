@@ -239,7 +239,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .swiper-container {
     height: 26px;
     border-top: 1px solid var(--color-dividers);

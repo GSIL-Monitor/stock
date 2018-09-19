@@ -341,3 +341,11 @@ export const isBusinessDay = param => {
     const APIName = 'v1/hq/is_edate'
     return get(APIName, param)
 }
+
+/**
+ * @description 权限广告图
+*/
+export const getNewsAd = (param) => {
+    const APIName = 'v1/zyzt_ad/get_terminal_ad'
+    return get(APIName, param)
+}
