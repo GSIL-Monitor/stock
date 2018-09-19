@@ -226,7 +226,12 @@ export default {
             getShortLine(param)
         },
         receiveSocketData(...args) {
-            let data
+            let data = args[0]
+            if (Object.is(data[0].mark, 1)) {
+                this.resetComponent()
+                this.noData = true
+                return false
+            }
             let requestContent = args[1]
             let isFullCodeIn = requestContent.includes(this.full_code)
             // 处理异常数据
@@ -236,12 +241,9 @@ export default {
             if (!this.isStockOnly && isFullCodeIn) {
                 return false
             }
-            // TODO: 剔重
-
             if (this.noData) {
                 this.noData = false
             }
-            data = args[0]
             data.forEach((element) => {
                 element.tdate = element.date
             })
