@@ -69,6 +69,7 @@ import {
     cloneDeep,
 } from 'lodash'
 
+// TODO: 无数据特殊处理
 export default {
     name: 'ConsensusTable',
     created() {

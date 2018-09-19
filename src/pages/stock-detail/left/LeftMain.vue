@@ -4,7 +4,7 @@
         v-show="leftState"
     >
         <Tabs
-            :activeKey="activeKey"
+            :activeKey="leftActiveKey"
             @on-click="tabClicked"
             activeStyle="underline"
             ref="leftTabs"
@@ -35,13 +35,20 @@
 import {
     mapState,
     mapGetters,
+    mapMutations,
 } from 'vuex'
 import {
     LOCAL_LEFT_TAB,
+    TAB_RECOMMEND_TAGS,
+    TAB_MY_STOCK,
+    TAB_RECENT_VISITED,
 } from '../storage'
 import {
     ASTOCK,
 } from '@formatter/config/stock-type-config'
+import {
+    LEFT_SELECT_TAB,
+} from '@store/stock-detail-store/config/mutation-types'
 
 import Tabs from '../components/tabs/'
 import TabPane from '../components/tab-pane/'
@@ -52,9 +59,6 @@ import RecentVisit from './RecentVisit.vue'
 export default {
     name: 'Left',
     created() {
-        this.initState()
-
-        this.$eventBus.$on('changeSelectKey', this.changeSelectKey)
         window.addEventListener('resize', this.resizeWindow)
     },
     mounted() {
@@ -62,25 +66,25 @@ export default {
     },
     data() {
         return {
-            recommendTags: 'tags',
-            mystock: 'stock',
-            recentVisited: 'recent',
-            activeKey: 'stock',
+            recommendTags: TAB_RECOMMEND_TAGS,
+            mystock: TAB_MY_STOCK,
+            recentVisited: TAB_RECENT_VISITED,
         }
     },
     computed: {
         ...mapState([
             'current_type',
-            'leftState',
             'full_code',
+            'leftState',
+            'leftActiveKey',
         ]),
         ...mapGetters([
-            'isAStock'
+            'isAStock',
         ]),
         leftClasses() {
             return [
                 {
-                    root_left_ShowTag: this.isAStock
+                    root_left_ShowTag: this.isAStock,
                 },
             ]
         },
@@ -93,21 +97,11 @@ export default {
         RecentVisit,
     },
     methods: {
-        initState() {
-            let store = this.getStore()
-            this.activeKey = store
-        },
-        getStore() {
-            let record = localStorage.getItem(LOCAL_LEFT_TAB)
-
-            return record || this.mystock
-        },
-        setStore() {
-            localStorage.setItem(LOCAL_LEFT_TAB, this.activeKey)
-        },
+        ...mapMutations([
+            LEFT_SELECT_TAB,
+        ]),
         tabClicked(type) {
-            this.activeKey = type
-            this.setStore()
+            this[LEFT_SELECT_TAB](type)
         },
         resizeWindow() {
             let $panes = this.$refs.leftTabs.$refs.panes
@@ -116,22 +110,17 @@ export default {
 
             $panes.style.height = residue + 'px'
         },
-        changeSelectKey(key) {
-            // 只记录，不设置本地存储
-            this.activeKey = key
-        },
     },
     beforeDestroy() {
-        this.$eventBus.$off('changeSelectKey', this.changeSelectKey)
         window.removeEventListener('resize', this.resizeWindow)
     },
     watch: {
         current_type(value, oldValue) {
             if (
                 Object.is(ASTOCK, oldValue)
-                && Object.is(this.recommendTags, this.activeKey)
+                && Object.is(this.recommendTags, this.leftActiveKey)
             ) {
-                this.activeKey = this.mystock
+                this[LEFT_SELECT_TAB](this.mystock)
             }
         },
     },

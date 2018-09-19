@@ -24,3 +24,5 @@ export const INFO_STATE = 'INFO_STATE'
 export const HSINDEX_CATEGORY = 'HSINDEX_CATEGORY'
 // K线参数
 export const KLINE_JUMP_PARAM = 'KLINE_JUMP_PARAM'
+// 左侧选中 tab
+export const LEFT_SELECT_TAB = 'LEFT_SELECT_TAB'

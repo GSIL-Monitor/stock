@@ -81,6 +81,7 @@ module.exports = {
             .set('@less', resolve('src/less')) // less alias
             .set('@assets', resolve('src/assets')) // assets alias
             .set('@service', resolve('src/dataService')) // assets alias
+            .set('@pages', resolve('src/pages')) // assets alias
             .set('@formatter', resolve('src/formatter')) // assets alias
             .set('@store', resolve('src/store')) // assets alias
             .set('lodash-es', 'lodash') // reduce lodash size

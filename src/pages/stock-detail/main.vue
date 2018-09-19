@@ -41,6 +41,7 @@ import {
     RIGHT_STATE,
     INFO_STATE,
     KLINE_JUMP_PARAM,
+    LEFT_SELECT_TAB,
 } from '@store/stock-detail-store/config/mutation-types'
 import {
     ADD_TO_RECENT_LIST
@@ -56,6 +57,8 @@ import {
     EVENT_KEY_BOARD,
     EVENT_CHANGE_STOCK,
     SESSION_ASTOCK_FUNC_TAB,
+    TAB_RECOMMEND_TAGS,
+    TAB_MY_STOCK,
 } from './storage'
 
 import stockVerifyMixin from './mixins/stock-verify-mixin'
@@ -145,6 +148,7 @@ export default {
             RIGHT_STATE,
             INFO_STATE,
             KLINE_JUMP_PARAM,
+            LEFT_SELECT_TAB,
         ]),
         ...mapActions([
             ADD_TO_RECENT_LIST,
@@ -202,7 +206,7 @@ export default {
                     }
                 }
                 // 左侧选中设置为推荐标签
-                localStorage.setItem(LOCAL_LEFT_TAB, 'tags')
+                this[LEFT_SELECT_TAB](TAB_RECOMMEND_TAGS)
             }
         },
         setJumpStoreState(jump) {
@@ -217,9 +221,15 @@ export default {
             this[LEFT_STATE](this.initLeftState())
             this[RIGHT_STATE](this.initRightState())
             this[INFO_STATE](this.initInforState())
+            this[LEFT_SELECT_TAB](this.initLeftActiveKey())
         },
         getLocalStorage(name) {
             return localStorage.getItem(name)
+        },
+        initLeftActiveKey() {
+            let record = this.getLocalStorage(LOCAL_LEFT_TAB)
+
+            return record || TAB_MY_STOCK
         },
         initLeftState() {
             let state = this.getLocalStorage(LOCAL_IS_LEFT_SHOW)
@@ -390,15 +400,12 @@ export default {
                     this.$eventBus.$emit('setKlineTabs')
                 }
             }
-            if (data.positionModule) {
-                this.setPositionModule(data.positionModule, true)
-                if (Object.is(data.positionModule, 'tags') ) {
-                    this.$eventBus.$emit('changeSelectKey', 'tags')
-                }
-            }
             // 触发 hashchange 事件
             if (data.stock_code) {
                 location.hash = data.stock_code
+            }
+            if (data.positionModule) {
+                this.setPositionModule(data.positionModule, true)
             }
             if (data.codeList) {
                 // TODO:设置K线图滚轮列表，与快捷键一起开发
@@ -490,8 +497,6 @@ export default {
         changeMystock(data) {
             this.$eventBus.$emit('refeatchMyStockGroup')
             this.$eventBus.$emit('revalidateIsMyStock')
-            //TODO: 自选股变色
-
         },
     },
     beforeDestroy() {

@@ -64,6 +64,8 @@ export const FRAME_RECENT_LIST = `${MODULE_NAME}-recentList`
 export const FRAME_MYSTOCK_GROUP = `${MODULE_NAME}-get-mystock-group`
 // 自选股单一分组详情
 export const FRAME_MYSTOCK_LIST = `${MODULE_NAME}-get-mystock-list`
+// 自选股变色
+export const FRAME_STOCK_COLOR = `${MODULE_NAME}-check-mystocks`
 
 // ==============================================================================
 /**
@@ -92,5 +94,11 @@ export const SOCKET_RANGE_SCOPE = `${MODULE_NAME}-range-scope`
 
 // ==============================================================================
 /**
- * EventBus Id
+ * Tabs Key
 */
+// 推荐标签
+export const TAB_RECOMMEND_TAGS = 'tab-tags'
+// 自选股
+export const TAB_MY_STOCK = 'tab-stock'
+// 最近访问
+export const TAB_RECENT_VISITED = 'tab-recent'

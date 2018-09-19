@@ -21,6 +21,7 @@
         >
             <StockName
                 :val="item.stock_name"
+                :is_defined="item.is_defined"
                 class="item_right_top_name"
             />
             <Price

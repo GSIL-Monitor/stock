@@ -10,7 +10,8 @@ const state = {
     full_code: null,
     leftState: true,  // 左侧栏展开收起状态
     rightState: true, // 右侧栏展开收起状态
-    infoState: false,
+    infoState: false, // 资讯栏状态
+    leftActiveKey: null,
     // hsIndexCategory: null,
     klineJumpState: null,
     tag_data: {

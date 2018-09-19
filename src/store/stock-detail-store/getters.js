@@ -1,4 +1,7 @@
 import * as TYPE from '@formatter/config/stock-type-config'
+import {
+    TAB_RECENT_VISITED,
+} from '@pages/stock-detail/storage'
 
 // 计算属性
 export default {
@@ -59,5 +62,8 @@ export default {
         return getters.isAStock
             || getters.isHSIndex
             || getters.isHkStock
+    },
+    isRecentListActive(state) {
+        return Object.is(TAB_RECENT_VISITED, state.leftActiveKey)
     },
 }

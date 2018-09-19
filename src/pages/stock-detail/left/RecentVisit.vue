@@ -38,6 +38,7 @@ import {
 } from '@store/stock-detail-store/config/action-types'
 import {
     FRAME_RECENT_LIST,
+    FRAME_STOCK_COLOR,
 } from '../storage'
 
 import subMixin from './sub-scription-mixin'
@@ -51,6 +52,7 @@ export default {
     ],
     created() {
         goGoal.event.listen(FRAME_RECENT_LIST, this.receiveRecentList)
+        goGoal.event.listen(FRAME_STOCK_COLOR, this.changeStockColor)
         this.fetchRecentList()
     },
     components: {
@@ -111,7 +113,6 @@ export default {
         receiveRecentList(d) {
             const data = JSON.parse(d)
             const changList = []
-
             data.forEach((element) => {
                 let full_code = element.full_code
                 let one = this.recent_list_data.find((el) => {
@@ -141,9 +142,26 @@ export default {
                 changePageStock(hash)
             }
         },
+        subStockColor() {
+            pushData(FRAME_STOCK_COLOR, {
+                code: this.getSubCodeList().join(';'),
+            })
+        },
+        changeStockColor(d) {
+            let data = JSON.parse(d)
+            for (let [key, value] of Object.entries(data)) {
+                let item = this.recent_list_data.find((element) => {
+                    return Object.is(element.full_code, key)
+                })
+                if (item) {
+                    item.is_defined = value
+                }
+            }
+        },
     },
     beforeDestroy() {
         goGoal.event.remove(FRAME_RECENT_LIST, this.receiveRecentList)
+        goGoal.event.remove(FRAME_STOCK_COLOR, this.changeStockColor)
         this.unSubScription(FRAME_RECENT_LIST)
     },
     watch: {

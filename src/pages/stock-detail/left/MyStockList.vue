@@ -248,9 +248,11 @@ export default {
         display: flex;
         flex-direction: column;
         height: 100%;
+        .item_right_top_name {
+            color: var(--color-gold-11);
+        }
     }
 
-    // list
     .market {
         display: flex;
         flex-direction: column;

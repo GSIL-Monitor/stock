@@ -13,7 +13,11 @@ import {
     INFO_STATE,
     // HSINDEX_CATEGORY,
     KLINE_JUMP_PARAM,
+    LEFT_SELECT_TAB,
 } from './config/mutation-types'
+import {
+    LOCAL_LEFT_TAB,
+} from '@pages/stock-detail/storage'
 
 export default {
     [GET_STOCK_TAG](state, payLoad) {
@@ -51,6 +55,10 @@ export default {
     },
     [KLINE_JUMP_PARAM](state, payLoad) {
         state.klineJumpState = payLoad
+    },
+    [LEFT_SELECT_TAB](state, payLoad) {
+        state.leftActiveKey = payLoad
+        localStorage.setItem(LOCAL_LEFT_TAB, payLoad)
     },
     // [HSINDEX_CATEGORY](state, payLoad) {
     //     state.hsIndexCategory = payLoad
