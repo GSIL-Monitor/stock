@@ -28,7 +28,6 @@ import {
 export default {
     name: 'HkTimeBox',
     created() {
-        // TODO: 日期切换，调用接口判断是否是交易日
         this.isRealDay()
         this.fetchData()
     },
@@ -110,6 +109,7 @@ export default {
             if (!Object.is(this.lastDate, date) && navigator.onLine) {
                 this.stopInterval()
                 this.fetchData()
+                this.lastDate = date
             }
         },
         formatHint() {

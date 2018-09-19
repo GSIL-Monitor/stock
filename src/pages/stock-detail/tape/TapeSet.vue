@@ -190,7 +190,6 @@ export default {
         changed(o) {
             this.changeState(o)
             this.setStorage(o)
-            // TODO:通知兄弟组件数据变化
             this.emitChanged(o)
         },
         changeState(o) {
