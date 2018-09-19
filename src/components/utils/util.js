@@ -277,3 +277,66 @@ export const getMyStockLine = () => {
         return 19
     }
 }
+
+const hostSome = (arr) => {
+    return arr.some(function(n) {
+        return location.host.indexOf(n) > -1
+    })
+}
+
+const isProductionDomain = () => {
+    const arr = ['66966', 'go-goal']
+
+    // 部分沙盒域名不规范，含有 go-goal
+    return hostSome(arr) && !isSandBoxDomain()
+}
+
+const isPreDomain = () => {
+    const arr = ['pre']
+
+    return hostSome(arr)
+}
+
+const isSandBoxDomain = () => {
+    const arr = ['sandbox', 'test']
+
+    return hostSome(arr)
+}
+
+const isLocalhostDomain = () => {
+    return location.host.includes('localhost')
+}
+
+/**
+ * @description 获取域名对应环境
+*/
+export const getEnvironment = () => {
+    if (isProductionDomain()) {
+        return 'pro'
+    } else if (isPreDomain()) {
+        return 'pre'
+    } else if (isSandBoxDomain()) {
+        return 'sandbox'
+    } else if (isLocalhostDomain()) {
+        return 'localhost'
+    } else {
+        return 'pro'
+    }
+}
+
+/**
+ * @description 获取远程主域地址
+*/
+export const getUrlDomain = () => {
+    const env = getEnvironment()
+
+    if (Object.is(env, 'pro')) {
+      return 'http://zyzt.66966.cn'
+    } else if (Object.is(env, 'pre')) {
+      return 'http://investpre.gofund.cn:8093'
+    } else if (Object.is(env, 'sandbox')) {
+      return 'http://investtest.gofund.cn:8093'
+    } else if (Object.is(env, 'localhost')) {
+      return 'http://investpre.gofund.cn:8093'
+    }
+}

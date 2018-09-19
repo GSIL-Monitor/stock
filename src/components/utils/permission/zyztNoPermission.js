@@ -3,6 +3,7 @@ import {
 } from '../callQt'
 import {
   getToken,
+  getUrlDomain,
 } from '../util'
 
 const getOpenParams = () => {
@@ -20,33 +21,6 @@ const getOpenParams = () => {
     height: popHeight,
     top,
     left
-  }
-}
-
-const getEnv = () => {
-  let host = location.hostname;
-  if (/localhost/.test(host)) {
-    return 'localhost'
-  } else if (/sandbox.gofund.cn/.test(host)) {
-    return 'sandbox'
-  } else if (/pre.gofund.cn/.test(host)) {
-    return 'pre'
-  } else {
-    return 'pro'
-  }
-}
-
-const getUrlDomain = () => {
-  var env = getEnv()
-
-  if (Object.is(env, 'pro')) {
-    return 'http://zyzt.66966.cn'
-  } else if (Object.is(env, 'pre')) {
-    return 'http://investpre.gofund.cn:8093'
-  } else if (Object.is(env, 'sandbox')) {
-    return 'http://investtest.gofund.cn:8093'
-  } else if (Object.is(env, 'localhost')) {
-    return 'http://investpre.gofund.cn:8093'
   }
 }
 

@@ -5,6 +5,7 @@
         :title="remark"
         type="button"
         v-if="showMsg"
+        @click="showCompanyHonorDetail"
     >
         {{showMsg}}
     </button>
@@ -14,6 +15,9 @@
 import {
     getCompanyHonor,
 } from '@service/index'
+import {
+    verifyPermission,
+} from '@c/utils/permission/'
 
 export default {
     name: 'CompanyHonorBtn',
@@ -27,6 +31,7 @@ export default {
             showMsg: '',
             remark: '',
             type: null,
+            myStockPermissionCode: ['TG_002', 'ZT_stocks'],
         }
     },
     computed: {
@@ -66,6 +71,12 @@ export default {
             }
 
             getCompanyHonor(params)
+        },
+        showCompanyHonorDetail() {
+            if (verifyPermission(this.myStockPermissionCode)) {
+                // 打开远端页面
+
+            }
         },
     },
     props: [
