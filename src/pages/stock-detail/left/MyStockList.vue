@@ -52,6 +52,7 @@ import {
     UnSubscriptSockets,
 } from '@c/utils/callQt'
 import {
+    switchToHashString,
     changePageStock,
 } from '../utility'
 import {
@@ -227,7 +228,8 @@ export default {
                 target = target.parentNode
             }
             if (target) {
-                let hash = target.dataset.hashString
+                let { source, symbol_type, stock_code } = target.dataset
+                let hash = switchToHashString(source, stock_code, symbol_type)
                 changePageStock(hash)
             }
         },
@@ -265,6 +267,16 @@ export default {
                 flex: 1;
             }
         }
+        &.active + .market {
+            .market_title {
+                border-top: 1px solid var(--color-dividers);
+            }
+        }
+        &:first-child {
+            .market_title {
+                border-top: 1px solid var(--color-dividers);
+            }
+        }
     }
     .market_title {
         display: flex;
@@ -272,6 +284,7 @@ export default {
         align-items: center;
         background-color: var(--color-card-background);
         border-bottom: 1px solid var(--color-dividers);
+
         padding: 0 5px;
         color: var(--color-primary-text);
         cursor: pointer;

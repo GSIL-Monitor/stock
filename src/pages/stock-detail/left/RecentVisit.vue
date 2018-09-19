@@ -27,6 +27,7 @@ import {
     UnSubscriptSockets,
 } from '@c/utils/callQt'
 import {
+    switchToHashString,
     changePageStock,
 } from '../utility'
 import {
@@ -57,7 +58,8 @@ export default {
     },
     computed: {
         ...mapState([
-            'recent_list_data'
+            'recent_list_data',
+            'full_code',
         ])
     },
     methods: {
@@ -134,7 +136,8 @@ export default {
                 target = target.parentNode
             }
             if (target) {
-                let hash = target.dataset.hashString
+                let { source, symbol_type, stock_code } = target.dataset
+                let hash = switchToHashString(source, stock_code, symbol_type)
                 changePageStock(hash)
             }
         },
@@ -142,6 +145,13 @@ export default {
     beforeDestroy() {
         goGoal.event.remove(FRAME_RECENT_LIST, this.receiveRecentList)
         this.unSubScription(FRAME_RECENT_LIST)
+    },
+    watch: {
+        full_code() {
+            setTimeout(() => {
+                this.fetchRecentList()
+            }, 0)
+        },
     },
 }
 </script>

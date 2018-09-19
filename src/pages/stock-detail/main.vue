@@ -390,6 +390,13 @@ export default {
                     this.$eventBus.$emit('setKlineTabs')
                 }
             }
+            if (data.positionModule) {
+                this.setPositionModule(data.positionModule, true)
+                if (Object.is(data.positionModule, 'tags') ) {
+                    this.$eventBus.$emit('changeSelectKey', 'tags')
+                }
+            }
+            // 触发 hashchange 事件
             if (data.stock_code) {
                 location.hash = data.stock_code
             }
@@ -397,20 +404,15 @@ export default {
                 // TODO:设置K线图滚轮列表，与快捷键一起开发
 
             }
-            if (data.positionModule) {
-                this.setPositionModule(data.positionModule, true)
-                if (Object.is(data.positionModule, 'tags') ) {
-                    this.$eventBus.$emit('changeSelectKey', 'tags')
-                }
-            }
-
             if (!data.isRencent) {
-                // 添加最近访问列表
-                this[ADD_TO_RECENT_LIST]({
-                    options: {
-                        full_code: this.full_code,
-                    }
-                })
+                // 添加最近访问列表，等待hashchange事件触发之后执行
+                setTimeout(() => {
+                    this[ADD_TO_RECENT_LIST]({
+                        options: {
+                            full_code: this.full_code,
+                        }
+                    })
+                }, 0)
             }
         },
         getNewLink(client_id) {

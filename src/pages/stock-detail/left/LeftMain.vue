@@ -148,6 +148,7 @@ export default {
         align-items: center;
         justify-content: space-around;
         padding: 0 10px;
+        border-bottom: none;
         .gg_tabs_tab  {
             padding: 5px 7px;
         }
