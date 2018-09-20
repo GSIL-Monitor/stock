@@ -280,7 +280,7 @@ export const getMyStockLine = () => {
 
 const hostSome = (arr) => {
     return arr.some(function(n) {
-        return location.host.indexOf(n) > -1
+        return location.host.includes(n)
     })
 }
 

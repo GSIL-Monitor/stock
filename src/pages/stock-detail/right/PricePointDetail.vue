@@ -216,6 +216,5 @@ export default {
 .echarts.price_point_chart {
     width: 319px;
     min-height: 150px;
-    // height: auto;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
     <div class="flow_bar">
-        <!-- <keep-alive> -->
+        <keep-alive>
             <chart
                 class="fund_flow_bar"
                 :manual-update="true"
                 ref="mychart"
             ></chart>
-        <!-- </keep-alive> -->
+        </keep-alive>
     </div>
 </template>
 
