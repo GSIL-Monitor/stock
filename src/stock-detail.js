@@ -8,13 +8,12 @@ import 'echarts/lib/chart/pie'
 import store from './store/stock-detail-store/'
 // import router from './router/stock-detail-router/'
 import App from './pages/stock-detail/'
-import eventBus from './plugins/eventBus/'
 import goGoal from './goGoal/'
+import eventBus from './plugins/eventBus/'
 
 import '@less/common/theme.less'
 
 Vue.component('chart', Echarts)
-
 Vue.use(infiniteScroll)
 Vue.use(eventBus)
 

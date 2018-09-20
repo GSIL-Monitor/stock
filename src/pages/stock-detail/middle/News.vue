@@ -60,6 +60,9 @@ import {
     getHKStockNews,
 } from '@service/'
 import formatInfoDate from '@formatter/information/date'
+import {
+    openNews,
+} from './open-information'
 
 import informationBusyMixin from '../mixins/information-busy-mixin'
 
@@ -83,6 +86,7 @@ export default {
                 'id',
                 'title',
                 'guid',
+                'stock_name',
             ],
         }
     },
@@ -137,6 +141,44 @@ export default {
                 return getHKStockNews
             }
         },
+        getOpenContentOption() {
+            if (this.isAStock) {
+                return {
+                    listApi:'v1/news/get_newmystock_info',
+                    contentApi:'v1/news/get_info_content',
+                    params: {
+                        rows: 6,
+                        stock_code: this.stock_code,
+                    },
+                }
+            } else if (this.isHSIndex) {
+                return {
+                    listApi:'v1/news/get_ask_news_info',
+                    contentApi:'v1/news/get_news_info_content',
+                    params: {
+                        rows: 6,
+                    },
+                }
+            } else if (this.isHkStock) {
+                return {
+                    source: 'hk',
+                    listApi:'v1/news/get_hk_newmystock_info',
+                    contentApi: 'v1/news/get_hk_info_content',
+                    params: {
+                        rows: 6,
+                        stock_code: this.stock_code,
+                    },
+                    path:'G3_08_17',
+                }
+            }
+        },
+        titleName() {
+            if (this.isAStock) {
+                return '个股资讯'
+            } else {
+                return '新闻'
+            }
+        },
     },
     methods: {
         fetchData() {
@@ -160,17 +202,25 @@ export default {
         formatDate(date) {
             return formatInfoDate(date, true)
         },
-        openContent(data) {
-            // TODO: open-content
+        openContent(index, data) {
+            index = index + 1
+            let title = data.stock_name ? `${this.titleName}——${data.stock_name}(${this.stock_code})` : this.titleName
+            const param = {
+                ...this.getOpenContentOption,
+                position: index,
+                contentId: data.guid || data.id,
+            }
+            param.params.page = Math.ceil(index / 6)
 
+            openNews(param, title)
         },
         handleClick(event) {
             const target = event.target
-
             if (target.className.includes('td-openContent')) {
-                const index = target.dataset.index
+                const index = Number(target.dataset.index)
                 const targetData = this.dataStore[index]
-                this.openContent(targetData)
+
+                this.openContent(index, targetData)
             }
         },
     },

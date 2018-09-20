@@ -72,6 +72,12 @@ import {
 } from '@service/'
 import formatInfoDate from '@formatter/information/date'
 import fileType from '@formatter/information/fileType'
+import {
+    openReport,
+} from './open-information'
+import {
+    getReportLine,
+} from '@c/utils/util'
 
 import informationBusyMixin from '../mixins/information-busy-mixin'
 
@@ -158,18 +164,29 @@ export default {
         formatIco(type) {
             return fileType(type)
         },
-        openContent(data) {
-            // TODO: open-content
-
+        openContent(index, data) {
+            index = index + 1
+            let title = data.stock_name ? `${this.titleName}——${data.stock_name}(${this.stock_code})` : this.titleName
+            const param = {
+                position: index,
+                contentId: data.guid,
+                params: {
+                    rows: 6,
+                    code: this.stock_code,
+                    product_line: getReportLine(),
+                    page: Math.ceil(index / 6)
+                },
+            }
+            openReport(param, title)
         },
         handleClick(event) {
             const target = event.target
 
             if (target.className.includes('td-openContent')) {
                 // 原生弹框
-                const index = target.dataset.index
+                const index = Number(target.dataset.index)
                 const targetData = this.dataStore[index]
-                this.openContent(targetData)
+                this.openContent(index, targetData)
             } else if (target.className.includes('info_ico_td')) {
                 // TODO:原文
 

@@ -68,6 +68,9 @@ import {
 } from '@service/'
 import formatInfoDate from '@formatter/information/date'
 import fileType from '@formatter/information/fileType'
+import {
+    openNotice,
+} from './open-information'
 
 import informationBusyMixin from '../mixins/information-busy-mixin'
 
@@ -89,10 +92,10 @@ export default {
             filterFields: [
                 'date',
                 'format',
-                'guid',
                 'has_read',
                 'title',
                 'text_id',
+                'stock_name',
             ],
         }
     },
@@ -134,6 +137,32 @@ export default {
                 return getIndexNotice
             }
         },
+        getOpenContentOption() {
+            if (this.isAStock) {
+                return {
+                    listApi:'v1/announcement/get_stock_new_announcement_list',
+                    params: {
+                        rows: 6,
+                        stock_code: this.stock_code,
+                    },
+                }
+            } else if (this.isHSIndex) {
+                return {
+                    listApi: 'v1/announcement/search_new_announcement',
+                    contentApi: 'v1/announcement/get_new_announcement_content',
+                    params: {
+                        rows: 6,
+                    },
+                }
+            }
+        },
+        titleName() {
+            if (this.isAStock) {
+                return '个股公告'
+            } else {
+                return '公告'
+            }
+        },
     },
     methods: {
         fetchData() {
@@ -160,17 +189,25 @@ export default {
         formatIco(type) {
             return fileType(type)
         },
-        openContent(data) {
-            // TODO: open-content
+        openContent(index, data) {
+            index = index + 1
+            let title = data.stock_name ? `${this.titleName}——${data.stock_name}(${this.stock_code})` : this.titleName
+            const param = {
+                ...this.getOpenContentOption,
+                position: index,
+                contentId: data.text_id,
+            }
+            param.params.page = Math.ceil(index / 6)
 
+            openNotice(param, title)
         },
         handleClick(event) {
             const target = event.target
 
             if (target.className.includes('td-openContent')) {
-                const index = target.dataset.index
+                const index = Number(target.dataset.index)
                 const targetData = this.dataStore[index]
-                this.openContent(targetData)
+                this.openContent(index, targetData)
             }
         },
     },
