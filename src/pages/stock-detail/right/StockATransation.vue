@@ -33,7 +33,7 @@
             infinite-scroll-disabled="busy"
             infinite-scroll-distance="60"
             infinite-scroll-throttle-delay="100"
-            @dblclick="dblclickLi"
+            @dblclick="toDetailPage"
             v-show="transation.length"
             ref="scrollContainer"
         >
@@ -62,6 +62,10 @@ import {
     getTransaction,
 } from '@service/'
 import {
+    skipF1,
+} from '../components/module-jump'
+import {
+    MODULE_NAME,
     LOCAL_TRANSATION_STORE,
 } from '../storage'
 
@@ -220,14 +224,12 @@ export default {
             this.$eventBus.$emit('showTransationFilter')
         },
         toDetailPage() {
-            console.log('timeShareDetail')
+            let hash = location.hash.substr(1)
+            skipF1(hash, MODULE_NAME)
         },
         loadMoreData() {
             this.busy = true
             this.fetchData()
-        },
-        dblclickLi() {
-            console.log('timeShareDetail')
         },
         resetBase() {
             this.update_time = null

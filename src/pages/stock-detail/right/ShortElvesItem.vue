@@ -69,6 +69,9 @@ export default {
     display: flex;
     height: 28px;
     align-items: center;
+    &:hover {
+         background: var(--color-selected-bg);
+    }
 }
 .line_item_list.red {
     color: @red;

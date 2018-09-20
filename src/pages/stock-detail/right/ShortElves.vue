@@ -36,7 +36,9 @@
     >
         <ShortElvesItem
             v-for="(item, index) of dataStore"
+            class="j_short_line_li"
             :key="index"
+            :data-full_code="item.fullcode"
             :type="item.type"
             :tdate="item.tdate"
             :name="item.name"
@@ -58,6 +60,9 @@ import {
 import {
     getShortLine,
 } from '@service/index'
+import {
+    changePageStock,
+} from '../utility'
 import {
     SOCKET_SHORT_LINE,
     LOCAL_SHORT_LINE_SET,
@@ -257,8 +262,16 @@ export default {
             this.resetComponent()
             this.getInfo()
         },
-        dblclickLi() {
-
+        dblclickLi(event) {
+            let target = event.target
+            while (target && !target.classList.contains('j_short_line_li')) {
+                target = target.parentNode
+            }
+            if (target) {
+                let full_code = target.dataset.full_code
+                let hash = full_code.substr(2)
+                changePageStock(hash)
+            }
         },
         filterLine() {
             this.$eventBus.$emit('showShortLineFilter')

@@ -2,7 +2,10 @@
     <div class="right_bottom_container">
         <div class="view_title">
             <span class="financial_title_dsc">简易财务</span>
-            <LoadMore class="financial_title_more"/>
+            <LoadMore
+                class="financial_title_more"
+                @on-click="handleClick"
+            />
         </div>
         <div class="view_vessel">
             <ul
@@ -10,14 +13,13 @@
                 v-for="(item, index) of config"
                 :key="index"
             >
-                <li
-                    is="SimpleFinancialItem"
+                <SimpleFinancialItem
                     v-for="(n, i) of item"
                     :key="i"
                     :text="n.text"
                     :className="n.result.color"
                     :val="n.result.val"
-                ></li>
+                />
             </ul>
         </div>
     </div>
@@ -30,6 +32,12 @@ import {
 import {
     getStockFinance,
 } from '@service/index'
+import {
+    getUrlDomain,
+} from '@c/utils/util'
+import {
+    sendEvent,
+} from '@c/utils/callQt'
 import {
     getReportShow,
     getCapitalStock,
@@ -300,6 +308,13 @@ export default {
                 },
             }
             getStockFinance(param)
+        },
+        handleClick() {
+            let hash = location.hash.substr(1)
+            let baseUrl = getUrlDomain()
+            let url = `${baseUrl}/html/companyInfo.html?stock_code=${hash}&top_tab=4`
+
+            sendEvent('hidden', '', JSON.stringify({url}), true)
         },
     },
     watch: {

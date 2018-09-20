@@ -20,7 +20,7 @@
             infinite-scroll-disabled="busy"
             infinite-scroll-distance="60"
             infinite-scroll-throttle-delay="100"
-            @dblclick="dblclickLi"
+            @dblclick="toDetailPage"
             v-show="dataStore.length"
             ref="scrollContainer"
         >
@@ -52,6 +52,12 @@ import {
 import {
     isHkRealTime,
 } from '../utility'
+import {
+    skipF1,
+} from '../components/module-jump'
+import {
+    MODULE_NAME,
+} from '../storage'
 
 import TransactionLi from './TransactionLi.vue'
 import LoadMore from '../components/LoadMore.vue'
@@ -164,14 +170,15 @@ export default {
             api(param)
         },
         toDetailPage() {
-            console.log('timeShareDetail')
+            if (this.isHkIndex || this.isHkNormal) {
+                return false
+            }
+            let hash = location.hash.substr(1)
+            skipF1(hash, MODULE_NAME)
         },
         loadMoreData() {
             this.busy = true
             this.getData()
-        },
-        dblclickLi() {
-            console.log('timeShareDetail')
         },
         resetComponent() {
             this.update_time = null

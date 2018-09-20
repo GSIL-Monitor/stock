@@ -8,6 +8,7 @@ import {
 export const skipF1 = (hash, moduleId) => {
     let baseUrl = getUrlDomain()
     let url = `${baseUrl}/html/timeShareDetail.html?stock_code=${hash}&id=${moduleId}`
+
     sendEvent('hidden', '', JSON.stringify({url}), true)
 }
 
