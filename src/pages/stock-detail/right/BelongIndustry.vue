@@ -13,10 +13,11 @@
         <ul
             v-if="showSelectList"
             class="belong_industry_list"
-            @click="skipMarket"
+            @click="handleClick"
         >
             <li
                 v-for="(item, index) of plateData"
+                :data-index="index"
                 :key="index"
             >
                 {{item.name}}
@@ -27,11 +28,17 @@
 
 <script>
 import {
+    mapState,
+} from 'vuex'
+import {
     getIndustryBelongPlate,
 } from '@service/index'
 import {
     toType,
 } from '@formatter/utility'
+import {
+    JsToQtEventInterface,
+} from '@c/utils/callQt'
 
 export default {
     name: "BelongIndustry",
@@ -45,6 +52,10 @@ export default {
         }
     },
     computed: {
+        ...mapState([
+            'stock_code',
+            'stock_name',
+        ]),
         showSelectList() {
             return this.plateData.length && this.flag
         },
@@ -65,9 +76,14 @@ export default {
                 callback0: (data) => {
                     let maps = []
                     if (toType(data.industry) === 'object') {
+                        data.industry.type = -2
                         maps.push(data.industry)
                     }
                     if (toType(data.plate) === 'array') {
+                        data.plate.forEach((element) => {
+                            element.type = 1
+                        })
+
                         maps.push(...data.plate)
                     }
 
@@ -82,9 +98,38 @@ export default {
 
             getIndustryBelongPlate(params)
         },
-        skipMarket() {
-            // TODO:跳转行情
+        skipMarket(data) {
+            let { type, code, name } = data
+            let switchType = Object.is(type, 1) ? 'gn_index' :
+                             Object.is(type, -2) ? 'hy_index' :
+                             Object.is(type, 2) ? 'index' :
+                             'index'
+            const params = {
+                code: 'LB' + code,
+                name: encodeURIComponent(name),
+                type: type,
+                stockCode: this.stock_code,
+                stockName: this.stock_name,
+            }
 
+            JsToQtEventInterface(JSON.stringify({
+                fun: 'SendwebTowebEvent',
+                data: {
+                    destID: 'stockMarket',//目的webid
+                    eventName: 'plateSelected',//事件名
+                    eventContent: JSON.stringify(params),//事件参数
+                }
+            }))
+        },
+        handleClick(event) {
+            let target = event.target
+            if (target.tagName.toLowerCase() !== 'li') {
+                return false
+            }
+            let index = target.dataset.index
+            let data = this.plateData[index]
+
+            this.skipMarket(data)
         },
         hideSelectListState() {
             this.flag = false
@@ -95,7 +140,6 @@ export default {
     },
     props: [
         "industry_name",
-        "stock_code",
     ],
     watch: {
         stock_code() {

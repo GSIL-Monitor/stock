@@ -20,7 +20,6 @@
                     <BelongIndustry
                         v-if="industry_name"
                         :industry_name="industry_name"
-                        :stock_code="stock_code"
                     />
                 </div>
                 <SetIco
@@ -274,6 +273,9 @@ import {
     initTapeDefault,
     initTapeFunc,
 } from '../tape/tape-public-func'
+import {
+    sendEvent,
+} from '@c/utils/callQt'
 import {
     TAPE_ROWS,
     TAPE_CONTENT,
@@ -670,10 +672,22 @@ export default {
             this.setTabSession(type)
         },
         skipDiagnose() {
-            console.log('skipDiagnose')
+            const params = JSON.stringify({
+                stock_code: this.stock_code,
+                stock_name: encodeURIComponent(this.stock_name)
+            })
+
+            sendEvent('diagnose', 'diagnoseStockCode', params, true)
         },
         skipReport() {
-            console.log('skipReport')
+            let hash = location.hash.substr(1)
+            const params = JSON.stringify({
+                moduleName: "reportCenter_/reportClassify",
+                stock_code: hash,
+                stock_name: encodeURIComponent(this.stock_name)
+            })
+
+            sendEvent('reportCenter', 'searchReport', params, true)
         },
         tapeSettings() {
             this.$eventBus.$emit('tapeSet')

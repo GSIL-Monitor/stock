@@ -8,6 +8,13 @@
 </template>
 
 <script>
+import {
+    skipF10,
+} from '../components/module-jump'
+import {
+    MODULE_NAME,
+} from '../storage'
+
 import DefaultBtn from './DefaultBtn.vue'
 
 export default {
@@ -17,7 +24,8 @@ export default {
     },
     methods: {
         skipF10() {
-            console.log('skip f10')
+            let hash = location.hash.substr(1)
+            skipF10(hash, MODULE_NAME)
         },
     },
 }

@@ -170,9 +170,10 @@ export default {
             sendEvent('bulletinCenter', 'bulletinCenter', params, true)
         },
         jumpMoreReport() {
+            let hash = location.hash.substr(1)
             const params = JSON.stringify({
                 moduleName: 'reportCenter_/reportClassify',
-                stock_code: this.stock_code,
+                stock_code: hash,
                 stock_name: encodeURIComponent(this.stock_name),
             })
             sendEvent('reportCenter', 'searchReport', params, true)
