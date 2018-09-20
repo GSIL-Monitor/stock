@@ -26,12 +26,18 @@
     >
     </TabPane>
     <LoadMore
+        @on-click="moduleJump"
         slot="navNext"
     />
 </Tabs>
 </template>
 
 <script>
+import {
+    mapState,
+} from 'vuex'
+
+import inforJumpMixin from '../mixins/information-jump-mixin'
 import informationMixin from '../mixins/information-mixin'
 
 import Tabs from '../components/tabs/'
@@ -43,6 +49,7 @@ import News from './News.vue'
 export default {
     name: 'InfoHkStockTemp',
     mixins: [
+        inforJumpMixin,
         informationMixin,
     ],
     data() {
@@ -59,6 +66,23 @@ export default {
         LoadMore,
         XqdownToUp,
         News,
+    },
+    computed: {
+        ...mapState([
+            'stock_code',
+        ]),
+    },
+    methods: {
+        getQueryString() {
+            let name = encodeURIComponent(this.stock_name)
+            return `keyword=${name}&stockCode=${this.stock_code}&type=0&hk_stock=1&stockName=${name}`
+        },
+        moduleJump() {
+            if (Object.is(this.activeKey, this.news)) {
+                let type = 0
+                this.jumpInfoMore(type)
+            }
+        },
     },
 }
 </script>

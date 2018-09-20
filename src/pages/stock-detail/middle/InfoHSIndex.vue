@@ -22,12 +22,21 @@
         <Notice/>
     </TabPane>
     <LoadMore
+        @on-click="moduleJump"
         slot="navNext"
     />
 </Tabs>
 </template>
 
 <script>
+import {
+    mapState
+} from 'vuex'
+import {
+    MODULE_NAME,
+} from '../storage'
+
+import inforJumpMixin from '../mixins/information-jump-mixin'
 import informationMixin from '../mixins/information-mixin'
 
 import Tabs from '../components/tabs/'
@@ -40,6 +49,7 @@ import Notice from './Notice.vue'
 export default {
     name: 'InfoHSIndexTemp',
     mixins: [
+        inforJumpMixin,
         informationMixin,
     ],
     data() {
@@ -56,6 +66,31 @@ export default {
         XqdownToUp,
         News,
         Notice,
+    },
+    computed: {
+        ...mapState([
+            'full_code',
+        ]),
+    },
+    methods: {
+        getJumpParam(url) {
+            return {
+                url,
+                parentId: MODULE_NAME,
+            }
+        },
+        getQueryString(type) {
+            return `stockCode=${this.full_code}&type=${type}`
+        },
+        moduleJump() {
+            if (Object.is(this.activeKey, this.news)) {
+                let type = 0
+                this.jumpInfoMore(type)
+            } else if (Object.is(this.activeKey, this.notice)) {
+                let type = 1
+                this.jumpInfoMore(type)
+            }
+        },
     },
 }
 </script>

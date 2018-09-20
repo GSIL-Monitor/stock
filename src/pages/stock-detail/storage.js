@@ -1,5 +1,5 @@
 
-const MODULE_NAME = 'stockDetail'
+export const MODULE_NAME = 'stockDetail'
 
 // ==============================================================================
 /**

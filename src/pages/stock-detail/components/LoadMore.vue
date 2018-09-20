@@ -1,7 +1,7 @@
 <template>
     <div
         class="load_more"
-        @click="moreClick"
+        @click.stop="moreClick"
     >
         <div>{{label}}</div>
         <div>&gt;</div>
@@ -13,7 +13,7 @@ export default {
     name: 'LoadMore',
     methods: {
         moreClick() {
-            this.$emit('on-lick')
+            this.$emit('on-click')
         }
     },
     props: {

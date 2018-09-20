@@ -53,6 +53,7 @@
     </TabPane>
     <LoadMore
         v-show="isShowMore"
+        @on-click="moduleJump"
         :label="loadMoreLabel"
         slot="navNext"
     />
@@ -60,6 +61,14 @@
 </template>
 
 <script>
+import {
+    mapState,
+} from 'vuex'
+import {
+    sendEvent,
+} from '@c/utils/callQt'
+
+import inforJumpMixin from '../mixins/information-jump-mixin'
 import informationMixin from '../mixins/information-mixin'
 
 import Tabs from '../components/tabs/'
@@ -75,6 +84,7 @@ import BigEvent from './BigEvent.vue'
 export default {
     name: 'InfoStockA',
     mixins: [
+        inforJumpMixin,
         informationMixin,
     ],
     data() {
@@ -101,6 +111,10 @@ export default {
         InvestQA,
     },
     computed: {
+        ...mapState([
+            'stock_code',
+            'stock_name',
+        ]),
         loadMoreLabel() {
             let prefix = '更多'
             return this.isNewsActive ? `${prefix}新闻` :
@@ -122,6 +136,49 @@ export default {
         },
         isShowMore() {
             return !this.isRelatedActive
+        },
+    },
+    methods: {
+        getQueryString(type) {
+            let name = encodeURIComponent(this.stock_name)
+
+            return `keyword=${name}&stockCode=${this.stock_code}&type=${type}&stockName=${name}`
+        },
+        moduleJump() {
+            if (this.isNewsActive) {
+                let type = 0
+                this.jumpInfoMore(type)
+            } else if (this.isNoticeActive) {
+                this.jumpMoreNotice()
+            } else if (this.isReportActive) {
+                this.jumpMoreReport()
+            } else if (Object.is(this.activeKey, this.question)) {
+                let type = 3
+                this.jumpInfoMore(type)
+            } else if (Object.is(this.activeKey, this.bigevent)) {
+                let type = 4
+                this.jumpInfoMore(type)
+            } else if (Object.is(this.activeKey, this.trade)) {
+                this.jumpStockMarket()
+            }
+        },
+        jumpMoreNotice() {
+            const params = JSON.stringify({
+                stockCode: this.stock_code,
+                stockName: encodeURIComponent(this.stock_name),
+            })
+            sendEvent('bulletinCenter', 'bulletinCenter', params, true)
+        },
+        jumpMoreReport() {
+            const params = JSON.stringify({
+                moduleName: 'reportCenter_/reportClassify',
+                stock_code: this.stock_code,
+                stock_name: encodeURIComponent(this.stock_name),
+            })
+            sendEvent('reportCenter', 'searchReport', params, true)
+        },
+        jumpStockMarket() {
+
         },
     },
 }
