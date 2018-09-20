@@ -7,7 +7,7 @@
         :title="item.title"
         :type="item.type"
         :full_code="item.full_code"
-        @on-click="jumpToModule"
+        @on-click="handleClick"
     />
 </div>
 </template>
@@ -19,6 +19,10 @@ import {
 import {
     getStockIdentity,
 } from '@service/'
+import {
+    sendEvent,
+    JsToQtEventInterface,
+} from '@c/utils/callQt'
 import stockAIcoConfig from './stock-a-identify-config'
 import hkStockIcoConfig from './hk-stock-identify-config'
 
@@ -88,9 +92,76 @@ export default {
         resetComponent() {
             this.dataStore = {}
         },
-        jumpToModule(obj) {
+        skipStockMarket(params) {
+            params = JSON.stringify(params);
+            sendEvent('stockMarket', 'stockMarketDetail', params, true);
+        },
+        skipStockMarketIndustry(plateCode, plateName, type) {
+            if (type == '1') {
+                type = 'gn_index'
+            } else if(type == '-2') {
+                type = 'hy_index'
+            } else if(type == '2') {
+                type = 'index'
+            }
+            const params = {
+                code: 'LB' + plateCode,
+                name: encodeURIComponent(plateName),
+                type: type,
+            }
+            JsToQtEventInterface(JSON.stringify({
+                fun: 'SendwebTowebEvent',
+                data: {
+                    destID: 'stockMarket',//目的webid
+                    eventName: 'plateSelected',//事件名
+                    eventContent: JSON.stringify(params),//事件参数
+                },
+            }))
+        },
+        handleClick(obj) {
             const { type, full_code } = obj
-            console.log(type, full_code)
+            switch (type) {
+                case "sh-tong":
+                // 沪股通
+                this.skipStockMarket({
+                    hash: "hsStock",
+                    module_type: "7",
+                });
+                break;
+                case "sz-tong":
+                // 深股通
+                this.skipStockMarket({
+                    hash: "hsStock",
+                    module_type: "8",
+                });
+                break;
+                case "margin-trading":
+                // 融资融券
+                this.skipStockMarketIndustry(full_code, "融资融券", "1");
+                break;
+                case "sz50":
+                // 上证50
+                this.skipStockMarketIndustry(full_code, "上证50", "2");
+                break;
+                case "hs300":
+                // 沪深300
+                this.skipStockMarketIndustry(full_code, "沪深300", "2");
+                break;
+                case "hk-tong":
+                //港股通
+                this.skipStockMarket({
+                    hash: "hk_stock",
+                    module_type: "8;9"
+                });
+                break;
+                case "hsi-index":
+                // 恒生指数成分股
+                this.skipStockMarket({
+                    hash: "hk_stock",
+                    module_type: "14"
+                });
+                break;
+            }
         },
     },
     watch: {
