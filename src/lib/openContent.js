@@ -1,5 +1,5 @@
 /* 点击文章 */
-import callQt from '../src/components/utils/callQt';
+import callQt from '@c/utils/callQt';
 var returnHost = function(){
     var host = location.hostname;
     var ggAddress;

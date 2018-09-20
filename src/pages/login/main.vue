@@ -48,7 +48,7 @@ export default {
     },
     methods: {
         clickButton() {
-            document.cookie = "mystock_cache=1";
+
             loginIn({
                 options: {
                     login_name: this.user,
@@ -58,7 +58,9 @@ export default {
                     var code = res.code;
                     if (code == 0) {
                         document.cookie = "token=" + res.token + "; path=/";
-                        document.cookie = "account_id=" + res.account_id;
+                        document.cookie = "account_id=" + res.account_id + "; path=/";
+                        document.cookie = 'userType={    "button_code": [        "13",        "TG_001",        "TG_002",        "TG_003",        "TG_004",        "TG_005",        "TG_006",        "TG_007",        "TG_008",        "TG_009",        "TG_010",        "TG_011",        "TG_012",        "TG_013",        "TG_014",        "TG_015",        "TG_016",        "TG_017",        "TG_018",        "TG_019",        "TG_0010_001",        "TG_0010_002",        "TG_0010_003",        "TG_0010_004",        "TG_0010_005",        "TG_0010_006",        "TG_0010_007",        "TG_0010_008",        "TG_0010_009",        "TG_0010_010",        "TG_0010_011",        "TG_0012_001",        "TG_0012_002",        "TG_0012_003",        "TG_0012_004",        "TG_0012_005",        "TG_0012_006",        "TG_0012_007",        "TG_0012_008",        "TG_0013_001",        "TG_0013_002",        "TG_0013_003",        "TG_0013_004",        "TG_0013_005",        "TG_0013_006",        "TG_0013_007",        "TG_0013_008",        "TG_0013_009",        "TG_003_001",        "TG_003_002",        "TG_003_003",        "TG_003_004",        "TG_003_005",        "TG_003_006",        "TG_004_001",        "TG_004_002",        "TG_004_003",        "TG_004_004",        "TG_004_005",        "TG_004_006",        "TG_004_007",        "TG_004_008",        "TG_004_009",        "TG_004_010",        "TG_004_011",        "TG_004_012",        "TG_004_013",        "TG_004_014",        "TG_005_001",        "TG_005_002",        "TG_005_003",        "TG_006_001",        "TG_006_002",        "TG_006_003",        "TG_007_001",        "TG_007_002",        "TG_007_003",        "TG_007_004",        "TG_007_005",        "TG_007_006",        "TG_007_007",        "TG_008_001",        "TG_008_002",        "TG_008_003",        "TG_008_004",        "TG_008_005",        "TG_008_006",        "TG_008_007",        "TG_008_008",        "TG_009_001",        "TG_009_002",        "TG_009_003",        "TG_009_004",        "TG_009_005",        "TG_009_006",        "TG_009_007",        "TG_009_008",        "TG_009_009",        "TG_009_010",        "TG_016_001",        "TG_016_002",        "TG_016_003"    ],    "days": 9867,    "end_date": "2045-09-25 00:00:00",    "is_auto": 0,    "is_inner": 1,    "past_days": null,    "past_end_date": null,    "past_permi": null,    "past_user_type": null,    "permi": "旗舰版",    "user_type": 9}'
+                        document.cookie = "mystock_cache=1";
 
                         this.passed = true;
                         localStorage.setItem('stock-user', JSON.stringify({

@@ -134,7 +134,8 @@
 
 <script>
 import {
-    mapState
+    mapState,
+    mapMutations,
 } from 'vuex'
 import {
     getBondData,
@@ -142,6 +143,9 @@ import {
 import {
     SOCKET_BOND_MARKET,
 } from '../storage'
+import {
+    STOCK_NAME,
+} from '@store/stock-detail-store/config/mutation-types'
 
 import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
@@ -214,6 +218,9 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            STOCK_NAME,
+        ]),
         volumeDiff(val, oldVal) {
             return Math.floor((val - oldVal))
         },
@@ -223,6 +230,8 @@ export default {
                     fullcode: this.full_code
                 },
                 callback0: data => {
+                    this[STOCK_NAME](data.stock_name)
+
                     this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type

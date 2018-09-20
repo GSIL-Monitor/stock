@@ -221,6 +221,7 @@
 <script>
 import {
     mapState,
+    mapMutations,
 } from 'vuex'
 import {
     getLimitStockData,
@@ -235,6 +236,9 @@ import {
 import {
     SOCKET_B_MARKET,
 } from '../storage'
+import {
+    STOCK_NAME,
+} from '@store/stock-detail-store/config/mutation-types'
 
 import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
@@ -343,6 +347,9 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            STOCK_NAME,
+        ]),
         initState() {
             initTapeDefault((key, val) => {
                 if ([TAPE_ROWS, TAPE_STYLE].includes(key)) {
@@ -376,6 +383,7 @@ export default {
                     stock_code: this.stock_code,
                 },
                 callback0: data => {
+                    this[STOCK_NAME](data.stock_name)
                     this.symbol_type = data.symbol_type
                     this.stock_type = data.stock_type
                     this.stock_name = data.stock_name

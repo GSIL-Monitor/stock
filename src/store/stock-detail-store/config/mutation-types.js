@@ -26,3 +26,5 @@ export const HSINDEX_CATEGORY = 'HSINDEX_CATEGORY'
 export const KLINE_JUMP_PARAM = 'KLINE_JUMP_PARAM'
 // 左侧选中 tab
 export const LEFT_SELECT_TAB = 'LEFT_SELECT_TAB'
+// 当前选中股票名字
+export const STOCK_NAME = 'STOCK_NAME'

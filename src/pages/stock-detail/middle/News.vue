@@ -203,11 +203,10 @@ export default {
             return formatInfoDate(date, true)
         },
         openContent(index, data) {
-            index = index + 1
             let title = data.stock_name ? `${this.titleName}——${data.stock_name}(${this.stock_code})` : this.titleName
             const param = {
                 ...this.getOpenContentOption,
-                position: index,
+                position: (index + 1),
                 contentId: data.guid || data.id,
             }
             param.params.page = Math.ceil(index / 6)

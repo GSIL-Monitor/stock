@@ -32,3 +32,14 @@ export const openReport = (pageParam = {}, titleName = '研报') => {
 
     openContent(JSON.stringify(param), titleName)
 }
+
+export const openBigEvent = (pageParam = {}, titleName = '大事件') => {
+    const param = Object.assign({
+        dataType: 'events',
+        windowHeight: document.body.clientWidth,
+        windowWidth: document.body.clientHeight,
+        path: 'G3_08_14',
+    }, pageParam)
+
+    openContent(JSON.stringify(param), titleName)
+}

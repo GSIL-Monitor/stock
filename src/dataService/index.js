@@ -349,3 +349,29 @@ export const getNewsAd = (param) => {
     const APIName = 'v1/zyzt_ad/get_terminal_ad'
     return get(APIName, param)
 }
+
+export const getNoticeUrl = (param) => {
+    const APIName = 'v1/announcement/get_announcement_file_url'
+    return get(APIName, param)
+}
+
+export const getReportAuth = (param) => {
+    const APIName = 'v1/gpoints/get_gpoint_report_read'
+
+    return get(APIName, param)
+}
+
+export const exchangeReport = (param) => {
+    const APIName = 'v1/gpoints/add_report_read_record'
+    return get(APIName, param)
+}
+
+export const userOperation = (param) => {
+    const APIName = 'v1/userop/add'
+    return get(APIName, param)
+}
+
+export const contactServer = (param) => {
+    const APIName = 'v1/renew/sendsmsmail'
+    return get(APIName, param)
+}

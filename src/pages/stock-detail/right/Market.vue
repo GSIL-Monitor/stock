@@ -162,6 +162,9 @@ import {
 import {
     GET_HS_INDEX_MARKET_DATA,
 } from '@store/stock-detail-store/config/action-types'
+import {
+    STOCK_NAME,
+} from '@store/stock-detail-store/config/mutation-types'
 // import {
 //     HSINDEX_CATEGORY,
 // } from '@store/stock-detail-store/config/mutation-types'
@@ -262,9 +265,10 @@ export default {
         },
     },
     methods: {
-        // ...mapMutations([
-        //     HSINDEX_CATEGORY,
-        // ]),
+        ...mapMutations([
+            STOCK_NAME,
+            // HSINDEX_CATEGORY,
+        ]),
         ...mapActions({
             getIndexData: GET_HS_INDEX_MARKET_DATA,
         }),
@@ -287,6 +291,7 @@ export default {
                 },
                 callback0: data => {
                     // this[HSINDEX_CATEGORY](data.category)
+                    this[STOCK_NAME](data.name)
                     this.stock_name = data.name
                     this.symbol_type = data.symbol_type
                     this.close_price = data.close_price

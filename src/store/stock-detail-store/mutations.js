@@ -14,6 +14,7 @@ import {
     // HSINDEX_CATEGORY,
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
+    STOCK_NAME,
 } from './config/mutation-types'
 import {
     LOCAL_LEFT_TAB,
@@ -59,6 +60,9 @@ export default {
     [LEFT_SELECT_TAB](state, payLoad) {
         state.leftActiveKey = payLoad
         localStorage.setItem(LOCAL_LEFT_TAB, payLoad)
+    },
+    [STOCK_NAME](state, payLoad) {
+        state.stock_name = payLoad
     },
     // [HSINDEX_CATEGORY](state, payLoad) {
     //     state.hsIndexCategory = payLoad

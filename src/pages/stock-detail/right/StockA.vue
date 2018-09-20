@@ -262,6 +262,7 @@
 <script>
 import {
     mapState,
+    mapMutations,
 } from 'vuex'
 import {
     getLimitStockData,
@@ -283,6 +284,9 @@ import {
     SESSION_ASTOCK_FUNC_TAB,
     SOCKET_A_MARKET,
 } from '../storage'
+import {
+    STOCK_NAME,
+} from '@store/stock-detail-store/config/mutation-types'
 
 import socketMixin from '../mixins/socket-mixin'
 import fiveOrderMixin from '../mixins/five-order-mixin'
@@ -479,6 +483,9 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            STOCK_NAME,
+        ]),
         tapeDefaultChanged(key, val) {
             this[key] = val
             this.nextResizeWindow()
@@ -511,6 +518,7 @@ export default {
                     get_industry: 1,
                 },
                 callback0: data => {
+                    this[STOCK_NAME](data.stock_name)
                     this.industry_name = data.industry_name
 
                     this.symbol_type = data.symbol_type

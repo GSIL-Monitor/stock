@@ -20,6 +20,7 @@
                 <tr
                     v-for="(item, index) of dataStore"
                     :key="index"
+                    :data-index="index"
                     class="info_tr"
                 >
                     <td
@@ -27,7 +28,6 @@
                     >
                         <span
                             class="td-openContent"
-                            :data-index="index"
                             :title="item.title"
                         >
                             {{item.title}}
@@ -54,6 +54,7 @@
         v-if="noData"
         class="extend_nodata"
     >{{noDataMsg}}</div>
+    <report-auth :report="readReport" @finish="readReport = null" />
 </div>
 </template>
 
@@ -74,6 +75,8 @@ import {
 
 import informationBusyMixin from '../mixins/information-busy-mixin'
 
+import reportAuth from '@c/reportAuth'
+
 export default {
     name: 'Notice',
     mixins: [
@@ -82,6 +85,9 @@ export default {
     created() {
         this.fetchData()
     },
+    components: {
+        reportAuth,
+    },
     data() {
         return {
             ROWS: 10,
@@ -89,6 +95,7 @@ export default {
             dataStore: [],
             noData: false,
             noDataMsg: '暂无相关公告',
+            readReport: null,
             filterFields: [
                 'date',
                 'format',
@@ -96,6 +103,8 @@ export default {
                 'title',
                 'text_id',
                 'stock_name',
+                'guid',
+                'original_type',
             ],
         }
     },
@@ -107,6 +116,7 @@ export default {
         ...mapState([
             'stock_code',
             'full_code',
+            'stock_name',
         ]),
         hsIndexParam() {
             return {
@@ -190,11 +200,10 @@ export default {
             return fileType(type)
         },
         openContent(index, data) {
-            index = index + 1
-            let title = data.stock_name ? `${this.titleName}——${data.stock_name}(${this.stock_code})` : this.titleName
+            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.stock_code})` : this.titleName
             const param = {
                 ...this.getOpenContentOption,
-                position: index,
+                position: (index + 1),
                 contentId: data.text_id,
             }
             param.params.page = Math.ceil(index / 6)
@@ -202,12 +211,31 @@ export default {
             openNotice(param, title)
         },
         handleClick(event) {
-            const target = event.target
-
+            let target = event.target
+            let type;
             if (target.className.includes('td-openContent')) {
-                const index = Number(target.dataset.index)
-                const targetData = this.dataStore[index]
+                type = 'openContent'
+            } else if (target.className.includes('stockDetial-read-pdf')) {
+                type = 'openPdf'
+            } else {
+                return false
+            }
+            while (target && target.tagName.toLowerCase() !== 'tr') {
+                target = target.parentNode
+            }
+            const index = Number(target.dataset.index)
+            const targetData = this.dataStore[index]
+
+            if (Object.is(type, 'openContent')) {
                 this.openContent(index, targetData)
+            } else if (Object.is(type, 'openPdf')) {
+                this.readReport = {
+                    create_date: formatInfoDate(targetData.date),
+                    original_type: 'announcement',
+                    format: targetData.format,
+                    title: targetData.title,
+                    guid: targetData.guid,
+                }
             }
         },
     },

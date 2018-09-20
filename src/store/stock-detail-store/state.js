@@ -3,6 +3,7 @@ export default {
     stock_code: null,
     source: null,
     full_code: null,
+    stock_name: null,
     leftState: true,  // 左侧栏展开收起状态
     rightState: true, // 右侧栏展开收起状态
     infoState: false, // 资讯栏状态

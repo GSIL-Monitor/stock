@@ -187,6 +187,7 @@
 import {
     mapState,
     mapGetters,
+    mapMutations,
 } from 'vuex'
 import {
     getHkStockData,
@@ -194,6 +195,9 @@ import {
 import {
     SOCKET_HKSTOCK_MARKET,
 } from '../storage'
+import {
+    STOCK_NAME,
+} from '@store/stock-detail-store/config/mutation-types'
 
 import socketMixin from '../mixins/socket-mixin'
 import rightResizeMixin from '../mixins/right-resize-mixin'
@@ -293,12 +297,17 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            STOCK_NAME,
+        ]),
         getInfoData() {
             const params = {
                 options: {
                     fullcode: this.full_code
                 },
                 callback0: data => {
+                    this[STOCK_NAME](data.stock_name)
+
                     this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.symbol_type  = data.symbol_type

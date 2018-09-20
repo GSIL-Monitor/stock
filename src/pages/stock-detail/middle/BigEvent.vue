@@ -9,11 +9,13 @@
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
+        @click="handleClick"
         ref="scrollContainer"
     >
         <li
             v-for="(item, index) of dataStore"
             :key="index"
+            :data-index="index"
             class="bigevent_item"
         >
             <svg
@@ -63,6 +65,9 @@ import {
 import {
     getEventList,
 } from '@service/'
+import {
+    openBigEvent,
+} from './open-information'
 
 import informationBusyMixin from '../mixins/information-busy-mixin'
 
@@ -92,7 +97,11 @@ export default {
         ...mapState([
             'stock_code',
             'full_code',
+            'stock_name',
         ]),
+        titleName() {
+            return '大事件'
+        },
     },
     methods: {
         fetchData() {
@@ -120,6 +129,35 @@ export default {
         },
         formatDate(date) {
             return subDate(date)
+        },
+        openContent(index, data) {
+            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.stock_code})` : this.titleName
+            const param = {
+                position: (index + 1),
+                stock_name: this.stock_name,
+                stock_code: this.stock_code,
+                params: {
+                    rows: 9,
+                    stock_code: this.stock_code,
+                    is_details: false,
+                    page: Math.ceil(index / 9),
+                },
+                listApi:'v1/stock/get_announcement_notice',
+                contentApi: 'v1/stock/get_big_event_milestone',
+                contentId: data.id,
+            }
+
+            openBigEvent(param, title)
+        },
+        handleClick(event) {
+            let target = event.target
+            while (target && target.tagName.toLowerCase() !== 'li') {
+                target = target.parentNode
+            }
+            const index = Number(target.dataset.index)
+            const targetData = this.dataStore[index]
+
+            this.openContent(index, targetData)
         },
     },
     watch: {
