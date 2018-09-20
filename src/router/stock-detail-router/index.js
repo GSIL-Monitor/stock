@@ -1,3 +1,6 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
 import App from '../pages/stock-detail/index.vue'
 
 // let rightSrc = '../pages/stock-detail/right/'
@@ -5,6 +8,8 @@ import stock_a from '../pages/stock-detail/right/stock_a.vue'
 import stock_b from '../pages/stock-detail/right/stock_b.vue'
 // import simple_financial from '../pages/stock-detail/right/simple_financial.vue'
 // import stock_transaction from '../pages/stock-detail/right/transaction.vue'
+
+Vue.use(VueRouter)
 
 // const stock_a = r => require.ensure(
 //     [],
@@ -23,7 +28,7 @@ import stock_b from '../pages/stock-detail/right/stock_b.vue'
 //     'simple_financial',
 // )
 
-export default [{
+const routes = [{
     path: '/',
     component: App, // 顶层路由
     name: 'App',
@@ -52,3 +57,9 @@ export default [{
         }
     ]
 }]
+
+export default new VueRouter({
+    routes,
+    mode: 'hash',
+    // strict: process.env.NODE_ENV !== 'production',
+})
