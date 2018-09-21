@@ -67,7 +67,7 @@ import {
     getYearSuffix,
 } from '@formatter/market-fields/consensus'
 import {
-    getMixedYen,
+    getMoneyFormat,
 } from '@formatter/market-fields/financial'
 import {
     JsToQtEventInterface,
@@ -110,7 +110,7 @@ export default {
                     fields: 'profit',
                     text: '净利润',
                     data: [],
-                    formatter: getMixedYen,
+                    formatter: this.formatRetainedProfits,
                 },
                 {
                     fields: 'profit_yoy',
@@ -203,6 +203,11 @@ export default {
                 }
             }
         },
+        formatRetainedProfits(val) {
+            return {
+                val: getMoneyFormat(val)
+            }
+        } ,
         getConsensusData() {
             let param = {
                 options: {

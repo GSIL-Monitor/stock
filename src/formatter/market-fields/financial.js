@@ -23,7 +23,7 @@ const getColor = val => {
                      DEFAULT
 }
 
-const getMoneyFormat = value => {
+export const getMoneyFormat = value => {
     if (isNumber(value)) {
         let val = formatNumber(Number(value))
         return `${val}元`
