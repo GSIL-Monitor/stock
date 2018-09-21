@@ -46,7 +46,8 @@
                     class="consensus_table_more"
                     @click="toDiagnose"
                 >
-                    更多数据<span class="consensus_table_more_deep">&gt;&gt;</span>
+                    更多数据
+                    <span class="consensus_table_more_deep">&gt;&gt;</span>
                 </td>
             </tr>
         </tfoot>
@@ -54,6 +55,9 @@
 </template>
 
 <script>
+import {
+    mapState,
+} from 'vuex'
 import {
     getSelfConsensus,
 } from "@service/index"
@@ -66,10 +70,13 @@ import {
     getMixedYen,
 } from '@formatter/market-fields/financial'
 import {
+    JsToQtEventInterface,
+    sendEvent,
+} from '@c/utils/callQt'
+import {
     cloneDeep,
 } from 'lodash'
 
-// TODO: 无数据特殊处理
 export default {
     name: 'ConsensusTable',
     created() {
@@ -133,6 +140,9 @@ export default {
         }
     },
     computed: {
+        ...mapState([
+            'stock_name',
+        ]),
         fieldsOrder() {
             return this.tbodyOrder.map((ele) => {
                 return ele.fields
@@ -163,9 +173,25 @@ export default {
     methods: {
         toDiagnose() {
             // 跳转诊股数据一分钟
-
+            const params = JSON.stringify({
+                moduleName: "stock",
+                stock_code: this.stock_code,
+                stock_name: encodeURIComponent(this.stock_name),
+            });
+            JsToQtEventInterface(JSON.stringify({
+                fun: "SendIdToGoBackHistory",
+                data: {
+                    moduleID: "diagnose_stock"
+                }
+            }))
+            sendEvent('diagnose', 'diagnoseStockCode', params, true);
         },
         formatYear(num, index) {
+            if (!num) {
+                return {
+                    val: '--'
+                }
+            }
             if (index === 0) {
                 let suffix = getYearSuffix()
                 return {
@@ -208,11 +234,25 @@ export default {
                     this.showFooter = true
                 },
                 callback1001: () => {
+                    this.theadOrder[0].data =  [null, null, null]
+                    this.fieldsOrder.reduce(
+                        (arr, cur, i) => {
+                            arr[i] = []
+                            for (let index = 0; index < 3; index++) {
+                                arr[i].push('--')
+                            }
 
+                            return arr
+                        },
+                        [],
+                    ).forEach((ele, i) => {
+                        this.tbodyOrder[i].data = ele
+                    })
+                    this.showFooter = true
                 },
                 afterResponse: () => {
 
-                }
+                },
             }
 
             getSelfConsensus(param)
