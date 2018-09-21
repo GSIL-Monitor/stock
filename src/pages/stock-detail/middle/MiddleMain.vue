@@ -186,6 +186,7 @@ export default {
     .info_date_td {
         white-space: nowrap;
         text-align: right;
+        padding-right: 10px;
     }
     .info_tr {
         height: 28px;

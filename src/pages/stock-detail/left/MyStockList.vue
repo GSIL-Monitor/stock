@@ -276,7 +276,7 @@ export default {
         }
         &:first-child {
             .market_title {
-                border-top: 1px solid var(--color-dividers);
+                border-top: none;
             }
         }
     }

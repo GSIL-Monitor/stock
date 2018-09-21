@@ -234,7 +234,7 @@ export default {
 
 <style lang="less" scoped>
 .info_date_td {
-    width: 113px;
+    width: 140px;
 }
 
 .info_ellipsis_td {
