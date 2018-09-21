@@ -3,7 +3,7 @@ import {
 } from './utility'
 import {
     dataFixed,
-} from '../components/utils/util'
+} from '@c/utils/util'
 
 const companyTagFormatter = {
     zyyx_score(value, list) {
@@ -48,6 +48,7 @@ const companyTagFormatter = {
     tags(value, row) {
         var innerClass = ''
         var outerClass = ''
+        var content = ''
 
         if (value === 2) {
             outerClass = 'bg-linear-red'
@@ -55,9 +56,12 @@ const companyTagFormatter = {
         } else if (value === 1) {
             outerClass = 'bg-yellow'
             innerClass = 'hope-honor'
-        } else {
+        } else if (value === -1) {
             outerClass = 'bg-gray'
             innerClass = 'common-honor'
+        } else {
+            outerClass = 'bg-gray point-default'
+            content = '--'
         }
         // 获取鉴定季
         var get_authenticate_class = companyTagFormatter.get_probative_term(row.tags_quarter)
@@ -67,17 +71,20 @@ const companyTagFormatter = {
             outerClass +
             '"><div class="tag-inner ' +
             innerClass +
-            '"></div>' +
+            '">' +
+            content + '</div>' +
             get_authenticate_class +
             '</div>'
         )
     }, //公司荣誉
     future_achievement_appraise(value, row) {
-        var className = '',
-            val = ''
-        if (value == '超预期') {
-            val = '可能超预期'
-            className = 'bg-linear-red'
+        var className = "", val = "";
+        if (row.clear === 1) {
+            val = '--'
+            className = "bg-gray point-default";
+        } else if (value == '超预期') {
+            val = "可能超预期";
+            className = "bg-linear-red";
         } else if (value == '符合预期') {
             val = '可能符合预期'
             className = 'bg-linear-red'
@@ -93,7 +100,6 @@ const companyTagFormatter = {
                 className = 'bg-gray'
             }
         }
-
         if (val.length >= 4) {
             className += ' two-line'
             var l = Math.floor(val.length / 2)
@@ -108,19 +114,24 @@ const companyTagFormatter = {
         if (['超预期', '符合预期', '低于预期', '--', null].indexOf(current) > -1) {
             return companyTagFormatter.get_company_future_appraise(
                 current,
-                ele.current_period_quarter
+                ele.current_period_quarter,
+                ele,
             )
         } else {
             return companyTagFormatter.get_company_history_appraise(
                 value,
-                ele.current_period_quarter_up
+                ele.current_period_quarter_up,
+                ele,
             )
         }
     }, // 业绩鉴定
-    get_company_history_appraise: function(value, expect) {
+    get_company_history_appraise: function(value, expect, data) {
         var txt = ''
         var class_name = ''
-        if (!value || ['--'].indexOf(value) > -1) {
+        if (data.clear === 1) {
+            txt = '--'
+            class_name = "bg-gray point-default";
+        } else if (!value || ['--'].indexOf(value) > -1) {
             txt = '无法鉴定'
             class_name = 'bg-gray'
         } else {
@@ -151,10 +162,13 @@ const companyTagFormatter = {
             '</div>'
         )
     },
-    get_company_future_appraise: function(value, expect) {
+    get_company_future_appraise: function(value, expect, data) {
         var txt = '',
             class_name = ''
-        if (value === '--' || !value) {
+        if (data.clear === 1) {
+            txt = '--'
+            class_name = "bg-gray point-default";
+        } else if (value === '--' || !value) {
             txt = '无法鉴定'
             class_name = 'bg-gray'
         } else {
@@ -204,11 +218,13 @@ const companyTagFormatter = {
         }
         return '<div class="tag-ico j-tag bg-blue ' + className + '">' + value + '</div>'
     }, // 机构持仓
-    business_status_new(value) {
+    business_status_new(value, data) {
         value = value || '--'
         var className = ''
-        if (['行业龙头', '子行业龙头'].indexOf(value) > -1) {
-            className = 'bg-linear-red'
+        if (data.clear === 1) {
+            className = 'bg-blue point-default'
+        } else if (["行业龙头", "子行业龙头"].indexOf(value) > -1) {
+            className = "bg-linear-red";
         } else {
             className = 'bg-blue'
         }
@@ -229,21 +245,26 @@ const companyTagFormatter = {
             return companyTagFormatter.get_industry_appraise(
                 ele.industry_appraise_newest,
                 '未来',
-                ele.industry_appraise_quarter
+                ele.industry_appraise_quarter,
+                ele,
             )
         } else {
             return companyTagFormatter.get_industry_appraise(
                 value,
                 '历史',
-                ele.industry_appraise_quarter_up
+                ele.industry_appraise_quarter_up,
+                ele,
             )
         }
     }, // 行业业绩
-    get_industry_appraise(value, season, expect) {
-        var class_name = season === '未来' ? 'future_appraise' : 'history_appraise'
-        var get_authenticate_class = this.get_probative_term(expect)
-        if (['超预期', '符合预期'].indexOf(value) > -1) {
-            class_name += ' bg-linear-red'
+    get_industry_appraise(value, season, expect, data) {
+        var class_name = season === "未来" ? "future_appraise" : "history_appraise";
+        var get_authenticate_class = this.get_probative_term(expect);
+        if (data.clear === 1) {
+            class_name += ' bg-gray point-default'
+            value = '--'
+        } else if (["超预期", "符合预期"].indexOf(value) > -1) {
+            class_name += ' bg-linear-red';
         } else if (value === '低于预期') {
             class_name += ' bg-green'
         } else {
@@ -320,7 +341,10 @@ const companyTagFormatter = {
     success_rate(value, list) {
         var className, val
 
-        if (value == null || value == -999) {
+        if (list.clear === 1) {
+            val = '--'
+            className = "point-default bg-gray";
+        } else if (value == null || value == -999) {
             val = '样本<br>不足'
             className = 'two-line point-default bg-gray'
         } else if (value >= 0.8) {
@@ -356,9 +380,11 @@ const companyTagFormatter = {
             '</div>'
         )
     }, // 季度胜率
-    industry_future(value) {
+    industry_future(value, data) {
         var class_name
-        if (['可能超预期', '业绩上调', '可能符合预期'].indexOf(value) > -1) {
+        if (data.clear === 1) {
+            class_name = 'bg-gray point-default'
+        } else if (['可能超预期', '业绩上调', '可能符合预期'].indexOf(value) > -1) {
             class_name = 'bg-linear-red'
         } else if (['可能低于预期', '业绩下调'].indexOf(value) > -1) {
             class_name = 'bg-green'

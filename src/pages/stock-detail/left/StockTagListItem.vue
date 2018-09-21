@@ -147,14 +147,14 @@ export default {
     .point-default {
         cursor: default;
     }
-    // .common-honor {
-    //     // background: url("../ico/honor-common.png") no-repeat -2px -2px;
-    // }
-    // .good-honor {
-    //     // background: url("../ico/honor-good.png") no-repeat -2px -2px;
-    // }
-    // .hope-honor {
-    //     // background: url("../ico/honor-hope.png") no-repeat -2px -2px;
-    // }
+    .common-honor {
+        background: url("~@assets/honor-common.png") no-repeat -2px -2px;
+    }
+    .good-honor {
+        background: url("~@assets/honor-good.png") no-repeat -2px -2px;
+    }
+    .hope-honor {
+        background: url("~@assets/honor-hope.png") no-repeat -2px -2px;
+    }
 }
 </style>

@@ -60,7 +60,10 @@
         v-if="noData"
         class="extend_nodata"
     >{{noDataMsg}}</div>
-    <report-auth :report="readReport" @finish="readReport = null" />
+    <report-auth
+        :report="readReport"
+        @finish="readReport = null"
+    />
 </div>
 </template>
 

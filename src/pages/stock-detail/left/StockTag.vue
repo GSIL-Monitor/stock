@@ -135,6 +135,11 @@ export default {
                 callback0: data => {
                     this[GET_STOCK_TAG](data)
                 },
+                callback1001: () => {
+                    var o = Object.create(null)
+                    o.clear = 1
+                    this[GET_STOCK_TAG](o)
+                },
             }
 
             this.getStockTagData(param)
