@@ -1,28 +1,36 @@
 <template>
-    <div class="right_bottom_container">
-        <div class="view_title">
-            <span class="financial_title_dsc">简易财务</span>
-            <LoadMore
-                class="financial_title_more"
-                @on-click="handleClick"
-            />
-        </div>
-        <div class="view_vessel">
-            <ul
-                class="financial_list_one"
-                v-for="(item, index) of config"
-                :key="index"
-            >
-                <SimpleFinancialItem
-                    v-for="(n, i) of item"
-                    :key="i"
-                    :text="n.text"
-                    :className="n.result.color"
-                    :val="n.result.val"
-                />
-            </ul>
-        </div>
+<div
+    class="right_bottom_container"
+>
+    <div
+        class="view_title"
+    >
+        <span
+            class="financial_title_dsc"
+        >简易财务</span>
+        <LoadMore
+            class="financial_title_more"
+            @on-click="handleClick"
+        />
     </div>
+    <div
+        class="view_vessel"
+    >
+        <ul
+            class="financial_list_one"
+            v-for="(item, index) of config"
+            :key="index"
+        >
+            <SimpleFinancialItem
+                v-for="(n, i) of item"
+                :key="i"
+                :text="n.text"
+                :className="n.result.color"
+                :val="n.result.val"
+            />
+        </ul>
+    </div>
+</div>
 </template>
 
 <script>
@@ -51,6 +59,111 @@ import {
 
 import LoadMore from '../components/LoadMore.vue'
 import SimpleFinancialItem from './SimpleFinancialItem.vue'
+
+// const config = [
+//     [
+//         {
+//             text: '报告期',
+//             result: getReportShow,
+//         },
+//         {
+//             text: '流通股本',
+//             result: getCapitalStock,
+//         },
+//         {
+//             text: '总股本',
+//             result: getCapitalStock,
+//         },
+//         {
+//             text: '股东人数',
+//             result: getShareHolder,
+//         },
+//         {
+//             text: '前十大流通股东占比',
+//             result: getYellowPercent,
+//         },
+//     ],
+//     [
+//         {
+//             text: '主营收入',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '净利润',
+//             result: getMixedYen,
+//         },
+//         {
+//             text: '每股盈利',
+//             result: getMixedYen,
+//         },
+//         {
+//             text: '每股净资产',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '净资产收益率',
+//             result: getYellowPercent,
+//         },
+//     ],
+//     [
+//         {
+//             text: '每股公积金',
+//             result: getMixedYen,
+//         },
+//         {
+//             text: '每股未分配利润',
+//             result: getMixedYen,
+//         },
+//         {
+//             text: '净利润同比',
+//             result: getMixedPercent,
+//         },
+//         {
+//             text: '主营收入同比',
+//             result: getMixedPercent,
+//         },
+//         {
+//             text: '销售毛利率',
+//             result: getYellowPercent,
+//         },
+//     ],
+//     [
+//         {
+//             text: '总资产',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '流动资产',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '流动负债',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '总负债',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '股东权益',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '股东权益比',
+//             result: getYellowNumber,
+//         },
+//     ],
+//     [
+//         {
+//             text: '经营现金流量',
+//             result: getBlueYen,
+//         },
+//         {
+//             text: '现金增加额',
+//             result: getBlueYen,
+//         },
+//     ],
+// ]
 
 export default {
     name: 'SimpleFinancial',
@@ -205,12 +318,10 @@ export default {
             return getReportShow(this.report_show, this.report_date)
         },
         formatTradableStock() {
-            let val = this.tradable_stock ? this.tradable_stock * 10000 : this.tradable_stock
-            return getCapitalStock(val)
+            return getCapitalStock(this.tradable_stock)
         },
         formatStockTotal() {
-            let val = this.stock_total ? this.stock_total * 10000 : this.stock_total
-            return getCapitalStock(val)
+            return getCapitalStock(this.stock_total)
         },
         formatFfa1_04() {
             return getBlueYen(this.ffa1_04)
@@ -283,8 +394,8 @@ export default {
                     let d = data[0]
                     this.report_show = d.report_show
                     this.report_date = d.report_date
-                    this.tradable_stock = d.tradable_stock
-                    this.stock_total = d.stock_total
+                    this.tradable_stock = d.tradable_stock ? d.tradable_stock * 10000 : d.tradable_stock
+                    this.stock_total = d.stock_total ? d.stock_total * 10000 : d.stock_total
                     this.holder_count = d.holder_count
                     this.ten_tradable = d.ten_tradable
                     this.ffa1_04 = d.ffa1_04
@@ -314,7 +425,9 @@ export default {
             let baseUrl = getUrlDomain()
             let url = `${baseUrl}/html/companyInfo.html?stock_code=${hash}&top_tab=4`
 
-            sendEvent('hidden', '', JSON.stringify({url}), true)
+            sendEvent('hidden', '', JSON.stringify({
+                url
+            }), true)
         },
     },
     watch: {
@@ -327,9 +440,14 @@ export default {
 
 <style lang="less">
 .financial_list_one {
-    padding: 5px 10px;
+    padding: 0 10px;
+    margin-top: 10px;
+    &:first-child {
+        margin-top: 5px;
+    }
 }
-.financial_list_one > li {
+
+.financial_list_one>li {
     height: 24px;
     display: flex;
     align-items: center;

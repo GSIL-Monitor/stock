@@ -86,7 +86,6 @@ export default {
                 'id',
                 'title',
                 'guid',
-                'stock_name',
             ],
         }
     },
@@ -99,6 +98,7 @@ export default {
         ...mapState([
             'stock_code',
             'full_code',
+            'stock_name',
         ]),
         hkStockParam() {
             return {
@@ -203,7 +203,7 @@ export default {
             return formatInfoDate(date, true)
         },
         openContent(index, data) {
-            let title = data.stock_name ? `${this.titleName}——${data.stock_name}(${this.stock_code})` : this.titleName
+            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.stock_code})` : this.titleName
             const param = {
                 ...this.getOpenContentOption,
                 position: (index + 1),
