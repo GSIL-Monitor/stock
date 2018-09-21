@@ -10,12 +10,18 @@ import {
     mapState,
 } from 'vuex'
 import companyFormatter from '@formatter/company-tag'
+// import
+import tagOpenPermission from './tag-open-permission'
 
 export default {
     name: 'OneTag',
     methods: {
         tagClick() {
             console.log(this.fields)
+            if (!tagOpenPermission(this.fields)) {
+                return false
+            }
+            console.log(111111)
         },
     },
     computed: {

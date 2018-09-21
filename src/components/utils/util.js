@@ -230,7 +230,7 @@ export const hasMyStockCache = () => {
     return Object.is(String(cache), '1')
 }
 
-const isZyzt = () => {
+export const isZyzt = () => {
     const ZYZT = 'zyzt'
     return navigator
                 .userAgent
@@ -238,7 +238,7 @@ const isZyzt = () => {
                 .includes(ZYZT)
 }
 
-const isZytg = () => {
+export const isZytg = () => {
     const ZYTG = 'zytg'
     return navigator
             .userAgent
