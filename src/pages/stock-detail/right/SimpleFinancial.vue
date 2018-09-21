@@ -7,7 +7,9 @@
     >
         <span
             class="financial_title_dsc"
-        >简易财务</span>
+        >
+            简易财务
+        </span>
         <LoadMore
             class="financial_title_more"
             @on-click="handleClick"
@@ -60,111 +62,6 @@ import {
 import LoadMore from '../components/LoadMore.vue'
 import SimpleFinancialItem from './SimpleFinancialItem.vue'
 
-// const config = [
-//     [
-//         {
-//             text: '报告期',
-//             result: getReportShow,
-//         },
-//         {
-//             text: '流通股本',
-//             result: getCapitalStock,
-//         },
-//         {
-//             text: '总股本',
-//             result: getCapitalStock,
-//         },
-//         {
-//             text: '股东人数',
-//             result: getShareHolder,
-//         },
-//         {
-//             text: '前十大流通股东占比',
-//             result: getYellowPercent,
-//         },
-//     ],
-//     [
-//         {
-//             text: '主营收入',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '净利润',
-//             result: getMixedYen,
-//         },
-//         {
-//             text: '每股盈利',
-//             result: getMixedYen,
-//         },
-//         {
-//             text: '每股净资产',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '净资产收益率',
-//             result: getYellowPercent,
-//         },
-//     ],
-//     [
-//         {
-//             text: '每股公积金',
-//             result: getMixedYen,
-//         },
-//         {
-//             text: '每股未分配利润',
-//             result: getMixedYen,
-//         },
-//         {
-//             text: '净利润同比',
-//             result: getMixedPercent,
-//         },
-//         {
-//             text: '主营收入同比',
-//             result: getMixedPercent,
-//         },
-//         {
-//             text: '销售毛利率',
-//             result: getYellowPercent,
-//         },
-//     ],
-//     [
-//         {
-//             text: '总资产',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '流动资产',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '流动负债',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '总负债',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '股东权益',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '股东权益比',
-//             result: getYellowNumber,
-//         },
-//     ],
-//     [
-//         {
-//             text: '经营现金流量',
-//             result: getBlueYen,
-//         },
-//         {
-//             text: '现金增加额',
-//             result: getBlueYen,
-//         },
-//     ],
-// ]
-
 export default {
     name: 'SimpleFinancial',
     created() {
@@ -172,30 +69,7 @@ export default {
     },
     data() {
         return {
-            report_show: null,
-            report_date: null,
-            tradable_stock: null,
-            stock_total: null,
-            holder_count: null,
-            ten_tradable: null,
-            ffa1_04: null,
-            ffa1_10: null,
-            ffa1_01: null,
-            ffa1_02: null,
-            ffa1_38: null,
-            ffa1_27: null,
-            ffa1_28: null,
-            ffa1_94: null,
-            ffa1_91: null,
-            ffa1_42: null,
-            ffa1_14: null,
-            ffa1_15: null,
-            ffa1_17: null,
-            ffa1_16: null,
-            ffa1_18: null,
-            ffa1_59: null,
-            ffa1_12: null,
-            ffa1_13: null,
+            dataStore: Object.create(null),
         }
     },
     components: {
@@ -315,109 +189,90 @@ export default {
             ]
         },
         formatReportShow() {
-            return getReportShow(this.report_show, this.report_date)
+            return getReportShow(this.dataStore.report_show, this.dataStore.report_date)
         },
         formatTradableStock() {
-            return getCapitalStock(this.tradable_stock)
+            return getCapitalStock(this.dataStore.tradable_stock)
         },
         formatStockTotal() {
-            return getCapitalStock(this.stock_total)
+            return getCapitalStock(this.dataStore.stock_total)
         },
         formatFfa1_04() {
-            return getBlueYen(this.ffa1_04)
+            return getBlueYen(this.dataStore.ffa1_04)
         },
         formatFfa1_02() {
-            return getBlueYen(this.ffa1_02)
+            return getBlueYen(this.dataStore.ffa1_02)
         },
         formatFfa1_14() {
-            return getBlueYen(this.ffa1_14)
+            return getBlueYen(this.dataStore.ffa1_14)
         },
         formatFfa1_15() {
-            return getBlueYen(this.ffa1_15)
+            return getBlueYen(this.dataStore.ffa1_15)
         },
         formatFfa1_16() {
-            return getBlueYen(this.ffa1_16)
+            return getBlueYen(this.dataStore.ffa1_16)
         },
         formatFfa1_17() {
-            return getBlueYen(this.ffa1_17)
+            return getBlueYen(this.dataStore.ffa1_17)
         },
         formatFfa1_12() {
-            return getBlueYen(this.ffa1_12)
+            return getBlueYen(this.dataStore.ffa1_12)
         },
         formatFfa1_13() {
-            return getBlueYen(this.ffa1_13)
+            return getBlueYen(this.dataStore.ffa1_13)
         },
         formatFfa1_10() {
-            return getMixedYen(this.ffa1_10)
+            return getMixedYen(this.dataStore.ffa1_10)
         },
         formatFfa1_01() {
-            return getMixedYen(this.ffa1_01)
+            return getMixedYen(this.dataStore.ffa1_01)
         },
         formatFfa1_27() {
-            return getMixedYen(this.ffa1_27)
+            return getMixedYen(this.dataStore.ffa1_27)
         },
         formatFfa1_28() {
-            return getMixedYen(this.ffa1_28)
+            return getMixedYen(this.dataStore.ffa1_28)
         },
         formatHolderCount() {
-            return getShareHolder(this.holder_count)
+            return getShareHolder(this.dataStore.holder_count)
         },
         formatTenTradable() {
-            return getYellowPercent(this.ten_tradable)
+            return getYellowPercent(this.dataStore.ten_tradable)
         },
         formatFfa1_38() {
-            return getYellowPercent(this.ffa1_38)
+            return getYellowPercent(this.dataStore.ffa1_38)
         },
         formatFfa1_42() {
-            return getYellowPercent(this.ffa1_42)
+            return getYellowPercent(this.dataStore.ffa1_42)
         },
         formatFfa1_59() {
-            return getYellowNumber(this.ffa1_59)
+            return getYellowNumber(this.dataStore.ffa1_59)
         },
         formatFfa1_18() {
-            return getBlueYen(this.ffa1_18)
+            return getBlueYen(this.dataStore.ffa1_18)
         },
         formatFfa1_91() {
-            return getMixedPercent(this.ffa1_91)
+            return getMixedPercent(this.dataStore.ffa1_91)
         },
         formatFfa1_94() {
-            return getMixedPercent(this.ffa1_94)
+            return getMixedPercent(this.dataStore.ffa1_94)
         },
     },
     methods: {
         getFinancialData() {
-            let param = {
+            const param = {
                 options: {
                     stock_code: this.stock_code,
                 },
-                callback0: data => {
-                    let d = data[0]
-                    this.report_show = d.report_show
-                    this.report_date = d.report_date
-                    this.tradable_stock = d.tradable_stock ? d.tradable_stock * 10000 : d.tradable_stock
-                    this.stock_total = d.stock_total ? d.stock_total * 10000 : d.stock_total
-                    this.holder_count = d.holder_count
-                    this.ten_tradable = d.ten_tradable
-                    this.ffa1_04 = d.ffa1_04
-                    this.ffa1_10 = d.ffa1_10
-                    this.ffa1_01 = d.ffa1_01
-                    this.ffa1_02 = d.ffa1_02
-                    this.ffa1_38 = d.ffa1_38
-                    this.ffa1_27 = d.ffa1_27
-                    this.ffa1_28 = d.ffa1_28
-                    this.ffa1_94 = d.ffa1_94
-                    this.ffa1_91 = d.ffa1_91
-                    this.ffa1_42 = d.ffa1_42
-                    this.ffa1_14 = d.ffa1_14
-                    this.ffa1_15 = d.ffa1_15
-                    this.ffa1_17 = d.ffa1_17
-                    this.ffa1_16 = d.ffa1_16
-                    this.ffa1_18 = d.ffa1_18
-                    this.ffa1_59 = d.ffa1_59
-                    this.ffa1_12 = d.ffa1_12
-                    this.ffa1_13 = d.ffa1_13
+                callback0: response => {
+                    const d = response[0]
+                    this.dataStore = Object.assign({}, d, {
+                        tradable_stock: d.tradable_stock ? d.tradable_stock * 10000 : d.tradable_stock,
+                        stock_total: d.stock_total ? d.stock_total * 10000 : d.stock_total
+                    })
                 },
             }
+
             getStockFinance(param)
         },
         handleClick() {
@@ -432,6 +287,7 @@ export default {
     },
     watch: {
         full_code() {
+            this.dataStore = Object.create(null)
             this.getFinancialData()
         },
     },
