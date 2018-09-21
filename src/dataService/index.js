@@ -375,3 +375,19 @@ export const contactServer = (param) => {
     const APIName = 'v1/renew/sendsmsmail'
     return get(APIName, param)
 }
+
+export const readNotice = (param) => {
+    const APIName = 'v1/news/read_mark'
+    Reflect.set(param.options, 'token', getToken())
+    Reflect.set(param.options, 'type', 8)
+
+    return get(APIName, param)
+}
+
+export const readReport = (param) => {
+    const APIName = 'v1/report/marks'
+    Reflect.set(param.options, 'token', getToken())
+    Reflect.set(param.options, 'type', 11)
+
+    return get(APIName, param)
+}

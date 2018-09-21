@@ -22,6 +22,7 @@
                     :key="index"
                     :data-index="index"
                     class="info_tr"
+                    :class="infoClasses(item.has_read)"
                 >
                     <td
                         class="info_ellipsis_td"
@@ -70,6 +71,7 @@ import {
 } from 'vuex'
 import {
     getResearchReport,
+    readReport,
 } from '@service/'
 import formatInfoDate from '@formatter/information/date'
 import fileType from '@formatter/information/fileType'
@@ -190,6 +192,17 @@ export default {
             }
             openReport(param, title)
         },
+        readAlready(data) {
+            if (Object.is(data.has_read, 0)) {
+                data.has_read = 1
+                // 调取 api
+                readReport({
+                    options: {
+                        id: data.guid,
+                    }
+                })
+            }
+        },
         handleClick(event) {
             let target = event.target
             let type;
@@ -209,6 +222,7 @@ export default {
 
             if (Object.is(type, 'openContent')) {
                 this.openContent(index, targetData)
+                this.readAlready(targetData)
             } else if (Object.is(type, 'openPdf')) {
                 this.readReport = {
                     create_date: formatInfoDate(targetData.create_date),
@@ -217,6 +231,13 @@ export default {
                     guid: targetData.guid,
                 }
             }
+        },
+        infoClasses(hasRead) {
+            return [
+                {
+                    'info_visited': hasRead,
+                }
+            ]
         },
     },
     watch: {

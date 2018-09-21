@@ -156,9 +156,6 @@ export default {
             color: #096DD9;
         }
     }
-    td {
-        color: var(--color-primary-text);
-    }
     .info_ellipsis_td {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -192,8 +189,9 @@ export default {
     }
     .info_tr {
         height: 28px;
-        &.visited {
-            color: var(--color-secondary-text);
+        color: var(--color-primary-text);
+        &.info_visited {
+            color: var(--color-gray4);
         }
     }
     .info_vessel {
