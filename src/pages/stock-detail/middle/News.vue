@@ -36,7 +36,7 @@
                     <td
                         class="info_date_td"
                     >
-                        {{formatDate(item.date)}}
+                        {{item.date}}
                     </td>
                 </tr>
             </tbody>
@@ -187,6 +187,9 @@ export default {
             const params = {
                 options: param,
                 callback0: (data) => {
+                    data.forEach((element) => {
+                        element.date = formatInfoDate(element.date, true)
+                    })
                     this.dataStore = this.dataStore.concat(data)
                     this.setBusyState(data.length)
                 },
@@ -198,9 +201,6 @@ export default {
                 },
             }
             api(params)
-        },
-        formatDate(date) {
-            return formatInfoDate(date, true)
         },
         openContent(index, data) {
             let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.stock_code})` : this.titleName

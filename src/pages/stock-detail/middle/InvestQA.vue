@@ -24,9 +24,10 @@
                 >
                     问
                 </span>
-                <span class="investqa_item_question_text">
-                    {{item.ask_title}}
-                </span>
+                <span
+                    class="investqa_item_question_text"
+                    v-html="item.ask_title"
+                ></span>
             </div>
             <div
                  class="investqa_item_answewr"
@@ -36,8 +37,9 @@
                 >
                     答
                 </span>
-                <span class="investqa_item_answewr_text">
-                    {{item.reply_content}}
+                <span
+                    class="investqa_item_answewr_text"
+                    v-html="item.reply_content">
                 </span>
             </div>
             <div
@@ -48,7 +50,7 @@
                 >
                 </span>
                 <span  class="investqa_item_date_text">
-                    {{formatDate(item.reply_time)}}
+                    {{item.reply_time}}
                 </span>
             </div>
         </li>
@@ -105,6 +107,9 @@ export default {
                     page: this.page,
                 },
                 callback0: data => {
+                    data.forEach((element) => {
+                        element.reply_time = subDate(element.reply_time)
+                    })
                     this.dataStore = this.dataStore.concat(data)
                     this.setBusyState(data.length)
                 },
@@ -116,9 +121,6 @@ export default {
                 },
             }
             getInvestmentQAData(param)
-        },
-        formatDate(date) {
-            return subDate(date)
         },
     },
     watch: {

@@ -50,7 +50,7 @@
                     <td
                         class="info_date_td"
                     >
-                        {{formatDate(item.create_date)}}
+                        {{item.create_date}}
                     </td>
                 </tr>
             </tbody>
@@ -157,6 +157,9 @@ export default {
             const params = {
                 options: param,
                 callback0: data => {
+                    data.forEach((element) => {
+                        element.create_date = formatInfoDate(element.create_date)
+                    })
                     this.dataStore = this.dataStore.concat(data)
                     this.setBusyState(data.length)
                 },
@@ -170,9 +173,6 @@ export default {
             if (api) {
                 api(params)
             }
-        },
-        formatDate(date) {
-            return formatInfoDate(date)
         },
         formatIco(type) {
             return fileType(type)
@@ -224,6 +224,9 @@ export default {
                 this.openContent(index, targetData)
                 this.readAlready(targetData)
             } else if (Object.is(type, 'openPdf')) {
+                if (!targetData.file_type) {
+                    return false
+                }
                 this.readReport = {
                     create_date: formatInfoDate(targetData.create_date),
                     file_type: targetData.file_type,
