@@ -10,7 +10,8 @@
         <ul class="tool_list">
             <OneTag
                 v-for="(item, index) of listData"
-                :key="index" :title="item.name"
+                :key="index"
+                :title="item.name"
                 :fields="item.fields"
             />
         </ul>

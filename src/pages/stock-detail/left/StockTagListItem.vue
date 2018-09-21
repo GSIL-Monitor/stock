@@ -1,6 +1,6 @@
 <template>
     <li class="tool_list_item">
-        <div v-html="formatter" @click="tagClick()"></div>
+        <div v-html="formatter" @click="tagClick"></div>
         <div class="tool_list_item_dsc">{{title}}</div>
     </li>
 </template>
@@ -10,23 +10,23 @@ import {
     mapState,
 } from 'vuex'
 import companyFormatter from '@formatter/company-tag'
-// import
 import tagOpenPermission from './tag-open-permission'
+import {
+    popProtogenesis,
+    openCompanyHonor,
+    openBelongPlate,
+    openSeasonRate,
+    openPerformanceAppraisal,
+    openIndustryPerformanceAppraisal,
+} from './open-tags-protogenesis'
 
 export default {
     name: 'OneTag',
-    methods: {
-        tagClick() {
-            console.log(this.fields)
-            if (!tagOpenPermission(this.fields)) {
-                return false
-            }
-            console.log(111111)
-        },
-    },
     computed: {
         ...mapState([
             'tag_data',
+            'stock_code',
+            'full_code',
         ]),
         formatter() {
             if (!this.fields) return '--'
@@ -37,6 +37,245 @@ export default {
         },
     },
     props: ['fields', 'title'],
+    methods: {
+        tagClick(event) {
+            if (!tagOpenPermission(this.fields)) {
+                return false
+            }
+            let target = event.target
+            while (target && !target.classList.contains('j-tag')) {
+                target = target.parentNode
+            }
+            if (target.classList.contains('point-default')) {
+                return false
+            }
+            let stock_code = this.stock_code
+            let stock_name = this.tag_data.stock_name
+            let full_code = this.full_code
+
+            switch (this.fields) {
+                case 'zyyx_score':
+                    // 确定性评分
+                    popProtogenesis(
+                        {
+                            stock_code: stock_code,
+                            stock_name: stock_name,
+                            full_code: full_code,
+                            field: 'sunScore',
+                        }, {
+                            openHtml: 'mystockPopup.html',
+                            width: 820,
+                            height: 600,
+                            title: '',
+                        }
+                    )
+                    break
+                case 'tags':
+                    // 公司荣誉
+                    openCompanyHonor(
+                        {
+                            stock_code: stock_code,
+                            stock_name: stock_name,
+                        }
+                    )
+                    break
+                case 'future_achievement_appraise':
+                    // 业绩预判
+                    {
+                        let t = '公司业绩预判未来'
+                        let title = t + ' (' + stock_name + ')'
+                        popProtogenesis(
+                            {
+                                stock_code: stock_code,
+                            },
+                            {
+                                openHtml: 'publicPage/popPerformancePrognosis.html',
+                                title: title,
+                                width: 722,
+                                height: 397,
+                            }
+                        )
+                    }
+                    break
+                case 'history_achievement_appraise':
+                    // 业绩鉴定
+                    {
+                        if (target.classList.contains('future_appraise')) {
+                            // 未来
+                            let title = '公司业绩鉴定 - 最新季' + ' (' + stock_name + ')'
+                            openPerformanceAppraisal(
+                                {
+                                    stock_code: stock_code,
+                                    stock_name: stock_name,
+                                },
+                                title,
+                                'thisSeason'
+                            )
+                        } else if (target.classList.contains('history_appraise')) {
+                            // 历史
+                            let title = '公司业绩鉴定 - 上一季' + ' (' + stock_name + ')'
+                            openPerformanceAppraisal(
+                                {
+                                    stock_code: stock_code,
+                                    stock_name: stock_name,
+                                },
+                                title,
+                                'prevSeason'
+                            )
+                        }
+                    }
+
+                    break
+                case 'hold_change':
+                    // 机构持仓
+                    {
+                        let t = '主流机构持仓';
+                        popProtogenesis(
+                            {
+                                stock_code: stock_code,
+                            },
+                            {
+                                openHtml: 'publicPage/popOrganizationHold.html',
+                                title: t + ' (' + stock_name + ')',
+                                width: 754,
+                                height: 460,
+                            }
+                        )
+                    }
+                    break
+                case 'business_status_new':
+                    // 行业地位
+                    popProtogenesis(
+                        {
+                            stock_code: stock_code,
+                            stock_name: stock_name,
+                        },
+                        {
+                            openHtml: 'publicPage/popIndustryStatus.html',
+                            width: 464,
+                            height: 265,
+                        }
+                    )
+                    break
+                case 'industry_appraise':
+                    // 行业业绩鉴定
+                    const industry_params = {
+                        stock_code: stock_code,
+                        stock_name: stock_name,
+                    }
+                    if (this.tag_data.sw_third_name) {
+                        industry_params.sw_third_name = this.tag_data.sw_third_name
+                    }
+                    if (target.classList.contains('future_appraise')) {
+                        openIndustryPerformanceAppraisal(industry_params, 'thisSeason')
+                    } else if (target.classList.contains('history_appraise')) {
+                        openIndustryPerformanceAppraisal(industry_params, 'prevSeason')
+                    }
+                    break
+                case 'financing_securities_loan':
+                    // 融资融券
+                    popProtogenesis(
+                        {
+                            stock_code: stock_code,
+                        },
+                        {
+                            openHtml: 'publicPage/popMarginTransaction.html',
+                            title: '融资融券 (' + stock_name + ')',
+                            width: 602,
+                            height: 488,
+                        }
+                    )
+                    break
+                case 'hold_percent':
+                    // 互联互通(持仓占比)
+                    const params = {
+                        stock_code: stock_code,
+                        stock_name: stock_name,
+                    }
+                    // if (hlht) {
+                    //     params.hlht = 1
+                    // }
+                    popProtogenesis(params, {
+                        title: '互联互通持仓占比( ' + stock_name + ' )',
+                        openHtml: 'publicPage/popInterconnectionPosition.html',
+                        width: 602,
+                        height: 327,
+                    })
+                    break
+                case 'success_rate':
+                    // 季度胜率
+                    openSeasonRate(
+                        {
+                            stock_code: stock_code,
+                            stock_name: stock_name,
+                        },
+                        'thisSeason',
+                    )
+                    break
+                case 'industry_future':
+                    // 行业业绩预判
+                    const rotogenesis_params = {
+                        stock_code: stock_code,
+                        stock_name: stock_name,
+                    }
+                    if (this.tag_data.sw_third_name) {
+                        rotogenesis_params.sw_third_name = this.tag_data.sw_third_name
+                    }
+
+                    popProtogenesis(rotogenesis_params, {
+                        openHtml: 'publicPage/popIndustryAppraise.html',
+                        width: 602,
+                        height: 326,
+                    })
+                    break
+                case 'industry_periodicity':
+                    // 行业周期
+                    const periodicity_params = {
+                        stock_code: stock_code,
+                        stock_name: stock_name,
+                    }
+                    if (this.tag_data.sw_third_name) {
+                        periodicity_params.sw_third_name = this.tag_data.sw_third_name
+                    }
+                    popProtogenesis(periodicity_params, {
+                        openHtml: 'publicPage/popIndustryPeriodicity.html',
+                        width: 722,
+                        height: 448,
+                    })
+                    break
+                case 'periodicity':
+                    // 个股风格
+                    popProtogenesis(
+                        {
+                            stock_code: stock_code,
+                            stock_name: stock_name,
+                        },
+                        {
+                            openHtml: 'publicPage/popCompanyStyle.html',
+                            title: stock_name ? '个股风格（' + stock_name + '）' : '个股风格',
+                            width: 602,
+                            height: 556,
+                        }
+                    )
+                    break
+                case 'over_rate':
+                    // 超额收益
+                    popProtogenesis(
+                        {
+                            stock_code: stock_code,
+                            stock_name: stock_name,
+                        },
+                        {
+                            openHtml: 'publicPage/popOverRate.html',
+                            title: stock_name ? '超额收益率（' + stock_name + '）' : '超额收益率',
+                            width: 346,
+                            height: 117,
+                        }
+                    )
+                    break
+            }
+        },
+    },
 }
 </script>
 

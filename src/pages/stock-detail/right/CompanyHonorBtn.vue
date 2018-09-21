@@ -13,11 +13,17 @@
 
 <script>
 import {
+    mapState,
+} from 'vuex'
+import {
     getCompanyHonor,
 } from '@service/index'
 import {
     verifyPermission,
 } from '@c/utils/permission/'
+import {
+    openCompanyHonor,
+} from '../left/open-tags-protogenesis'
 
 export default {
     name: 'CompanyHonorBtn',
@@ -35,6 +41,10 @@ export default {
         }
     },
     computed: {
+        ...mapState([
+            'stock_code',
+            'stock_name',
+        ]),
         honorClass() {
             const maps = Object.create(null, {
                 '1': {
@@ -75,13 +85,13 @@ export default {
         showCompanyHonorDetail() {
             if (verifyPermission(this.myStockPermissionCode)) {
                 // 打开远端页面
-
+                openCompanyHonor({
+                    stock_code: this.stock_code,
+                    stock_name: this.stock_name,
+                })
             }
         },
     },
-    props: [
-        'stock_code'
-    ],
     watch: {
         stock_code() {
             this.showMsg = ''
