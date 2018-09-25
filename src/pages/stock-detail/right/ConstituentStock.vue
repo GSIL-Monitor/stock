@@ -15,7 +15,6 @@
             @loadmore="loadMore"
             @clickTheadCell="sortChange"
             @indexChanged="indexChanged"
-            ref="vueTable1"
         >
             <template slot="name" slot-scope="scope">
                 <StockName
@@ -302,36 +301,5 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-}
-
-.ht-table-container {
-    top: 26px;
-    /deep/ table {
-        font-size: 12px;
-    }
-    /deep/ tr {
-        border-top: none;
-        border-bottom-color: transparent;
-    }
-    /deep/ tr.ht-tr-hover {
-        border-bottom-color: var(--color-selected);
-    }
-    /deep/ tr.ht-tr-active {
-        background: transparent;
-    }
-    /deep/ th,
-    /deep/ td {
-        padding-left: 10px;
-    }
-    /deep/ .sort-down-icon {
-        & > i {
-          border-top-color: var(--color-blue);
-        }
-    }
-    /deep/ .sort-up-icon {
-        & > i {
-          border-bottom-color: var(--color-blue);
-        }
-    }
 }
 </style>

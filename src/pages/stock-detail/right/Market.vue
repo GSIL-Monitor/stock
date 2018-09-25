@@ -138,7 +138,7 @@
                 label="其他指数"
                 :type="otherIndex"
             >
-                <div>3</div>
+                <OtherIndex v-if="loadOtherIndex"/>
             </TabPane>
             <TabPane
                 label="短线精灵"
@@ -220,6 +220,8 @@ export default {
             symbol_type: null,
             stock_name: null,
             close_price: null,
+
+            loadOtherIndex: false,
         }
     },
     components: {
@@ -315,6 +317,7 @@ export default {
                     this.socketData.fall = data.fall
                 },
                 afterResponse: () => {
+                    this.loadOtherIndex = true
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
                 },
@@ -351,6 +354,7 @@ export default {
     },
     watch: {
         full_code() {
+            this.loadOtherIndex = false
             this.cancleSocket(this.linkIndex)
             this.socketData = {}
             this.$nextTick(()=> {
@@ -386,6 +390,36 @@ export default {
     .gg_tabs_tab_active {
         background: var(--color-card-background);
         color: var(--color-selected);
+    }
+    .ht-table-container {
+        top: 26px;
+        /deep/ table {
+            font-size: 12px;
+        }
+        /deep/ tr {
+            border-top: none;
+            border-bottom-color: transparent;
+        }
+        /deep/ tr.ht-tr-hover {
+            border-bottom-color: var(--color-selected);
+        }
+        /deep/ tr.ht-tr-active {
+            background: transparent;
+        }
+        /deep/ th,
+        /deep/ td {
+            padding-left: 10px;
+        }
+        /deep/ .sort-down-icon {
+            & > i {
+            border-top-color: var(--color-blue);
+            }
+        }
+        /deep/ .sort-up-icon {
+            & > i {
+            border-bottom-color: var(--color-blue);
+            }
+        }
     }
 }
 </style>

@@ -65,7 +65,6 @@ export default {
         state.stock_name = payLoad
     },
     [HSINDEX_CATEGORY](state, payLoad) {
-        console.log(payLoad)
         state.hsIndexCategory = payLoad
     },
 }
