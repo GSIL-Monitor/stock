@@ -30,6 +30,9 @@
                         v-if="isImportantCode"
                     />
                 </div>
+                <IsMyStock
+                    v-if="!isBKIndex"
+                />
             </div>
         </div>
         <div class="detail_info">
@@ -173,6 +176,7 @@ import socketMixin from '../mixins/socket-mixin.js'
 import Tabs from '../components/tabs/index.js'
 import TabPane from '../components/tab-pane/index.js'
 import ButtonF10 from '../components/ButtonF10.vue'
+import IsMyStock from './IsMyStock.vue'
 import TitleTopMarket from './TitleTopMarket.vue'
 import StockName from '@formatter/market-base/StockName.vue'
 import StockCode from '@formatter/market-base/StockCode.vue'
@@ -221,6 +225,7 @@ export default {
     components: {
         TitleTopMarket,
         ButtonF10,
+        IsMyStock,
         MarketInfo,
         StockName,
         StockCode,
