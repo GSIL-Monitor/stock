@@ -162,6 +162,9 @@
     .gg_tabs_tabpane {
         height: 100%;
     }
+    .gg_tabs_content {
+        position: relative;
+    }
     .gg_tabs_tab_active {
         color: #15A4FA;
     }

@@ -66,6 +66,10 @@ export const FRAME_MYSTOCK_GROUP = `${MODULE_NAME}-get-mystock-group`
 export const FRAME_MYSTOCK_LIST = `${MODULE_NAME}-get-mystock-list`
 // 自选股变色
 export const FRAME_STOCK_COLOR = `${MODULE_NAME}-check-mystocks`
+// 沪深指数 -- 成分股
+export const FRAME_CONSTITUENT_STOCK = `${MODULE_NAME}-onePlate-stocks`
+// 沪深指数 -- 其他指数
+export const FRAME_OTHER_INDEXS = `${MODULE_NAME}-other-indexs`
 
 // ==============================================================================
 /**

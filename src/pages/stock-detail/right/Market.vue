@@ -123,9 +123,7 @@
                 label="成分股"
                 :type="constituent"
             >
-                <ConstituentStock
-                    :plate_code="full_code"
-                />
+                <ConstituentStock/>
             </TabPane>
             <TabPane
                 label="涨跌分布"

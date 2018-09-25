@@ -3,77 +3,39 @@
         <div class="view_title">
             <span>成分股</span>
         </div>
-        <!-- <sunTable
-            :data="dataStore"
-            style="width: 100%;"
-            @needMoreData="loadMore"
-            @cell-dblclick="dblClick"
-            @sort-change="sortChange"
-            :default-sort="{
-                prop: 'price_change_rate',
-                order: 'descending',
-            }"
-            :isInfiniteScrollDisabled="disableInfiniteScroll"
-            class="constituent_table"
-            ref="sunTableRef"
-        > -->
-         <sunTable
-            v-if="dataStore.length"
-            :data="dataStore"
-            style="width: 100%;"
-            @needMoreData="loadMore"
-            @cell-dblclick="dblClick"
-            @sort-change="sortChange"
-            :isInfiniteScrollDisabled="disableInfiniteScroll"
-            class="constituent_table"
-            ref="sunTableRef"
+        <ht-table
+            :fields="fields"
+            :config="config"
+            :tableData="dataStore || []"
+            :sortParams="sortOBJ"
+            @loadmore="loadMore"
+            @clickTheadCell="sortChange"
+            @indexChanged="indexChanged"
+            ref="vueTable1"
         >
-            <template slot="empty">
-                <div class="loading"></div>
+            <template slot="name" slot-scope="scope">
+                <StockName
+                    :val="scope.rowData.name"
+                    :is_defined="scope.rowData.is_defined"
+                    :source="scope.rowData.source"
+                    :symbol_type="scope.rowData.symbol_type"
+                />
             </template>
-            <sunTableColumn
-                prop="name"
-                label="名称"
-                width="100"
-                sortable="custom"
-                :sort-orders="['descending', 'ascending']"
-            >
-                <template slot-scope="scope">
-                    <StockName
-                        :val="scope.row.name"
-                        :current_type="current_type"
-                    ></StockName>
-                </template>
-            </sunTableColumn>
-            <sunTableColumn
-                prop="mcap"
-                label="总市值"
-                width="100"
-                sortable="custom"
-                :sort-orders="['descending', 'ascending']"
-            >
-                <template slot-scope="scope">
-                    <MarketValue
-                        :val="scope.row.mcap"
-                    ></MarketValue>
-                </template>
-            </sunTableColumn>
-            <sunTableColumn
-                prop="price_change_rate"
-                label="涨跌幅"
-                width="100"
-                sortable="custom"
-                :sort-orders="['descending', 'ascending']"
-            >
-                <template slot-scope="scope">
-                    <PriceChangeRate
-                        :val="scope.row.price_change_rate"
-                        :price_change="scope.row.price_change"
-                        :current_type="current_type"
-                    ></PriceChangeRate>
-                </template>
-            </sunTableColumn>
-        </sunTable>
+            <template slot="mcap" slot-scope="scope">
+                <MarketValue
+                    :val="scope.rowData.mcap"
+                />
+            </template>
+            <template slot="price_change_rate" slot-scope="scope">
+                <PriceChangeRate
+                    :val="scope.rowData.price_change_rate"
+                    :price_change="scope.rowData.price_change"
+                    :source="scope.rowData.source"
+                    :symbol_type="scope.rowData.symbol_type"
+                    :stock_type="scope.rowData.stock_type"
+                />
+            </template>
+        </ht-table>
         <div
             v-if="noData"
             class="extend_nodata"
@@ -90,31 +52,81 @@ import {
 import {
     GET_HS_INDEX_CONSTITUENT_LIST,
 } from '@store/stock-detail-store/config/action-types.js'
-
 import {
-    sunTable,
-    sunTableColumn
-} from '@c/table'
+    FRAME_CONSTITUENT_STOCK,
+} from '../storage.js'
+import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
+
+import htTable from '@c/htTable/index.vue'
 import StockName from '@formatter/market-base/StockName.vue'
 import MarketValue from '@formatter/market-base/MarketValue.vue'
 import PriceChangeRate from '@formatter/market-base/PriceChangeRate.vue'
 
+const configData = () => {
+    return {
+        name: {
+            title: '名称',
+            field: 'name',
+            align: 'left',
+            width: 80,
+            canSort: true,
+        },
+        mcap: {
+            title: '总市值',
+            field: 'mcap',
+            align: 'left',
+            width: 80,
+            canSort: true,
+        },
+        price_change_rate: {
+            title: '涨跌幅',
+            field: 'price_change_rate',
+            align: 'left',
+            width: 80,
+            canSort: true,
+        },
+    }
+}
+
+const fieldData = () => {
+    return [
+        'name',
+        'mcap',
+        'price_change_rate',
+    ]
+}
+
+let subTimer = null
+
 export default {
     name: 'ConstituentStock',
     created() {
+        goGoal.event.listen(FRAME_CONSTITUENT_STOCK, this.receiveFrameData)
         if (this.full_code) {
             this.fetchData()
         }
     },
     data() {
         return {
-            sortFields: 'price_change_rate',
-            orderType: -1,
             page: 1,
             busy: true,
             dataStore: [],
             noData: false,
             ROWS: 30,
+            sortOBJ: {
+                order: 'price_change_rate',
+                order_type: -1,
+            },
+            config: configData(),
+            fields: fieldData(),
+            subFields: [
+                'source', 'symbol_type', 'name', 'code',
+                'price_change', 'price_change_rate', 'mcap',
+                'stock_type',
+            ],
         }
     },
     computed: {
@@ -126,6 +138,9 @@ export default {
         paramType() {
             return Object.is(this.source, 'BK') ? 3 : 9
         },
+        subType() {
+            return Object.is(this.source, 'BK') ? 3 : 5
+        },
         disableInfiniteScroll() {
             return this.busy
         },
@@ -135,19 +150,19 @@ export default {
             getIndexStocks: GET_HS_INDEX_CONSTITUENT_LIST,
         }),
         fetchData() {
-            const fields = [
-                'source', 'symbol_type', 'name', 'code',
-                'price_change', 'price_change_rate', 'mcap',
-            ]
+            // const fields = [
+            //     'source', 'symbol_type', 'name', 'code',
+            //     'price_change', 'price_change_rate', 'mcap',
+            // ]
             const param = {
                 options: {
                     rows: this.ROWS,
                     first_flag: 0,
                     type: this.paramType,
-                    order: this.sortFields,
-                    order_type: this.orderType,
+                    order: this.sortOBJ.order,
+                    order_type: this.sortOBJ.order_type,
                     plate_code: this.full_code,
-                    fields: fields.join(';'),
+                    fields: this.subFields.join(';'),
                     page: this.page,
                 },
                 callback0: data => {
@@ -177,6 +192,9 @@ export default {
             this.getIndexStocks(param)
         },
         loadMore() {
+            if (this.busy) {
+                return false
+            }
             this.busy = true
             this.page++
             // 加载数据
@@ -186,37 +204,64 @@ export default {
             console.log(args)
             console.log('dblclick')
         },
-        sortChange(args) {
-            let { order, prop } = args
-            if (this.dataStore.length !== 0) {
+        sortChange(...args) {
+            let { field, canSort} = args[1]
+            if (canSort) {
+                UnSubscriptSockets(FRAME_CONSTITUENT_STOCK)
+                if (Object.is(field, this.sortOBJ.order)) {
+                    this.sortOBJ.order_type = Object.is(this.sortOBJ.order_type, 1) ? -1 : 1
+                } else {
+                    this.sortOBJ.order_type = -1
+                    this.sortOBJ.order = field
+                }
                 this.resetState()
+                this.fetchData()
             }
-            this.sortFields = prop
-            this.orderType = Object.is('ascending', order) ? 1 : -1
-            this.fetchData()
         },
         resetState() {
             this.page = 1
             this.busy = true
-            if (Object.is(this.noData, false)) {
-                this.$refs.sunTableRef.$refs.bodyWrapper.scrollTop = 0
-            }
             this.noData = false
             this.dataStore = []
         },
+        receiveFrameData(args) {
+            const data = JSON.parse(args)
+            let start = data[0].index
+            let len = data.length
+
+            this.dataStore.splice(start, len, ...data)
+        },
+        indexChanged(start, end) {
+            const STEP = 1000
+            if (subTimer) {
+                clearTimeout(subTimer)
+                subTimer = null
+            }
+            subTimer = setTimeout(() => {
+                pushData(FRAME_CONSTITUENT_STOCK, {
+                    group_code: this.full_code,
+                    group_type: this.subType,
+                    index: `${start};${end}`,
+                    field: this.subFields.join(';'),
+                    sort: this.sortOBJ.order,
+                    sortType: this.sortOBJ.order_type,
+                })
+            }, STEP)
+        },
     },
     watch: {
-        full_code() {
+        full_code(val, oldVal) {
+            UnSubscriptSockets(FRAME_CONSTITUENT_STOCK)
             this.resetState()
             this.fetchData()
         },
     },
     beforeDestroy() {
-
+        goGoal.event.remove(FRAME_CONSTITUENT_STOCK, this.receiveFrameData)
+        UnSubscriptSockets(FRAME_CONSTITUENT_STOCK)
     },
     components: {
-        sunTable,
-        sunTableColumn,
+        htTable,
         StockName,
         MarketValue,
         PriceChangeRate,
@@ -224,24 +269,41 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .index_constituent {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.el-table {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.el-table__header-wrapper {
-    flex-shrink: 0;
-}
-
-.el-table__body-wrapper {
-    flex: 1;
+.ht-table-container {
+    top: 26px;
+    /deep/ table {
+        font-size: 12px;
+    }
+    /deep/ tr {
+        border-top: none;
+        border-bottom-color: transparent;
+    }
+    /deep/ tr.ht-tr-hover {
+        border-bottom-color: var(--color-selected);
+    }
+    /deep/ tr.ht-tr-active {
+        background: transparent;
+    }
+    /deep/ th,
+    /deep/ td {
+        padding-left: 10px;
+    }
+    /deep/ .sort-down-icon {
+        & > i {
+          border-top-color: var(--color-blue);
+        }
+    }
+    /deep/ .sort-up-icon {
+        & > i {
+          border-bottom-color: var(--color-blue);
+        }
+    }
 }
 </style>
