@@ -1,9 +1,9 @@
 import {
     isNumber,
-} from './utility'
+} from './utility.js'
 import {
     dataFixed,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 
 const companyTagFormatter = {
     zyyx_score(value, list) {

@@ -15,10 +15,10 @@ import {
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
     STOCK_NAME,
-} from './config/mutation-types'
+} from './config/mutation-types.js'
 import {
     LOCAL_LEFT_TAB,
-} from '@pages/stock-detail/storage'
+} from '@pages/stock-detail/storage.js'
 
 export default {
     [GET_STOCK_TAG](state, payLoad) {

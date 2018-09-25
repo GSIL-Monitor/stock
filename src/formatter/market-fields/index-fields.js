@@ -6,12 +6,12 @@
 import {
     isClearCase,
     getClearVal,
-} from '../utility'
+} from '../utility.js'
 import {
     RED,
     GREEN,
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 
 const normal = (val, color) => {
     return {

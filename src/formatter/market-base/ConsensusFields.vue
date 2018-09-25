@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatConsensusFields } from '../format-data'
+import Base from './mixins/base.js'
+import { formatConsensusFields } from '../format-data.js'
 
 export default {
     name: 'Rose',

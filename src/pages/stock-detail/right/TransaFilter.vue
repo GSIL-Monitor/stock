@@ -55,13 +55,13 @@
 import {
     mapState,
 } from 'vuex'
-import popUpFiveSecond from '../components/popup-five-second'
+import popUpFiveSecond from '../components/popup-five-second.js'
 import {
     ASTOCK,
-} from '@formatter/config/stock-type-config'
+} from '@formatter/config/stock-type-config.js'
 import {
     LOCAL_TRANSATION_STORE,
-} from '../storage'
+} from '../storage.js'
 
 import PopUp from '@c/popUp.vue'
 

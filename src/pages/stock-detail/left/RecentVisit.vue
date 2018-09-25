@@ -25,23 +25,23 @@ import {
 import {
     pushData,
     UnSubscriptSockets,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     switchToHashString,
     changePageStock,
-} from '../utility'
+} from '../utility.js'
 import {
     STOCK_RECENT_LIST,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 import {
     GET_RECENT_LIST_DATA,
-} from '@store/stock-detail-store/config/action-types'
+} from '@store/stock-detail-store/config/action-types.js'
 import {
     FRAME_RECENT_LIST,
     FRAME_STOCK_COLOR,
-} from '../storage'
+} from '../storage.js'
 
-import subMixin from './sub-scription-mixin'
+import subMixin from './sub-scription-mixin.js'
 
 import StockItem from '../components/StockItem.vue'
 

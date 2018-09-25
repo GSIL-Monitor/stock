@@ -46,27 +46,27 @@ import {
 } from 'vuex'
 import {
     hasMyStockCache,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     pushData,
     UnSubscriptSockets,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     switchToHashString,
     changePageStock,
-} from '../utility'
+} from '../utility.js'
 import {
     SESSION_SELECT_STOCK_GROUP,
     FRAME_MYSTOCK_GROUP,
-} from '../storage'
+} from '../storage.js'
 import {
     GET_STOCK_GROUP_DATA,
-} from '@store/stock-detail-store/config/action-types'
+} from '@store/stock-detail-store/config/action-types.js'
 import {
     STOCK_GROUP_LIST,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 
-import oneStockList from './one-stock-list-mixin'
+import oneStockList from './one-stock-list-mixin.js'
 
 import StockItem from '../components/StockItem.vue'
 

@@ -37,10 +37,10 @@ import {
 import {
     pushData,
     UnSubscriptSockets,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     FRAME_PRICE_POINT,
-} from '../storage'
+} from '../storage.js'
 
 import PricePointSimple from './PricePointSimple.vue'
 import PricePointDetail from './PricePointDetail.vue'

@@ -68,12 +68,12 @@ import {
 } from 'vuex'
 import {
     getInvestmentQAData,
-} from '@service/'
+} from '@service/index.js'
 import {
     subDate,
-} from '../utility'
+} from '../utility.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin'
+import informationBusyMixin from '../mixins/information-busy-mixin.js'
 
 export default {
     name: 'InvestQA',

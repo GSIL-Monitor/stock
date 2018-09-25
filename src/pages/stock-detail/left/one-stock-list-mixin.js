@@ -8,17 +8,17 @@ import {
 import {
     pushData,
     UnSubscriptSockets,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     FRAME_MY_STOCK,
     FRAME_MYSTOCK_LIST,
-} from '../storage'
+} from '../storage.js'
 import {
     SELECT_GROUP_DATA,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 import {
     GET_SELECT_GROUP_DATA,
-} from '@store/stock-detail-store/config/action-types'
+} from '@store/stock-detail-store/config/action-types.js'
 
 let listTimeoutTimer = null
 

@@ -71,16 +71,16 @@ import {
     getNoticeList,
     getIndexNotice,
     readNotice,
-} from '@service/'
-import formatInfoDate from '@formatter/information/date'
-import fileType from '@formatter/information/fileType'
+} from '@service/index.js'
+import formatInfoDate from '@formatter/information/date.js'
+import fileType from '@formatter/information/fileType.js'
 import {
     openNotice,
-} from './open-information'
+} from './open-information.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin'
+import informationBusyMixin from '../mixins/information-busy-mixin.js'
 
-import reportAuth from '@c/reportAuth'
+import reportAuth from '@c/reportAuth.vue'
 
 export default {
     name: 'Notice',

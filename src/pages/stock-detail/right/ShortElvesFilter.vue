@@ -17,9 +17,9 @@
 <script>
 import {
     LOCAL_SHORT_LINE_SET,
-} from '../storage'
-import shortLineType from '@formatter/config/short-line-config'
-import popUpFiveSecond from '../components/popup-five-second'
+} from '../storage.js'
+import shortLineType from '@formatter/config/short-line-config.js'
+import popUpFiveSecond from '../components/popup-five-second.js'
 
 import PopUp from '@c/popUp.vue'
 import ShortElvesFilterItem from './ShortElvesFilterItem.vue'

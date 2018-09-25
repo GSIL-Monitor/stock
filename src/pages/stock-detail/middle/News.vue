@@ -58,13 +58,13 @@ import {
     getStockNews,
     getHSIndexNews,
     getHKStockNews,
-} from '@service/'
-import formatInfoDate from '@formatter/information/date'
+} from '@service/index.js'
+import formatInfoDate from '@formatter/information/date.js'
 import {
     openNews,
-} from './open-information'
+} from './open-information.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin'
+import informationBusyMixin from '../mixins/information-busy-mixin.js'
 
 export default {
     name: 'News',

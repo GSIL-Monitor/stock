@@ -1,4 +1,4 @@
-import openContent from './open-content'
+import openContent from './open-content.js'
 
 export const openNews = (pageParam = {}, titleName = '资讯') => {
     const param = Object.assign({

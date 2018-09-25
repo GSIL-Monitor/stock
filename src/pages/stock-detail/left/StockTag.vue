@@ -17,10 +17,10 @@ import {
 } from 'vuex'
 import {
     GET_STOCK_TAG,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 import {
     GET_STOCK_TAG_DATA,
-} from '@store/stock-detail-store/config/action-types'
+} from '@store/stock-detail-store/config/action-types.js'
 
 import TagList from './StockTagList.vue'
 

@@ -9,8 +9,8 @@
 import {
     mapState,
 } from 'vuex'
-import companyFormatter from '@formatter/company-tag'
-import tagOpenPermission from './tag-open-permission'
+import companyFormatter from '@formatter/company-tag.js'
+import tagOpenPermission from './tag-open-permission.js'
 import {
     popProtogenesis,
     openCompanyHonor,
@@ -18,7 +18,7 @@ import {
     openSeasonRate,
     openPerformanceAppraisal,
     openIndustryPerformanceAppraisal,
-} from './open-tags-protogenesis'
+} from './open-tags-protogenesis.js'
 
 export default {
     name: 'OneTag',

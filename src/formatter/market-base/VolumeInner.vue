@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatVolumeInner } from '../format-data'
+import Base from './mixins/base.js'
+import { formatVolumeInner } from '../format-data.js'
 
 export default {
     name: 'VolumeInner',

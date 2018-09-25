@@ -89,7 +89,7 @@ import {
 } from 'vuex'
 import {
     GET_HS_INDEX_CONSTITUENT_LIST,
-} from '@store/stock-detail-store/config/action-types'
+} from '@store/stock-detail-store/config/action-types.js'
 
 import {
     sunTable,

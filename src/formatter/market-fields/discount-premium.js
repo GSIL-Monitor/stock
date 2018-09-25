@@ -5,10 +5,10 @@ import {
     RED,
     GREEN,
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     isNumber,
-} from '../utility'
+} from '../utility.js'
 
 const addSymbol = (value) => {
     if (value > 0) {

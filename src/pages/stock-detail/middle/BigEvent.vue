@@ -61,15 +61,15 @@ import {
 } from 'vuex'
 import {
     subDate,
-} from '../utility'
+} from '../utility.js'
 import {
     getEventList,
-} from '@service/'
+} from '@service/index.js'
 import {
     openBigEvent,
-} from './open-information'
+} from './open-information.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin'
+import informationBusyMixin from '../mixins/information-busy-mixin.js'
 
 export default {
     name: 'BigEvent',

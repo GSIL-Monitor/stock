@@ -22,19 +22,19 @@
 </template>
 
 <script>
-import formatPrice from '@formatter/market-fields/price'
+import formatPrice from '@formatter/market-fields/price.js'
 import {
     RED,
     GREEN,
     DEFAULT,
-} from '@formatter/config/color-config'
+} from '@formatter/config/color-config.js'
 import {
     ASTOCK,
     SHBSTOCK,
     SZBSTOCK,
     FUND,
     BOND,
-} from '@formatter/config/stock-type-config'
+} from '@formatter/config/stock-type-config.js'
 
 export default {
     name: 'FiveOrderItem',

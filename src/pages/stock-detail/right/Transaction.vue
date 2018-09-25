@@ -48,16 +48,16 @@ import {
 import {
     getTransaction,
     getHKTransaction,
-} from '@service/'
+} from '@service/index.js'
 import {
     isHkRealTime,
-} from '../utility'
+} from '../utility.js'
 import {
     skipF1,
-} from '../components/module-jump'
+} from '../components/module-jump.js'
 import {
     MODULE_NAME,
-} from '../storage'
+} from '../storage.js'
 
 import TransactionLi from './TransactionLi.vue'
 import LoadMore from '../components/LoadMore.vue'

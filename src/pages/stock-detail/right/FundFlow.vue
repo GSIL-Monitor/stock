@@ -49,12 +49,12 @@ import {
 } from 'vuex'
 import {
     JsToQtEventInterface,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     SOCKET_A_FLOW,
-} from '../storage'
+} from '../storage.js'
 
-import socketMixin from "../mixins/socket-mixin"
+import socketMixin from "../mixins/socket-mixin.js"
 
 import DefaultBtn from '../components/DefaultBtn.vue'
 import FundFlowPie from './FundFlowPie.vue'

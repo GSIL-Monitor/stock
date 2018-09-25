@@ -5,11 +5,11 @@
 */
 import {
     YELLOW,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     formatFigure,
     isNumber,
-} from '../utility'
+} from '../utility.js'
 
 /**
  * @description 流通市值(mcap)、总市值(tcap)

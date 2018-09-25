@@ -9,13 +9,13 @@ import {
     GREEN,
     BLUE,
     YELLOW,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     formatFigure,
     formatNumber,
     isNumber,
     toType,
-} from '../utility'
+} from '../utility.js'
 
 const getColor = val => {
     return val > 0 ? RED :

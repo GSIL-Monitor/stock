@@ -3,10 +3,10 @@
  * @see Interface::formatPriceChange()
  * @return {function}
 */
-import * as TYPE from '../config/stock-type-config'
+import * as TYPE from '../config/stock-type-config.js'
 import {
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     stockToType,
     isNumber,
@@ -14,7 +14,7 @@ import {
     getRetainBits,
     isClearCase,
     getClearVal,
-} from '../utility'
+} from '../utility.js'
 
 const addSymbol = (value) => {
     if (value > 0) {

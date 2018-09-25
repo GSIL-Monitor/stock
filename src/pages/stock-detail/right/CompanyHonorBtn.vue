@@ -17,13 +17,13 @@ import {
 } from 'vuex'
 import {
     getCompanyHonor,
-} from '@service/index'
+} from '@service/index.js'
 import {
     verifyPermission,
-} from '@c/utils/permission/'
+} from '@c/utils/permission/index.js'
 import {
     openCompanyHonor,
-} from '../left/open-tags-protogenesis'
+} from '../left/open-tags-protogenesis.js'
 
 export default {
     name: 'CompanyHonorBtn',

@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatTurnover} from '../format-data'
+import Base from './mixins/base.js'
+import { formatTurnover} from '../format-data.js'
 
 export default {
     name: 'Turnover',

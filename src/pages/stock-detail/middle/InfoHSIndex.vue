@@ -34,13 +34,13 @@ import {
 } from 'vuex'
 import {
     MODULE_NAME,
-} from '../storage'
+} from '../storage.js'
 
-import inforJumpMixin from '../mixins/information-jump-mixin'
-import informationMixin from '../mixins/information-mixin'
+import inforJumpMixin from '../mixins/information-jump-mixin.js'
+import informationMixin from '../mixins/information-mixin.js'
 
-import Tabs from '../components/tabs/'
-import TabPane from '../components/tab-pane/'
+import Tabs from '../components/tabs/index.js'
+import TabPane from '../components/tab-pane/index.js'
 import LoadMore from '../components/LoadMore.vue'
 import XqdownToUp from '../components/XqdownToUp.vue'
 import News from './News.vue'

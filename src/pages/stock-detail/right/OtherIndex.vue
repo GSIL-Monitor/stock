@@ -5,7 +5,7 @@
 <script>
 import {
     getOtherIndicators,
-} from '@service/index'
+} from '@service/index.js'
 
 export default {
     name: ''

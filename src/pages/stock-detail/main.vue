@@ -31,7 +31,7 @@ import {
     getUrlParam,
     getCookie,
     changeUrlParam,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     CURRENT_TYPE,
     STOCK_CODE,
@@ -42,10 +42,10 @@ import {
     INFO_STATE,
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 import {
     ADD_TO_RECENT_LIST
-} from '@store/stock-detail-store/config/action-types'
+} from '@store/stock-detail-store/config/action-types.js'
 import {
     LOCAL_LATEST_CODE,
     LOCAL_IS_LEFT_SHOW,
@@ -61,7 +61,7 @@ import {
     TAB_MY_STOCK,
 } from './storage'
 
-import stockVerifyMixin from './mixins/stock-verify-mixin'
+import stockVerifyMixin from './mixins/stock-verify-mixin.js'
 
 import LeftTemplate from './left/LeftMain.vue'
 import MiddleTemplate from './middle/MiddleMain.vue'

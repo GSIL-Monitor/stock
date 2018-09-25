@@ -265,34 +265,34 @@ import {
 } from 'vuex'
 import {
     getLimitStockData,
-} from '@service/'
+} from '@service/index.js'
 import {
     throttle,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     initTapeDefault,
     initTapeFunc,
-} from '../tape/tape-public-func'
+} from '../tape/tape-public-func.js'
 import {
     sendEvent,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     TAPE_ROWS,
     TAPE_CONTENT,
     TAPE_STYLE,
     FUNC_PERFORMANCE,
-} from '../tape/tape-set-config'
+} from '../tape/tape-set-config.js'
 import {
     SESSION_ASTOCK_FUNC_TAB,
     SOCKET_A_MARKET,
-} from '../storage'
+} from '../storage.js'
 import {
     STOCK_NAME,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin'
-import fiveOrderMixin from '../mixins/five-order-mixin'
-import rightResizeMixin from '../mixins/right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin.js'
+import fiveOrderMixin from '../mixins/five-order-mixin.js'
+import rightResizeMixin from '../mixins/right-resize-mixin.js'
 
 import CompanyHonorBtn from './CompanyHonorBtn.vue'
 import BelongIndustry from './BelongIndustry.vue'

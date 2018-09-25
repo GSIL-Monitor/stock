@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatCompareClose } from '../format-data'
+import Base from './mixins/base.js'
+import { formatCompareClose } from '../format-data.js'
 
 export default {
     name: 'CompareClose',

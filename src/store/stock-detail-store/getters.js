@@ -1,4 +1,4 @@
-import * as TYPE from '@formatter/config/stock-type-config'
+import * as TYPE from '@formatter/config/stock-type-config.js'
 
 // 计算属性
 export default {

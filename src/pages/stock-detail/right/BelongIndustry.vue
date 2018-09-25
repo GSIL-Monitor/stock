@@ -32,13 +32,13 @@ import {
 } from 'vuex'
 import {
     getIndustryBelongPlate,
-} from '@service/index'
+} from '@service/index.js'
 import {
     toType,
 } from '@formatter/utility'
 import {
     JsToQtEventInterface,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 
 export default {
     name: "BelongIndustry",

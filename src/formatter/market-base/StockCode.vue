@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatShowCode } from '../format-data'
+import Base from './mixins/base.js'
+import { formatShowCode } from '../format-data.js'
 
 export default {
     name: 'StockCode',

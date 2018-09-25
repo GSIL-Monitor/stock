@@ -16,7 +16,7 @@
 <script>
 import {
     loginIn,
-} from '@service/index'
+} from '@service/index.js'
 
 import commonStyle from '@c/commonStyle/index'
 import searchBtn from '@c/button'

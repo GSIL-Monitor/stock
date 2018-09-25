@@ -6,12 +6,12 @@
 import {
     RED,
     GREEN,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     formatNumber,
     isClearCase,
     getClearVal,
-} from '../utility'
+} from '../utility.js'
 
 const normal = (value, list, color) => {
     if (isClearCase(value, list)) {

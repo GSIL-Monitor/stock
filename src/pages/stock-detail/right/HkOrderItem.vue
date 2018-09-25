@@ -21,8 +21,8 @@ import {
     RED,
     GREEN,
     DEFAULT,
-} from '@formatter/config/color-config'
-import formatPrice from '@formatter/market-fields/price'
+} from '@formatter/config/color-config.js'
+import formatPrice from '@formatter/market-fields/price.js'
 
 export default {
     name: 'HkOrderItem',

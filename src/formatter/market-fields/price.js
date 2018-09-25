@@ -3,12 +3,12 @@
  * @see Interface::formatPrice()
  * @return {function}
 */
-import * as TYPE from '../config/stock-type-config'
+import * as TYPE from '../config/stock-type-config.js'
 import {
     RED,
     GREEN,
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     stockToType,
     isNumber,
@@ -16,7 +16,7 @@ import {
     getColor,
     getRetainBits,
     getClearVal,
-} from '../utility'
+} from '../utility.js'
 
 const getValAndColor = (value, price_change, num = 2) => {
     const val = formatNum(value, num)

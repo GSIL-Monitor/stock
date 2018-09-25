@@ -29,9 +29,9 @@
 <script>
 import {
     dataFixed,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 
-import Props from '../mixins/price-point-mixin'
+import Props from '../mixins/price-point-mixin.js'
 
 export default {
     name: 'PricePointSimple',

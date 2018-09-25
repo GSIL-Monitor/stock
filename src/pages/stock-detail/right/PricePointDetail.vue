@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Props from '../mixins/price-point-mixin'
+import Props from '../mixins/price-point-mixin.js'
 
 export default {
     name: 'PricePointDetail',

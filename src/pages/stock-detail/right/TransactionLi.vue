@@ -38,7 +38,7 @@ import {
     formatNormalVolume,
     getArrow,
     formatCount,
-} from '@formatter/market-fields/transaction'
+} from '@formatter/market-fields/transaction.js'
 
 import Price from '@formatter/market-base/Price.vue'
 

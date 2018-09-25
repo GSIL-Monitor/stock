@@ -10,10 +10,10 @@
 <script>
 import {
     skipF10,
-} from '../components/module-jump'
+} from '../components/module-jump.js'
 import {
     MODULE_NAME,
-} from '../storage'
+} from '../storage.js'
 
 import DefaultBtn from './DefaultBtn.vue'
 

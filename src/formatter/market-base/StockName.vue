@@ -7,8 +7,8 @@
 <script>
 import {
     prefixCls
-} from './config/prefix'
-import { formatStockName } from '../format-data'
+} from './config/prefix.js'
+import { formatStockName } from '../format-data.js'
 
 export default {
     name: 'Name',

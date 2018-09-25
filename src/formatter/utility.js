@@ -1,9 +1,9 @@
-import * as TYPE from './config/stock-type-config'
+import * as TYPE from './config/stock-type-config.js'
 import {
     DEFAULT,
     RED,
     GREEN,
-} from './config/color-config'
+} from './config/color-config.js'
 
 /**
  * @description 判断类型，总是返回一个有效的、全小写字符串

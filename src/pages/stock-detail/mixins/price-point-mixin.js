@@ -1,6 +1,6 @@
 import {
     isNumber,
-} from '@formatter/utility'
+} from '@formatter/utility.js'
 
 export default {
     props: {

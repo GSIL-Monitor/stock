@@ -4,13 +4,13 @@ import {
 import {
     getUrlDomain,
     getToken,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     sendEvent,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     MODULE_NAME,
-} from '../storage'
+} from '../storage.js'
 
 export default {
     computed: {

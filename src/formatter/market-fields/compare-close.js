@@ -9,12 +9,12 @@ import {
     getRetainBits,
     isClearCase,
     getClearVal,
-} from '../utility'
+} from '../utility.js'
 import {
     RED,
     GREEN,
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 
 const getColor = (value, close_price) => {
     return value > close_price ? RED :

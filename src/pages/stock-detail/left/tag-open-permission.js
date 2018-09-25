@@ -1,14 +1,14 @@
 import {
     isHavePermission,
-} from '@c/utils/permission/index'
-import zytgNoPermission from '@c/utils/permission/zytgNoPermission'
-import zyztNoPermission from '@c/utils/permission/zyztNoPermission'
+} from '@c/utils/permission/index.js'
+import zytgNoPermission from '@c/utils/permission/zytgNoPermission.js'
+import zyztNoPermission from '@c/utils/permission/zyztNoPermission.js'
 import {
     isZyzt,
     isZytg,
     getCookie,
-} from '@c/utils/util'
-import openBuyPrice from './open-buy-right'
+} from '@c/utils/util.js'
+import openBuyPrice from './open-buy-right.js'
 
 const COMPANY_TAG_CODE = ['TG_002', 'ZT_stocks']
 

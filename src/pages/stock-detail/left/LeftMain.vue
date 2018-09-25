@@ -42,16 +42,16 @@ import {
     TAB_RECOMMEND_TAGS,
     TAB_MY_STOCK,
     TAB_RECENT_VISITED,
-} from '../storage'
+} from '../storage.js'
 import {
     ASTOCK,
-} from '@formatter/config/stock-type-config'
+} from '@formatter/config/stock-type-config.js'
 import {
     LEFT_SELECT_TAB,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 
-import Tabs from '../components/tabs/'
-import TabPane from '../components/tab-pane/'
+import Tabs from '../components/tabs/index.js'
+import TabPane from '../components/tab-pane/index.js'
 import StockTag from './StockTag.vue'
 import MyStockList from './MyStockList.vue'
 import RecentVisit from './RecentVisit.vue'

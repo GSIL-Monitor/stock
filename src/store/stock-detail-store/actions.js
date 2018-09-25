@@ -6,7 +6,7 @@ import {
     getIndexData,
     getIndexStocks,
     addMyRecent,
-} from '@service/'
+} from '@service/index.js'
 import {
     GET_STOCK_TAG_DATA,
     GET_STOCK_GROUP_DATA,
@@ -15,7 +15,7 @@ import {
     GET_HS_INDEX_MARKET_DATA,
     GET_HS_INDEX_CONSTITUENT_LIST,
     ADD_TO_RECENT_LIST,
-} from './config/action-types'
+} from './config/action-types.js'
 // import {
 //     HSINDEX_CATEGORY,
 // } from './config/mutation-types'

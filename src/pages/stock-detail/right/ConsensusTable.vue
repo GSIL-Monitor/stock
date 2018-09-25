@@ -60,19 +60,19 @@ import {
 } from 'vuex'
 import {
     getSelfConsensus,
-} from "@service/index"
+} from '@service/index.js'
 import {
     getFixedNum,
     getPercentNum,
     getYearSuffix,
-} from '@formatter/market-fields/consensus'
+} from '@formatter/market-fields/consensus.js'
 import {
     getMoneyFormat,
-} from '@formatter/market-fields/financial'
+} from '@formatter/market-fields/financial.js'
 import {
     JsToQtEventInterface,
     sendEvent,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     cloneDeep,
 } from 'lodash'

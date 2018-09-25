@@ -41,13 +41,13 @@ import {
 } from 'vuex'
 import {
     getStockFinance,
-} from '@service/index'
+} from '@service/index.js'
 import {
     getUrlDomain,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     sendEvent,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     getReportShow,
     getCapitalStock,

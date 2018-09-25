@@ -1,7 +1,7 @@
 import {
     pushData,
     UnSubscriptSockets,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 
 export default {
     computed: {

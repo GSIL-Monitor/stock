@@ -15,7 +15,7 @@
 <script>
 import {
     initTapeFunc,
-} from '../tape/tape-public-func'
+} from '../tape/tape-public-func.js'
 
 import TabSwitchItem from './TabSwitchItem.vue'
 

@@ -5,14 +5,14 @@
 */
 import {
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     getRetainBits,
     stockToType,
     isClearCase,
     getClearVal,
     isNumber,
-} from '../utility'
+} from '../utility.js'
 
 // 振幅
 export const formatAmplitude = (amplitude, list) => {

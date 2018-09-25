@@ -139,17 +139,17 @@ import {
 } from 'vuex'
 import {
     getBondData,
-} from '@service/index'
+} from '@service/index.js'
 import {
     SOCKET_BOND_MARKET,
-} from '../storage'
+} from '../storage.js'
 import {
     STOCK_NAME,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin'
-import fiveOrderMixin from '../mixins/five-order-mixin'
-import rightResizeMixin from '../mixins/right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin.js'
+import fiveOrderMixin from '../mixins/five-order-mixin.js'
+import rightResizeMixin from '../mixins/right-resize-mixin.js'
 
 import ButtonF10 from '../components/ButtonF10.vue'
 import IsMyStock from './IsMyStock.vue'

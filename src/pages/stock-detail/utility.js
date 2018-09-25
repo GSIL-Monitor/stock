@@ -1,12 +1,12 @@
 import {
     getCookie,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     sendEvent,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     EVENT_CHANGES_CODE,
-} from './storage'
+} from './storage.js'
 
 // 截取新闻信息
 export const subDate = (date) => {

@@ -225,24 +225,24 @@ import {
 } from 'vuex'
 import {
     getLimitStockData,
-} from '@service/index'
+} from '@service/index.js'
 import {
     initTapeDefault,
-} from '../tape/tape-public-func'
+} from '../tape/tape-public-func.js'
 import {
     TAPE_ROWS,
     TAPE_STYLE,
-} from '../tape/tape-set-config'
+} from '../tape/tape-set-config.js'
 import {
     SOCKET_B_MARKET,
-} from '../storage'
+} from '../storage.js'
 import {
     STOCK_NAME,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin'
-import fiveOrderMixin from '../mixins/five-order-mixin'
-import rightResizeMixin from '../mixins/right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin.js'
+import fiveOrderMixin from '../mixins/five-order-mixin.js'
+import rightResizeMixin from '../mixins/right-resize-mixin.js'
 
 import SetIco from '../components/SetIco.vue'
 import TitleTopMarket from './TitleTopMarket.vue'

@@ -1,10 +1,10 @@
 import {
     openNewWin,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 import {
     getUrlDomain,
     getToken,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 
 // --- 打开原生弹窗
 export const popProtogenesis = (param, config) => {

@@ -7,11 +7,11 @@ import {
     RED,
     GREEN,
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     toType,
     isNumber,
-} from '../utility'
+} from '../utility.js'
 
 export const formatTime = time => {
     if (Object.is(toType(time), 'string')) {

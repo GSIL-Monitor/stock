@@ -1,8 +1,8 @@
 <script>
-import Base from './mixins/base'
+import Base from './mixins/base.js'
 import {
     formatClosePrice,
-} from '../format-data'
+} from '../format-data.js'
 
 export default {
     name: 'Close',

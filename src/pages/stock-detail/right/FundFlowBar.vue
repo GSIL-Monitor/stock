@@ -13,7 +13,7 @@
 <script>
 import {
     isNumber,
-} from '@formatter/utility'
+} from '@formatter/utility.js'
 
 const xData = ['净特大单', '净大单', '净中单', '净小单']
 const defaultOptions = {

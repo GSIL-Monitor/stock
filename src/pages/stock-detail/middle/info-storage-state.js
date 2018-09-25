@@ -1,6 +1,6 @@
 import {
     LOCAL_IS_INFO_FULL,
-} from '../storage'
+} from '../storage.js'
 
 export const getInfoState = () =>  {
     return localStorage.getItem(LOCAL_IS_INFO_FULL)

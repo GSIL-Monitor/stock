@@ -6,12 +6,12 @@
 import {
     RED,
     GREEN,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     isClearCase,
     getClearVal,
-} from '../utility'
-import { dataFixed } from '@c/utils/util'
+} from '../utility.js'
+import { dataFixed } from '@c/utils/util.js'
 const getColor = (val) => {
     if (val > 1) {
         return RED

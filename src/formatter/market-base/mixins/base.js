@@ -1,6 +1,6 @@
 import {
     prefixCls
-} from '../config/prefix'
+} from '../config/prefix.js'
 
 export default {
     computed: {

@@ -191,16 +191,16 @@ import {
 } from 'vuex'
 import {
     getHkStockData,
-} from '@service/'
+} from '@service/index.js'
 import {
     SOCKET_HKSTOCK_MARKET,
-} from '../storage'
+} from '../storage.js'
 import {
     STOCK_NAME,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin'
-import rightResizeMixin from '../mixins/right-resize-mixin'
+import socketMixin from '../mixins/socket-mixin.js'
+import rightResizeMixin from '../mixins/right-resize-mixin.js'
 
 import HkTimeBox from './HkTimeBox.vue'
 import ButtonF10 from '../components/ButtonF10.vue'

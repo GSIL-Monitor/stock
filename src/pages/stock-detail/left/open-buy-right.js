@@ -1,10 +1,10 @@
 import {
     getToken,
     getUrlDomain,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     openNewWin,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 
 const openBuyPrice = () => {
     let url,

@@ -59,20 +59,20 @@ import {
 } from 'vuex'
 import {
     getShortLine,
-} from '@service/index'
+} from '@service/index.js'
 import {
     changePageStock,
-} from '../utility'
+} from '../utility.js'
 import {
     SOCKET_SHORT_LINE,
     LOCAL_SHORT_LINE_SET,
-} from '../storage'
+} from '../storage.js'
 import {
     ASTOCK,
     INDEX,
-} from '@formatter/config/stock-type-config'
+} from '@formatter/config/stock-type-config.js'
 
-import socketMixin from '../mixins/socket-mixin'
+import socketMixin from '../mixins/socket-mixin.js'
 
 import SetIco from '../components/SetIco.vue'
 import ShortElvesItem from './ShortElvesItem.vue'

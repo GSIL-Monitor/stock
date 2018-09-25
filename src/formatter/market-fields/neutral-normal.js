@@ -5,13 +5,13 @@
  */
 import {
     BLUE,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     formatNumber,
     isClearCase,
     getClearVal,
-} from '../utility'
-import { dataFixed } from '@c/utils/util';
+} from '../utility.js'
+import { dataFixed } from '@c/utils/util.js';
 
 const normal = (value, list, isInteger) => {
     if (isClearCase(value, list) || Object.is(value, 0)) {

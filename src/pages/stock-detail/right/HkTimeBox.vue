@@ -18,12 +18,12 @@
 <script>
 import {
     isBusinessDay,
-} from '@service/'
+} from '@service/index.js'
 import {
     formatDate,
     isHkRealTime,
     getTimeStamp,
-} from '../utility'
+} from '../utility.js'
 
 export default {
     name: 'HkTimeBox',

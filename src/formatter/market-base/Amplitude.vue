@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatAmplitude } from '../format-data'
+import Base from './mixins/base.js'
+import { formatAmplitude } from '../format-data.js'
 
 export default {
     name: 'Amplitude',

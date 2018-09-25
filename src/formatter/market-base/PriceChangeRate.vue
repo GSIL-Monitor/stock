@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatPriceChangeRate } from '../format-data'
+import Base from './mixins/base.js'
+import { formatPriceChangeRate } from '../format-data.js'
 
 export default {
     name: 'PriceChangeRate',

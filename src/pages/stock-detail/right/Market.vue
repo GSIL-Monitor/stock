@@ -158,22 +158,22 @@ import {
 import {
     SOCKET_HSINDEX_MARKET,
     SESSION_INDEX_FUNC_TAB,
-} from '../storage'
+} from '../storage.js'
 import {
     GET_HS_INDEX_MARKET_DATA,
-} from '@store/stock-detail-store/config/action-types'
+} from '@store/stock-detail-store/config/action-types.js'
 import {
     STOCK_NAME,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 // import {
 //     HSINDEX_CATEGORY,
-// } from '@store/stock-detail-store/config/mutation-types'
+// } from '@store/stock-detail-store/config/mutation-types.js'
 
-import rightResizeMixin from '../mixins/right-resize-mixin'
-import socketMixin from '../mixins/socket-mixin'
+import rightResizeMixin from '../mixins/right-resize-mixin.js'
+import socketMixin from '../mixins/socket-mixin.js'
 
-import Tabs from '../components/tabs/'
-import TabPane from '../components/tab-pane/'
+import Tabs from '../components/tabs/index.js'
+import TabPane from '../components/tab-pane/index.js'
 import ButtonF10 from '../components/ButtonF10.vue'
 import TitleTopMarket from './TitleTopMarket.vue'
 import StockName from '@formatter/market-base/StockName.vue'

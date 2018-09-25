@@ -14,7 +14,7 @@ import {
     mapState,
     mapGetters,
 } from 'vuex'
-import * as TYPE from '@formatter/config/stock-type-config'
+import * as TYPE from '@formatter/config/stock-type-config.js'
 
 export default {
     name: 'KLine',

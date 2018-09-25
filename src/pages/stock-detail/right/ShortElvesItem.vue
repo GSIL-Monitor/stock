@@ -19,7 +19,7 @@ import {
     formatDate,
     formatStockName,
     formatType,
-} from '@formatter/market-fields/short-line'
+} from '@formatter/market-fields/short-line.js'
 
 export default {
     name: 'ShortElvesItem',

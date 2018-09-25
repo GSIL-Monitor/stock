@@ -5,13 +5,13 @@
 */
 import {
     DEFAULT,
-} from '../config/color-config'
+} from '../config/color-config.js'
 import {
     isNumber,
-} from '../utility'
+} from '../utility.js'
 import {
     dataFixed,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 
 export const getYearSuffix = () => {
     let nowMonth = new Date().getMonth()

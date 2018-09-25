@@ -60,14 +60,14 @@ import {
 } from 'vuex'
 import {
     getTransaction,
-} from '@service/'
+} from '@service/index.js'
 import {
     skipF1,
-} from '../components/module-jump'
+} from '../components/module-jump.js'
 import {
     MODULE_NAME,
     LOCAL_TRANSATION_STORE,
-} from '../storage'
+} from '../storage.js'
 
 import TransactionLi from './TransactionLi.vue'
 import SetIco from '../components/SetIco.vue'

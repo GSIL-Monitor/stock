@@ -3,8 +3,8 @@
  * @see Interface::formatStockName()
  * @return {function}
  */
-import * as TYPE from '../config/stock-type-config'
-import { stockToType } from '../utility'
+import * as TYPE from '../config/stock-type-config.js'
+import { stockToType } from '../utility.js'
 
 const formatHK = name => {
     let reg = /\w{1}/,

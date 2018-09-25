@@ -18,13 +18,13 @@ import {
 } from 'vuex'
 import {
     getStockIdentity,
-} from '@service/'
+} from '@service/index.js'
 import {
     sendEvent,
     JsToQtEventInterface,
-} from '@c/utils/callQt'
-import stockAIcoConfig from './stock-a-identify-config'
-import hkStockIcoConfig from './hk-stock-identify-config'
+} from '@c/utils/callQt.js'
+import stockAIcoConfig from './stock-a-identify-config.js'
+import hkStockIcoConfig from './hk-stock-identify-config.js'
 
 import IdentifyIco from './IdentifyIco.vue'
 

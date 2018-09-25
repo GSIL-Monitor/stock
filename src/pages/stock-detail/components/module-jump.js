@@ -1,9 +1,9 @@
 import {
     getUrlDomain,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     sendEvent,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 
 export const skipF1 = (hash, moduleId) => {
     let baseUrl = getUrlDomain()

@@ -9,8 +9,8 @@
 <script>
 import {
     prefixCls
-} from './config/prefix'
-import { formatMarketValue } from '../format-data'
+} from './config/prefix.js'
+import { formatMarketValue } from '../format-data.js'
 
 export default {
     name: 'MarketValue',

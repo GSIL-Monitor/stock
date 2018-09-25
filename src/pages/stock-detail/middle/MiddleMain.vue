@@ -36,10 +36,10 @@ import {
 import {
     getInfoState,
     setInfoState,
-} from './info-storage-state'
+} from './info-storage-state.js'
 import {
     INFO_STATE,
-} from '@store/stock-detail-store/config/mutation-types'
+} from '@store/stock-detail-store/config/mutation-types.js'
 
 import KLine from './KLine.vue'
 import InfoStockATemp from './InfoStockA.vue'

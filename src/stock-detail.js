@@ -5,11 +5,11 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/chart/pie'
 
-import store from './store/stock-detail-store/'
+import store from './store/stock-detail-store/index.js'
 // import router from './router/stock-detail-router/'
-import App from './pages/stock-detail/'
-import goGoal from './goGoal/'
-import eventBus from './plugins/eventBus/'
+import App from './pages/stock-detail/index.js'
+import goGoal from './goGoal/index.js'
+import eventBus from './plugins/eventBus/index.js'
 
 import '@less/common/theme.less'
 

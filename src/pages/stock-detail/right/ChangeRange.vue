@@ -39,12 +39,12 @@
 <script>
 import {
     evenRound,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     SOCKET_RANGE_SCOPE,
-} from '../storage'
+} from '../storage.js'
 
-import socketMixin from '../mixins/socket-mixin'
+import socketMixin from '../mixins/socket-mixin.js'
 
 import RangeBodyItem from './ChangeRangeBodyItem.vue'
 import RangeListItem from './ChangeRangeListItem.vue'

@@ -17,10 +17,10 @@ import {
     getMyStockIsAdd,
     addStock,
     delMyStock,
-} from '@service/index'
+} from '@service/index.js'
 import {
     syncMyStockState,
-} from '../utility'
+} from '../utility.js'
 
 import DefaultBtn from '../components/DefaultBtn.vue'
 

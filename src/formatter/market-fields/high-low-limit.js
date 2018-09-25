@@ -8,17 +8,17 @@ import {
     stockToType,
     isClearCase,
     getClearVal,
-} from "../utility";
+} from "../utility.js";
 import {
     ASTOCK,
     SHBSTOCK,
     SZBSTOCK,
     FUND,
-} from '../config/stock-type-config'
+} from '../config/stock-type-config.js'
 import {
     RED,
     GREEN,
-} from "../config/color-config"
+} from "../config/color-config.js"
 
 const isABStock = type => {
     return [

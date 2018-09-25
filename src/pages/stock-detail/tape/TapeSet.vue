@@ -52,17 +52,17 @@
 import {
     initTapeDefault,
     initTapeFunc,
-} from './tape-public-func'
+} from './tape-public-func.js'
 import {
     LOCAL_TAPE_SET_DFT,
     LOCAL_TAPE_SET_FUNC,
-} from '../storage'
+} from '../storage.js'
 import {
     TAPE_ROWS,
     TAPE_CONTENT,
     TAPE_STYLE,
     FUNC_PERFORMANCE,
-} from './tape-set-config'
+} from './tape-set-config.js'
 
 import DefaultBtn from '../components/DefaultBtn.vue'
 import TapeSectionItem from './TapeSectionItem.vue'

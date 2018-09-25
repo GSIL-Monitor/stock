@@ -1,11 +1,11 @@
 import {
     RED,
     GREEN,
-} from '../config/color-config'
-import shortLineType from '../config/short-line-config'
+} from '../config/color-config.js'
+import shortLineType from '../config/short-line-config.js'
 import {
     dataFixed,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 
 export const getColor = type => {
     if ([1, 2, 5, 7, 9, 10].includes(type)) {

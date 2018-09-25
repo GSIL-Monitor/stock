@@ -61,13 +61,13 @@ import {
 } from 'vuex'
 import {
     getDiscountPremium,
-} from '@service/'
-import formatDiscountPremium from '@formatter/market-fields/discount-premium'
+} from '@service/index.js'
+import formatDiscountPremium from '@formatter/market-fields/discount-premium.js'
 import {
     getTimeStamp,
     switchToHashString,
     changePageStock,
-} from '../utility'
+} from '../utility.js'
 
 import 'swiper/dist/css/swiper.css'
 import {

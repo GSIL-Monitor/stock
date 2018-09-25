@@ -50,7 +50,7 @@
 <script>
 import {
     evenRound,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 
 import FiveOrderItem from './FiveOrderItem.vue'
 

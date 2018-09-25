@@ -1,6 +1,6 @@
 <script>
-import Base from './mixins/base'
-import { formatFall } from '../format-data'
+import Base from './mixins/base.js'
+import { formatFall } from '../format-data.js'
 
 export default {
     name: 'Fall',

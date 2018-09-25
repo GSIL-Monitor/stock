@@ -1,7 +1,7 @@
 import {
     LOCAL_TAPE_SET_DFT,
     LOCAL_TAPE_SET_FUNC,
-} from '../storage'
+} from '../storage.js'
 
 export const initTapeDefault = (callback) => {
     let store = localStorage.getItem(LOCAL_TAPE_SET_DFT)
