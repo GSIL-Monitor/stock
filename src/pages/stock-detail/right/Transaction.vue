@@ -145,7 +145,10 @@ export default {
                         this.latestTime = this.getTimeStamp(data[0].update_time)
                     }
 
-                    this.dataStore = this.dataStore.concat(data)
+                    this.dataStore = this.dataStore.concat(data.map((element) => {
+                        return Object.freeze(element)
+                    }))
+
                     this.update_time = data[data.length - 1].update_time
 
                     if (this.isForbiddenHkLoad) {
@@ -197,7 +200,7 @@ export default {
                 this.noData = false
             }
             if (nowTimeStamp > this.latestTime) {
-                this.dataStore.unshift(data)
+                this.dataStore.unshift(Object.freeze(data))
                 // 港股非实时行情保留4条数据
                 if (this.isForbiddenHkLoad) {
                     if (this.dataStore.length > 4) {

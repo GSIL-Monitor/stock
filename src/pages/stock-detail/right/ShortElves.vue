@@ -208,7 +208,9 @@ export default {
             const param = {
                 options: p,
                 callback0: data => {
-                    this.dataStore = this.dataStore.concat(data)
+                    this.dataStore = this.dataStore.concat(data.map((element) => {
+                        return Object.freeze(element)
+                    }))
                     this.end_date = data[data.length - 1].tdate
 
                     this.$nextTick(() => {
@@ -250,8 +252,9 @@ export default {
             }
             data.forEach((element) => {
                 element.tdate = element.date
+                Object.freeze(element)
+                this.dataStore.unshift(element)
             })
-            this.dataStore.unshift(...data)
         },
         loadMoreData() {
             // 滚动加载

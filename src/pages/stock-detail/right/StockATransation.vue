@@ -34,11 +34,11 @@
             infinite-scroll-distance="60"
             infinite-scroll-throttle-delay="100"
             @dblclick="toDetailPage"
-            v-show="transation.length"
+            v-show="dataStore.length"
             ref="scrollContainer"
         >
             <TransactionLi
-                v-for="(item, index) of transation"
+                v-for="(item, index) of dataStore"
                 :key="index"
                 :item="item"
                 :current_type="current_type"
@@ -83,7 +83,7 @@ export default {
     data() {
         return {
             latestTime: 0,
-            transation: [],
+            dataStore: [],
             filterMsg: '全部',
             update_time: null,
             busy: true,
@@ -190,11 +190,14 @@ export default {
             const param = {
                 options: this.getCurrentParams(),
                 callback0: data => {
-                    if (!this.update_time && Object.is(this.transation.length, 0)) {
+                    if (!this.update_time && Object.is(this.dataStore.length, 0)) {
                         this.latestTime = this.getTimeStamp(data[0].update_time)
                     }
 
-                    this.transation = this.transation.concat(data)
+                    this.dataStore = this.dataStore.concat(data.map((element) => {
+                        return Object.freeze(element)
+                    }))
+
                     this.update_time = data[data.length - 1].update_time
 
                     this.$nextTick(() => {
@@ -239,7 +242,7 @@ export default {
                 this.$refs.scrollContainer.scrollTop = 0
             }
             this.noData = false
-            this.transation = []
+            this.dataStore = []
         },
         resetAll() {
             this.resetBase()
@@ -271,7 +274,7 @@ export default {
                 this.noData = false
             }
             if (nowTimeStamp > this.latestTime) {
-                this.transation.unshift(data)
+                this.dataStore.unshift(Object.freeze(data))
                 this.latestTime = nowTimeStamp
             }
         },
