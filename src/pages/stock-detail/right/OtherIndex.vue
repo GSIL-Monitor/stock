@@ -137,6 +137,11 @@ export default {
         PriceChangeRate,
     },
     methods: {
+        findSameCodeIndex(data) {
+            return data.findIndex((element) => {
+                return Object.is(`${element.source}${element.code}`, this.full_code)
+            })
+        },
         fetchData() {
             const param = {
                 options: {
@@ -147,6 +152,11 @@ export default {
                     get_index: this.hsIndexCategory[0],
                 },
                 callback0: (data) => {
+                    // 找出相同的股票
+                    let index = this.findSameCodeIndex(data)
+                    if (index > -1) {
+                        data.splice(index, 1)
+                    }
                     data.forEach((element) => {
                         Reflect.set(element, 'price_change', element.change_value)
                         Reflect.set(element, 'price_change_rate', element.change_rate)
@@ -191,12 +201,18 @@ export default {
         },
         receiveFrameData(args) {
             const data = JSON.parse(args)
-            let start = data[0].index
-            let len = data.length
 
             data.forEach((element) => {
                 element.code = element.code.replace(element.source, '')
             })
+
+            // 找出相同的股票
+            let index = this.findSameCodeIndex(data)
+            if (index > -1) {
+                data.splice(index, 1)
+            }
+            let start = data[0].index
+            let len = data.length
 
             this.dataStore.splice(start, len, ...data)
         },
