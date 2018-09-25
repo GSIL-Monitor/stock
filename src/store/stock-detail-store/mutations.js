@@ -11,7 +11,7 @@ import {
     LEFT_STATE,
     RIGHT_STATE,
     INFO_STATE,
-    // HSINDEX_CATEGORY,
+    HSINDEX_CATEGORY,
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
     STOCK_NAME,
@@ -64,7 +64,8 @@ export default {
     [STOCK_NAME](state, payLoad) {
         state.stock_name = payLoad
     },
-    // [HSINDEX_CATEGORY](state, payLoad) {
-    //     state.hsIndexCategory = payLoad
-    // },
+    [HSINDEX_CATEGORY](state, payLoad) {
+        console.log(payLoad)
+        state.hsIndexCategory = payLoad
+    },
 }

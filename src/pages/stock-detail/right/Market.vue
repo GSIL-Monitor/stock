@@ -166,9 +166,9 @@ import {
 import {
     STOCK_NAME,
 } from '@store/stock-detail-store/config/mutation-types.js'
-// import {
-//     HSINDEX_CATEGORY,
-// } from '@store/stock-detail-store/config/mutation-types.js'
+import {
+    HSINDEX_CATEGORY,
+} from '@store/stock-detail-store/config/mutation-types.js'
 
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
 import socketMixin from '../mixins/socket-mixin.js'
@@ -270,7 +270,7 @@ export default {
     methods: {
         ...mapMutations([
             STOCK_NAME,
-            // HSINDEX_CATEGORY,
+            HSINDEX_CATEGORY,
         ]),
         ...mapActions({
             getIndexData: GET_HS_INDEX_MARKET_DATA,
@@ -293,7 +293,7 @@ export default {
                     fullcode: this.full_code
                 },
                 callback0: data => {
-                    // this[HSINDEX_CATEGORY](data.category)
+                    this[HSINDEX_CATEGORY](data.category)
                     this[STOCK_NAME](data.name)
                     this.stock_name = data.name
                     this.symbol_type = data.symbol_type

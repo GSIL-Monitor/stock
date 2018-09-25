@@ -2,6 +2,10 @@
     <div class="index_constituent">
         <div class="view_title">
             <span>成分股</span>
+            <LoadMore
+                v-if="dataStore.length"
+                @on-click="moduleJump"
+            />
         </div>
         <ht-table
             :fields="fields"
@@ -58,8 +62,10 @@ import {
 import {
     pushData,
     UnSubscriptSockets,
+    JsToQtEventInterface,
 } from '@c/utils/callQt.js'
 
+import LoadMore from '../components/LoadMore.vue'
 import htTable from '@c/htTable/index.vue'
 import StockName from '@formatter/market-base/StockName.vue'
 import MarketValue from '@formatter/market-base/MarketValue.vue'
@@ -134,6 +140,8 @@ export default {
             'current_type',
             'full_code',
             'source',
+            'stock_name',
+            'hsIndexCategory',
         ]),
         paramType() {
             return Object.is(this.source, 'BK') ? 3 : 9
@@ -150,10 +158,6 @@ export default {
             getIndexStocks: GET_HS_INDEX_CONSTITUENT_LIST,
         }),
         fetchData() {
-            // const fields = [
-            //     'source', 'symbol_type', 'name', 'code',
-            //     'price_change', 'price_change_rate', 'mcap',
-            // ]
             const param = {
                 options: {
                     rows: this.ROWS,
@@ -248,6 +252,29 @@ export default {
                 })
             }, STEP)
         },
+        moduleJump() {
+            let type
+            if (Array.isArray(this.hsIndexCategory)) {
+                type = this.hsIndexCategory.includes(1) ? 'index' :
+                       this.hsIndexCategory.includes(7) ? 'gn_index' :
+                       this.hsIndexCategory.some((element) => {
+                           return [6, 8, 9].includes(element)
+                       }) ? 'hy_index' : 'index'
+            }
+            const params = {
+                code: `LB${this.full_code}`,
+                name: encodeURIComponent(this.stock_name),
+                type,
+            }
+            JsToQtEventInterface(JSON.stringify({
+                fun:'SendwebTowebEvent',
+                data: {
+                    destID: 'stockMarket',//目的webid
+                    eventName: 'plateSelected',//事件名
+                    eventContent: JSON.stringify(params)//事件参数
+                }
+            }))
+        },
     },
     watch: {
         full_code(val, oldVal) {
@@ -261,6 +288,7 @@ export default {
         UnSubscriptSockets(FRAME_CONSTITUENT_STOCK)
     },
     components: {
+        LoadMore,
         htTable,
         StockName,
         MarketValue,

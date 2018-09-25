@@ -8,7 +8,7 @@ export default {
     rightState: true, // 右侧栏展开收起状态
     infoState: false, // 资讯栏状态
     leftActiveKey: null, // 左侧选中 tab
-    // hsIndexCategory: null,
+    hsIndexCategory: null,
     klineJumpState: null,
     tag_data: {
         zyyx_score: null, // 确定性评分
