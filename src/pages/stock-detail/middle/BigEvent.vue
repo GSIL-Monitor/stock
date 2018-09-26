@@ -69,12 +69,12 @@ import {
     openBigEvent,
 } from './open-information.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin.js'
+import informationItemMixin from '../mixins/information-item-mixin.js'
 
 export default {
     name: 'BigEvent',
     mixins: [
-        informationBusyMixin,
+        informationItemMixin,
     ],
     created() {
         this.fetchData()

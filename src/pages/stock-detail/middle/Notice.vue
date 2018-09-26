@@ -78,14 +78,14 @@ import {
     openNotice,
 } from './open-information.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin.js'
+import informationItemMixin from '../mixins/information-item-mixin.js'
 
 import reportAuth from '@c/reportAuth.vue'
 
 export default {
     name: 'Notice',
     mixins: [
-        informationBusyMixin,
+        informationItemMixin,
     ],
     created() {
         this.fetchData()
@@ -205,7 +205,7 @@ export default {
             return fileType(type)
         },
         openContent(index, data) {
-            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.stock_code})` : this.titleName
+            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.showCode})` : this.titleName
             const param = {
                 ...this.getOpenContentOption,
                 position: (index + 1),

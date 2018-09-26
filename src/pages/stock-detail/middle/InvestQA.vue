@@ -73,12 +73,12 @@ import {
     subDate,
 } from '../utility.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin.js'
+import informationItemMixin from '../mixins/information-item-mixin.js'
 
 export default {
     name: 'InvestQA',
     mixins: [
-        informationBusyMixin,
+        informationItemMixin,
     ],
     created() {
         this.fetchData()

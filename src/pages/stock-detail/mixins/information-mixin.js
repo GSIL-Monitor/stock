@@ -6,7 +6,7 @@ export default {
     computed: {
         ...mapState([
             'infoState',
-        ])
+        ]),
     },
     methods: {
         tabClicked(type) {

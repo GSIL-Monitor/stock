@@ -85,14 +85,14 @@ import {
     getReportLine,
 } from '@c/utils/util.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin.js'
+import informationItemMixin from '../mixins/information-item-mixin.js'
 
 import reportAuth from '@c/reportAuth.vue'
 
 export default {
     name: 'Report',
     mixins: [
-        informationBusyMixin,
+        informationItemMixin,
     ],
     created() {
         this.fetchData()
@@ -182,7 +182,7 @@ export default {
         },
         openContent(index, data) {
             index = index + 1
-            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.stock_code})` : this.titleName
+            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.showCode})` : this.titleName
             const param = {
                 position: index,
                 contentId: data.guid,

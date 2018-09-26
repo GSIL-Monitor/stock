@@ -64,12 +64,12 @@ import {
     openNews,
 } from './open-information.js'
 
-import informationBusyMixin from '../mixins/information-busy-mixin.js'
+import informationItemMixin from '../mixins/information-item-mixin.js'
 
 export default {
     name: 'News',
     mixins: [
-        informationBusyMixin,
+        informationItemMixin,
     ],
     created() {
         this.fetchData()
@@ -203,7 +203,7 @@ export default {
             api(params)
         },
         openContent(index, data) {
-            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.stock_code})` : this.titleName
+            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.showCode})` : this.titleName
             const param = {
                 ...this.getOpenContentOption,
                 position: (index + 1),
