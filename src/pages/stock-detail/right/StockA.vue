@@ -363,7 +363,7 @@ export default {
             loadIdentify: false,
             socketData: {},
 
-            stock_name: '',
+            // stock_name: '',
             symbol_type: null,
             close_price: null,
             stock_type: null,
@@ -450,6 +450,7 @@ export default {
             'stock_code',
             'full_code',
             'current_type',
+            'stock_name',
         ]),
         row() {
             return this[TAPE_ROWS]
@@ -520,12 +521,15 @@ export default {
                     get_industry: 1,
                 },
                 callback0: data => {
+                    if (data.fullcode !== this.full_code) {
+                        return false
+                    }
                     this[STOCK_NAME](data.stock_name)
                     this.industry_name = data.industry_name
 
                     this.symbol_type = data.symbol_type
                     this.stock_type = data.stock_type
-                    this.stock_name = data.stock_name
+                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.pe_y1 = data.pe_y1
                     this.mcap = data.mcap * 10000
@@ -553,8 +557,7 @@ export default {
                     this.socketData.low_price = data.low_price
                     this.socketData.volume_outer = data.volume_outer ? data.volume_outer / 100 : data.volume_outer
                     this.socketData.volume_inner = data.volume_inner ? data.volume_inner / 100 :  data.volume_inner
-                },
-                afterResponse: () => {
+
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
                     // 获取基础属性信息
@@ -723,7 +726,7 @@ export default {
             if (this.$parent.isAStock) {
                 this.loadIdentify = false
                 this.cancleSocket(this.linkIndex)
-                this.socketData = {}
+                // this.socketData = {}
                 this.nextResizeWindow()
                 this.getInfoData()
             }

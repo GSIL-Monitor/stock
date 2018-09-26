@@ -5,6 +5,7 @@
     :data-source="_source"
     :data-symbol_type="_symbol_type"
     :data-stock_code="_stock_code"
+    :data-stock_name="item.stock_name"
 >
     <div
         class="item_left"

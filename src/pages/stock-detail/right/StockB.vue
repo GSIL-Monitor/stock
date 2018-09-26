@@ -292,7 +292,7 @@ export default {
             linkIndex: 0,
             symbol_type: null,
             stock_type: null,
-            stock_name: null,
+            // stock_name: null,
             close_price: null,
             mark: false,
             negotiable_capital: null,
@@ -332,6 +332,7 @@ export default {
             'source',
             'stock_code',
             'full_code',
+            'stock_name',
             'current_type',
         ]),
         row() {
@@ -383,10 +384,13 @@ export default {
                     stock_code: this.stock_code,
                 },
                 callback0: data => {
+                    if (data.fullcode !== this.full_code) {
+                        return false
+                    }
                     this[STOCK_NAME](data.stock_name)
                     this.symbol_type = data.symbol_type
                     this.stock_type = data.stock_type
-                    this.stock_name = data.stock_name
+                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.negotiable_capital = data.negotiable_capital ? data.negotiable_capital * 10000 : data.negotiable_capital
                     this.mcap = data.mcap ? data.mcap * 10000 : data.mcap
@@ -414,8 +418,7 @@ export default {
                     this.socketData.low_price = data.low_price
                     this.socketData.volume_outer = data.volume_outer ? data.volume_outer / 100 : data.volume_outer
                     this.socketData.volume_inner = data.volume_inner ? data.volume_inner / 100 : data.volume_inner
-                },
-                afterResponse: () => {
+
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
                 },
@@ -501,7 +504,7 @@ export default {
         full_code() {
             if (this.$parent.isBStock) {
                 this.cancleSocket(this.linkIndex)
-                this.socketData = {}
+                // this.socketData = {}
                 this.nextResizeWindow()
                 this.getInfoData()
             }

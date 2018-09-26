@@ -185,7 +185,7 @@ export default {
             is_buy_back: false, // 是否是回购 (回购无均价字段)
 
             symbol_type: null,
-            stock_name: null,
+            // stock_name: null,
             close_price: null,
         }
     },
@@ -211,6 +211,7 @@ export default {
             'source',
             'stock_code',
             'full_code',
+            'stock_name',
             'current_type',
         ]),
         linkAddress() {
@@ -230,9 +231,12 @@ export default {
                     fullcode: this.full_code
                 },
                 callback0: data => {
+                    if (data.fullcode !== this.full_code) {
+                        return false
+                    }
                     this[STOCK_NAME](data.stock_name)
 
-                    this.stock_name = data.stock_name
+                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type
 
@@ -266,8 +270,7 @@ export default {
 
                     // 回购
                     this.is_buy_back =  Array.isArray(data.category) ? data.category.includes(3) : false
-                },
-                afterResponse: () => {
+
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
                 },
@@ -330,7 +333,7 @@ export default {
     watch: {
         full_code() {
             this.cancleSocket(this.linkIndex)
-            this.socketData = {}
+            // this.socketData = {}
             this.getInfoData()
         },
     },

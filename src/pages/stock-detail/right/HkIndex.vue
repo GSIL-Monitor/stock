@@ -137,7 +137,7 @@ export default {
             socketData: {},
 
             symbol_type: null,
-            stock_name: null,
+            // stock_name: null,
             close_price: null,
         }
     },
@@ -158,6 +158,7 @@ export default {
             'source',
             'stock_code',
             'full_code',
+            'stock_name',
             'current_type',
         ]),
         linkAddress() {
@@ -174,9 +175,12 @@ export default {
                     fullcode: this.full_code
                 },
                 callback0: data => {
+                    if (data.fullcode !== this.full_code) {
+                        return false
+                    }
                     this[STOCK_NAME](data.stock_name)
 
-                    this.stock_name = data.stock_name
+                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type
 
@@ -187,8 +191,7 @@ export default {
                     this.socketData.low_price = data.low_price
                     this.socketData.open_price = data.open_price
                     this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                },
-                afterResponse: () => {
+
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
                 },
@@ -234,7 +237,7 @@ export default {
     watch: {
         full_code() {
             this.cancleSocket(this.linkIndex)
-            this.socketData = {}
+            // this.socketData = {}
             this.getInfoData()
         },
     },

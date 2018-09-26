@@ -4,6 +4,10 @@ import {
     relogin,
 } from '@c/utils/callQt'
 
+const CancelToken = axios.CancelToken;
+const promiseList = {}
+const cancelArray = []
+
 // axios default config
 axios.defaults.baseURL = '/api/'
 axios.defaults.timeout = 10000
@@ -20,10 +24,8 @@ const revertPassed = () => {
     localStorage.setItem(STORAGE_USER, JSON.stringify(userInfo))
 }
 
-let cancel, promiseArr = {}
-const CancelToken = axios.CancelToken
 const errorHandler = () => {
-    let errMap = {
+    const errMap = {
         400() {},
         401() {},
         405() {
@@ -33,7 +35,7 @@ const errorHandler = () => {
         1100() {
             /* token失效 */
             revertPassed()
-            if (location.hostname == 'localhost') {
+            if (Object.is(location.hostname, 'localhost')) {
                 location.href = location.origin //回到登录页
             }
             relogin()
@@ -49,12 +51,12 @@ const errorCodeArray = Reflect.ownKeys(handler).map(n => Number(n))
 // 拦截请求
 axios.interceptors.request.use(config => {
     // 发起请求时，取消掉当前正在进行的相同请求
-    let url = Reflect.get(config, 'url')
-    if (Reflect.has(promiseArr, url)) {
-        Reflect.get(promiseArr, url)('操作取消')
-        Reflect.set(promiseArr, url, cancel)
-    } else {
-        Reflect.set(promiseArr, url, cancel)
+    if (cancelArray.length) {
+        cancelArray.forEach((canCelFunc) => {
+            canCelFunc('Operation canceled by the user.')
+        })
+
+        cancelArray.length = 0
     }
 
     return config
@@ -108,13 +110,18 @@ const promise = (url = '', param, type = 'get') => {
         const axiosParams = {
             method: type,
             cancelToken: new CancelToken(c => {
-                cancel = c
-            })
+                if (Reflect.has(promiseList, url)) {
+                    cancelArray.push(promiseList[url])
+                }
+                promiseList[url] = c
+            }),
         }
 
         if (Object.is(type, 'get')) {
             Object.assign(axiosParams, {
-                url: `${url}?${qs.stringify(options)}`,
+                // url: `${url}?${qs.stringify(options)}`,
+                url,
+                params: options,
             })
         } else if (Object.is(type, 'post')) {
             Object.assign(axiosParams, {
@@ -124,19 +131,19 @@ const promise = (url = '', param, type = 'get') => {
         }
 
         axios(axiosParams)
-        .then(response => {
-            if (!response) return
-            let data = Reflect.get(response, 'data')
-            // 被取消的操作不会有 data
-            if (!data) return
-            dealResponseData(data, param)
-            resolve(data)
-        })
-        .catch((error) => {
-            console.error(url, param)
-            console.error(error)
-            // reject(error)
-        })
+            .then(response => {
+                if (!response) return
+                let data = Reflect.get(response, 'data')
+                // 被取消的操作不会有 data
+                if (!data) return
+                dealResponseData(data, param)
+                resolve(data)
+            })
+            .catch((error) => {
+                console.error(url, param)
+                console.error(error)
+                // reject(error)
+            })
     })
 }
 

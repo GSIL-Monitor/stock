@@ -64,6 +64,10 @@ import {
 } from '@store/stock-detail-store/config/action-types.js'
 import {
     STOCK_GROUP_LIST,
+    STOCK_CODE,
+    SOURCE,
+    FULL_CODE,
+    STOCK_NAME,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
 import oneStockList from './one-stock-list-mixin.js'
@@ -88,6 +92,7 @@ export default {
             groupTimeoutTimer: null,
             activeGroupId: null, // 当前选中 id
             medianGroupId: null, // 中转 id
+            clickTimer: null,
             myStockCache: hasMyStockCache(),
         }
     },
@@ -103,6 +108,10 @@ export default {
     methods: {
         ...mapMutations([
             STOCK_GROUP_LIST,
+            STOCK_CODE,
+            SOURCE,
+            FULL_CODE,
+            STOCK_NAME,
         ]),
         ...mapActions({
             getStockGroupData: GET_STOCK_GROUP_DATA,
@@ -215,23 +224,30 @@ export default {
             this.group_data[0].sum += data ? 1 : -1
         },
         changeCurrentStock(event) {
-            let target = event.target
-            let activeIndex = this.getActiveGroupIndex()
-            if (activeIndex === -1) {
-                return false
-            }
-            let $scrollContainer = this.$refs.scrollContainer[activeIndex]
-            if (!($scrollContainer.compareDocumentPosition(target) & 16)) {
-                return false
-            }
-            while (target && target.tagName.toLowerCase() !== 'li') {
-                target = target.parentNode
-            }
-            if (target) {
-                let { source, symbol_type, stock_code } = target.dataset
-                let hash = switchToHashString(source, stock_code, symbol_type)
-                changePageStock(hash)
-            }
+            const STEP = 150
+            clearTimeout(this.clickTimer)
+            this.clickTimer = setTimeout(() => {
+                let target = event.target
+                let activeIndex = this.getActiveGroupIndex()
+                if (activeIndex === -1) {
+                    return false
+                }
+                let $scrollContainer = this.$refs.scrollContainer[activeIndex]
+                if (!($scrollContainer.compareDocumentPosition(target) & 16)) {
+                    return false
+                }
+                while (target && target.tagName.toLowerCase() !== 'li') {
+                    target = target.parentNode
+                }
+                if (target) {
+                    let { source, symbol_type, stock_code, stock_name } = target.dataset
+                    let hash = switchToHashString(source, stock_code, symbol_type)
+                    // this[SOURCE](source)
+                    // this[FULL_CODE]()
+                    this[STOCK_NAME](stock_name)
+                    changePageStock(hash)
+                }
+            }, STEP)
         },
     },
     beforeDestroy() {

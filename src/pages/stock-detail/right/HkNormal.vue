@@ -235,7 +235,7 @@ export default {
             linkIndex: 0,
             socketData: {},
             symbol_type: null,
-            stock_name: null,
+            // stock_name: null,
             close_price: null,
 
             loadIdentify: false,
@@ -265,6 +265,7 @@ export default {
             'source',
             'stock_code',
             'full_code',
+            'stock_name',
             'current_type',
         ]),
         ...mapGetters([
@@ -306,9 +307,12 @@ export default {
                     fullcode: this.full_code
                 },
                 callback0: data => {
+                    if (data.fullcode !== this.full_code) {
+                        return false
+                    }
                     this[STOCK_NAME](data.stock_name)
 
-                    this.stock_name = data.stock_name
+                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.symbol_type  = data.symbol_type
 
@@ -330,8 +334,7 @@ export default {
                     this.socketData.high_price = data.high_price
                     this.socketData.low_price = data.low_price
                     this.socketData.open_price = data.open_price
-                },
-                afterResponse: () => {
+
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
                     this.loadIdentify = true
@@ -380,7 +383,7 @@ export default {
         full_code() {
             this.loadIdentify = false
             this.cancleSocket(this.linkIndex)
-            this.socketData = {}
+            // this.socketData = {}
             this.nextResizeWindow()
             this.getInfoData()
         },
