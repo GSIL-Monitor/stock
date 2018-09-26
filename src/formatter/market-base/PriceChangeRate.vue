@@ -20,7 +20,6 @@ export default {
     },
     props: {
         price_change: {
-            required: true,
             default: 0.
         },
         price: {

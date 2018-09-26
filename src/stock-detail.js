@@ -18,11 +18,11 @@ Vue.use(infiniteScroll)
 Vue.use(eventBus)
 
 // handle error
-Vue.config.errorHandler = function (err, vm, info) {
-    console.log("@ ", err)
-    console.log("@@ ", vm)
-    console.log("@@@ ", info)
-}
+// Vue.config.errorHandler = function (err, vm, info) {
+//     console.log("@ ", err)
+//     console.log("@@ ", vm)
+//     console.log("@@@ ", info)
+// }
 
 window.goGoal = goGoal
 goGoal.sockets = []

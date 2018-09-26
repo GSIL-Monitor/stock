@@ -203,4 +203,9 @@ export default {
         width: 100%;
     }
 }
+// .ht-table-container {
+//     /deep/ table {
+//         font-size: 14px;
+//     }
+// }
 </style>

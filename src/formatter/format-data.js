@@ -10,6 +10,8 @@ import formatPriceChange from './market-fields/price-change.js'
 import formatPriceChangeRate from './market-fields/price-change-rate.js'
 // 今开、最高、最低、均价、买入价、卖出价
 import formatCompareClose from './market-fields/compare-close.js'
+// 委比(commission_rate)
+import formatCommissionRate from './market-fields/commission-rate.js'
 // 金额 (turnover)、总手 (volume)、换手率 (turnover_rate)
 import {
     formatTurnover,
@@ -56,6 +58,7 @@ export {
     formatTurnover,
     formatVolume,
     formatTurnoverRate,
+    formatCommissionRate,
     formatVolumeInner,
     formatVolumeOuter,
     formatQuantityRatio,

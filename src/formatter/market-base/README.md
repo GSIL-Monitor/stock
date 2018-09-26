@@ -48,6 +48,8 @@
     `Turnover.vue`
 ## 振幅(amplitude)
     `Amplitude.vue`
+## 委比(commission_rate)
+    `CommissionRate.vue`
 ## 涨停(传close_price计算)
     `HighLimit.vue`
 ## 跌停(传close_price计算)

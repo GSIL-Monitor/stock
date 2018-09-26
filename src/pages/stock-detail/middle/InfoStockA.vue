@@ -43,13 +43,17 @@
         label="同业股票"
         :type="trade"
     >
-
+        <TradeStocks
+            component-type="trade"
+        />
     </TabPane>
     <TabPane
         label="关联品种"
         :type="related"
     >
-
+        <TradeStocks
+            component-type="related"
+        />
     </TabPane>
     <LoadMore
         v-show="isShowMore"
@@ -80,6 +84,7 @@ import Notice from './Notice.vue'
 import Report from './Report.vue'
 import InvestQA from './InvestQA.vue'
 import BigEvent from './BigEvent.vue'
+import TradeStocks from './TradeStocks.vue'
 
 export default {
     name: 'InfoStockA',
@@ -95,8 +100,8 @@ export default {
             report: 'report',
             question: 'question',
             bigevent: 'bigevent',
-            related: 'related',
             trade: 'trade',
+            related: 'related',
         }
     },
     components: {
@@ -109,6 +114,7 @@ export default {
         Report,
         BigEvent,
         InvestQA,
+        TradeStocks,
     },
     computed: {
         ...mapState([
@@ -117,6 +123,7 @@ export default {
         ]),
         loadMoreLabel() {
             let prefix = '更多'
+
             return this.isNewsActive ? `${prefix}新闻` :
                     this.isNoticeActive ? `${prefix}公告`:
                     this.isReportActive ? `${prefix}研报`:

@@ -20,7 +20,6 @@ export default {
     },
     props: {
         price_change: { // 判断颜色
-            required: true,
             default: 0,
         },
     },

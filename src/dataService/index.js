@@ -1,12 +1,12 @@
 import {
     get,
     post,
-} from './XHR'
+} from './XHR.js'
 import {
     getToken,
     getReportLine,
     getMyStockLine,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 
 /**
  * @description 网页登录
@@ -233,7 +233,7 @@ export const getSameIndustryStock = param => {
 }
 
 /**
- * @description 个股 -- A股关联品种
+ * @description 个股 -- A股 / 港股 关联品种
 */
 export const getRelatedStock = param => {
     const APIName = 'v1/stock/get_associated_varieties'
@@ -326,13 +326,13 @@ export const getHKSameIndustryStock = param => {
     return get(APIName, param)
 }
 
-/**
- * @description 个股 -- 港股股票关联品种
-*/
-export const getHKRelatedStock = param => {
-    const APIName = 'v1/stock/get_associated_varieties'
-    return get(APIName, param)
-}
+// /**
+//  * @description 个股 -- 港股股票关联品种
+// */
+// export const getHKRelatedStock = param => {
+//     const APIName = 'v1/stock/get_associated_varieties'
+//     return get(APIName, param)
+// }
 
 /**
  * @description 个股 -- 判断传入日期是否是交易日
