@@ -54,6 +54,7 @@ const template = `<div
                 :source="scope.rowData.source"
                 :symbol_type="scope.rowData.symbol_type"
                 :stock_type="scope.rowData.stock_type"
+                :price_change="scope.rowData.price_change"
             />
         </template>
         <template slot="price_change_rate" slot-scope="scope">

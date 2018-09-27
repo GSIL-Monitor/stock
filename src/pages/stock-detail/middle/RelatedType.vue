@@ -86,7 +86,7 @@ export default {
     },
     beforeDestroy() {
         goGoal.event.remove(FRAME_RELATED_STOCK, this.receiveFrameData)
-         UnSubscriptSockets(FRAME_RELATED_STOCK)
+        UnSubscriptSockets(FRAME_RELATED_STOCK)
     },
 }
 </script>
