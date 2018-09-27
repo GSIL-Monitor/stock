@@ -72,6 +72,8 @@ export const FRAME_CONSTITUENT_STOCK = `${MODULE_NAME}-onePlate-stocks`
 export const FRAME_OTHER_INDEXS = `${MODULE_NAME}-index-list`
 // A股 -- 同业股票
 export const FRAME_TRADE_STOCK = `${MODULE_NAME}-trade-stock`
+// 关联品种
+export const FRAME_RELATED_STOCK = `${MODULE_NAME}-related-stock`
 
 // ==============================================================================
 /**

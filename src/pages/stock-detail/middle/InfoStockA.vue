@@ -43,17 +43,13 @@
         label="同业股票"
         :type="trade"
     >
-        <TradeStocks
-            component-type="trade"
-        />
+        <TradeStocks/>
     </TabPane>
     <TabPane
         label="关联品种"
         :type="related"
     >
-        <TradeStocks
-            component-type="related"
-        />
+        <RelatedType/>
     </TabPane>
     <LoadMore
         v-show="isShowMore"
@@ -85,6 +81,8 @@ import Report from './Report.vue'
 import InvestQA from './InvestQA.vue'
 import BigEvent from './BigEvent.vue'
 import TradeStocks from './TradeStocks.vue'
+import RelatedType from './RelatedType.vue'
+
 
 export default {
     name: 'InfoStockA',
@@ -115,6 +113,7 @@ export default {
         BigEvent,
         InvestQA,
         TradeStocks,
+        RelatedType,
     },
     computed: {
         ...mapState([
