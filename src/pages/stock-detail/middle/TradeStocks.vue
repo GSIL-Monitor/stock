@@ -370,7 +370,6 @@ export default {
         },
         receiveTradeData(args) {
             const data = JSON.parse(args)
-            console.log(data)
             data.forEach((element) => {
                 let index = element.index
                 if (element.volume) {

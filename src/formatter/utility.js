@@ -187,18 +187,18 @@ export const formatNumber = (...args) => {
 
     // 格式化方法
     const format = (num, isInteger) => {
-        num = Number(num)
-        let abs_num = Math.abs(num)
         const BASE_NUM = 10
         const THOUSAND = Math.pow(BASE_NUM, 3) // 1千
-        if (abs_num < THOUSAND) {
+        num = Number(num)
+        let absNumber = Math.abs(num)
+        if (absNumber < THOUSAND) {
             if (isInteger) {
                 // 整数
                 return num.toFixed(0)
             } else {
                 // 浮点型
                 const ONE_HUNDRED = Math.pow(BASE_NUM, 2) // 1百
-                if (abs_num < ONE_HUNDRED) {
+                if (absNumber < ONE_HUNDRED) {
                     return num.toFixed(2)
                 } else if (num < THOUSAND) {
                     return num.toFixed(1)
@@ -209,7 +209,7 @@ export const formatNumber = (...args) => {
             const range = financialRange()
             let rangeItem
             while (rangeItem = range[index++]) {
-                if (abs_num >= rangeItem.min && abs_num < rangeItem.max) { break }
+                if (absNumber >= rangeItem.min && absNumber < rangeItem.max) { break }
             }
             if (rangeItem) {
                 let result = (num / rangeItem.divider).toFixed(rangeItem.fixed)
