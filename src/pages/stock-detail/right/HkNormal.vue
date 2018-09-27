@@ -312,27 +312,17 @@ export default {
                     }
                     this[STOCK_NAME](data.stock_name)
 
+                    data.price_change = data.change_value
+                    data.price_change_rate = data.change_rate
+                    data.turnover && (data.turnover = data.turnover * 10000)
+                    data.turnover_rate && (data.turnover_rate = data.turnover_rate * 100)
+                    Reflect.deleteProperty(data, 'change_value')
+                    Reflect.deleteProperty(data, 'change_rate')
+
                     this.close_price = data.close_price
                     this.symbol_type  = data.symbol_type
 
-                    this.socketData.price = data.price
-                    this.socketData.price_change = data.change_value
-                    this.socketData.price_change_rate = data.change_rate
-
-                    this.socketData.buy1_price = data.buy1_price
-                    this.socketData.sell1_price = data.sell1_price
-                    this.socketData.buy1_volume = data.buy1_volume
-                    this.socketData.sell1_volume = data.sell1_volume
-
-                    this.socketData.avg_price = data.avg_price
-                    this.socketData.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
-                    this.socketData.volume = data.volume
-                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.socketData.hk_tcap = data.hk_tcap
-                    this.socketData.tcap = data.tcap
-                    this.socketData.high_price = data.high_price
-                    this.socketData.low_price = data.low_price
-                    this.socketData.open_price = data.open_price
+                    this.socketData = Object.assign({}, data)
 
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)

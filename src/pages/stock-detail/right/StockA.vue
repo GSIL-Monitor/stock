@@ -524,38 +524,32 @@ export default {
                     if (data.fullcode !== this.full_code) {
                         return false
                     }
+
                     this[STOCK_NAME](data.stock_name)
                     this.industry_name = data.industry_name
+
+                    data.price_change = data.change_value
+                    data.price_change_rate = data.change_rate
+                    data.mcap && (data.mcap = data.mcap * 10000)
+                    data.tcap && (data.tcap = data.tcap * 10000)
+                    data.turnover && (data.turnover = data.turnover * 10000)
+                    data.turnover_rate && (data.turnover_rate = data.turnover_rate * 100)
+                    Reflect.deleteProperty(data, 'change_value')
+                    Reflect.deleteProperty(data, 'change_rate')
 
                     this.symbol_type = data.symbol_type
                     this.stock_type = data.stock_type
                     this.close_price = data.close_price
                     this.pe_y1 = data.pe_y1
-                    this.mcap = data.mcap * 10000
+                    this.mcap = data.mcap
                     this.pb_y1 = data.pb_y1
-                    this.tcap = data.tcap * 10000
+                    this.tcap = data.tcap
 
                     this.setFiveOrderFields('buy', data)
                     this.setFiveOrderFields('sell', data)
-
                     this.resetDiff()
 
-                    this.socketData.stock_name = data.stock_name
-                    this.socketData.price = data.price
-                    this.socketData.price_change = data.change_value
-                    this.socketData.price_change_rate = data.change_rate
-
-                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.socketData.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
-                    this.socketData.volume = data.volume
-                    this.socketData.quantity_ratio = data.quantity_ratio
-                    this.socketData.avg_price = data.avg_price
-                    this.socketData.amplitude = data.amplitude
-                    this.socketData.open_price = data.open_price
-                    this.socketData.high_price = data.high_price
-                    this.socketData.low_price = data.low_price
-                    this.socketData.volume_inner = data.volume_inner
-                    this.socketData.volume_outer = data.volume_outer
+                    this.socketData = Object.assign({}, data)
 
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
@@ -588,6 +582,9 @@ export default {
             }
             if (transferData.mcap) {
                 transferData.mcap = transferData.mcap * 10000
+            }
+            if (transferData.tcap) {
+                transferData.tcap = transferData.tcap * 10000
             }
             // 继承推送数据
             this.socketData = Object.assign({}, this.socketData, transferData)

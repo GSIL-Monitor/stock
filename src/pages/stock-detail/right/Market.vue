@@ -301,20 +301,13 @@ export default {
                     this.symbol_type = data.symbol_type
                     this.close_price = data.close_price
 
-                    this.socketData.price = data.price
-                    this.socketData.price_change = data.change_value
-                    this.socketData.price_change_rate = data.change_rate
+                    data.price_change = data.change_value
+                    data.price_change_rate = data.change_rate
+                    data.turnover && (data.turnover = data.turnover * 10000)
+                    Reflect.deleteProperty(data, 'change_value')
+                    Reflect.deleteProperty(data, 'change_rate')
 
-                    this.socketData.volume = data.volume
-                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.socketData.high_price = data.high_price
-                    this.socketData.low_price = data.low_price
-                    this.socketData.open_price = data.open_price
-                    this.socketData.amplitude = data.amplitude
-
-                    this.socketData.flat = data.flat
-                    this.socketData.rose = data.rose
-                    this.socketData.fall = data.fall
+                    this.socketData = Object.assign({}, data)
                 },
                 afterResponse: () => {
                     this.loadOtherIndex = true

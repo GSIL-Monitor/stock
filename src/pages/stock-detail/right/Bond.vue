@@ -238,36 +238,20 @@ export default {
                     }
                     this[STOCK_NAME](data.stock_name)
 
+                    data.price_change = data.change_value
+                    data.price_change_rate = data.change_rate
+                    data.turnover && (data.turnover = data.turnover * 10000)
+                    Reflect.deleteProperty(data, 'change_value')
+                    Reflect.deleteProperty(data, 'change_rate')
+
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type
 
                     this.setFiveOrderFields('buy', data)
                     this.setFiveOrderFields('sell', data)
+                    this.resetDiff()
 
-                    this.buy1_diff = 0
-                    this.buy2_diff = 0
-                    this.buy3_diff = 0
-                    this.buy4_diff = 0
-                    this.buy5_diff = 0
-                    this.sell1_diff = 0
-                    this.sell2_diff = 0
-                    this.sell3_diff = 0
-                    this.sell4_diff = 0
-                    this.sell5_diff = 0
-
-                    this.socketData.price = data.price
-                    this.socketData.price_change = data.change_value
-                    this.socketData.price_change_rate = data.change_rate
-
-                    this.socketData.avg_price = data.avg_price
-                    this.socketData.quantity_ratio = data.quantity_ratio
-                    this.socketData.volume = data.volume
-                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.socketData.high_price = data.high_price
-                    this.socketData.low_price = data.low_price
-                    this.socketData.open_price = data.open_price
-                    this.socketData.volume_outer = data.volume_outer
-                    this.socketData.volume_inner = data.volume_inner
+                    this.socketData = Object.assign({}, data)
 
                     // 回购
                     this.is_buy_back =  Array.isArray(data.category) ? data.category.includes(3) : false

@@ -177,18 +177,19 @@ export default {
                     if (data.fullcode !== this.full_code) {
                         return false
                     }
+
                     this[STOCK_NAME](data.stock_name)
+
+                    data.price_change = data.change_value
+                    data.price_change_rate = data.change_rate
+                    data.turnover && (data.turnover = data.turnover * 10000)
+                    Reflect.deleteProperty(data, 'change_value')
+                    Reflect.deleteProperty(data, 'change_rate')
 
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type
 
-                    this.socketData.price = data.price
-                    this.socketData.price_change = data.change_value
-                    this.socketData.price_change_rate = data.change_rate
-                    this.socketData.high_price = data.high_price
-                    this.socketData.low_price = data.low_price
-                    this.socketData.open_price = data.open_price
-                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
+                    this.socketData = Object.assign({}, data)
 
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)

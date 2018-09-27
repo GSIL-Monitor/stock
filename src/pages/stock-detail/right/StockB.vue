@@ -388,36 +388,32 @@ export default {
                     if (data.fullcode !== this.full_code) {
                         return false
                     }
+
                     this[STOCK_NAME](data.stock_name)
                     this.symbol_type = data.symbol_type
                     this.stock_type = data.stock_type
+
+                    data.price_change = data.change_value
+                    data.price_change_rate = data.change_rate
+                    data.mcap && (data.mcap = data.mcap * 10000)
+                    data.capital && (data.capital = data.capital * 10000)
+                    data.tcap && (data.tcap = data.tcap * 10000)
+                    data.turnover && (data.turnover = data.turnover * 10000)
+                    data.turnover_rate && (data.turnover_rate = data.turnover_rate * 100)
+                    Reflect.deleteProperty(data, 'change_value')
+                    Reflect.deleteProperty(data, 'change_rate')
+
                     this.close_price = data.close_price
-                    this.negotiable_capital = data.negotiable_capital ? data.negotiable_capital * 10000 : data.negotiable_capital
-                    this.mcap = data.mcap ? data.mcap * 10000 : data.mcap
-                    this.capital = data.capital ? data.capital * 10000 : data.capital
-                    this.tcap = data.tcap ? data.tcap * 10000 : data.tcap
+                    this.negotiable_capital = data.negotiable_capital
+                    this.mcap = data.mcap
+                    this.capital = data.capital
+                    this.tcap = data.tcap
 
                     this.setFiveOrderFields('buy', data)
                     this.setFiveOrderFields('sell', data)
-
                     this.resetDiff()
 
-                    this.socketData.price = data.price
-                    this.socketData.price_change = data.change_value
-                    this.socketData.price_change_rate = data.change_rate
-
-                    this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
-                    this.socketData.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
-                    this.socketData.volume = data.volume
-                    this.socketData.quantity_ratio = data.quantity_ratio
-
-                    this.socketData.avg_price = data.avg_price
-                    this.socketData.amplitude = data.amplitude
-                    this.socketData.open_price = data.open_price
-                    this.socketData.high_price = data.high_price
-                    this.socketData.low_price = data.low_price
-                    this.socketData.volume_outer = data.volume_outer
-                    this.socketData.volume_inner = data.volume_inner
+                    this.socketData = Object.assign({}, data)
 
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
