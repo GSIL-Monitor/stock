@@ -100,6 +100,7 @@
                             <td>
                                 <Volume
                                     :val="socketData.volume"
+                                    :current_type="current_type"
                                 />
                             </td>
                             <td class="two-letters">量比</td>
@@ -528,7 +529,6 @@ export default {
 
                     this.symbol_type = data.symbol_type
                     this.stock_type = data.stock_type
-                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.pe_y1 = data.pe_y1
                     this.mcap = data.mcap * 10000
@@ -547,15 +547,15 @@ export default {
 
                     this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
                     this.socketData.turnover_rate = data.turnover_rate ? data.turnover_rate * 100 : data.turnover_rate
-                    this.socketData.volume = data.volume ? data.volume / 100 : data.volume
+                    this.socketData.volume = data.volume
                     this.socketData.quantity_ratio = data.quantity_ratio
                     this.socketData.avg_price = data.avg_price
                     this.socketData.amplitude = data.amplitude
                     this.socketData.open_price = data.open_price
                     this.socketData.high_price = data.high_price
                     this.socketData.low_price = data.low_price
-                    this.socketData.volume_outer = data.volume_outer ? data.volume_outer / 100 : data.volume_outer
-                    this.socketData.volume_inner = data.volume_inner ? data.volume_inner / 100 :  data.volume_inner
+                    this.socketData.volume_inner = data.volume_inner
+                    this.socketData.volume_outer = data.volume_outer
 
                     this.sendLink(this.linkAddress)
                     this.rememberLink(this.linkAddress, this.linkIndex)
@@ -586,17 +586,8 @@ export default {
             if (transferData.turnover) {
                 transferData.turnover = transferData.turnover * 10000
             }
-            if (transferData.volume) {
-                transferData.volume = transferData.volume / 100
-            }
             if (transferData.mcap) {
                 transferData.mcap = transferData.mcap * 10000
-            }
-            if (transferData.volume_outer) {
-                transferData.volume_outer = transferData.volume_outer / 100
-            }
-            if (transferData.volume_inner) {
-                transferData.volume_inner = transferData.volume_inner / 100
             }
             // 继承推送数据
             this.socketData = Object.assign({}, this.socketData, transferData)

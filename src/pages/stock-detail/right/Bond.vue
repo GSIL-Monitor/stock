@@ -38,6 +38,7 @@
                         <td>
                             <Volume
                                 :val="socketData.volume"
+                                :current_type="current_type"
                             />
                         </td>
                         <td class="two-letters">金额</td>
@@ -87,12 +88,14 @@
                         <td>
                             <VolumeOuter
                                 :val="socketData.volume_outer"
+                                :current_type="current_type"
                             ></VolumeOuter>
                         </td>
                         <td class="two-letters">内盘</td>
                         <td>
                             <VolumeInner
                                 :val="socketData.volume_inner"
+                                :current_type="current_type"
                             />
                         </td>
                     </tr>
@@ -258,13 +261,13 @@ export default {
 
                     this.socketData.avg_price = data.avg_price
                     this.socketData.quantity_ratio = data.quantity_ratio
-                    this.socketData.volume = data.volume ? data.volume / 100 : data.volume
+                    this.socketData.volume = data.volume
                     this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
                     this.socketData.high_price = data.high_price
                     this.socketData.low_price = data.low_price
                     this.socketData.open_price = data.open_price
-                    this.socketData.volume_outer = data.volume_outer ? data.volume_outer / 100 : data.volume_outer
-                    this.socketData.volume_inner = data.volume_inner ? data.volume_inner / 100 : data.volume_inner
+                    this.socketData.volume_outer = data.volume_outer
+                    this.socketData.volume_inner = data.volume_inner
 
                     // 回购
                     this.is_buy_back =  Array.isArray(data.category) ? data.category.includes(3) : false
@@ -289,15 +292,6 @@ export default {
             const transferData = Object.assign({}, data)
             if (transferData.turnover) {
                 transferData.turnover = transferData.turnover * 10000
-            }
-            if (transferData.volume) {
-                transferData.volume = transferData.volume / 100
-            }
-            if (transferData.volume_outer) {
-                transferData.volume_outer = transferData.volume_outer / 100
-            }
-            if (transferData.volume_inner) {
-                transferData.volume_inner = transferData.volume_inner / 100
             }
             // 继承推送数据
             this.socketData = Object.assign({}, this.socketData, transferData)

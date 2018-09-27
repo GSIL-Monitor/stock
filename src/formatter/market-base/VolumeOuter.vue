@@ -9,7 +9,7 @@ export default {
     ],
     computed: {
         formatter() {
-            return formatVolumeOuter(this.val, this.fields)
+            return formatVolumeOuter(this.val, this.fields, this.current_type)
         }
     },
 }

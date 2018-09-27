@@ -12,7 +12,7 @@ export default {
                 }
 
                 return o
-            }, {})
+            }, Object.create(null))
         },
         display() {
             return this.formatter.val

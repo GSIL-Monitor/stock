@@ -85,6 +85,7 @@
                     <td>
                         <Volume
                             :val="socketData.volume"
+                            :current_type="current_type"
                         />
                     </td>
                     <td

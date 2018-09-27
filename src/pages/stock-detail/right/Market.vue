@@ -59,6 +59,7 @@
                     <td>
                         <Volume
                             :val="socketData.volume"
+                            :current_type="current_type"
                         />
                     </td>
                     <td class="two-letters">金额</td>
@@ -304,7 +305,7 @@ export default {
                     this.socketData.price_change = data.change_value
                     this.socketData.price_change_rate = data.change_rate
 
-                    this.socketData.volume = data.volume ? data.volume / 100 : data.volume
+                    this.socketData.volume = data.volume
                     this.socketData.turnover = data.turnover ? data.turnover * 10000 : data.turnover
                     this.socketData.high_price = data.high_price
                     this.socketData.low_price = data.low_price
@@ -334,9 +335,6 @@ export default {
             const transferData = Object.assign({}, data)
             if (transferData.turnover) {
                 transferData.turnover = transferData.turnover * 10000
-            }
-            if (transferData.volume) {
-                transferData.volume = transferData.volume / 100
             }
             // 继承推送数据
             this.socketData = Object.assign({}, this.socketData, transferData)

@@ -4,14 +4,23 @@
  * @return {object}
 */
 import {
+    formatNumber,
+    isClearCase,
+    getClearVal,
+    stockToType,
+} from '../utility.js'
+import {
     RED,
     GREEN,
 } from '../config/color-config.js'
 import {
-    formatNumber,
-    isClearCase,
-    getClearVal,
-} from '../utility.js'
+    ASTOCK,
+    SHBSTOCK,
+    SZBSTOCK,
+    FUND,
+    BOND,
+    INDEX,
+} from '../config/stock-type-config.js'
 
 const normal = (value, list, color) => {
     if (isClearCase(value, list)) {
@@ -25,12 +34,27 @@ const normal = (value, list, color) => {
     }
 }
 
-export const formatVolumeInner = (volume_inner, list) => {
+export const formatVolumeInner = (volume_inner, list, current_type) => {
     const color = GREEN
+    let type = current_type || stockToType(
+        list.source,
+        list.symbol_type,
+    )
+    if ([ASTOCK, SHBSTOCK, SZBSTOCK, FUND, BOND, INDEX].includes(type)) {
+        volume_inner = volume_inner / 100
+    }
+
     return normal(volume_inner, list, color)
 }
 
-export const formatVolumeOuter = (volume_outer, list) => {
+export const formatVolumeOuter = (volume_outer, list, current_type) => {
     const color = RED
+    let type = current_type || stockToType(
+        list.source,
+        list.symbol_type,
+    )
+    if ([ASTOCK, SHBSTOCK, SZBSTOCK, FUND, BOND, INDEX].includes(type)) {
+        volume_outer = volume_outer / 100
+    }
     return normal(volume_outer, list, color)
 }
