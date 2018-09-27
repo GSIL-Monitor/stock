@@ -1,6 +1,7 @@
 <template>
 <div
     class="info_wrap"
+    :class="wrapClasses"
 >
     <ul
         class="info_vessel"
@@ -70,11 +71,13 @@ import {
 } from './open-information.js'
 
 import informationItemMixin from '../mixins/information-item-mixin.js'
+import loaddingStyleMixin from '../mixins/loadding-style-mixin.js'
 
 export default {
     name: 'BigEvent',
     mixins: [
         informationItemMixin,
+        loaddingStyleMixin,
     ],
     created() {
         this.fetchData()
@@ -105,6 +108,7 @@ export default {
     },
     methods: {
         fetchData() {
+            this.addLoadding()
             const params = {
                 options: {
                     is_details: false,
@@ -122,6 +126,9 @@ export default {
                     if (Object.is(this.dataStore.length, 0)) {
                         this.noData = true
                     }
+                },
+                afterResponse: () => {
+                    this.removeLoadding()
                 },
             }
 

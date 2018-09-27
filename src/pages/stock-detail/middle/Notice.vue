@@ -1,6 +1,7 @@
 <template>
 <div
     class="info_wrap"
+    :class="wrapClasses"
 >
     <div
         class="info_vessel"
@@ -79,6 +80,7 @@ import {
 } from './open-information.js'
 
 import informationItemMixin from '../mixins/information-item-mixin.js'
+import loaddingStyleMixin from '../mixins/loadding-style-mixin.js'
 
 import reportAuth from '@c/reportAuth.vue'
 
@@ -86,6 +88,7 @@ export default {
     name: 'Notice',
     mixins: [
         informationItemMixin,
+        loaddingStyleMixin,
     ],
     created() {
         this.fetchData()
@@ -181,6 +184,7 @@ export default {
     },
     methods: {
         fetchData() {
+            this.addLoadding()
             let param = this.getParams
             let api = this.getApi
             const params = {
@@ -197,6 +201,9 @@ export default {
                     if (Object.is(this.dataStore.length, 0)) {
                         this.noData = true
                     }
+                },
+                afterResponse: () => {
+                    this.removeLoadding()
                 },
             }
             api(params)

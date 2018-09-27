@@ -108,3 +108,48 @@ img {
 .clearfix {
     .clearfix();
 }
+@loading-bg: var(--loading-bg);
+/*loading公共样式*/
+.loadingStyle {
+    position: relative;
+    min-height: 100px;
+  }
+  @keyframes loadingBg{
+      0% {
+      }
+      100% {
+        background-image: var(--loading-bg);
+      }
+    }
+  .loadingStyle:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    background-color: var(--color-card-background);
+    background-image: var(--loading-bg);
+    background-repeat: no-repeat;
+    background-position: 50% 30%;
+    height: 100%;
+    width: 100%;
+  }
+  .loadingStyleNobg {
+    position: relative;
+    min-height: 100px;
+  }
+  .loadingStyleNobg:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    background-repeat: no-repeat;
+    background-position: 50% 30%;
+    height: 100%;
+    width: 100%;
+    animation: loadingBg 0s 0.8s;
+    -webkit-animation: loadingBg 0s 0.8s;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+  }

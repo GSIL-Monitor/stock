@@ -1,4 +1,8 @@
 <template>
+<div
+    class="info_wrap"
+    :class="wrapClasses"
+>
     <ht-table
         :fields="fields"
         :config="config"
@@ -8,6 +12,7 @@
         @loadmore="loadMore"
         @clickTheadCell="sortChange"
         @indexChanged="indexChanged"
+
     >
         <span slot="index" slot-scope="scope">{{ scope.index + 1 }}</span>
         <template slot="code" slot-scope="scope">
@@ -80,6 +85,7 @@
             />
         </template>
     </ht-table>
+</div>
 </template>
 
 <script>
@@ -100,6 +106,8 @@ import {
 import {
     FRAME_TRADE_STOCK,
 } from '../storage.js'
+
+import loaddingStyleMixin from '../mixins/loadding-style-mixin.js'
 
 import htTable from '@c/htTable/index.vue'
 import StockCode from '@formatter/market-base/StockCode.vue'
@@ -221,6 +229,9 @@ const fieldData = () => {
 
 export default {
     name: 'TradeStocks',
+    mixins: [
+        loaddingStyleMixin,
+    ],
     props: {
         /**
          * @param {enmu} componentType trade | related
@@ -264,7 +275,8 @@ export default {
     },
     watch: {
         full_code() {
-
+            this.resetState()
+            this.fetchData()
         },
         componentType() {
 
@@ -334,11 +346,12 @@ export default {
         fetchTradeData() {
             let api = this.listTradeApi
             if (!api) { return false }
+            this.addLoadding()
             const params = {
                 options: {
                     order: this.sortOBJ.order,
                     order_type: this.sortOBJ.order_type,
-                    page: 1,
+                    page: this.page,
                     stock_code: this.stock_code,
                     rows: this.ROWS,
                     fields: this.isAStock ? 'fullcode;plate_code;sw_second_name' : 'fullcode',
@@ -353,6 +366,9 @@ export default {
                 },
                 callback1001: () => {
 
+                },
+                afterResponse: () => {
+                    this.removeLoadding()
                 },
             }
 
@@ -393,5 +409,7 @@ export default {
 </script>
 
 <style lang="less">
-
+.ht_table-fixed-head-container {
+    z-index: 2;
+}
 </style>

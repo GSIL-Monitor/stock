@@ -1,6 +1,7 @@
 <template>
 <div
     class="info_wrap"
+    :class="wrapClasses"
 >
     <ul
         class="info_vessel"
@@ -74,11 +75,13 @@ import {
 } from '../utility.js'
 
 import informationItemMixin from '../mixins/information-item-mixin.js'
+import loaddingStyleMixin from '../mixins/loadding-style-mixin.js'
 
 export default {
     name: 'InvestQA',
     mixins: [
         informationItemMixin,
+        loaddingStyleMixin,
     ],
     created() {
         this.fetchData()
@@ -100,6 +103,7 @@ export default {
     },
     methods: {
         fetchData() {
+            this.addLoadding()
             let param = {
                 options: {
                     stock_code: this.stock_code,
@@ -118,6 +122,9 @@ export default {
                     if (Object.is(this.dataStore.length, 0)) {
                         this.noData = true
                     }
+                },
+                afterResponse: () => {
+                    this.removeLoadding()
                 },
             }
             getInvestmentQAData(param)
