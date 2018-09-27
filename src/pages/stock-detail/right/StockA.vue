@@ -723,13 +723,11 @@ export default {
     },
     watch: {
         full_code() {
-            if (this.$parent.isAStock) {
-                this.loadIdentify = false
-                this.cancleSocket(this.linkIndex)
-                this.socketData = {}
-                this.nextResizeWindow()
-                this.getInfoData()
-            }
+            this.loadIdentify = false
+            this.cancleSocket(this.linkIndex)
+            this.socketData = {}
+            this.nextResizeWindow()
+            this.getInfoData()
         },
     },
 }

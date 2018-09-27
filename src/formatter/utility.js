@@ -109,7 +109,17 @@ export const formatNum = (val, num = 2) => {
 }
 
 /**
- * @description 金融字段处理
+ * @description 获取清空数据
+*/
+export const getClearVal = () => {
+    return {
+        val: '--',
+        color: DEFAULT,
+    }
+}
+
+/**
+ * @description 金融字段处理(包含异常处理)
  * @param {number} num
  * @param {boolean} isInteger
  * @return {string}
@@ -123,60 +133,90 @@ export const formatFigure = (num, isInteger) => {
 }
 
 /**
- * @description 获取清空数据
-*/
-export const getClearVal = () => {
-    return {
-        val: '--',
-        color: DEFAULT,
-    }
-}
-
-/**
- * @description 金融字段处理
- * @param {number} num
- * @param {boolean} isInteger
+ * @description 金融字段处理(正常数字)
+ * @param {number} num 第一个参数
+ * @param {boolean} isInteger 第二个参数
  * @return {string}
  */
-export const formatNumber = (num, isInteger) => {
-    const BASE_NUM = 10;
-    const THOUSAND_HUNDRED_MILLION = Math.pow(BASE_NUM, 11); // 1000亿
-    const TEN_BILLION = Math.pow(BASE_NUM, 10); // 100亿
-    const ONE_HUNDRED_BILLION = Math.pow(BASE_NUM, 8); // 1亿
-    const BILLION_1000 = Math.pow(BASE_NUM, 7); // 1000万
-    const MILLION = Math.pow(BASE_NUM, 6); // 100万
-    const HUNDRED_THOUSAND = Math.pow(BASE_NUM, 5); // 10万
-    const TEN_THOUSAND = Math.pow(BASE_NUM, 4); // 1万
-    const THOUSAND = Math.pow(BASE_NUM, 3); // 1千
-    num = Number(num)
-    let abs_num = Math.abs(num);
+export const formatNumber = (...args) => {
+    // 金融字段区间
+    const financialRange = () => {
+        const BASE_NUM = 10
+        const THOUSAND_HUNDRED_MILLION = Math.pow(BASE_NUM, 11) // 1000亿
+        const TEN_BILLION = Math.pow(BASE_NUM, 10) // 100亿
+        const ONE_HUNDRED_BILLION = Math.pow(BASE_NUM, 8); // 1亿
+        const BILLION_1000 = Math.pow(BASE_NUM, 7) // 1000万
+        const MILLION = Math.pow(BASE_NUM, 6) // 100万
+        const HUNDRED_THOUSAND = Math.pow(BASE_NUM, 5) // 10万
+        const TEN_THOUSAND = Math.pow(BASE_NUM, 4) // 1万
+        const THOUSAND = Math.pow(BASE_NUM, 3) // 1千
+        const SUFFIX_ONE_HANDRED_MILLION = '亿'
+        const SUFFIX_TEN_THOUSAND = '万'
 
-    if (abs_num >= THOUSAND_HUNDRED_MILLION) {
-        return (num / ONE_HUNDRED_BILLION).toFixed(0) + "亿";
-    } else if (abs_num >= TEN_BILLION) {
-        return (num / ONE_HUNDRED_BILLION).toFixed(1) + "亿";
-    } else if (abs_num >= ONE_HUNDRED_BILLION) {
-        return (num / ONE_HUNDRED_BILLION).toFixed(2) + "亿";
-    } else if (abs_num >= BILLION_1000) {
-        return (num / TEN_THOUSAND).toFixed(0) + "万";
-    } else if (abs_num >= MILLION) {
-        return (num / TEN_THOUSAND).toFixed(1) + "万";
-    } else if (abs_num >= HUNDRED_THOUSAND) {
-        return (num / TEN_THOUSAND).toFixed(2) + "万";
-    } else if (abs_num >= THOUSAND) {
-        return num.toFixed(0);
-    } else {
-        // 小于1000
-        if (isInteger) {
-            // 整数
-            return num.toFixed(0);
+        return [
+            {
+                min: THOUSAND_HUNDRED_MILLION, max: Infinity, suffix: SUFFIX_ONE_HANDRED_MILLION,
+                divider: ONE_HUNDRED_BILLION, fixed: 0,
+            },
+            {
+                min: TEN_BILLION, max: THOUSAND_HUNDRED_MILLION, suffix: SUFFIX_ONE_HANDRED_MILLION,
+                divider: ONE_HUNDRED_BILLION, fixed: 1,
+            },
+            {
+                min: ONE_HUNDRED_BILLION, max: TEN_BILLION, suffix: SUFFIX_ONE_HANDRED_MILLION,
+                divider: ONE_HUNDRED_BILLION, fixed: 2,
+            },
+            {
+                min: BILLION_1000, max: ONE_HUNDRED_BILLION, suffix: SUFFIX_TEN_THOUSAND,
+                divider: TEN_THOUSAND, fixed: 0,
+            },
+            {
+                min: MILLION, max: BILLION_1000, suffix: SUFFIX_TEN_THOUSAND,
+                divider: TEN_THOUSAND, fixed: 1,
+            },
+            {
+                min: HUNDRED_THOUSAND, max: MILLION, suffix: SUFFIX_TEN_THOUSAND,
+                divider: TEN_THOUSAND, fixed: 2,
+            },
+            {
+                min: THOUSAND, max: HUNDRED_THOUSAND, suffix: '',
+                divider: 1, fixed: 0,
+            },
+        ]
+    }
+
+    // 格式化方法
+    const format = (num, isInteger) => {
+        num = Number(num)
+        let abs_num = Math.abs(num)
+        const BASE_NUM = 10
+        const THOUSAND = Math.pow(BASE_NUM, 3) // 1千
+        if (abs_num < THOUSAND) {
+            if (isInteger) {
+                // 整数
+                return num.toFixed(0)
+            } else {
+                // 浮点型
+                const ONE_HUNDRED = Math.pow(BASE_NUM, 2) // 1百
+                if (abs_num < ONE_HUNDRED) {
+                    return num.toFixed(2)
+                } else if (num < THOUSAND) {
+                    return num.toFixed(1)
+                }
+            }
         } else {
-            // 浮点型
-            if (abs_num < 100) {
-                return num.toFixed(2);
-            } else if (num < THOUSAND) {
-                return num.toFixed(1);
+            let index = 0
+            const range = financialRange()
+            let rangeItem
+            while (rangeItem = range[index++]) {
+                if (abs_num >= rangeItem.min && abs_num < rangeItem.max) { break }
+            }
+            if (rangeItem) {
+                let result = (num / rangeItem.divider).toFixed(rangeItem.fixed)
+                return `${result}${rangeItem.suffix}`
             }
         }
     }
+
+    return format(...args)
 }

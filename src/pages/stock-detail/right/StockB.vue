@@ -502,12 +502,10 @@ export default {
     },
     watch: {
         full_code() {
-            if (this.$parent.isBStock) {
-                this.cancleSocket(this.linkIndex)
-                this.socketData = {}
-                this.nextResizeWindow()
-                this.getInfoData()
-            }
+            this.cancleSocket(this.linkIndex)
+            this.socketData = {}
+            this.nextResizeWindow()
+            this.getInfoData()
         },
     },
 }

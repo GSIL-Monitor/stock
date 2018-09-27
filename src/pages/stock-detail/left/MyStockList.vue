@@ -224,7 +224,7 @@ export default {
             this.group_data[0].sum += data ? 1 : -1
         },
         changeCurrentStock(event) {
-            const STEP = 150
+            const STEP = 200
             clearTimeout(this.clickTimer)
             this.clickTimer = setTimeout(() => {
                 let target = event.target
