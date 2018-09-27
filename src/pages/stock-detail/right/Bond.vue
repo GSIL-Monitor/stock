@@ -185,7 +185,6 @@ export default {
             is_buy_back: false, // 是否是回购 (回购无均价字段)
 
             symbol_type: null,
-            // stock_name: null,
             close_price: null,
         }
     },
@@ -236,7 +235,6 @@ export default {
                     }
                     this[STOCK_NAME](data.stock_name)
 
-                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type
 

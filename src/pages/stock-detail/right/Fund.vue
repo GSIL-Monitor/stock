@@ -201,7 +201,6 @@ export default {
             linkIndex: 0,
             socketData: {},
             symbol_type: null,
-            // stock_name: null,
             close_price: null,
             mark: false,
         }
@@ -252,7 +251,6 @@ export default {
                     }
                     this[STOCK_NAME](data.stock_name)
 
-                    // this.stock_name = data.stock_name
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type
 

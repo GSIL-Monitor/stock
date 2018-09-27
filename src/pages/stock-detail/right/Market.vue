@@ -218,7 +218,6 @@ export default {
             linkIndex: 0,
             socketData: {},
             symbol_type: null,
-            stock_name: null,
             close_price: null,
 
             loadOtherIndex: false,
@@ -252,6 +251,7 @@ export default {
             'stock_code',
             'full_code',
             'current_type',
+            'stock_name',
         ]),
         isImportantCode() {
             return ['930715','000905','000133','399006','399005','000009','000904','399001','000906','000132','000300','000001','000010','000903','000016'].includes(this.stock_code)
@@ -297,7 +297,6 @@ export default {
                 callback0: data => {
                     this[HSINDEX_CATEGORY](data.category)
                     this[STOCK_NAME](data.name)
-                    this.stock_name = data.name
                     this.symbol_type = data.symbol_type
                     this.close_price = data.close_price
 

@@ -363,7 +363,6 @@ export default {
             loadIdentify: false,
             socketData: {},
 
-            // stock_name: '',
             symbol_type: null,
             close_price: null,
             stock_type: null,
