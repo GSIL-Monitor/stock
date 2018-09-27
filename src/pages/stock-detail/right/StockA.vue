@@ -726,7 +726,7 @@ export default {
             if (this.$parent.isAStock) {
                 this.loadIdentify = false
                 this.cancleSocket(this.linkIndex)
-                // this.socketData = {}
+                this.socketData = {}
                 this.nextResizeWindow()
                 this.getInfoData()
             }

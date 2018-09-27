@@ -504,7 +504,7 @@ export default {
         full_code() {
             if (this.$parent.isBStock) {
                 this.cancleSocket(this.linkIndex)
-                // this.socketData = {}
+                this.socketData = {}
                 this.nextResizeWindow()
                 this.getInfoData()
             }

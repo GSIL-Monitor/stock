@@ -356,7 +356,7 @@ export default {
         full_code() {
             this.loadOtherIndex = false
             this.cancleSocket(this.linkIndex)
-            // this.socketData = {}
+            this.socketData = {}
             this.$nextTick(()=> {
                 this.resizeWindow()
             })

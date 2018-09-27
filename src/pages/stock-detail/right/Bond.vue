@@ -333,7 +333,7 @@ export default {
     watch: {
         full_code() {
             this.cancleSocket(this.linkIndex)
-            // this.socketData = {}
+            this.socketData = {}
             this.getInfoData()
         },
     },

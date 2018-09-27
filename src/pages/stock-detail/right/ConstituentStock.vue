@@ -231,6 +231,11 @@ export default {
             const data = JSON.parse(args)
             let start = data[0].index
             let len = data.length
+            data.forEach((element) => {
+                if (element.mcap) {
+                    element.mcap = element.mcap * 10000
+                }
+            })
 
             this.dataStore.splice(start, len, ...data)
         },
