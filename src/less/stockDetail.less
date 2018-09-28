@@ -240,3 +240,35 @@ body {
     padding: 0 20px;
     font-size: 18px;
 }
+
+.order_item_count {
+    border: 1px solid transparent;
+    @keyframes move_red {
+        from {
+            border-color: var(--color-stock-risebg-deep);
+            background-color: var(--color-stock-risebg-shallow);
+        }
+        to {
+            border-color: transparent;
+            background-color: var(--color-card-background);
+        }
+    }
+
+    @keyframes move_green {
+        from {
+            border-color: var(--color-stock-fallbg-deep);
+            background-color: var(--color-stock-fallbg-shallow);
+        }
+        to {
+            border-color: transparent;
+            background-color: var(--color-card-background);
+        }
+    }
+
+    &.bg-red {
+        animation: move_red .7s linear infinite;
+    }
+    &.bg-green {
+        animation: move_green .7s linear infinite;
+    }
+}

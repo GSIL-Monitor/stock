@@ -10,7 +10,10 @@
         >
             {{formatPrice.val}}
         </span>
-        <span class="order_item_count">
+        <span
+            class="order_item_count"
+            :class="animationClasses"
+        >
             {{volume_count}}
         </span>
         <span
@@ -41,7 +44,19 @@ export default {
     data() {
         return {
             handArr: [ASTOCK, SHBSTOCK, SZBSTOCK, FUND],
+            animationState: false,
         }
+    },
+    watch: {
+        now_diff(val, oldVal) {
+            if (val !== 0) {
+                this.animationState = true
+                const STEP = 600
+                setTimeout(() => {
+                    this.animationState = false
+                }, STEP)
+            }
+        },
     },
     computed: {
         // 转换成手为单位
@@ -75,6 +90,15 @@ export default {
         diffVolume() {
             return this.now_diff > 0 ? `+${this.now_diff}` :
                    this.now_diff < 0 ? this.now_diff : ''
+        },
+        startAnimation() {
+            return this.now_diff > 0 ? 'bg-red' :
+                   this.now_diff < 0 ? 'bg-green' : ''
+        },
+        animationClasses() {
+            return [
+                this.animationState && this.startAnimation
+            ]
         },
     },
     props: {

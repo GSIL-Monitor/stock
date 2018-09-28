@@ -192,7 +192,9 @@
     }
     //基础颜色
     --color-red: var(--color-rise-color); //涨 红色
+    @color-red: #ff2b48; //涨 红色
     --color-green: var(--color-fall-color); //跌 绿色
+    @color-green: #06B45F; //跌 绿色
     --color-blue: var(--color-blue-7); //可点击文字、当前栏目、股票名称 蓝色
     --color-danger: #ffa100; //图标标签 橘色
     --color-yellow: #FDBE41; //自选股   金色
@@ -799,4 +801,10 @@
     --table-bg-active: #fdc732;
     //** Border color for table and cell borders.
     --table-border-color: var(--color-boder-2); //#ddd
+
+    // stock-detail
+    --color-stock-risebg-deep: fade(@color-red, 20%);
+    --color-stock-risebg-shallow: fade(@color-red, 10%);
+    --color-stock-fallbg-deep: fade(@color-green, 20%);
+    --color-stock-fallbg-shallow: fade(@color-green, 10%);
 }
