@@ -185,7 +185,7 @@ export default {
                     element.classColor = ''
                 })
                 arr = null
-            }, 600)
+            }, 700)
         },
         receiveFrameData(d) {
             const data = JSON.parse(d)

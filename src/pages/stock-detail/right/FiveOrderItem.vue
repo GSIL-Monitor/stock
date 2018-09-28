@@ -51,7 +51,7 @@ export default {
         now_diff(val, oldVal) {
             if (val !== 0) {
                 this.animationState = true
-                const STEP = 600
+                const STEP = 700
                 setTimeout(() => {
                     this.animationState = false
                 }, STEP)
