@@ -32,6 +32,11 @@ export default {
                 return element.fullcode
             })
         },
+        tableClasses() {
+            return [
+                'trade-stock-table'
+            ]
+        },
     },
     watch: {
         full_code() {
@@ -109,7 +114,20 @@ export default {
 </script>
 
 <style lang="less">
-.ht_table-fixed-head-container {
-    z-index: 2;
+.trade-stock-table {
+    .ht_table-fixed-head-container {
+        z-index: 2;
+    }
+    .trade_related_click {
+        cursor: pointer;
+    }
+    .without-data:before{
+        width: 0;
+        height: 0;
+    }
+    .without-data:after{
+        content: '暂无同业股票';
+        margin-top: 0;
+    }
 }
 </style>

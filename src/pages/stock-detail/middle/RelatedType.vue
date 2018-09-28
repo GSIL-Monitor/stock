@@ -30,6 +30,11 @@ export default {
                 return element.full_code
             })
         },
+        tableClasses() {
+            return [
+                'related-stock-table'
+            ]
+        },
     },
     methods: {
         sortChange(...args) {
@@ -89,7 +94,20 @@ export default {
 </script>
 
 <style lang="less">
-.ht_table-fixed-head-container {
-    z-index: 2;
+.related-stock-table {
+    .ht_table-fixed-head-container {
+        z-index: 2;
+    }
+    .trade_related_click {
+        cursor: pointer;
+    }
+    .without-data:before{
+        width: 0;
+        height: 0;
+    }
+    .without-data:after{
+        content: '暂无关联品种';
+        margin-top: 0;
+    }
 }
 </style>

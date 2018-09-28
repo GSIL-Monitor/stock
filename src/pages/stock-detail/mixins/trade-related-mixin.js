@@ -30,7 +30,7 @@ const template = `<div
         :fixedColCount="3"
         @clickTheadCell="sortChange"
         @indexChanged="indexChanged"
-
+        :class="tableClasses"
     >
         <span slot="index" slot-scope="scope">{{ scope.index + 1 }}</span>
         <template slot="code" slot-scope="scope">
