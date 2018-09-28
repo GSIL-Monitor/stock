@@ -28,6 +28,7 @@
         <RelatedType/>
     </TabPane>
     <LoadMore
+        v-show="isShowMore"
         @on-click="moduleJump"
         slot="navNext"
     />
@@ -80,6 +81,9 @@ export default {
         ...mapState([
             'stock_code',
         ]),
+        isShowMore() {
+            return !Object.is(this.activeKey, this.related)
+        },
     },
     methods: {
         getQueryString() {
