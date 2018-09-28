@@ -44,9 +44,12 @@ const formatNormal = (price_change, bit) => {
 }
 
 const formatHKStock = (price_change, list) => {
+    let price = list.price
+
     if (
         price_change === '' ||
-        Object.is(String(list.price), '0') ||
+        !isNumber(price) ||
+        Object.is(String(price), '0') ||
         (Reflect.has(list, 'mark') && String(Reflect.get(list, 'mark')) === '1')
     ) {
         return getClearVal()

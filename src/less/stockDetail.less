@@ -241,6 +241,18 @@ body {
     font-size: 18px;
 }
 
+.ht-table-container table thead {
+    .sort-down-icon {
+        & > i {
+        border-top-color: var(--color-blue);
+        }
+    }
+    .sort-up-icon {
+        & > i {
+        border-bottom-color: var(--color-blue);
+        }
+    }
+}
 .order_item_count {
     border: 1px solid transparent;
     @keyframes move_red {

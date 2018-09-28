@@ -38,6 +38,9 @@
 import {
     mapState,
 } from 'vuex'
+import {
+    sendEvent,
+} from '@c/utils/callQt.js'
 
 import inforJumpMixin from '../mixins/information-jump-mixin.js'
 import informationMixin from '../mixins/information-mixin.js'
@@ -83,10 +86,18 @@ export default {
             let name = encodeURIComponent(this.stock_name)
             return `keyword=${name}&stockCode=${this.stock_code}&type=0&hk_stock=1&stockName=${name}`
         },
+        jumpStockMarket() {
+            const params = JSON.stringify({
+                hash: 'hk_stock'
+            })
+            sendEvent('stockMarket', 'stockMarketDetail', params, true)
+        },
         moduleJump() {
             if (Object.is(this.activeKey, this.news)) {
                 let type = 0
                 this.$_jumpInfoMore(type)
+            } else if (Object.is(this.activeKey, this.trade)) {
+                this.jumpStockMarket()
             }
         },
     },

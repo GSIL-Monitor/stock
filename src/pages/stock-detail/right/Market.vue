@@ -398,16 +398,6 @@ export default {
         /deep/ td {
             padding-left: 10px;
         }
-        /deep/ .sort-down-icon {
-            & > i {
-            border-top-color: var(--color-blue);
-            }
-        }
-        /deep/ .sort-up-icon {
-            & > i {
-            border-bottom-color: var(--color-blue);
-            }
-        }
     }
 }
 </style>
