@@ -582,7 +582,7 @@ export default {
                     data.tcap && (data.tcap = data.tcap * 10000)
                     data.turnover && (data.turnover = data.turnover * 10000)
                     data.turnover_rate && (data.turnover_rate = data.turnover_rate * 100)
-                    Reflect.deleteProperty(data, 'name')
+                    Reflect.deleteProperty(data, 'stock_name')
                     Reflect.deleteProperty(data, 'change_value')
                     Reflect.deleteProperty(data, 'change_rate')
                     Reflect.deleteProperty(data, 'industry_name')

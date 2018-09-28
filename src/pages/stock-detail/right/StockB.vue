@@ -270,6 +270,52 @@ import VolumeInner from '@formatter/market-base/VolumeInner.vue'
 import HighLimit from '@formatter/market-base/HighLimit.vue'
 import LowLimit from '@formatter/market-base/LowLimit.vue'
 
+const apiFields = [
+    'symbol_type',
+    'stock_type',
+    'close_price',
+    'negotiable_capital',
+    'mcap',
+    'capital',
+    'tcap',
+    'price',
+    'turnover',
+    'turnover_rate',
+    'volume',
+    'quantity_ratio',
+    'avg_price',
+    'amplitude',
+    'open_price',
+    'high_price',
+    'low_price',
+    'volume_outer',
+    'volume_inner',
+    'fullcode',
+]
+
+const fiveFields = [
+    'buy1_price',
+    'buy2_price',
+    'buy3_price',
+    'buy4_price',
+    'buy5_price',
+    'sell1_price',
+    'sell2_price',
+    'sell3_price',
+    'sell4_price',
+    'sell5_price',
+    'buy1_volume',
+    'buy2_volume',
+    'buy3_volume',
+    'buy4_volume',
+    'buy5_volume',
+    'sell1_volume',
+    'sell2_volume',
+    'sell3_volume',
+    'sell4_volume',
+    'sell5_volume',
+]
+
 export default {
     name: 'StockBTemp',
     mixins: [
@@ -293,7 +339,6 @@ export default {
             linkIndex: 0,
             symbol_type: null,
             stock_type: null,
-            // stock_name: null,
             close_price: null,
             mark: false,
             negotiable_capital: null,
@@ -383,6 +428,7 @@ export default {
             const params = {
                 options: {
                     stock_code: this.stock_code,
+                    fields: ['stock_name', 'industry_name', 'change_value', 'change_rate', ...apiFields, ...fiveFields].join(';'),
                 },
                 callback0: data => {
                     if (data.fullcode !== this.full_code) {
@@ -390,19 +436,22 @@ export default {
                     }
 
                     this[STOCK_NAME](data.stock_name)
-                    this.symbol_type = data.symbol_type
-                    this.stock_type = data.stock_type
 
+                    data.name = data.stock_name
                     data.price_change = data.change_value
                     data.price_change_rate = data.change_rate
                     data.mcap && (data.mcap = data.mcap * 10000)
                     data.capital && (data.capital = data.capital * 10000)
                     data.tcap && (data.tcap = data.tcap * 10000)
+                    data.negotiable_capital && (data.negotiable_capital = data.negotiable_capital * 10000)
                     data.turnover && (data.turnover = data.turnover * 10000)
                     data.turnover_rate && (data.turnover_rate = data.turnover_rate * 100)
+                    Reflect.deleteProperty(data, 'stock_name')
                     Reflect.deleteProperty(data, 'change_value')
                     Reflect.deleteProperty(data, 'change_rate')
 
+                    this.symbol_type = data.symbol_type
+                    this.stock_type = data.stock_type
                     this.close_price = data.close_price
                     this.negotiable_capital = data.negotiable_capital
                     this.mcap = data.mcap
@@ -433,8 +482,18 @@ export default {
                 return false
             }
 
+            const transferData = ['name', 'price_change', 'price_change_rate', ...apiFields, ...fiveFields].reduce(
+                (obj, element) => {
+                    if (Reflect.has(data, element)) {
+                        obj[element] = Reflect.get(data, element)
+                    }
+
+                    return obj
+                },
+                {}
+            )
+
             this.mark = false
-            const transferData = Object.assign({}, data)
             // 处理推送数据单位
             if (transferData.turnover) {
                 transferData.turnover = transferData.turnover * 10000
@@ -474,7 +533,7 @@ export default {
                     price_change: this.socketData.price_change,
                     volume: Math.floor(Math.round(data.transaction_volume / 100)),
                     transaction_type: data.transaction_type,
-                    deal_count: this.socketData.deal_count,
+                    deal_count: data.deal_count,
                 }
                 this.$refs.transactionComponent.pushData(one)
             }
