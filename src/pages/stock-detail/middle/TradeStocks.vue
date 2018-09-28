@@ -35,7 +35,7 @@ export default {
     },
     watch: {
         full_code() {
-            this.resetState()
+            this.$_resetState()
             this.fetchData()
         },
     },
@@ -47,7 +47,7 @@ export default {
             let { field, canSort} = args[1]
             if (canSort) {
                 UnSubscriptSockets(FRAME_TRADE_STOCK)
-                this.sortNormal()
+                this.$_sortNormal()
             }
         },
         indexChanged(start, end) {
@@ -62,7 +62,7 @@ export default {
         fetchData() {
             let api = this.listTradeApi
             if (!api) { return false }
-            this.addLoadding()
+            this.$_addLoadding()
             const params = {
                 options: {
                     order: this.sortOBJ.order,
@@ -94,7 +94,7 @@ export default {
                     }
                 },
                 afterResponse: () => {
-                    this.removeLoadding()
+                    this.$_removeLoadding()
                 },
             }
 
@@ -102,10 +102,10 @@ export default {
         },
     },
     created() {
-        goGoal.event.listen(FRAME_TRADE_STOCK, this.receiveFrameData)
+        goGoal.event.listen(FRAME_TRADE_STOCK, this.$_receiveFrameData)
     },
     beforeDestroy() {
-        goGoal.event.remove(FRAME_TRADE_STOCK, this.receiveFrameData)
+        goGoal.event.remove(FRAME_TRADE_STOCK, this.$_receiveFrameData)
         UnSubscriptSockets(FRAME_TRADE_STOCK)
     },
 }

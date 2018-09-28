@@ -16,14 +16,14 @@ export default {
             'stock_code',
             'source',
         ]),
-        showCode() {
+        $_showCode() {
             return formatShowCode(this.stock_code, {
                 source: this.source,
             })
         },
     },
     methods: {
-        setBusyState(length) {
+        $_setBusyState(length) {
             if (length < this.ROWS) {
                 this.busy = true
             } else {
@@ -32,13 +32,13 @@ export default {
                 })
             }
         },
-        loadMore() {
+        $_loadMore() {
             // 滚动加载
             this.busy = true
             this.page++
             this.fetchData()
         },
-        resetState() {
+        $_resetState() {
             this.page = 1
             this.busy = true
             if (Object.is(this.noData, false)) {

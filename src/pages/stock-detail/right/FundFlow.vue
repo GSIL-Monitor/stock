@@ -84,8 +84,8 @@ export default {
     },
     created() {
         if (this.full_code) {
-            this.sendLink(this.linkAddress)
-            this.rememberLink(this.linkAddress, this.linkIndex)
+            this.$_sendLink(this.linkAddress)
+            this.$_rememberLink(this.linkAddress, this.linkIndex)
         }
         this.$eventBus.$on(SOCKET_A_FLOW, this.receiveSocketData)
     },
@@ -174,13 +174,13 @@ export default {
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_A_FLOW, this.receiveSocketData)
-        this.cancleSocket(this.linkIndex)
+        this.$_cancleSocket(this.linkIndex)
     },
     watch: {
         full_code() {
-            this.cancleSocket(this.linkIndex)
-            this.sendLink(this.linkAddress)
-            this.rememberLink(this.linkAddress, this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
+            this.$_sendLink(this.linkAddress)
+            this.$_rememberLink(this.linkAddress, this.linkIndex)
         },
     },
 }

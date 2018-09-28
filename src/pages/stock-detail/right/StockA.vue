@@ -240,10 +240,10 @@
             />
         </div>
         <AssociatedStock
-            @resizeWindow="resizeWindow"
+            @resizeWindow="$_resizeWindow"
         />
         <!-- 分笔、分价表、资金流向、短线精灵、简易财务 -->
-        <div class="detail_extend" :style="extendStyles" ref="detailExtend">
+        <div class="detail_extend" :style="$_extendStyles" ref="detailExtend">
             <SimpleFinancial v-if="bottomTabConfig.activeType === 'simple_finance'"/>
             <StockTransaction v-if="isTransationShow" ref="transactionComponent"/>
             <PricePoint v-if="bottomTabConfig.activeType === 'price_table'"/>
@@ -537,7 +537,7 @@ export default {
         ]),
         tapeDefaultChanged(key, val) {
             this[key] = val
-            this.nextResizeWindow()
+            this.$_nextResizeWindow()
         },
         bottomSwitch(key, val) {
             if (val === false) {
@@ -558,7 +558,7 @@ export default {
                     this.bottomHideList.splice(index, 1)
                 }
             }
-            this.nextResizeWindow()
+            this.$_nextResizeWindow()
         },
         getInfoData() {
             let param = {
@@ -595,14 +595,14 @@ export default {
                     this.pb_y1 = data.pb_y1
                     this.tcap = data.tcap
 
-                    this.setFiveOrderFields('buy', data)
-                    this.setFiveOrderFields('sell', data)
-                    this.resetDiff()
+                    this.$_setFiveOrderFields('buy', data)
+                    this.$_setFiveOrderFields('sell', data)
+                    this.$_resetDiff()
 
                     this.socketData = Object.assign({}, data)
 
-                    this.sendLink(this.linkAddress)
-                    this.rememberLink(this.linkAddress, this.linkIndex)
+                    this.$_sendLink(this.linkAddress)
+                    this.$_rememberLink(this.linkAddress, this.linkIndex)
                     // 获取基础属性信息
                     this.loadIdentify = true
                 },
@@ -616,7 +616,7 @@ export default {
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
                 this.mark = true
-                this.clearFiveOrder()
+                this.$_clearFiveOrder()
                 // 清空成交明细
                 if (this.isTransationShow) {
                     this.$refs.transactionComponent.clear()
@@ -662,11 +662,11 @@ export default {
             }
 
             // 计算五档 volume 差值
-            this.setDiffValue('buy')
-            this.setDiffValue('sell')
+            this.$_setDiffValue('buy')
+            this.$_setDiffValue('sell')
 
-            this.setFiveOrderFields('buy', this.socketData)
-            this.setFiveOrderFields('sell', this.socketData)
+            this.$_setFiveOrderFields('buy', this.socketData)
+            this.$_setFiveOrderFields('sell', this.socketData)
 
             // 成交明细
             if (this.isTransationShow && data.transaction_type && data.transaction_volume) {
@@ -745,7 +745,7 @@ export default {
         tapeSettings() {
             this.$eventBus.$emit('tapeSet')
         },
-        resizeWindow() {
+        $_resizeWindow() {
             let ele = this.$refs.detailExtend
             let tabs = this.$refs.tabs
             let top = ele.getBoundingClientRect().top
@@ -759,12 +759,12 @@ export default {
             this[TAPE_CONTENT] = 'market'
             this[TAPE_STYLE] = 'off'
             this.bottomHideList = []
-            this.nextResizeWindow()
+            this.$_nextResizeWindow()
         },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
-        this.cancleSocket(this.linkIndex)
+        this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
 
         this.$eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
@@ -774,9 +774,9 @@ export default {
     watch: {
         full_code() {
             this.loadIdentify = false
-            this.cancleSocket(this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
-            this.nextResizeWindow()
+            this.$_nextResizeWindow()
             this.getInfoData()
         },
     },

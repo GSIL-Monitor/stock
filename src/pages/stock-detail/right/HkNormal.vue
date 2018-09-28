@@ -174,7 +174,7 @@
     />
     <div
         class="detail_extend"
-        :style="extendStyles"
+        :style="$_extendStyles"
         ref="detailExtend"
     >
         <StockTransaction
@@ -324,8 +324,8 @@ export default {
 
                     this.socketData = Object.assign({}, data)
 
-                    this.sendLink(this.linkAddress)
-                    this.rememberLink(this.linkAddress, this.linkIndex)
+                    this.$_sendLink(this.linkAddress)
+                    this.$_rememberLink(this.linkAddress, this.linkIndex)
                     this.loadIdentify = true
                 },
             }
@@ -365,13 +365,13 @@ export default {
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
-        this.cancleSocket(this.linkIndex)
+        this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {
         full_code() {
             this.loadIdentify = false
-            this.cancleSocket(this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
             this.nextResizeWindow()
             this.getInfoData()

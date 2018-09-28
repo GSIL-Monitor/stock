@@ -20,7 +20,7 @@ import CommissionRate from '@formatter/market-base/CommissionRate.vue'
 
 const template = `<div
     class="info_wrap"
-    :class="wrapClasses"
+    :class="$_wrapClasses"
 >
     <ht-table
         :fields="fields"
@@ -28,7 +28,6 @@ const template = `<div
         :tableData="dataStore || []"
         :sortParams="sortOBJ"
         :fixedColCount="3"
-        @loadmore="loadMore"
         @clickTheadCell="sortChange"
         @indexChanged="indexChanged"
 
@@ -36,12 +35,15 @@ const template = `<div
         <span slot="index" slot-scope="scope">{{ scope.index + 1 }}</span>
         <template slot="code" slot-scope="scope">
             <StockCode
+                class="trade_related_click"
                 :val="scope.rowData.code"
                 :source="scope.rowData.source"
+                :is_defined="scope.rowData.is_defined"
             />
         </template>
         <template slot="name" slot-scope="scope">
             <StockName
+                class="trade_related_click"
                 :val="scope.rowData.name"
                 :is_defined="scope.rowData.is_defined"
                 :source="scope.rowData.source"
@@ -228,12 +230,6 @@ export default {
             'isHkStock',
         ]),
     },
-    watch: {
-        // full_code() {
-        //     this.resetState()
-        //     this.fetchData()
-        // },
-    },
     data() {
         return {
             dataStore: [],
@@ -265,41 +261,24 @@ export default {
             ].join(';'),
         }
     },
-    components: {
-        htTable,
-        StockCode,
-        StockName,
-        Price,
-        PriceChange,
-        PriceChangeRate,
-        Volume,
-        Turnover,
-        TurnoverRate,
-        Amplitude,
-        QuantityRatio,
-        CommissionRate,
-    },
     methods: {
-        loadMore() {
-
-        },
-        resetState() {
+        $_resetState() {
             this.page = 1
             this.noData = false
             this.dataStore = []
             this.apiData = []
         },
-        sortNormal(field) {
+        $_sortNormal(field) {
             if (Object.is(field, this.sortOBJ.order)) {
                 this.sortOBJ.order_type = Object.is(this.sortOBJ.order_type, 1) ? -1 : 1
             } else {
                 this.sortOBJ.order_type = -1
                 this.sortOBJ.order = field
             }
-            this.resetState()
+            this.$_resetState()
             this.fetchData()
         },
-        receiveFrameData(args) {
+        $_receiveFrameData(args) {
             const data = JSON.parse(args)
             data.forEach((element) => {
                 let index = element.index
@@ -313,6 +292,20 @@ export default {
                 this.dataStore.splice(index, 1, element)
             })
         },
+    },
+    components: {
+        htTable,
+        StockCode,
+        StockName,
+        Price,
+        PriceChange,
+        PriceChangeRate,
+        Volume,
+        Turnover,
+        TurnoverRate,
+        Amplitude,
+        QuantityRatio,
+        CommissionRate,
     },
     created() {
         this.fetchData()

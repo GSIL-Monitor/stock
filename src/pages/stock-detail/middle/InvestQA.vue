@@ -1,12 +1,12 @@
 <template>
 <div
     class="info_wrap"
-    :class="wrapClasses"
+    :class="$_wrapClasses"
 >
     <ul
         class="info_vessel"
         v-show="dataStore.length"
-        v-infinite-scroll="loadMore"
+        v-infinite-scroll="$_loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
@@ -103,7 +103,7 @@ export default {
     },
     methods: {
         fetchData() {
-            this.addLoadding()
+            this.$_addLoadding()
             let param = {
                 options: {
                     stock_code: this.stock_code,
@@ -115,7 +115,7 @@ export default {
                         element.reply_time = subDate(element.reply_time)
                     })
                     this.dataStore = this.dataStore.concat(data)
-                    this.setBusyState(data.length)
+                    this.$_setBusyState(data.length)
                 },
                 callback1001: () => {
                     this.busy = true
@@ -124,7 +124,7 @@ export default {
                     }
                 },
                 afterResponse: () => {
-                    this.removeLoadding()
+                    this.$_removeLoadding()
                 },
             }
             getInvestmentQAData(param)
@@ -132,7 +132,7 @@ export default {
     },
     watch: {
         full_code() {
-            this.resetState()
+            this.$_resetState()
             this.fetchData()
         },
     },

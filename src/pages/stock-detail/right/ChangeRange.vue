@@ -56,8 +56,8 @@ export default {
     ],
     created() {
         this.$eventBus.$on(SOCKET_RANGE_SCOPE, this.receiveSocketData)
-        this.sendLink(this.linkAddress)
-        this.rememberLink(this.linkAddress, this.linkIndex)
+        this.$_sendLink(this.linkAddress)
+        this.$_rememberLink(this.linkAddress, this.linkIndex)
     },
     data() {
         return {
@@ -296,7 +296,7 @@ export default {
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_RANGE_SCOPE, this.receiveSocketData)
-        this.cancleSocket(this.linkIndex)
+        this.$_cancleSocket(this.linkIndex)
     },
 }
 </script>

@@ -278,7 +278,7 @@ export default {
         ...mapActions({
             getIndexData: GET_HS_INDEX_MARKET_DATA,
         }),
-        resizeWindow() {
+        $_resizeWindow() {
             let $panes = this.$refs.marketDetailTabs.$refs.panes
             let top = $panes.getBoundingClientRect().top
             let tabHeight = this.$refs.marketDetailTabs.$refs.navWrap.offsetHeight
@@ -311,8 +311,8 @@ export default {
                 },
                 afterResponse: () => {
                     this.loadOtherIndex = true
-                    this.sendLink(this.linkAddress)
-                    this.rememberLink(this.linkAddress, this.linkIndex)
+                    this.$_sendLink(this.linkAddress)
+                    this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
@@ -345,11 +345,9 @@ export default {
     watch: {
         full_code() {
             this.loadOtherIndex = false
-            this.cancleSocket(this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
-            this.$nextTick(()=> {
-                this.resizeWindow()
-            })
+            this.$_nextResizeWindow()
             this.getInfoData()
         }
     },

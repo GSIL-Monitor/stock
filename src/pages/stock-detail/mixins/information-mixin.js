@@ -3,27 +3,27 @@ import {
 } from 'vuex'
 
 export default {
+    props: {
+        titleState: {
+            type: Boolean,
+            default: false,
+        },
+    },
     computed: {
         ...mapState([
             'infoState',
         ]),
     },
     methods: {
-        tabClicked(type) {
+        $_tabClicked(type) {
             if (Object.is(this.infoState, false)) {
                 const SHOW = true
-                this.changeContainerState(SHOW)
+                this.$_changeContainerState(SHOW)
             }
             this.activeKey = type
         },
-        changeContainerState(state) {
+        $_changeContainerState(state) {
             this.$eventBus.$emit('changeInfoState', state)
-        },
-    },
-    props: {
-        titleState: {
-            type: Boolean,
-            default: false,
         },
     },
 }

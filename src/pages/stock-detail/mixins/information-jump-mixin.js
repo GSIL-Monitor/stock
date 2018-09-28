@@ -19,14 +19,14 @@ export default {
         ]),
     },
     methods: {
-        getJumpParam(url) {
+        $_getJumpParam(url) {
             return {
                 url,
                 parentId: MODULE_NAME,
                 keyword: this.stock_code,
             }
         },
-        jumpInfoMore(type) {
+        $_jumpInfoMore(type) {
             let baseUrl = getUrlDomain()
             let query = this.getQueryString(type)
             let token = getToken()

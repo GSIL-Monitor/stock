@@ -225,8 +225,8 @@ export default {
                     }
                 },
                 afterResponse: () => {
-                    this.sendLink(this.linkAddress)
-                    this.rememberLink(this.linkAddress, this.linkIndex)
+                    this.$_sendLink(this.linkAddress)
+                    this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
             getShortLine(param)
@@ -281,22 +281,22 @@ export default {
         },
         shortFilterChanged(type) {
             this.type = type
-            this.cancleSocket(this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
             this.resetStockData()
         },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_SHORT_LINE, this.receiveSocketData)
-        this.cancleSocket(this.linkIndex)
+        this.$_cancleSocket(this.linkIndex)
         this.$eventBus.$off('shortFilterChanged', this.shortFilterChanged)
     },
     watch: {
         full_code() {
-            this.cancleSocket(this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
             this.resetStockData()
         },
         stock_only() {
-            this.cancleSocket(this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
             this.resetStockData()
         },
     },

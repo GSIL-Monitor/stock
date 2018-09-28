@@ -1,12 +1,12 @@
 <template>
 <div
     class="info_wrap"
-    :class="wrapClasses"
+    :class="$_wrapClasses"
 >
     <div
         class="info_vessel"
         v-show="dataStore.length"
-        v-infinite-scroll="loadMore"
+        v-infinite-scroll="$_loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
@@ -158,7 +158,7 @@ export default {
     },
     methods: {
         fetchData() {
-            this.addLoadding()
+            this.$_addLoadding()
             let param = this.getParams
             let api = this.getApi
             const params = {
@@ -168,7 +168,7 @@ export default {
                         element.create_date = formatInfoDate(element.create_date)
                     })
                     this.dataStore = this.dataStore.concat(data)
-                    this.setBusyState(data.length)
+                    this.$_setBusyState(data.length)
                 },
                 callback1001: () => {
                     this.busy = true
@@ -177,7 +177,7 @@ export default {
                     }
                 },
                 afterResponse: () => {
-                    this.removeLoadding()
+                    this.$_removeLoadding()
                 },
             }
             if (api) {
@@ -189,7 +189,7 @@ export default {
         },
         openContent(index, data) {
             index = index + 1
-            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.showCode})` : this.titleName
+            let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.$_showCode})` : this.titleName
             const param = {
                 position: index,
                 contentId: data.guid,
@@ -255,7 +255,7 @@ export default {
     },
     watch: {
         full_code() {
-            this.resetState()
+            this.$_resetState()
             this.fetchData()
         },
     },

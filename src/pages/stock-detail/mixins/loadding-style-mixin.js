@@ -6,10 +6,10 @@ export default {
         }
     },
     computed: {
-        isFirstLoadding() {
+        $_isFirstLoadding() {
             return Object.is(this.page, 1)
         },
-        wrapClasses() {
+        $_wrapClasses() {
             return [
                 {
                     loadingStyle: this.loadding,
@@ -18,13 +18,13 @@ export default {
         },
     },
     methods: {
-        addLoadding() {
-            if (this.isFirstLoadding) {
+        $_addLoadding() {
+            if (this.$_isFirstLoadding) {
                 this.loadding = true
             }
         },
-        removeLoadding() {
-            if (this.isFirstLoadding) {
+        $_removeLoadding() {
+            if (this.$_isFirstLoadding) {
                 this.loadding = false
             }
         }

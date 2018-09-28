@@ -4,14 +4,8 @@ export default {
             extendHeight: 200,
         }
     },
-    created() {
-        window.addEventListener('resize', this.resizeWindow)
-    },
-    mounted() {
-        this.resizeWindow()
-    },
     computed: {
-        extendStyles() {
+        $_extendStyles() {
             let height = this.extendHeight
             return {
                 height: `${height}px`,
@@ -19,19 +13,25 @@ export default {
         },
     },
     methods: {
-        resizeWindow() {
+        $_resizeWindow() {
             let top = this.$refs.detailExtend.getBoundingClientRect().top
             let residue = window.innerHeight - top
 
             this.extendHeight = residue
         },
-        nextResizeWindow() {
+        $_nextResizeWindow() {
             this.$nextTick(() => {
-                this.resizeWindow()
+                this.$_resizeWindow()
             })
         },
     },
+    created() {
+        window.addEventListener('resize', this.$_resizeWindow)
+    },
+    mounted() {
+        this.$_resizeWindow()
+    },
     beforeDestroy() {
-        window.removeEventListener('resize', this.resizeWindow)
+        window.removeEventListener('resize', this.$_resizeWindow)
     },
 }

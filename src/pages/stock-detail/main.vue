@@ -78,25 +78,6 @@ export default {
     mixins: [
         stockVerifyMixin,
     ],
-    beforeCreate() {
-        goGoal.detectSelectedTheme()
-        // 监听 hash 改变
-        window.onhashchange = event => {
-            let hash = location.hash.substr(1)
-            this.changeCurrentStockState(hash)
-        }
-    },
-    created() {
-        goGoal.ws.onmessage = this.socketOnMessage
-        goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
-        goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
-        goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
-        goGoal.event.listen(EVENT_CHANGE_STOCK, this.changeMystock)
-        this.$eventBus.$on(this.tapeSetName, this.changeTapeSetState)
-
-        this.initState()
-        this.init()
-    },
     data() {
         return {
             tapeState: false,
@@ -105,14 +86,6 @@ export default {
             client_id: null,
             keyBoardTimer: null,
         }
-    },
-    components: {
-        LeftTemplate,
-        MiddleTemplate,
-        RightTemplate,
-        TapeSet,
-        TransaFilter,
-        ShortElvesFilter,
     },
     computed: {
         ...mapState([
@@ -380,7 +353,7 @@ export default {
             }
         },
         changeCurrentStockState(hash) {
-            let type = this.enSureStockType(hash)
+            let type = this.$_enSureStockType(hash)
             this[CURRENT_TYPE](type)
 
             let info = this.getInfo(hash)
@@ -497,6 +470,33 @@ export default {
             this.$eventBus.$emit('refeatchMyStockGroup')
             this.$eventBus.$emit('revalidateIsMyStock')
         },
+    },
+    components: {
+        LeftTemplate,
+        MiddleTemplate,
+        RightTemplate,
+        TapeSet,
+        TransaFilter,
+        ShortElvesFilter,
+    },
+    beforeCreate() {
+        goGoal.detectSelectedTheme()
+        // 监听 hash 改变
+        window.onhashchange = event => {
+            let hash = location.hash.substr(1)
+            this.changeCurrentStockState(hash)
+        }
+    },
+    created() {
+        goGoal.ws.onmessage = this.socketOnMessage
+        goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
+        goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
+        goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
+        goGoal.event.listen(EVENT_CHANGE_STOCK, this.changeMystock)
+        this.$eventBus.$on(this.tapeSetName, this.changeTapeSetState)
+
+        this.initState()
+        this.init()
     },
     beforeDestroy() {
         // goGoal.ws.onmessage = null

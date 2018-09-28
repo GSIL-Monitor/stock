@@ -141,7 +141,7 @@
         />
         <div
             class="detail_extend"
-            :style="extendStyles"
+            :style="$_extendStyles"
             ref="detailExtend"
         >
             <StockTransaction
@@ -263,14 +263,14 @@ export default {
                     this.close_price = data.close_price
                     this.symbol_type = data.symbol_type
 
-                    this.setFiveOrderFields('buy', data)
-                    this.setFiveOrderFields('sell', data)
-                    this.resetDiff()
+                    this.$_setFiveOrderFields('buy', data)
+                    this.$_setFiveOrderFields('sell', data)
+                    this.$_resetDiff()
 
                     this.socketData = Object.assign({}, data)
 
-                    this.sendLink(this.linkAddress)
-                    this.rememberLink(this.linkAddress, this.linkIndex)
+                    this.$_sendLink(this.linkAddress)
+                    this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
             getFundData(params)
@@ -280,7 +280,7 @@ export default {
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
-                this.clearFiveOrder()
+                this.$_clearFiveOrder()
                 // 清空成交明细
                 this.$refs.transactionComponent.clear()
                 return false
@@ -296,11 +296,11 @@ export default {
             this.close_price = this.socketData.close_price
 
             // 计算五档 volume 差值
-            this.setDiffValue('buy')
-            this.setDiffValue('sell')
+            this.$_setDiffValue('buy')
+            this.$_setDiffValue('sell')
 
-            this.setFiveOrderFields('buy', this.socketData)
-            this.setFiveOrderFields('sell', this.socketData)
+            this.$_setFiveOrderFields('buy', this.socketData)
+            this.$_setFiveOrderFields('sell', this.socketData)
 
             if (data.transaction_type && data.transaction_volume) {
                 let one = {
@@ -317,12 +317,12 @@ export default {
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_FUND_MARKET, this.receiveSocketData)
-        this.cancleSocket(this.linkIndex)
+        this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {
         full_code() {
-            this.cancleSocket(this.linkIndex)
+            this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
             this.getInfoData()
         },

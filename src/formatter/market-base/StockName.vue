@@ -12,6 +12,23 @@ import { formatStockName } from '../format-data.js'
 
 export default {
     name: 'Name',
+    props: {
+        is_defined: { // 自选股变色
+            default: false,
+        },
+        val: {
+            required: true,
+        },
+        source: {
+            default: null,
+        },
+        symbol_type: {
+            default: null,
+        },
+        current_type: {
+            default: null,
+        },
+    },
     computed: {
         formatter() {
             let name = formatStockName(this.val, {
@@ -36,23 +53,6 @@ export default {
         },
         display() {
             return this.formatter.val
-        },
-    },
-    props: {
-        is_defined: { // 自选股变色
-            default: false,
-        },
-        val: {
-            required: true,
-        },
-        source: {
-            default: null,
-        },
-        symbol_type: {
-            default: null,
-        },
-        current_type: {
-            default: null,
         },
     },
 }

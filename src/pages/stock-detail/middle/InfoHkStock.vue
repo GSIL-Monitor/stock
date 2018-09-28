@@ -2,10 +2,10 @@
 <Tabs
     :activeKey="activeKey"
     active-style="underline"
-    @on-click="tabClicked"
+    @on-click="$_tabClicked"
 >
     <XqdownToUp
-        @on-click="changeContainerState"
+        @on-click="$_changeContainerState"
         slot="navPrev"
         :is-on="titleState"
     />
@@ -80,7 +80,7 @@ export default {
         moduleJump() {
             if (Object.is(this.activeKey, this.news)) {
                 let type = 0
-                this.jumpInfoMore(type)
+                this.$_jumpInfoMore(type)
             }
         },
     },

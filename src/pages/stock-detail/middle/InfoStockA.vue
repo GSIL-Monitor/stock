@@ -1,11 +1,11 @@
 <template>
 <Tabs
     :activeKey="activeKey"
-    @on-click="tabClicked"
+    @on-click="$_tabClicked"
     active-style="underline"
 >
     <XqdownToUp
-        @on-click="changeContainerState"
+        @on-click="$_changeContainerState"
         slot="navPrev"
         :is-on="titleState"
     />
@@ -159,17 +159,17 @@ export default {
         moduleJump() {
             if (this.isNewsActive) {
                 let type = 0
-                this.jumpInfoMore(type)
+                this.$_jumpInfoMore(type)
             } else if (this.isNoticeActive) {
                 this.jumpMoreNotice()
             } else if (this.isReportActive) {
                 this.jumpMoreReport()
             } else if (Object.is(this.activeKey, this.question)) {
                 let type = 3
-                this.jumpInfoMore(type)
+                this.$_jumpInfoMore(type)
             } else if (Object.is(this.activeKey, this.bigevent)) {
                 let type = 4
-                this.jumpInfoMore(type)
+                this.$_jumpInfoMore(type)
             } else if (Object.is(this.activeKey, this.trade)) {
                 this.jumpStockMarket()
             }

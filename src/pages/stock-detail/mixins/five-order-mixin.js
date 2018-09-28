@@ -100,12 +100,12 @@ export default {
         },
     },
     methods: {
-        clearFiveOrder() {
-            this.setFiveOrderFields('buy', {})
-            this.setFiveOrderFields('sell', {})
-            this.resetDiff()
+        $_clearFiveOrder() {
+            this.$_setFiveOrderFields('buy', {})
+            this.$_setFiveOrderFields('sell', {})
+            this.$_resetDiff()
         },
-        resetDiff() {
+        $_resetDiff() {
             for (let i = 1; i <= 5; i += 1) {
                 let buyPrefix = 'buy'
                 let sellPrefix = 'sell'
@@ -115,23 +115,23 @@ export default {
                 this[sellDiffField] = 0
             }
         },
-        volumeDiff(val, oldVal) {
+        $_volumeDiff(val, oldVal) {
             return Math.floor((val - oldVal) / 100)
         },
-        setDiffValue(prefix) {
+        $_setDiffValue(prefix) {
             for (let i = 1; i <= 5; i++) {
                 let priceFields = `${prefix}${i}_price`
                 let diffFields = `${prefix}${i}_diff`
                 let volumeFielfs = `${prefix}${i}_volume`
 
                 if (Object.is(this.socketData[priceFields], this[priceFields])) {
-                    this[diffFields] = this.volumeDiff(this.socketData[volumeFielfs], this[volumeFielfs])
+                    this[diffFields] = this.$_volumeDiff(this.socketData[volumeFielfs], this[volumeFielfs])
                 } else {
                     this[diffFields] = 0
                 }
             }
         },
-        setFiveOrderFields(prefix, data) {
+        $_setFiveOrderFields(prefix, data) {
             for (let i = 1; i <= 5; i += 1) {
                 let priceFields = `${prefix}${i}_price`
                 let volumeFielfs = `${prefix}${i}_volume`

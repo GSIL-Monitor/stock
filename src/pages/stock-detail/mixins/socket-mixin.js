@@ -1,21 +1,21 @@
 export default {
     methods: {
-        cancleSocket(index) {
+        $_cancleSocket(index) {
             let preLink = goGoal.sockets[index]
             if (preLink) {
-                this.sendLink(this.getCancelLinkAddress(preLink))
+                this.$_sendLink(this.$_getCancelLinkAddress(preLink))
             }
             goGoal.sockets[index] = null
         },
-        rememberLink(link, index) {
+        $_rememberLink(link, index) {
             goGoal.sockets[index] = link
         },
-        getCancelLinkAddress(address) {
+        $_getCancelLinkAddress(address) {
             let state = `|status:0`
 
             return address + state
         },
-        sendLink(link) {
+        $_sendLink(link) {
             if (goGoal.ws.readyState === 1) {
                 // OPEN
                 goGoal.ws.send(link)
