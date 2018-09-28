@@ -9,7 +9,7 @@ export default {
     ],
     computed: {
         formatter() {
-            return formatTurnover(this.val, this.fields)
+            return formatTurnover(this.val, this.$_fields)
         },
     },
 }

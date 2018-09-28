@@ -50,13 +50,12 @@ export default {
     mixins: [
         subMixin,
     ],
-    created() {
-        goGoal.event.listen(FRAME_RECENT_LIST, this.receiveRecentList)
-        goGoal.event.listen(FRAME_STOCK_COLOR, this.changeStockColor)
-        this.fetchRecentList()
-    },
-    components: {
-        StockItem,
+    watch: {
+        full_code() {
+            setTimeout(() => {
+                this.fetchRecentList()
+            }, 0)
+        },
     },
     computed: {
         ...mapState([
@@ -159,17 +158,18 @@ export default {
             }
         },
     },
+    components: {
+        StockItem,
+    },
+    created() {
+        goGoal.event.listen(FRAME_RECENT_LIST, this.receiveRecentList)
+        goGoal.event.listen(FRAME_STOCK_COLOR, this.changeStockColor)
+        this.fetchRecentList()
+    },
     beforeDestroy() {
         goGoal.event.remove(FRAME_RECENT_LIST, this.receiveRecentList)
         goGoal.event.remove(FRAME_STOCK_COLOR, this.changeStockColor)
         this.unSubScription(FRAME_RECENT_LIST)
-    },
-    watch: {
-        full_code() {
-            setTimeout(() => {
-                this.fetchRecentList()
-            }, 0)
-        },
     },
 }
 </script>

@@ -17,14 +17,14 @@ export default {
     },
     computed: {
         formatter() {
-            let name = formatShowCode(this.val, this.fields)
+            let name = formatShowCode(this.val, this.$_fields)
 
             return {
                 val: name,
                 color: '',
             }
         },
-        classes() {
+        $_classes() {
             let color = this.formatter.color
             let isMyStock = this.is_defined ? 'is-my-stock' : ''
 

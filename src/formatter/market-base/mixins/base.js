@@ -4,7 +4,7 @@ import {
 
 export default {
     computed: {
-        fields() {
+        $_fields() {
             return ['source', 'symbol_type', 'stock_type', 'mark', 'price'].reduce((o, ele) => {
                 let val = this[ele]
                 if (val !== null) {
@@ -14,17 +14,17 @@ export default {
                 return o
             }, Object.create(null))
         },
-        display() {
+        $_display() {
             return this.formatter.val
         },
-        classes() {
+        $_classes() {
             let color = this.formatter.color
 
             return [`${color}`, `${prefixCls}`]
         },
     },
-    template: `<span :class="classes">
-            {{display}}
+    template: `<span :class="$_classes">
+            {{$_display}}
          </span>`,
     props: {
         val: {

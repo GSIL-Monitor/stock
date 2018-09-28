@@ -9,7 +9,7 @@ export default {
     ],
     computed: {
         formatter() {
-            return formatAmplitude(this.val, this.fields)
+            return formatAmplitude(this.val, this.$_fields)
         }
     }
 }

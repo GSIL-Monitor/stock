@@ -9,7 +9,7 @@ export default {
     ],
     computed: {
         formatter() {
-            return formatCommissionRate(this.val, this.fields)
+            return formatCommissionRate(this.val, this.$_fields)
         },
     },
 }

@@ -30,9 +30,6 @@
 
     export default {
         name: 'Tabs',
-        mounted() {
-            this.updateNav()
-        },
         props: {
             activeKey: {
                 default: 0,
@@ -47,6 +44,11 @@
             average: {
                 type: Boolean,
                 default: false,
+            },
+        },
+        watch: {
+            activeKey(val) {
+                this.updateStatus()
             },
         },
         data() {
@@ -132,10 +134,8 @@
                 ]
             },
         },
-        watch: {
-            activeKey(val) {
-                this.updateStatus()
-            },
+        mounted() {
+            this.updateNav()
         },
     }
 </script>

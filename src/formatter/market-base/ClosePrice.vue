@@ -9,7 +9,7 @@ export default {
     mixins: [Base],
     computed: {
         formatter() {
-            return formatClosePrice(this.val, this.fields, this.current_type)
+            return formatClosePrice(this.val, this.$_fields, this.current_type)
         },
     },
 }

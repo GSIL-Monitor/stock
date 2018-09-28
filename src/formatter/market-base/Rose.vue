@@ -9,7 +9,7 @@ export default {
     ],
     computed: {
         formatter() {
-            return formatRose(this.val, this.fields)
+            return formatRose(this.val, this.$_fields)
         },
     },
 }

@@ -7,9 +7,17 @@ export default {
     mixins: [
         Base,
     ],
+    props: {
+        price_change: {
+            default: 0.
+        },
+        price: {
+
+        },
+    },
     computed: {
         params() {
-            let o = this.fields
+            let o = this.$_fields
             o.price_change = this.price_change
 
             return o
@@ -18,13 +26,5 @@ export default {
             return formatPriceChangeRate(this.val, this.params, this.current_type)
         },
     },
-    props: {
-        price_change: {
-            default: 0.
-        },
-        price: {
-
-        },
-    }
 }
 </script>

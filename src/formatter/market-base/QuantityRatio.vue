@@ -9,10 +9,8 @@ export default {
     ],
     computed: {
         formatter() {
-            return formatQuantityRatio(this.val, this.fields)
+            return formatQuantityRatio(this.val, this.$_fields)
         },
     },
-    props: {
-    }
 }
 </script>

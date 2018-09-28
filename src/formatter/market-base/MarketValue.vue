@@ -14,6 +14,9 @@ import { formatMarketValue } from '../format-data.js'
 
 export default {
     name: 'MarketValue',
+    props: [
+        'val'
+    ],
     data() {
         return {
             prefixCls,
@@ -34,8 +37,5 @@ export default {
             ]
         }
     },
-    props: [
-        'val'
-    ]
 }
 </script>

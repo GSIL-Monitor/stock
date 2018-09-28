@@ -7,7 +7,7 @@ export default {
     mixins: [Base],
     computed: {
         formatter() {
-            return formatFlat(this.val, this.fields)
+            return formatFlat(this.val, this.$_fields)
         },
     },
 }

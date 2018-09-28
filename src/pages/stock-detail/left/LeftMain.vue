@@ -58,11 +58,15 @@ import RecentVisit from './RecentVisit.vue'
 
 export default {
     name: 'Left',
-    created() {
-        window.addEventListener('resize', this.resizeWindow)
-    },
-    mounted() {
-        this.resizeWindow()
+    watch: {
+        current_type(value, oldValue) {
+            if (
+                Object.is(ASTOCK, oldValue)
+                && Object.is(this.recommendTags, this.leftActiveKey)
+            ) {
+                this[LEFT_SELECT_TAB](this.mystock)
+            }
+        },
     },
     data() {
         return {
@@ -89,13 +93,6 @@ export default {
             ]
         },
     },
-    components: {
-        Tabs,
-        TabPane,
-        StockTag,
-        MyStockList,
-        RecentVisit,
-    },
     methods: {
         ...mapMutations([
             LEFT_SELECT_TAB,
@@ -111,19 +108,23 @@ export default {
             $panes.style.height = residue + 'px'
         },
     },
+    components: {
+        Tabs,
+        TabPane,
+        StockTag,
+        MyStockList,
+        RecentVisit,
+    },
+    created() {
+        window.addEventListener('resize', this.resizeWindow)
+    },
+    mounted() {
+        this.resizeWindow()
+    },
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeWindow)
     },
-    watch: {
-        current_type(value, oldValue) {
-            if (
-                Object.is(ASTOCK, oldValue)
-                && Object.is(this.recommendTags, this.leftActiveKey)
-            ) {
-                this[LEFT_SELECT_TAB](this.mystock)
-            }
-        },
-    },
+
 }
 </script>
 

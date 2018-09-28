@@ -7,15 +7,15 @@ export default {
     mixins: [
         Base,
     ],
-    computed: {
-        formatter() {
-            return formatPriceChange(this.val, this.fields, this.current_type)
-        },
-    },
     props: {
         price: {
 
         }
-    }
+    },
+    computed: {
+        formatter() {
+            return formatPriceChange(this.val, this.$_fields, this.current_type)
+        },
+    },
 }
 </script>

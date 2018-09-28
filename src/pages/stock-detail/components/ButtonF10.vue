@@ -19,14 +19,14 @@ import DefaultBtn from './DefaultBtn.vue'
 
 export default {
     name: 'ButtonF10',
-    components: {
-        DefaultBtn,
-    },
     methods: {
         skipF10() {
             let hash = location.hash.substr(1)
             skipF10(hash, MODULE_NAME)
         },
+    },
+    components: {
+        DefaultBtn,
     },
 }
 </script>

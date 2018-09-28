@@ -11,17 +11,17 @@
 <script>
 export default {
     name: 'LoadMore',
-    methods: {
-        moreClick() {
-            this.$emit('on-click')
-        }
-    },
     props: {
         label: {
             type: String,
             default: '更多',
         },
-    }
+    },
+    methods: {
+        moreClick() {
+            this.$emit('on-click')
+        }
+    },
 }
 </script>
 

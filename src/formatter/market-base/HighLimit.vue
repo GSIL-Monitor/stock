@@ -9,7 +9,7 @@ export default {
     ],
     computed: {
         params() {
-            var o = this.fields
+            var o = this.$_fields
             if (this.stock_name) {
                 o.stock_name = this.stock_name
             }

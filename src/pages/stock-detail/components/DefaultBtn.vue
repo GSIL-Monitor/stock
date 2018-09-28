@@ -11,16 +11,16 @@
 <script>
 export default {
     name: "DefaultBtn",
-    methods: {
-        emitClick() {
-            this.$emit('on-click')
-        }
-    },
     props: {
         label: {
             type: String,
             default: '',
         },
+    },
+    methods: {
+        emitClick() {
+            this.$emit('on-click')
+        }
     },
 }
 </script>

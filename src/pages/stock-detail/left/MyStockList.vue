@@ -79,14 +79,6 @@ export default {
     mixins: [
         oneStockList,
     ],
-    created() {
-        if (this.myStockCache) {
-            goGoal.event.listen(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
-        }
-        this.$eventBus.$on('refeatchMyStockGroup', this.refeatchMyStockGroup)
-        this.$eventBus.$on('correctionData', this.correctionData)
-        this.fetchMyStockGroup()
-    },
     data() {
         return {
             groupTimeoutTimer: null,
@@ -95,9 +87,6 @@ export default {
             clickTimer: null,
             myStockCache: hasMyStockCache(),
         }
-    },
-    components: {
-        StockItem,
     },
     computed: {
         ...mapState([
@@ -249,6 +238,17 @@ export default {
                 }
             }, STEP)
         },
+    },
+    components: {
+        StockItem,
+    },
+    created() {
+        if (this.myStockCache) {
+            goGoal.event.listen(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
+        }
+        this.$eventBus.$on('refeatchMyStockGroup', this.refeatchMyStockGroup)
+        this.$eventBus.$on('correctionData', this.correctionData)
+        this.fetchMyStockGroup()
     },
     beforeDestroy() {
         if (this.myStockCache) {

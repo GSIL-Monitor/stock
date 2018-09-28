@@ -77,13 +77,12 @@ import StockName from '@formatter/market-base/StockName.vue'
 
 export default {
     name: 'StockItem',
-    components: {
-        Price,
-        PriceChange,
-        PriceChangeRate,
-        PriceChangeRate,
-        StockCode,
-        StockName,
+    props: {
+        item: {
+            type: Object,
+            required: true,
+            default: {},
+        },
     },
     computed: {
         ...mapState([
@@ -129,12 +128,13 @@ export default {
             ]
         },
     },
-    props: {
-        item: {
-            type: Object,
-            required: true,
-            default: {},
-        },
+    components: {
+        Price,
+        PriceChange,
+        PriceChangeRate,
+        PriceChangeRate,
+        StockCode,
+        StockName,
     },
 }
 </script>
