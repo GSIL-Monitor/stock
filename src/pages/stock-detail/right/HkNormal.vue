@@ -170,7 +170,7 @@
     />
     <AssociatedStock
         v-if="isHkStock"
-        @resizeWindow="resizeWindow"
+        @resizeWindow="$_resizeWindow"
     />
     <div
         class="detail_extend"
@@ -373,7 +373,7 @@ export default {
             this.loadIdentify = false
             this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
-            this.nextResizeWindow()
+            this.$_nextResizeWindow()
             this.getInfoData()
         },
     },

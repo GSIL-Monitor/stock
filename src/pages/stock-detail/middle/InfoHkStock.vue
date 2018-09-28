@@ -19,11 +19,13 @@
         label="同业股票"
         :type="trade"
     >
+        <TradeStocks/>
     </TabPane>
     <TabPane
         label="关联品种"
         :type="related"
     >
+        <RelatedType/>
     </TabPane>
     <LoadMore
         @on-click="moduleJump"
@@ -45,6 +47,8 @@ import TabPane from '../components/tab-pane/index.js'
 import LoadMore from '../components/LoadMore.vue'
 import XqdownToUp from '../components/XqdownToUp.vue'
 import News from './News.vue'
+import TradeStocks from './TradeStocks.vue'
+import RelatedType from './RelatedType.vue'
 
 export default {
     name: 'InfoHkStockTemp',
@@ -66,6 +70,8 @@ export default {
         LoadMore,
         XqdownToUp,
         News,
+        TradeStocks,
+        RelatedType,
     },
     computed: {
         ...mapState([

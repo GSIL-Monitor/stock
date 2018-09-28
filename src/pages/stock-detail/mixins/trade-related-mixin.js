@@ -48,6 +48,7 @@ const template = `<div
                 :is_defined="scope.rowData.is_defined"
                 :source="scope.rowData.source"
                 :symbol_type="scope.rowData.symbol_type"
+                :title="scope.rowData.name"
             />
         </template>
         <template slot="price" slot-scope="scope">
@@ -66,6 +67,7 @@ const template = `<div
                 :source="scope.rowData.source"
                 :symbol_type="scope.rowData.symbol_type"
                 :stock_type="scope.rowData.stock_type"
+                :price="scope.rowData.price"
             />
         </template>
         <template slot="price_change" slot-scope="scope">
@@ -74,6 +76,7 @@ const template = `<div
                 :source="scope.rowData.source"
                 :symbol_type="scope.rowData.symbol_type"
                 :stock_type="scope.rowData.stock_type"
+                :price="scope.rowData.price"
             />
         </template>
         <template slot="volume" slot-scope="scope">
@@ -219,17 +222,6 @@ export default {
         loaddingStyleMixin,
     ],
     template,
-    computed: {
-        ...mapState([
-            'stock_code',
-            'full_code',
-            'current_type',
-        ]),
-        ...mapGetters([
-            'isAStock',
-            'isHkStock',
-        ]),
-    },
     data() {
         return {
             dataStore: [],
@@ -261,6 +253,17 @@ export default {
             ].join(';'),
         }
     },
+    computed: {
+        ...mapState([
+            'stock_code',
+            'full_code',
+            'current_type',
+        ]),
+        ...mapGetters([
+            'isAStock',
+            'isHkStock',
+        ]),
+    },
     methods: {
         $_resetState() {
             this.page = 1
@@ -282,9 +285,6 @@ export default {
             const data = JSON.parse(args)
             data.forEach((element) => {
                 let index = element.index
-                if (element.volume) {
-                    element.volume = element.volume / 100
-                }
                 element.code = element.full_code.replace(element.source, '')
                 if (element.turnover) {
                     element.turnover = element.turnover * 10000
