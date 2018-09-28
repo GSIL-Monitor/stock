@@ -23,7 +23,7 @@ import {
 } from '../config/stock-type-config.js'
 
 const normal = (value, list, color) => {
-    if (isClearCase(value, list)) {
+    if (isClearCase(value, list) || Object.is(value, 0)) {
         return getClearVal()
     } else {
         let val = formatNumber(value, true)

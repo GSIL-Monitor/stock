@@ -83,7 +83,6 @@ import BigEvent from './BigEvent.vue'
 import TradeStocks from './TradeStocks.vue'
 import RelatedType from './RelatedType.vue'
 
-
 export default {
     name: 'InfoStockA',
     mixins: [
@@ -100,25 +99,14 @@ export default {
             bigevent: 'bigevent',
             trade: 'trade',
             related: 'related',
+            tradeCode: {},
         }
-    },
-    components: {
-        Tabs,
-        TabPane,
-        LoadMore,
-        XqdownToUp,
-        News,
-        Notice,
-        Report,
-        BigEvent,
-        InvestQA,
-        TradeStocks,
-        RelatedType,
     },
     computed: {
         ...mapState([
             'stock_code',
             'stock_name',
+            'full_code',
         ]),
         loadMoreLabel() {
             let prefix = '更多'
@@ -143,6 +131,24 @@ export default {
         isShowMore() {
             return !this.isRelatedActive
         },
+    },
+    watch: {
+        full_code() {
+            this.tradeCode = {}
+        },
+    },
+    components: {
+        Tabs,
+        TabPane,
+        LoadMore,
+        XqdownToUp,
+        News,
+        Notice,
+        Report,
+        BigEvent,
+        InvestQA,
+        TradeStocks,
+        RelatedType,
     },
     methods: {
         getQueryString(type) {
@@ -185,8 +191,25 @@ export default {
             sendEvent('reportCenter', 'searchReport', params, true)
         },
         jumpStockMarket() {
-
+            let plate_code = this.tradeCode.plate_code
+            if (!plate_code) {
+                alert('暂无申万二级行业')
+                return false
+            }
+            const params = JSON.stringify({
+                plate_code: plate_code
+            })
+            sendEvent('stockMarket', 'stockMarketDetail', params, true)
         },
+        changeTradeCode(obj) {
+            this.tradeCode = obj
+        },
+    },
+    created() {
+        this.$eventBus.$on('tradeCode', this.changeTradeCode)
+    },
+    beforeDestroy() {
+        this.$eventBus.$off('tradeCode', this.changeTradeCode)
     },
 }
 </script>

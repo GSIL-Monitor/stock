@@ -70,10 +70,16 @@ export default {
                     page: this.page,
                     stock_code: this.stock_code,
                     rows: this.ROWS,
-                    fields: this.isAStock ? 'fullcode;plate_code;sw_second_name' : 'fullcode',
+                    fields: this.isAStock ? 'fullcode;plate_code' : 'fullcode',
                 },
                 callback0: (data) => {
-                    this.apiData = data
+                    this.apiData = Object.freeze(data)
+                    if (this.isAStock) {
+                        this.$eventBus.$emit('tradeCode', {
+                            plate_code: data[0].plate_code,
+                        })
+                    }
+
                     this.dataStore = data.map((element, index) => {
                         return {
                             index: index,
@@ -81,7 +87,11 @@ export default {
                     })
                 },
                 callback1001: () => {
-
+                    if (this.isAStock) {
+                        this.$eventBus.$emit('tradeCode', {
+                            plate_code: null,
+                        })
+                    }
                 },
                 afterResponse: () => {
                     this.removeLoadding()
