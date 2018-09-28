@@ -6,15 +6,15 @@ import {
 } from './config/color-config.js'
 
 /**
- * @description 判断类型，总是返回一个有效的、全小写字符串
+ * @description 判断类型，返回一个有效的、全小写字符串
  * @return {string}
  */
 export const toType = obj => {
     return Object.prototype.toString
-        .call(obj)
-        .split(' ')[1]
-        .slice(0, -1)
-        .toLowerCase()
+                .call(obj)
+                .split(' ')[1]
+                .slice(0, -1)
+                .toLowerCase()
 }
 
 /**

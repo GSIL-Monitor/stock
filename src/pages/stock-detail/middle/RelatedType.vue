@@ -32,14 +32,11 @@ export default {
         },
     },
     methods: {
-        loadMore() {
-
-        },
         sortChange(...args) {
             let { field, canSort} = args[1]
             if (canSort) {
                 UnSubscriptSockets(FRAME_RELATED_STOCK)
-                this.$_sortNormal()
+                this.$_sortNormal(field)
             }
         },
         indexChanged(start, end) {
