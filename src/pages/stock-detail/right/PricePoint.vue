@@ -16,13 +16,13 @@
             </div>
             <PricePointSimple
                 v-else-if="isSimple"
-                :data="volume_list"
+                :chartData="volume_list"
                 :total_volume="total_volume"
                 :close_price="close_price"
             />
             <PricePointDetail
                 v-else
-                :data="volume_list"
+                :chartData="volume_list"
                 :total_volume="total_volume"
                 :close_price="close_price"
             />

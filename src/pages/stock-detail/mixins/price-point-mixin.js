@@ -4,7 +4,7 @@ import {
 
 export default {
     props: {
-        data: {
+        chartData: {
             type: Array,
             required: true,
             default() {

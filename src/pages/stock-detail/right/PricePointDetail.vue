@@ -4,7 +4,7 @@
             <chart
                 class="price_point_chart"
                 :auto-resize="true"
-                :options="chartOptions"
+                :manual-update="true"
                 :style="priceChartStyle"
                 ref="priceChart"
             ></chart>
@@ -20,12 +20,6 @@ export default {
     mixins: [
         Props,
     ],
-    created() {
-        this.calcChartHeight()
-        window.addEventListener('resize', this.calcChartHeight)
-    },
-    mounted() {
-    },
     data() {
         return {
             redColor: '#f51d27',
@@ -123,7 +117,7 @@ export default {
         getChartParams() {
             const sericeData = [[], []]
             const yData = []
-            ;[...this.data].reverse().forEach((element, index)=> {
+            ;[...this.chartData].reverse().forEach((element, index)=> {
                 yData.push(element.price.toFixed(2));
                 let volume = element.volume
                 let v1 = volume['1'] || 0
@@ -200,16 +194,25 @@ export default {
             }
             this.chartHeight = height
         },
-        // chartResize(event) {
-        //     console.log(this)
-        // },
-        setEchart() {
-
+         mergeOptions() {
+            this.$refs.priceChart.mergeOptions(this.chartOptions)
         },
+    },
+    created() {
+        this.calcChartHeight()
+        window.addEventListener('resize', this.calcChartHeight)
+    },
+    mounted() {
+        this.mergeOptions()
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.calcChartHeight)
     },
+    watch: {
+        chartData() {
+            this.mergeOptions()
+        },
+    }
 }
 </script>
 <style lang="less">

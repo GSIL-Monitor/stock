@@ -1,7 +1,7 @@
 <template>
     <ul>
         <li
-            v-for="(item, index) of data"
+            v-for="(item, index) of chartData"
             :key="index"
             :class="liClasses(item.price)"
         >
@@ -40,7 +40,7 @@ export default {
     ],
     computed: {
         sumArr() {
-            return this.data.map((element) => {
+            return this.chartData.map((element) => {
                 return Object.entries(element.volume).reduce((sum, n) => {
                     return sum += n[1]
                 }, 0)

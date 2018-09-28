@@ -13,8 +13,11 @@
 <script>
 export default {
     name: 'FundFlowPie',
-    mounted() {
-        this.mergeOptions()
+    props: {
+        pieData: {
+            type: Object,
+            required: true,
+        },
     },
     data() {
         return {
@@ -189,11 +192,8 @@ export default {
             this.$refs.mychart.mergeOptions(this.chartOptions)
         },
     },
-    props: {
-        pieData: {
-            type: Object,
-            required: true,
-        },
+    mounted() {
+        this.mergeOptions()
     },
     watch: {
         pieData() {
