@@ -328,8 +328,8 @@ export default {
     created() {
         this.initState()
 
-        this.$eventBus.$on(SOCKET_B_MARKET, this.receiveSocketData)
-        this.$eventBus.$on('tapeDefaultChanged', this.tapeDefaultChanged)
+        this.$_eventBus.$on(SOCKET_B_MARKET, this.receiveSocketData)
+        this.$_eventBus.$on('tapeDefaultChanged', this.tapeDefaultChanged)
 
         this.getInfoData()
     },
@@ -411,10 +411,10 @@ export default {
             this.$_nextResizeWindow()
         },
         tapeSettings() {
-            this.$eventBus.$emit('tapeSet')
+            this.$_eventBus.$emit('tapeSet')
         },
         emitDataChange(parentType, type) {
-            this.$eventBus.$emit('dataChanged', {
+            this.$_eventBus.$emit('dataChanged', {
                 parentType: parentType,
                 type,
                 changed: {
@@ -554,11 +554,11 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_B_MARKET, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_B_MARKET, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
 
-        this.$eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
+        this.$_eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
     },
     watch: {
         full_code() {

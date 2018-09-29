@@ -174,7 +174,7 @@ export default {
                     this.setLeftState(state)
                     // 行情图状态
                     if (sendState) {
-                        this.$eventBus.$emit('setKlineStyle', 'left', state)
+                        this.$_eventBus.$emit('setKlineStyle', 'left', state)
                     }
                 }
                 // 左侧选中设置为推荐标签
@@ -244,14 +244,14 @@ export default {
             if (data.left) {
                 let state = Object.is(data.left, 'true')
                 this.setLeftState(state)
-                this.$eventBus.$emit('setKlineStyle', 'left', state)
+                this.$_eventBus.$emit('setKlineStyle', 'left', state)
             } else if (data.right) {
                 let state = Object.is(data.right, 'true')
                 if (Object.is(state, false) && this.tapeState) {
                     this.changeTapeSetState()
                 }
                 this.setRightState(state)
-                this.$eventBus.$emit('setKlineStyle', 'right', state)
+                this.$_eventBus.$emit('setKlineStyle', 'right', state)
             } else if (data.fullScreen) {
                 let nextState = data.fullScreen
                 if (Object.is(nextState, 'true')) {
@@ -369,7 +369,7 @@ export default {
                 this.setJumpStoreState(data.jump)
                 if (Object.is(location.hash.substr(1), data.stock_code)) {
                     // 与之前相同的股票，设置 K 线图状态，不同的股票则等到full_code改变时设置
-                    this.$eventBus.$emit('setKlineTabs')
+                    this.$_eventBus.$emit('setKlineTabs')
                 }
             }
             // 触发 hashchange 事件
@@ -436,13 +436,13 @@ export default {
 
                 let receiveContent = JSON.parse(data.receive_content)
                 let requestContent = data.request_content
-                this.$eventBus.$emit(id, receiveContent, requestContent)
+                this.$_eventBus.$emit(id, receiveContent, requestContent)
             }
         },
         keyBoardSpace() {
             let state = !this.leftState
             this.setLeftState(state)
-            this.$eventBus.$emit('setKlineStyle', 'left', state)
+            this.$_eventBus.$emit('setKlineStyle', 'left', state)
         },
         keyBoardF10() {
 
@@ -467,8 +467,8 @@ export default {
             }, 50)
         },
         changeMystock(data) {
-            this.$eventBus.$emit('refeatchMyStockGroup')
-            this.$eventBus.$emit('revalidateIsMyStock')
+            this.$_eventBus.$emit('refeatchMyStockGroup')
+            this.$_eventBus.$emit('revalidateIsMyStock')
         },
     },
     components: {
@@ -489,7 +489,7 @@ export default {
     },
     created() {
         goGoal.ws.onmessage = this.socketOnMessage
-        this.$eventBus.$on(this.tapeSetName, this.changeTapeSetState)
+        this.$_eventBus.$on(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
@@ -500,7 +500,7 @@ export default {
     },
     beforeDestroy() {
         // goGoal.ws.onmessage = null
-        this.$eventBus.$off(this.tapeSetName, this.changeTapeSetState)
+        this.$_eventBus.$off(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.remove(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.remove(EVENT_KEY_BOARD, this.keyBoardEvent)

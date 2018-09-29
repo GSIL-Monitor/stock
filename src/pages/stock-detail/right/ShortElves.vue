@@ -85,8 +85,8 @@ export default {
     created() {
         this.initType()
         this.getInfo()
-        this.$eventBus.$on(SOCKET_SHORT_LINE, this.receiveSocketData)
-        this.$eventBus.$on('shortFilterChanged', this.shortFilterChanged)
+        this.$_eventBus.$on(SOCKET_SHORT_LINE, this.receiveSocketData)
+        this.$_eventBus.$on('shortFilterChanged', this.shortFilterChanged)
     },
     data() {
         return {
@@ -277,7 +277,7 @@ export default {
             }
         },
         filterLine() {
-            this.$eventBus.$emit('showShortLineFilter')
+            this.$_eventBus.$emit('showShortLineFilter')
         },
         shortFilterChanged(type) {
             this.type = type
@@ -286,9 +286,9 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_SHORT_LINE, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_SHORT_LINE, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
-        this.$eventBus.$off('shortFilterChanged', this.shortFilterChanged)
+        this.$_eventBus.$off('shortFilterChanged', this.shortFilterChanged)
     },
     watch: {
         full_code() {

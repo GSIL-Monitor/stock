@@ -228,7 +228,7 @@ export default {
         rightResizeMixin,
     ],
     created() {
-        this.$eventBus.$on(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
+        this.$_eventBus.$on(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
@@ -373,7 +373,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },

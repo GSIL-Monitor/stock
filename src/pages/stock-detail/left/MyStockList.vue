@@ -246,15 +246,15 @@ export default {
         if (this.myStockCache) {
             goGoal.event.listen(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
         }
-        this.$eventBus.$on('refeatchMyStockGroup', this.refeatchMyStockGroup)
-        this.$eventBus.$on('correctionData', this.correctionData)
+        this.$_eventBus.$on('refeatchMyStockGroup', this.refeatchMyStockGroup)
+        this.$_eventBus.$on('correctionData', this.correctionData)
         this.fetchMyStockGroup()
     },
     beforeDestroy() {
         if (this.myStockCache) {
             goGoal.event.remove(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
         }
-        this.$eventBus.$off('refeatchMyStockGroup', this.refeatchMyStockGroup)
+        this.$_eventBus.$off('refeatchMyStockGroup', this.refeatchMyStockGroup)
     },
 }
 </script>

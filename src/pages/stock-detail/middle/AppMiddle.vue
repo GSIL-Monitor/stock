@@ -49,7 +49,7 @@ import InfoHkStockTemp from './InfoHkStock.vue'
 export default {
     name: 'Middle',
     created() {
-        this.$eventBus.$on('changeInfoState', this.changeInfoState)
+        this.$_eventBus.$on('changeInfoState', this.changeInfoState)
     },
     computed: {
         ...mapState([
@@ -84,7 +84,7 @@ export default {
         ]),
         changeInfoState(state) {
             this[INFO_STATE](state)
-            this.$eventBus.$emit('setKlineStyle', 'bottom', state)
+            this.$_eventBus.$emit('setKlineStyle', 'bottom', state)
             setInfoState(state)
         },
     },

@@ -87,7 +87,7 @@ export default {
             this.$_sendLink(this.linkAddress)
             this.$_rememberLink(this.linkAddress, this.linkIndex)
         }
-        this.$eventBus.$on(SOCKET_A_FLOW, this.receiveSocketData)
+        this.$_eventBus.$on(SOCKET_A_FLOW, this.receiveSocketData)
     },
     computed: {
         ...mapState([
@@ -173,7 +173,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_A_FLOW, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_A_FLOW, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
     },
     watch: {

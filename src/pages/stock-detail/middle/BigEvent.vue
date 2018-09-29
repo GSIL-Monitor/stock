@@ -127,11 +127,12 @@ export default {
                         this.noData = true
                     }
                 },
-                afterResponse: () => {
-                    this.$_removeLoadding()
-                },
             }
-
+            if (this.$_isFirstLoadding) {
+                params.afterResponse = () => {
+                    this.$_removeLoadding()
+                }
+            }
             getEventList(params)
         },
         formatDate(date) {

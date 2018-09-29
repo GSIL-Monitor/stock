@@ -50,7 +50,7 @@ const errorCodeArray = Reflect.ownKeys(handler).map(n => Number(n))
 
 // 拦截请求
 axios.interceptors.request.use(config => {
-    // 发起请求时，取消掉当前正在进行的相同请求
+    // 发起请求时，取消掉当前正在进行的相同请求(同一个 api 不验证参数)
     if (cancelArray.length) {
         cancelArray.forEach((canCelFunc) => {
             canCelFunc('Operation canceled by the user.')
@@ -76,29 +76,19 @@ axios.interceptors.response.use(response => {
     return Promise.resolve(error)
 })
 
-const handleDataResponse = ({
-    callback0 = () => {},
-    callback1001 = () => {},
-}) => {
-    return {
-        0: callback0,
-        1001: callback1001,
-    }
-}
-
 const dealResponseData = (data, param) => {
     const code = Reflect.get(data, 'code')
-    const handle = handleDataResponse(param)
+    const callback0 = 'callback0'
+    const callbac1001 = 'callbac1001'
     const completeName = 'afterResponse'
-    switch (code) {
-    case 0:
-        Reflect.get(handle, code)(Reflect.get(data, 'data'))
-        break
-    case 1001:
-        Reflect.get(handle, code)()
-        break
+
+    if (Object.is(code, 0) && Reflect.has(param, callback0)) {
+        Reflect.get(param, callback0)(Reflect.get(data, 'data'))
     }
-    if (typeof Reflect.get(param, completeName) === 'function') {
+    if (Object.is(code, 1001) && Reflect.has(param, callbac1001)) {
+        Reflect.get(param, callbac1001)()
+    }
+    if (Reflect.has(param, completeName)) {
         Reflect.get(param, completeName)()
     }
 }

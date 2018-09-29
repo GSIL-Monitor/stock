@@ -19,7 +19,7 @@ export default {
     methods: {
         icoClick() {
             let emitOn = !this.on
-            this.$eventBus.$emit('dataChanged', {
+            this.$_eventBus.$emit('dataChanged', {
                 parentType: this.parentType,
                 isList: true,
                 changed: [

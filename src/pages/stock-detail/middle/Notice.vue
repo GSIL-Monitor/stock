@@ -202,9 +202,11 @@ export default {
                         this.noData = true
                     }
                 },
-                afterResponse: () => {
+            }
+            if (this.$_isFirstLoadding) {
+                params.afterResponse = () => {
                     this.$_removeLoadding()
-                },
+                }
             }
             api(params)
         },

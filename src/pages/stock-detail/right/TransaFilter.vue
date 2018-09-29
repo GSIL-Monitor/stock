@@ -117,7 +117,7 @@ export default {
     },
     created() {
         this.getState()
-        this.$eventBus.$on('showTransationFilter', this.filterMethod)
+        this.$_eventBus.$on('showTransationFilter', this.filterMethod)
     },
     computed: {
         ...mapState(['current_type', 'full_code']),
@@ -205,7 +205,7 @@ export default {
             localStorage.setItem(LOCAL_TRANSATION_STORE, JSON.stringify(store))
         },
         emitData(o) {
-            this.$eventBus.$emit('transationFilter', o)
+            this.$_eventBus.$emit('transationFilter', o)
         },
         confirmPopUp() {
             if (this.activeType) {
@@ -228,7 +228,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off('showTransationFilter', this.filterMethod)
+        this.$_eventBus.$off('showTransationFilter', this.filterMethod)
     },
     components: {
         PopUp,

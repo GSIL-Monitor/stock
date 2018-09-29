@@ -55,7 +55,7 @@ export default {
         socketMixin,
     ],
     created() {
-        this.$eventBus.$on(SOCKET_RANGE_SCOPE, this.receiveSocketData)
+        this.$_eventBus.$on(SOCKET_RANGE_SCOPE, this.receiveSocketData)
         this.$_sendLink(this.linkAddress)
         this.$_rememberLink(this.linkAddress, this.linkIndex)
     },
@@ -295,7 +295,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_RANGE_SCOPE, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_RANGE_SCOPE, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
     },
 }

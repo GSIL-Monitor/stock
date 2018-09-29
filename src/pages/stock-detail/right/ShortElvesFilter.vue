@@ -28,7 +28,7 @@ export default {
     name: 'ShortElvesFilter',
     created() {
         this.initState()
-        this.$eventBus.$on('showShortLineFilter', this.filterMethod)
+        this.$_eventBus.$on('showShortLineFilter', this.filterMethod)
     },
     data() {
         return {
@@ -88,7 +88,7 @@ export default {
             // 保存当前状态
             this.setStore()
             // emit 数据
-            this.$eventBus.$emit('shortFilterChanged', this.localStore.join(';'))
+            this.$_eventBus.$emit('shortFilterChanged', this.localStore.join(';'))
             this.showFilter = false
         },
         filterMethod() {
@@ -113,7 +113,7 @@ export default {
         }
     },
     beforeDestroy() {
-        this.$eventBus.$off('showShortLineFilter', this.filterMethod)
+        this.$_eventBus.$off('showShortLineFilter', this.filterMethod)
     },
     watch: {
         full_code() {

@@ -391,10 +391,10 @@ export default {
         // 根据 localStorage 设置初始状态
         this.initState()
 
-        this.$eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
-        this.$eventBus.$on('tapeDefaultChanged', this.tapeDefaultChanged)
-        this.$eventBus.$on('bottomSwitch', this.bottomSwitch)
-        this.$eventBus.$on('resetTapeState', this.resetTapeState)
+        this.$_eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
+        this.$_eventBus.$on('tapeDefaultChanged', this.tapeDefaultChanged)
+        this.$_eventBus.$on('bottomSwitch', this.bottomSwitch)
+        this.$_eventBus.$on('resetTapeState', this.resetTapeState)
         if (this.stock_code) {
             this.getInfoData()
         }
@@ -702,7 +702,7 @@ export default {
             }
         },
         emitDataChange(parentType, type) {
-            this.$eventBus.$emit('dataChanged', {
+            this.$_eventBus.$emit('dataChanged', {
                 parentType: parentType,
                 type,
                 changed: {
@@ -742,7 +742,7 @@ export default {
             sendEvent('reportCenter', 'searchReport', params, true)
         },
         tapeSettings() {
-            this.$eventBus.$emit('tapeSet')
+            this.$_eventBus.$emit('tapeSet')
         },
         $_resizeWindow() {
             let ele = this.$refs.detailExtend
@@ -775,13 +775,13 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
 
-        this.$eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
-        this.$eventBus.$off('bottomSwitch', this.bottomSwitch)
-        this.$eventBus.$off('resetTapeState', this.resetTapeState)
+        this.$_eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
+        this.$_eventBus.$off('bottomSwitch', this.bottomSwitch)
+        this.$_eventBus.$off('resetTapeState', this.resetTapeState)
     },
     watch: {
         full_code() {

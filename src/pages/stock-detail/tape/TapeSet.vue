@@ -73,7 +73,7 @@ export default {
     created() {
         this.initState()
 
-        this.$eventBus.$on('dataChanged', (o) => {
+        this.$_eventBus.$on('dataChanged', (o) => {
             this.changed(o)
         })
     },
@@ -240,14 +240,14 @@ export default {
             if (Reflect.has(o, 'isList')) {
                 // function
                 let item = o.changed[0]
-                this.$eventBus.$emit('bottomSwitch', item.type, item.on)
+                this.$_eventBus.$emit('bottomSwitch', item.type, item.on)
             } else {
                 // default
-                this.$eventBus.$emit('tapeDefaultChanged', o.parentType, o.type)
+                this.$_eventBus.$emit('tapeDefaultChanged', o.parentType, o.type)
             }
         },
         tapeComplete() {
-            this.$eventBus.$emit('tapeSet')
+            this.$_eventBus.$emit('tapeSet')
         },
         tapeReset() {
             const resetDefault = {
@@ -268,7 +268,7 @@ export default {
             })
             localStorage.setItem(LOCAL_TAPE_SET_DFT, JSON.stringify(resetDefault))
             localStorage.setItem(LOCAL_TAPE_SET_FUNC, JSON.stringify([]))
-            this.$eventBus.$emit('resetTapeState')
+            this.$_eventBus.$emit('resetTapeState')
         },
     },
 

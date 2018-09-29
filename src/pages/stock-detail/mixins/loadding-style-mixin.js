@@ -24,9 +24,7 @@ export default {
             }
         },
         $_removeLoadding() {
-            if (this.$_isFirstLoadding) {
-                this.loadding = false
-            }
+            this.loadding = false
         }
     },
 }

@@ -22,7 +22,7 @@ export default {
             if (this.activeType === type) {
                 return false
             } else {
-                this.$eventBus.$emit('dataChanged', {
+                this.$_eventBus.$emit('dataChanged', {
                     parentType: this.type,
                     type,
                     changed: {

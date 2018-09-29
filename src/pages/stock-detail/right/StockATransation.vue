@@ -77,7 +77,7 @@ export default {
     name: 'StockTransation',
     created() {
         this.initStockState()
-        this.$eventBus.$on('transationFilter', this.filterParams)
+        this.$_eventBus.$on('transationFilter', this.filterParams)
         this.fetchData()
     },
     data() {
@@ -224,7 +224,7 @@ export default {
             this.fetchData()
         },
         filterTransation() {
-            this.$eventBus.$emit('showTransationFilter')
+            this.$_eventBus.$emit('showTransationFilter')
         },
         toDetailPage() {
             let hash = location.hash.substr(1)
@@ -292,7 +292,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off('transationFilter', this.filterParams)
+        this.$_eventBus.$off('transationFilter', this.filterParams)
     },
     watch: {
         full_code() {

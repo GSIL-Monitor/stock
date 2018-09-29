@@ -27,7 +27,7 @@ import DefaultBtn from '../components/DefaultBtn.vue'
 export default {
     name: 'IsMyStock',
     created() {
-        this.$eventBus.$on('revalidateIsMyStock', this.revalidateIsMyStock)
+        this.$_eventBus.$on('revalidateIsMyStock', this.revalidateIsMyStock)
         this.fetchData()
     },
     data() {
@@ -78,10 +78,10 @@ export default {
                 callback0: data => {
                     if (data.is_defined) {
                         this.setInMyStockState()
-                        this.$eventBus.$emit('setKlineStockAdd')
+                        this.$_eventBus.$emit('setKlineStockAdd')
                     } else {
                         this.setNotInMyStockState()
-                        this.$eventBus.$emit('setKlineStockDel')
+                        this.$_eventBus.$emit('setKlineStockDel')
                     }
                 },
             }
@@ -106,9 +106,9 @@ export default {
                     // 模块同步
                     syncMyStockState()
                     // 更新左侧状态
-                    this.$eventBus.$emit('correctionData', this.inMyStockList)
+                    this.$_eventBus.$emit('correctionData', this.inMyStockList)
                     // 发送事件到框架
-                    this.$eventBus.$emit('setKlineStockDel')
+                    this.$_eventBus.$emit('setKlineStockDel')
                 },
             }
 
@@ -130,9 +130,9 @@ export default {
                         // 模块同步
                         syncMyStockState()
                         // 更新左侧状态
-                        this.$eventBus.$emit('correctionData', this.inMyStockList)
+                        this.$_eventBus.$emit('correctionData', this.inMyStockList)
                         // 发送事件到框架
-                        this.$eventBus.$emit('setKlineStockAdd')
+                        this.$_eventBus.$emit('setKlineStockAdd')
                     }
                 },
             }
@@ -155,7 +155,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off('revalidateIsMyStock', this.revalidateIsMyStock)
+        this.$_eventBus.$off('revalidateIsMyStock', this.revalidateIsMyStock)
     },
     watch: {
         full_code() {

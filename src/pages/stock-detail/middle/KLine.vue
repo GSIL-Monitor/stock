@@ -19,10 +19,10 @@ import * as TYPE from '@formatter/config/stock-type-config.js'
 export default {
     name: 'KLine',
     created() {
-        this.$eventBus.$on('setKlineTabs', this.setKlineTabs)
-        this.$eventBus.$on('setKlineStyle', this.changeKlineState)
-        this.$eventBus.$on('setKlineStockAdd', this.setAddStock)
-        this.$eventBus.$on('setKlineStockDel', this.setDelStock)
+        this.$_eventBus.$on('setKlineTabs', this.setKlineTabs)
+        this.$_eventBus.$on('setKlineStyle', this.changeKlineState)
+        this.$_eventBus.$on('setKlineStockAdd', this.setAddStock)
+        this.$_eventBus.$on('setKlineStockDel', this.setDelStock)
     },
     mounted() {
         this.initKLine()
@@ -230,10 +230,10 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off('setKlineTabs', this.setKlineTabs)
-        this.$eventBus.$off('setKlineStyle', this.changeKlineState)
-        this.$eventBus.$off('setKlineStockAdd', this.setAddStock)
-        this.$eventBus.$off('setKlineStockDel', this.setDelStock)
+        this.$_eventBus.$off('setKlineTabs', this.setKlineTabs)
+        this.$_eventBus.$off('setKlineStyle', this.changeKlineState)
+        this.$_eventBus.$off('setKlineStockAdd', this.setAddStock)
+        this.$_eventBus.$off('setKlineStockDel', this.setDelStock)
     },
     watch: {
         full_code() {

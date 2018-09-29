@@ -203,7 +203,7 @@ export default {
     ],
     created() {
         this.initState()
-        this.$eventBus.$on(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
+        this.$_eventBus.$on(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
@@ -340,7 +340,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
     },
     watch: {
         full_code() {

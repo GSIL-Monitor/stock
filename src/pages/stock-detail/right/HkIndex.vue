@@ -124,7 +124,7 @@ import Turnover from '@formatter/market-base/Turnover.vue'
 export default {
     name: 'HkIndex',
     created() {
-        this.$eventBus.$on(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
+        this.$_eventBus.$on(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     mixins: [
@@ -234,7 +234,7 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$eventBus.$off(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
+        this.$_eventBus.$off(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
@@ -252,4 +252,3 @@ export default {
         justify-content: flex-end;
     }
 </style>
-

@@ -206,10 +206,10 @@ export default {
         },
     },
     created() {
-        this.$eventBus.$on('tradeCode', this.changeTradeCode)
+        this.$_eventBus.$on('tradeCode', this.changeTradeCode)
     },
     beforeDestroy() {
-        this.$eventBus.$off('tradeCode', this.changeTradeCode)
+        this.$_eventBus.$off('tradeCode', this.changeTradeCode)
     },
 }
 </script>

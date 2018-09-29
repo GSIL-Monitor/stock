@@ -23,7 +23,7 @@ export default {
             this.activeKey = type
         },
         $_changeContainerState(state) {
-            this.$eventBus.$emit('changeInfoState', state)
+            this.$_eventBus.$emit('changeInfoState', state)
         },
     },
 }
