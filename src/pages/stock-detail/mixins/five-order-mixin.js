@@ -101,8 +101,8 @@ export default {
     },
     methods: {
         $_clearFiveOrder() {
-            this.$_setFiveOrderFields('buy', {})
-            this.$_setFiveOrderFields('sell', {})
+            this.$_setFiveOrderFields('buy', Object.create(null))
+            this.$_setFiveOrderFields('sell', Object.create(null))
             this.$_resetDiff()
         },
         $_resetDiff() {

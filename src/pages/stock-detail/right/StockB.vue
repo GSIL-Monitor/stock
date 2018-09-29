@@ -540,6 +540,18 @@ export default {
                 this.$refs.transactionComponent.pushData(one)
             }
         },
+        resetComponent() {
+            this.$_cancleSocket(this.linkIndex)
+            this.socketData = {}
+            this.stock_type = null
+            this.close_price = null
+            this.negotiable_capital = null
+            this.mcap = null
+            this.capital = null
+            this.tcap = null
+            this.$_clearFiveOrder()
+            this.$_nextResizeWindow()
+        },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_B_MARKET, this.receiveSocketData)
@@ -550,9 +562,7 @@ export default {
     },
     watch: {
         full_code() {
-            this.$_cancleSocket(this.linkIndex)
-            this.socketData = {}
-            this.$_nextResizeWindow()
+            this.resetComponent()
             this.getInfoData()
         },
     },

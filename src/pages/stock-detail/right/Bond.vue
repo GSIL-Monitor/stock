@@ -300,6 +300,12 @@ export default {
                 this.$refs.transactionComponent.pushData(one)
             }
         },
+        resetComponent() {
+            this.$_cancleSocket(this.linkIndex)
+            this.socketData = {}
+            this.close_price = null
+            this.$_clearFiveOrder()
+        },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_BOND_MARKET, this.receiveSocketData)
@@ -308,14 +314,9 @@ export default {
     },
     watch: {
         full_code() {
-            this.$_cancleSocket(this.linkIndex)
-            this.socketData = {}
+            this.resetComponent()
             this.getInfoData()
         },
     },
 }
 </script>
-
-<style lang="less">
-
-</style>

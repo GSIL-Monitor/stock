@@ -362,6 +362,15 @@ export default {
                 this.$refs.transactionComponent.pushData(one)
             }
         },
+        resetComponent() {
+            this.loadIdentify = false
+            this.$_cancleSocket(this.linkIndex)
+            this.socketData = {}
+            this.close_price = null
+            this.symbol_type = null
+
+            this.$_nextResizeWindow()
+        },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
@@ -370,10 +379,7 @@ export default {
     },
     watch: {
         full_code() {
-            this.loadIdentify = false
-            this.$_cancleSocket(this.linkIndex)
-            this.socketData = {}
-            this.$_nextResizeWindow()
+            this.resetComponent()
             this.getInfoData()
         },
     },

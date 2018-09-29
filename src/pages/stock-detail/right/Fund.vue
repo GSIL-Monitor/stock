@@ -8,11 +8,11 @@
                         class="title_left_name"
                         :val="stock_name"
                         :current_type="current_type"
-                    ></StockName>
+                    />
                     <StockCode
                         class="title_left_code"
                         :val="stock_code"
-                    ></StockCode>
+                    />
                 </div>
             </div>
             <TitleTopMarket
@@ -314,6 +314,12 @@ export default {
                 this.$refs.transactionComponent.pushData(one)
             }
         },
+        resetComponent() {
+            this.$_cancleSocket(this.linkIndex)
+            this.socketData = {}
+            this.close_price = null
+            this.$_clearFiveOrder()
+        },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_FUND_MARKET, this.receiveSocketData)
@@ -322,14 +328,9 @@ export default {
     },
     watch: {
         full_code() {
-            this.$_cancleSocket(this.linkIndex)
-            this.socketData = {}
+            this.resetComponent()
             this.getInfoData()
         },
     },
 }
 </script>
-
-<style lang="less">
-
-</style>

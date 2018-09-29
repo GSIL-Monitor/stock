@@ -227,6 +227,11 @@ export default {
                 this.$refs.transactionComponent.pushData(one)
             }
         },
+        resetComponent() {
+            this.$_cancleSocket(this.linkIndex)
+            this.socketData = {}
+            this.close_price = null
+        },
     },
     beforeDestroy() {
         this.$eventBus.$off(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
@@ -235,8 +240,7 @@ export default {
     },
     watch: {
         full_code() {
-            this.$_cancleSocket(this.linkIndex)
-            this.socketData = {}
+            this.resetComponent()
             this.getInfoData()
         },
     },

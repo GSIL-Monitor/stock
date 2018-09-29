@@ -51,6 +51,9 @@
 import {
     evenRound,
 } from '@c/utils/util.js'
+import {
+    isNumber,
+} from '@formatter/utility.js'
 
 import FiveOrderItem from './FiveOrderItem.vue'
 
@@ -76,7 +79,7 @@ export default {
             let sum = buy_all + sell_all
             let buyRatio, sellRatio
 
-            if (sum !== 0) {
+            if (isNumber(sum) && sum !== 0) {
                 buyRatio = evenRound(buy_all / sum * 100)
                 sellRatio = evenRound(sell_all / sum * 100)
             } else {
