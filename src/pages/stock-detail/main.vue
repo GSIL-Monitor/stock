@@ -2,13 +2,13 @@
 <div
     class="root"
 >
-    <LeftTemplate
+    <AppLeft
         class="root_left"
     />
-    <MiddleTemplate
+    <AppMiddle
         class="root_main"
     />
-    <RightTemplate
+    <AppRight
         class="root_right"
     />
     <TapeSet
@@ -63,9 +63,9 @@ import {
 
 import stockVerifyMixin from './mixins/stock-verify-mixin.js'
 
-import LeftTemplate from './left/LeftMain.vue'
-import MiddleTemplate from './middle/MiddleMain.vue'
-import RightTemplate from './right/RightMain.vue'
+import AppLeft from './left/AppLeft.vue'
+import AppMiddle from './middle/AppMiddle.vue'
+import AppRight from './right/AppRight.vue'
 // 盘口设置
 import TapeSet from './tape/TapeSet.vue'
 // 成交明细过滤
@@ -472,9 +472,9 @@ export default {
         },
     },
     components: {
-        LeftTemplate,
-        MiddleTemplate,
-        RightTemplate,
+        AppLeft,
+        AppMiddle,
+        AppRight,
         TapeSet,
         TransaFilter,
         ShortElvesFilter,

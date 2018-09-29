@@ -3,7 +3,6 @@
         <thead>
             <tr
                 v-for="(item, index) of setTheadSlist"
-                v-if="item.data.length"
                 :key="index"
             >
                 <td>{{item.text}}</td>
@@ -22,9 +21,7 @@
         <tbody>
             <tr
                 v-for="(item, index) of setTbodySlist"
-                v-if="item.data.length"
                 :key="index"
-
             >
                 <td>{{item.text}}</td>
                 <td

@@ -3,27 +3,10 @@
         class="root_right"
         v-show="rightState"
     >
-        <StockATemp
-            v-if="isAStock"
-        />
-        <MarketTemp
-            v-else-if="isHSIndex"
-        />
-        <HkNormalTemp
-            v-else-if="isHkNormal"
-        />
-        <HkIndexTemp
-            v-else-if="isHkIndex"
-        />
-        <StockBTemp
-            v-else-if="isBStock"
-        />
-        <FundTemp
-            v-else-if="isFund"
-        />
-        <BondTemp
-            v-else-if="isBond"
-        />
+        <component
+            :is="currentView"
+        >
+        </component>
     </div>
 </template>
 
@@ -57,15 +40,16 @@ export default {
             'isHkIndex',
             'isHkNormal',
         ]),
-    },
-    components: {
-        StockATemp,
-        StockBTemp,
-        FundTemp,
-        BondTemp,
-        MarketTemp,
-        HkIndexTemp,
-        HkNormalTemp,
+        currentView() {
+            return this.isAStock ? StockATemp :
+                   this.isBStock ? StockBTemp :
+                   this.isFund ? FundTemp :
+                   this.isBond ? BondTemp :
+                   this.isHSIndex ? MarketTemp :
+                   this.isHkIndex ? HkIndexTemp :
+                   this.isHkNormal ? HkNormalTemp :
+                   StockATemp
+        },
     },
 }
 </script>

@@ -227,7 +227,6 @@
                             </td>
                         </tr>
                     </tbody>
-
                 </MarketInfo>
                 <ConsensusTable
                     v-if="detailInfo === 'entrust'"
