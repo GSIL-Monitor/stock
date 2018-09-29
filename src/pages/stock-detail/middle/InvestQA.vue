@@ -125,7 +125,7 @@ export default {
                 },
             }
             if (this.$_isFirstLoadding) {
-                params.afterResponse = () => {
+                param.afterResponse = () => {
                     this.$_removeLoadding()
                 }
             }

@@ -326,14 +326,6 @@ export const getHKSameIndustryStock = param => {
     return get(APIName, param)
 }
 
-// /**
-//  * @description 个股 -- 港股股票关联品种
-// */
-// export const getHKRelatedStock = param => {
-//     const APIName = 'v1/stock/get_associated_varieties'
-//     return get(APIName, param)
-// }
-
 /**
  * @description 个股 -- 判断传入日期是否是交易日
 */
