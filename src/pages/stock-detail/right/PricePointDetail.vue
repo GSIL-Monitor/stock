@@ -24,7 +24,7 @@ export default {
         return {
             redColor: '#f51d27',
             greenColor: '#29B81E',
-            chartHeight: 150
+            chartHeight: 150,
         }
     },
     computed: {

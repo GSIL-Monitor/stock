@@ -283,14 +283,14 @@ export default {
         },
         $_receiveFrameData(args) {
             const data = JSON.parse(args)
-            data.forEach((element) => {
+            for (let element of data) {
                 let index = element.index
                 element.code = element.full_code.replace(element.source, '')
                 if (element.turnover) {
                     element.turnover = element.turnover * 10000
                 }
                 this.dataStore.splice(index, 1, element)
-            })
+            }
         },
     },
     components: {
