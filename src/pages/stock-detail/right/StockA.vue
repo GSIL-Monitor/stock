@@ -239,7 +239,7 @@
             />
         </div>
         <AssociatedStock
-            @resizeWindow="$_resizeWindow"
+            @resize-window="$_resizeWindow"
         />
         <!-- 分笔、分价表、资金流向、短线精灵、简易财务 -->
         <div class="detail_extend" :style="$_extendStyles" ref="detailExtend">
@@ -250,9 +250,9 @@
             <ShortElves v-if="bottomTabConfig.activeType === 'short_line'"/>
         </div>
         <TabSwitch
-            :configArr="tabSwitchList.list"
-            :activeType="tabSwitchList.activeType"
-            @tabClick="changeBottomActiveTab"
+            :config-arr="tabSwitchList.list"
+            :active-type="tabSwitchList.activeType"
+            @on-click="changeBottomActiveTab"
             ref="tabs"
         />
     </div>

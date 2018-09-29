@@ -13,7 +13,7 @@
     />
     <TapeSet
         v-show="isShowTape"
-        :isHide="isBStock"
+        :is-hide="isBStock"
     />
     <TransaFilter/>
     <ShortElvesFilter/>
@@ -489,11 +489,11 @@ export default {
     },
     created() {
         goGoal.ws.onmessage = this.socketOnMessage
+        this.$eventBus.$on(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
         goGoal.event.listen(EVENT_CHANGE_STOCK, this.changeMystock)
-        this.$eventBus.$on(this.tapeSetName, this.changeTapeSetState)
 
         this.initState()
         this.init()
@@ -502,12 +502,9 @@ export default {
         // goGoal.ws.onmessage = null
         this.$eventBus.$off(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)
+        goGoal.event.remove(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.remove(EVENT_KEY_BOARD, this.keyBoardEvent)
         goGoal.event.remove(EVENT_CHANGE_STOCK, this.changeMystock)
     },
 }
 </script>
-
-<style lang="less">
-@import '~@less/stockDetail.less';
-</style>

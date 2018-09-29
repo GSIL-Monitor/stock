@@ -206,7 +206,9 @@
                 </MarketInfo>
             </div>
         </div>
-        <AssociatedStock/>
+        <AssociatedStock
+            @resize-window="$_resizeWindow"
+        />
         <div
             class="detail_extend"
             :style="$_extendStyles"

@@ -170,7 +170,7 @@
     />
     <AssociatedStock
         v-if="isHkStock"
-        @resizeWindow="$_resizeWindow"
+        @resize-window="$_resizeWindow"
     />
     <div
         class="detail_extend"

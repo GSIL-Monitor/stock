@@ -4,9 +4,9 @@
         v-show="leftState"
     >
         <Tabs
-            :activeKey="leftActiveKey"
+            :active-key="leftActiveKey"
             @on-click="tabClicked"
-            activeStyle="underline"
+            active-style="underline"
             ref="leftTabs"
         >
             <TabPane

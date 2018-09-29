@@ -26,7 +26,7 @@ import HkIndexTemp from './HkIndex.vue'
 import HkNormalTemp from './HkNormal.vue'
 
 export default {
-    name: 'RightMain',
+    name: 'Right',
     computed: {
         ...mapState([
             'rightState',

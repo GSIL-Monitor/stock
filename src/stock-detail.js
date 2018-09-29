@@ -12,17 +12,11 @@ import goGoal from './goGoal/index.js'
 import eventBus from './plugins/eventBus/index.js'
 
 import '@less/common/theme.less'
+import '@less/stockDetail.less'
 
 Vue.component('chart', Echarts)
 Vue.use(infiniteScroll)
 Vue.use(eventBus)
-
-// handle error
-// Vue.config.errorHandler = function (err, vm, info) {
-//     console.log("@ ", err)
-//     console.log("@@ ", vm)
-//     console.log("@@@ ", info)
-// }
 
 window.goGoal = goGoal
 goGoal.sockets = []

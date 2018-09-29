@@ -79,14 +79,11 @@ import PriceChangeRate from '@formatter/market-base/PriceChangeRate.vue'
 
 export default {
     name: 'AssociatedStock',
-    components: {
-        swiper,
-        swiperSlide,
-        Price,
-        PriceChangeRate,
-    },
-    created() {
-        this.fetchData()
+    watch: {
+        full_code() {
+            this.resetComponent()
+            this.fetchData()
+        },
     },
     data() {
         return {
@@ -212,7 +209,7 @@ export default {
         },
         resizeHeight() {
             this.$nextTick(() => {
-                this.$emit('resizeWindow')
+                this.$emit('resize-window')
             })
         },
         resetComponent() {
@@ -227,14 +224,17 @@ export default {
             }
         },
     },
+    components: {
+        swiper,
+        swiperSlide,
+        Price,
+        PriceChangeRate,
+    },
+    created() {
+        this.fetchData()
+    },
     beforeDestroy() {
         this.clearIntervalTimer()
-    },
-    watch: {
-        full_code() {
-            this.resetComponent()
-            this.fetchData()
-        },
     },
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
 <Tabs
-    :activeKey="activeKey"
+    :active-key="activeKey"
     active-style="underline"
     @on-click="$_tabClicked"
 >

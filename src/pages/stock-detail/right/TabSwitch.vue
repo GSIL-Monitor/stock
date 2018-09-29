@@ -5,7 +5,7 @@
             :key="item.type"
             :text="item.text"
             :type="item.type"
-            :isActive="item.type === activeType"
+            :is-active="item.type === activeType"
             :style="switchItemObj"
             @switch="switchTab"
         />
@@ -21,6 +21,17 @@ import TabSwitchItem from './TabSwitchItem.vue'
 
 export default {
     name: 'TabSwitch',
+    props: {
+        configArr: {
+            type: Array,
+            default() {
+                return []
+            },
+        },
+        activeType: {
+            type: String,
+        }
+    },
     computed: {
         getWidth() {
             return 100 / this.configArr.length
@@ -36,23 +47,12 @@ export default {
             if (type === this.activeType) {
                 return false
             }
-            this.$emit('tabClick', type)
+            this.$emit('on-click', type)
         },
     },
     components: {
         TabSwitchItem,
     },
-    props: {
-        configArr: {
-            type: Array,
-            default() {
-                return []
-            },
-        },
-        activeType: {
-            type: String,
-        }
-    }
 }
 </script>
 

@@ -118,7 +118,7 @@
             </MarketInfo>
         </div>
         <Tabs
-            :activeKey="activeKey"
+            :active-key="activeKey"
             average
             ref="marketDetailTabs"
             @on-click="tabClicked"

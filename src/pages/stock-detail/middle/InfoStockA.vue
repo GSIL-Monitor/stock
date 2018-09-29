@@ -1,8 +1,8 @@
 <template>
 <Tabs
-    :activeKey="activeKey"
-    @on-click="$_tabClicked"
+    :active-key="activeKey"
     active-style="underline"
+    @on-click="$_tabClicked"
 >
     <XqdownToUp
         @on-click="$_changeContainerState"
