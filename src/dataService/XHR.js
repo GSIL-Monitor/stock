@@ -7,6 +7,7 @@ import {
 const CancelToken = axios.CancelToken;
 const promiseList = {}
 const cancelArray = []
+const cancelMessage = 'Operation canceled by the user.'
 
 // axios default config
 axios.defaults.baseURL = '/api/'
@@ -53,7 +54,7 @@ axios.interceptors.request.use(config => {
     // 发起请求时，取消掉当前正在进行的相同请求(同一个 api 不验证参数)
     if (cancelArray.length) {
         cancelArray.forEach((canCelFunc) => {
-            canCelFunc('Operation canceled by the user.')
+            canCelFunc(cancelMessage)
         })
 
         cancelArray.length = 0
@@ -61,10 +62,12 @@ axios.interceptors.request.use(config => {
 
     return config
 }, error => {
-    return Promise.reject(error)
+    return Promise.resolve(error)
 })
 
-// 拦截响应
+/**
+ * 拦截响应
+*/
 axios.interceptors.response.use(response => {
     // 错误处理
     let code = response.data.code
@@ -79,7 +82,7 @@ axios.interceptors.response.use(response => {
 const dealResponseData = (data, param) => {
     const code = Reflect.get(data, 'code')
     const callback0 = 'callback0'
-    const callbac1001 = 'callbac1001'
+    const callbac1001 = 'callback1001'
     const completeName = 'afterResponse'
 
     if (Object.is(code, 0) && Reflect.has(param, callback0)) {
@@ -93,46 +96,53 @@ const dealResponseData = (data, param) => {
     }
 }
 
+const getRequestParams = (url, type, options) => {
+    const axiosParams = {
+        method: type,
+        cancelToken: new CancelToken(c => {
+            if (Reflect.has(promiseList, url)) {
+                cancelArray.push(promiseList[url])
+            }
+            promiseList[url] = c
+        }),
+    }
+
+    if (Object.is(type, 'get')) {
+        Object.assign(axiosParams, {
+            // url: `${url}?${qs.stringify(options)}`,
+            url,
+            params: options,
+        })
+    } else if (Object.is(type, 'post')) {
+        Object.assign(axiosParams, {
+            url,
+            data: qs.stringify(options),
+        })
+    }
+
+    return axiosParams
+}
+
 const promise = (url = '', param, type = 'get') => {
+    // sync await 数据请求失败报错不是 Promise 对象，用 Promise 包一层
     return new Promise((resolve, reject) => {
-        let options = Reflect.get(param, 'options')
-
-        const axiosParams = {
-            method: type,
-            cancelToken: new CancelToken(c => {
-                if (Reflect.has(promiseList, url)) {
-                    cancelArray.push(promiseList[url])
-                }
-                promiseList[url] = c
-            }),
-        }
-
-        if (Object.is(type, 'get')) {
-            Object.assign(axiosParams, {
-                // url: `${url}?${qs.stringify(options)}`,
-                url,
-                params: options,
-            })
-        } else if (Object.is(type, 'post')) {
-            Object.assign(axiosParams, {
-                url,
-                data: qs.stringify(options),
-            })
-        }
+        const options = Reflect.get(param, 'options')
+        const axiosParams = getRequestParams(url, type, options)
 
         axios(axiosParams)
             .then(response => {
-                if (!response) return
-                let data = Reflect.get(response, 'data')
-                // 被取消的操作不会有 data
-                if (!data) return
+                if (Object.is(response.message, cancelMessage)) {
+                    // 被取消的 api
+                    return false
+                }
+                const data = Reflect.get(response, 'data')
                 dealResponseData(data, param)
+                // 通过 Promise 传递 data
                 resolve(data)
             })
             .catch((error) => {
                 console.error(url, param)
                 console.error(error)
-                // reject(error)
             })
     })
 }

@@ -22,8 +22,6 @@
             </div>
             <TitleTopMarket
                 class="detail_head_market"
-                :source="source"
-                :symbol_type="symbol_type"
                 :stock_type="stock_type"
                 :price="socketData.price"
                 :price_change="socketData.price_change"
@@ -61,6 +59,7 @@
                             <td>
                                 <Turnover
                                     :val="socketData.turnover"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                             <td class="two-letters">换手</td>
@@ -68,6 +67,7 @@
                                 <TurnoverRate
                                     :val="socketData.turnover_rate"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                         </tr>
@@ -77,12 +77,14 @@
                                 <Volume
                                     :val="socketData.volume"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                             <td class="two-letters">量比</td>
                             <td>
                                 <QuantityRatio
                                     :val="socketData.quantity_ratio"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                         </tr>
@@ -121,6 +123,7 @@
                                     :val="socketData.avg_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                             <td class="two-letters">振幅</td>
@@ -128,6 +131,7 @@
                                 <Amplitude
                                     :val="socketData.amplitude"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                         </tr>
@@ -138,6 +142,7 @@
                                     :val="socketData.open_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                             <td class="two-letters">昨收</td>
@@ -155,6 +160,7 @@
                                     :val="socketData.high_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                             <td class="two-letters">最低</td>
@@ -163,6 +169,7 @@
                                     :val="socketData.low_price"
                                     :close_price="close_price"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                         </tr>
@@ -172,6 +179,7 @@
                                 <VolumeOuter
                                     :val="socketData.volume_outer"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                             <td class="two-letters">内盘</td>
@@ -179,6 +187,7 @@
                                 <VolumeInner
                                     :val="socketData.volume_inner"
                                     :current_type="current_type"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                         </tr>

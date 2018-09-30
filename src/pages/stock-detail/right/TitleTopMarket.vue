@@ -5,12 +5,14 @@
             :val="price"
             :price_change="price_change"
             :current_type="current_type"
+            :stock_type="stock_type"
         ></Price>
         <PriceChange
             class="top_market_value"
             :val="price_change"
             :price="price"
             :current_type="current_type"
+            :stock_type="stock_type"
         ></PriceChange>
         <PriceChangeRate
             class="top_market_rate"
@@ -18,6 +20,7 @@
             :price="price"
             :price_change="price_change"
             :current_type="current_type"
+            :stock_type="stock_type"
         ></PriceChangeRate>
     </div>
 </template>
@@ -41,15 +44,10 @@ export default {
     computed: {
         ...mapState([
             'current_type',
-            'source',
         ]),
     },
     props: {
-        symbol_type: {
-            type: Number,
-            default: 1
-        },
-        stock_type: {
+        stock_type: { //A股必传
             type: Number,
             default: 1,
         },

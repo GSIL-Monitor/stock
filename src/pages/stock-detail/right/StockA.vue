@@ -29,8 +29,6 @@
             </div>
             <TitleTopMarket
                 class="detail_head_market"
-                :source="source"
-                :symbol_type="symbol_type"
                 :stock_type="stock_type"
                 :price="socketData.price"
                 :price_change="socketData.price_change"
@@ -85,12 +83,14 @@
                             <td>
                                 <Turnover
                                     :val="socketData.turnover"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                             <td class="two-letters">换手</td>
                             <td>
                                 <TurnoverRate
                                     :val="socketData.turnover_rate"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -100,6 +100,7 @@
                             <td>
                                 <Volume
                                     :val="socketData.volume"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -107,6 +108,7 @@
                             <td>
                                 <QuantityRatio
                                     :val="socketData.quantity_ratio"
+                                    :stock_type="stock_type"
                                 />
                             </td>
                         </tr>
@@ -144,6 +146,7 @@
                                 <CompareClose
                                     :val="socketData.avg_price"
                                     :close_price="close_price"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -151,6 +154,7 @@
                             <td>
                                 <Amplitude
                                     :val="socketData.amplitude"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -161,6 +165,7 @@
                                 <CompareClose
                                     :val="socketData.open_price"
                                     :close_price="close_price"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -178,6 +183,7 @@
                                 <CompareClose
                                     :val="socketData.high_price"
                                     :close_price="close_price"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -186,6 +192,7 @@
                                 <CompareClose
                                     :val="socketData.low_price"
                                     :close_price="close_price"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -195,6 +202,7 @@
                             <td>
                                 <VolumeOuter
                                     :val="socketData.volume_outer"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
@@ -202,6 +210,7 @@
                             <td>
                                 <VolumeInner
                                     :val="socketData.volume_inner"
+                                    :stock_type="stock_type"
                                     :current_type="current_type"
                                 />
                             </td>
