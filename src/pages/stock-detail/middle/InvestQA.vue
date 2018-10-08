@@ -2,8 +2,14 @@
 <div
     class="info_wrap"
     :class="$_wrapClasses"
+    v-show="dataStore.length"
+    v-infinite-scroll="$_loadMore"
+    infinite-scroll-disabled="busy"
+    infinite-scroll-distance="60"
+    infinite-scroll-throttle-delay="100"
+    ref="scrollContainer"
 >
-    <ul
+    <!-- <ul
         class="info_vessel"
         v-show="dataStore.length"
         v-infinite-scroll="$_loadMore"
@@ -11,11 +17,17 @@
         infinite-scroll-distance="60"
         infinite-scroll-throttle-delay="100"
         ref="scrollContainer"
+    > -->
+    <ul
+        class="info_vessel"
+        ref="infoContainer"
+        @click="handleClick"
     >
         <li
             v-for="(item, index) of dataStore"
-            :key="index"
             class="investqa_item"
+            :data-index="index"
+            :key="index"
         >
             <div
                 class="investqa_item_question"
@@ -27,6 +39,7 @@
                 </span>
                 <span
                     class="investqa_item_question_text"
+                    :title="item.ask_title.replace(/\<br\>/, ' ')"
                     v-html="item.ask_title"
                 ></span>
             </div>
@@ -40,6 +53,7 @@
                 </span>
                 <span
                     class="investqa_item_answewr_text"
+                    :title="item.reply_content.replace(/\<br\>/, ' ')"
                     v-html="item.reply_content">
                 </span>
             </div>
@@ -73,6 +87,9 @@ import {
 import {
     subDate,
 } from '../utility.js'
+import {
+    openInvestment,
+} from './open-information.js'
 
 import informationItemMixin from '../mixins/information-item-mixin.js'
 import loaddingStyleMixin from '../mixins/loadding-style-mixin.js'
@@ -99,6 +116,7 @@ export default {
         ...mapState([
             'stock_code',
             'full_code',
+            'stock_name',
         ]),
     },
     methods: {
@@ -131,6 +149,41 @@ export default {
             }
             getInvestmentQAData(param)
         },
+        openContent(index, data) {
+            let titleName = '投资问答'
+            let title = this.stock_name ? `${titleName}——${this.stock_name}(${this.$_showCode})` : titleName
+            const param = {
+                listApi: 'v1/news/get_investment_qa',
+                position: (index + 1),
+                contentId: data.id,
+                stock_code: this.stock_code,
+                stock_name: this.stock_name,
+                params: {
+                    rows: 6,
+                    stock_code: this.stock_code,
+                    page: Math.ceil(index / 6)
+                },
+            }
+
+            openInvestment(param, title)
+        },
+        handleClick(event) {
+            let target = event.target
+            if (!(this.$refs.infoContainer.compareDocumentPosition(target) & 16)) {
+                return false
+            }
+
+            while (target && target.tagName.toLowerCase() !== 'li') {
+                target = target.parentNode
+            }
+
+            if (target) {
+                const index = Number(target.dataset.index)
+                const targetData = this.dataStore[index]
+
+                this.openContent(index, targetData)
+            }
+        },
     },
     watch: {
         full_code() {
@@ -142,30 +195,35 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.info_wrap {
+    overflow: auto;
+}
 .info_vessel {
+    display: table;
     width: 100%;
+    table-layout: fixed;
 }
 .investqa_item {
+    cursor: pointer;
     padding: 5px 10px;
+    border-bottom: 1px solid var(--color-dividers);
 }
 .investqa_item_question,
 .investqa_item_answewr,
 .investqa_item_date {
     height: 26px;
     display: flex;
-    flex-grow: 1;
-    width: 100%;
     align-items: center;
 }
 
 .investqa_item_question_text,
 .investqa_item_answewr_text {
-    flex-grow: 1;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    height: 16px;
+    line-height: 16px;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .investqa_ico {
     flex: 0 0 16px;
