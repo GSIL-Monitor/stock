@@ -59,7 +59,7 @@ import {
     SESSION_ASTOCK_FUNC_TAB,
     TAB_RECOMMEND_TAGS,
     TAB_MY_STOCK,
-} from './storage'
+} from './storage.js'
 
 import stockVerifyMixin from './mixins/stock-verify-mixin.js'
 

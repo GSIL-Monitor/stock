@@ -5,14 +5,17 @@ import {
 export default {
     computed: {
         $_fields() {
-            return ['source', 'symbol_type', 'stock_type', 'mark', 'price'].reduce((o, ele) => {
-                let val = this[ele]
-                if (val !== null) {
-                    Reflect.set(o, ele, val)
-                }
+            return ['source', 'symbol_type', 'stock_type', 'mark', 'price'].reduce(
+                (o, ele) => {
+                    let val = this[ele]
+                    if (val !== null) {
+                        Reflect.set(o, ele, val)
+                    }
 
-                return o
-            }, Object.create(null))
+                    return o
+                },
+                Object.create(null)
+            )
         },
         $_display() {
             return this.formatter.val

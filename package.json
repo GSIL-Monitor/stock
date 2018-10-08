@@ -11,6 +11,7 @@
     "dependencies": {
         "axios": "^0.18.0",
         "element-ui": "^2.4.5",
+        "intersection-observer": "^0.5.0",
         "lodash": "^4.17.10",
         "number-precision": "^1.2.0",
         "vue": "^2.5.16",
@@ -18,6 +19,7 @@
         "vue-echarts": "^3.1.1",
         "vue-infinite-scroll": "^2.0.2",
         "vue-router": "^3.0.1",
+        "vue-virtual-scroller": "^0.12.2",
         "vuex": "^3.0.1",
         "vuex-persistedstate": "^2.5.4"
     },

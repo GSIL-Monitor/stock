@@ -48,7 +48,7 @@ export default {
                    this.isHSIndex ? MarketTemp :
                    this.isHkIndex ? HkIndexTemp :
                    this.isHkNormal ? HkNormalTemp :
-                   StockATemp
+                   ''
         },
     },
 }

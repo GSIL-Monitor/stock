@@ -121,7 +121,7 @@
         <OldFiveOrder
             :orderData="orderData"
             :close_price="close_price"
-            :stockType="current_type"
+            :current_type="current_type"
         />
         <div
             class="detail_extend"

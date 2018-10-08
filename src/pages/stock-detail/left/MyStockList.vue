@@ -22,7 +22,32 @@
                 <div class="market_title_num">{{item.sum}}</div>
                 <div>)</div>
             </div>
-            <ul
+            <!-- <virtual-scroller
+                v-if="isGroupActive(item.group_id)"
+                class="market_list"
+                :items="getListData(item.group_id)"
+                emit-update
+                @update="listScroll"
+                item-height="liItemHeight"
+                content-tag="ul"
+            > -->
+            <virtual-scroller
+                v-if="isGroupActive(item.group_id)"
+                @scroll.native="listScroll"
+                :items="getListData(item.group_id)"
+                :item-height="liItemHeight"
+                content-tag="ul"
+                class="market_list"
+                ref="scrollContainer"
+            >
+                <template slot-scope="props">
+                    <StockItem
+                        :item="props.item"
+                        :key="props.itemKey"
+                    />
+                </template>
+            </virtual-scroller>
+            <!-- <ul
                 class="market_list"
                 @scroll="listScroll"
                 ref="scrollContainer"
@@ -31,9 +56,8 @@
                     v-for="(listItem, i) of getListData(item.group_id)"
                     :key="i"
                     :item="listItem"
-                    ref="listItem"
                 />
-            </ul>
+            </ul> -->
         </div>
     </div>
 </template>
@@ -65,8 +89,6 @@ import {
 import {
     STOCK_GROUP_LIST,
     STOCK_CODE,
-    SOURCE,
-    FULL_CODE,
     STOCK_NAME,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
@@ -86,6 +108,7 @@ export default {
             medianGroupId: null, // 中转 id
             clickTimer: null,
             myStockCache: hasMyStockCache(),
+            liItemHeight: 45,
         }
     },
     computed: {
@@ -98,8 +121,6 @@ export default {
         ...mapMutations([
             STOCK_GROUP_LIST,
             STOCK_CODE,
-            SOURCE,
-            FULL_CODE,
             STOCK_NAME,
         ]),
         ...mapActions({
@@ -221,7 +242,7 @@ export default {
                 if (activeIndex === -1) {
                     return false
                 }
-                let $scrollContainer = this.$refs.scrollContainer[activeIndex]
+                let $scrollContainer = this.$refs.scrollContainer[0].$el
                 if (!($scrollContainer.compareDocumentPosition(target) & 16)) {
                     return false
                 }
@@ -231,8 +252,6 @@ export default {
                 if (target) {
                     let { source, symbol_type, stock_code, stock_name } = target.dataset
                     let hash = switchToHashString(source, stock_code, symbol_type)
-                    // this[SOURCE](source)
-                    // this[FULL_CODE]()
                     this[STOCK_NAME](stock_name)
                     changePageStock(hash)
                 }

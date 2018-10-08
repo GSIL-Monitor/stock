@@ -13,7 +13,7 @@
                     :now_volume="item.now_volume"
                     :now_diff="item.now_diff"
                     :close_price="close_price"
-                    :stockType="stockType"
+                    :current_type="current_type"
                 />
             </ul>
             <div class="volume_cont">{{calcRatio.sellRatio}}</div>
@@ -28,7 +28,7 @@
                     :now_volume="item.now_volume"
                     :now_diff="item.now_diff"
                     :close_price="close_price"
-                    :stockType="stockType"
+                    :current_type="current_type"
                 />
             </ul>
             <div class="volume_cont">{{calcRatio.buyRatio}}</div>
@@ -94,7 +94,7 @@ export default {
         close_price: {
             required: true,
         },
-        stockType: {
+        current_type: {
             type: String,
             required: true,
         },

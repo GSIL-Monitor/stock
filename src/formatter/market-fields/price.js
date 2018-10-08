@@ -57,7 +57,7 @@ const formatBStock = (value, price_change, list, bit) => {
 
 const formatFutures = (value, price_change) => {
     var result = getValAndColor(value, price_change)
-    // 舍去末尾为零的位数
+    // 期货舍去末尾为零的位数
     result.val = Number(result.val)
 
     return result
@@ -103,19 +103,7 @@ const formatTypePrice = (type, price, list) => {
 }
 
 const formatPrice = (price, list, current_type) => {
-    if (!isNumber(price) || Object.is(Number(price), 0)) {
-        // 异常处理
-        const price_change = list.price_change || list.change_value
-        const color = price_change > 0 ? RED :
-                      price_change < 0 ? GREEN :
-                                         DEFAULT
-
-        return {
-            val: '--',
-            color
-        }
-    } else if (Object.is(String(list.mark), '1')) {
-        // 清空
+    if (!isNumber(price) || Object.is(price, 0) || Object.is(String(list.mark), '1')) {
         return getClearVal()
     } else {
         let type = current_type || stockToType(

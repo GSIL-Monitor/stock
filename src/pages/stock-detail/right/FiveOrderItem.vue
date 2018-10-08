@@ -65,10 +65,10 @@ export default {
         },
         formatPrice() {
             return formatPrice(this.now_price, {
-            }, this.stockType)
+            }, this.current_type)
         },
         volume_count() {
-            if (this.handArr.includes(this.stockType)) {
+            if (this.handArr.includes(this.current_type)) {
                 return this.changeToHand
             } else {
                 return this.now_volume ? this.now_volume.toFixed(0) : '0'
@@ -119,7 +119,7 @@ export default {
         close_price: {
             required: true,
         },
-        stockType: {
+        current_type: {
             type: String,
             required: true,
         },

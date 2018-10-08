@@ -19,6 +19,9 @@ import {
 import {
     GET_SELECT_GROUP_DATA,
 } from '@store/stock-detail-store/config/action-types.js'
+import {
+    throttle,
+} from 'lodash'
 
 let listTimeoutTimer = null
 
@@ -43,15 +46,22 @@ export default {
         }),
         getSubScriptionEdge() {
             const containerIndex = this.getActiveGroupIndex()
-            let nowScrollTop = this.$refs.scrollContainer[containerIndex].scrollTop
+            if (Object.is(containerIndex, -1)) {
+                return []
+            }
+            let nowScrollTop = this.$refs.scrollContainer[0].$el.scrollTop
             let height = window.screen.availHeight - 150
-            let oneHeight = 40
+            let oneHeight = this.liItemHeight
             let start = Math.floor(nowScrollTop / oneHeight)
             let count = Math.ceil(height / oneHeight)
             let end = start + count
             let MAX = this.select_group_data.length - 1
             if (end > MAX)  {
                 end = MAX
+                let s = end - count
+                if (s >= 0) {
+                    start = s
+                }
             }
 
             return {
@@ -67,11 +77,11 @@ export default {
 
             return arr
         },
-        listScroll() {
+        listScroll: throttle(function() {
             const edges = this.getSubScriptionEdge()
             const codeList = this.getSubScriptionFullCode(edges.start, edges.end)
             this.subScriptionList(codeList)
-        },
+        }, 400),
         subScriptionList(codeList) {
             const subFilterFields = [
                 'full_code', 'source', 'code', 'stock_name', 'symbol_type',

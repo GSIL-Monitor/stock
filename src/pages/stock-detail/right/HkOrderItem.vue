@@ -33,7 +33,7 @@ export default {
     computed: {
         formatPrice() {
             return formatPrice(this.now_price, {
-            }, this.stockType)
+            }, this.current_type)
         },
         volume_count() {
             return this.now_volume ? this.now_volume.toFixed(0) : '0'
@@ -62,7 +62,7 @@ export default {
         close_price: {
             required: true,
         },
-        stockType: {
+        current_type: {
             type: String,
             required: true,
         },

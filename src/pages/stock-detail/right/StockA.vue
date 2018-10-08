@@ -64,7 +64,7 @@
             class="detail_order"
             :orderData="orderData"
             :close_price="close_price"
-            :stockType="current_type"
+            :current_type="current_type"
             :row="row"
         />
         <!-- 字段详情 -->

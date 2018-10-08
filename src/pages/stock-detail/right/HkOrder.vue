@@ -13,7 +13,7 @@
                 :now_price="item.now_price"
                 :now_volume="item.now_volume"
                 :close_price="close_price"
-                :stockType="stockType"
+                :current_type="current_type"
             />
         </ul>
         <ul class="hk_order_sell">
@@ -24,7 +24,7 @@
                 :now_price="item.now_price"
                 :now_volume="item.now_volume"
                 :close_price="close_price"
-                :stockType="stockType"
+                :current_type="current_type"
             />
         </ul>
     </div>
@@ -55,7 +55,7 @@ export default {
         close_price: {
             required: true,
         },
-        stockType: {
+        current_type: {
             type: String,
             required: true,
         },
