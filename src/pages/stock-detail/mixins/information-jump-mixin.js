@@ -33,7 +33,7 @@ export default {
 
             let url = `${baseUrl}/html/stockMoreNews.html?${query}&token=${token}&qtFrame=1`
 
-            let param = JSON.stringify(this.getJumpParam(url))
+            let param = JSON.stringify(this.$_getJumpParam(url))
 
             sendEvent('hidden', '', param, true)
         },
