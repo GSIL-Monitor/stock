@@ -276,9 +276,6 @@ import {
     getLimitStockData,
 } from '@service/index.js'
 import {
-    throttle,
-} from '@c/utils/util.js'
-import {
     initTapeDefault,
     initTapeFunc,
 } from '../tape/tape-public-func.js'

@@ -1,3 +1,7 @@
+import {
+    throttle,
+} from 'lodash'
+
 export default {
     data() {
         return {
@@ -13,12 +17,12 @@ export default {
         },
     },
     methods: {
-        $_resizeWindow() {
+        $_resizeWindow: throttle(function() {
             let top = this.$refs.detailExtend.getBoundingClientRect().top
             let residue = window.innerHeight - top
 
             this.extendHeight = residue
-        },
+        }, 200),
         $_nextResizeWindow() {
             this.$nextTick(() => {
                 this.$_resizeWindow()
