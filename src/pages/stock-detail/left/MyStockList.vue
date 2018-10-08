@@ -78,6 +78,7 @@ import {
 import {
     switchToHashString,
     changePageStock,
+    isContainsNode,
 } from '../utility.js'
 import {
     SESSION_SELECT_STOCK_GROUP,
@@ -243,7 +244,7 @@ export default {
                     return false
                 }
                 let $scrollContainer = this.$refs.scrollContainer[0].$el
-                if (!($scrollContainer.compareDocumentPosition(target) & 16)) {
+                if (!isContainsNode($scrollContainer, target)) {
                     return false
                 }
                 while (target && target.tagName.toLowerCase() !== 'li') {

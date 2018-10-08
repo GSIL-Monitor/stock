@@ -40,7 +40,7 @@ export const openInvestment = (pageParam = {}, titleName = '投资问答') => {
         windowWidth: document.body.clientHeight,
         path: 'G3_08_13',
     }, pageParam)
-console.log(param)
+
     openContent(JSON.stringify(param), titleName)
 }
 

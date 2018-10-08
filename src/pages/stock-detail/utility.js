@@ -117,3 +117,13 @@ export const changePageStock = (hash, isRecent = false) => {
         isRencent: isRecent,
     }))
 }
+
+/**
+ * @description 确定元素之间是否为包含关系
+ * @param {Node} container
+ * @param {Node} target
+ * @return {boolean}
+*/
+export const isContainsNode = (container, target) => {
+    return container.compareDocumentPosition(target) & 16
+}

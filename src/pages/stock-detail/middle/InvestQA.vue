@@ -2,13 +2,72 @@
 <div
     class="info_wrap"
     :class="$_wrapClasses"
-    v-show="dataStore.length"
-    v-infinite-scroll="$_loadMore"
-    infinite-scroll-disabled="busy"
-    infinite-scroll-distance="60"
-    infinite-scroll-throttle-delay="100"
-    ref="scrollContainer"
 >
+    <div
+        v-show="dataStore.length"
+        v-infinite-scroll="$_loadMore"
+        infinite-scroll-disabled="busy"
+        infinite-scroll-distance="60"
+        infinite-scroll-throttle-delay="100"
+        ref="scrollContainer"
+    >
+        <ul
+            class="info_vessel"
+            @click="handleClick"
+            ref="infoContainer"
+        >
+            <li
+                v-for="(item, index) of dataStore"
+                class="investqa_item"
+                :data-index="(index + 1)"
+                :key="index"
+            >
+                <div
+                    class="investqa_item_question"
+                >
+                    <span
+                        class="investqa_ico investqa_ico_bgGray"
+                    >
+                        问
+                    </span>
+                    <span
+                        class="investqa_item_question_text"
+                        :title="item.ask_title.replace(/\<br\>/, ' ')"
+                        v-html="item.ask_title"
+                    ></span>
+                </div>
+                <div
+                    class="investqa_item_answewr"
+                >
+                    <span
+                        class="investqa_ico investqa_ico_bgGray"
+                    >
+                        答
+                    </span>
+                    <span
+                        class="investqa_item_answewr_text"
+                        :title="item.reply_content.replace(/\<br\>/, ' ')"
+                        v-html="item.reply_content">
+                    </span>
+                </div>
+                <div
+                    class="investqa_item_date"
+                >
+                    <span
+                        class="investqa_ico"
+                    >
+                    </span>
+                    <span  class="investqa_item_date_text">
+                        {{item.reply_time}}
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div
+        v-if="noData"
+        class="extend_nodata"
+    >{{noDataMsg}}</div>
     <!-- <ul
         class="info_vessel"
         v-show="dataStore.length"
@@ -18,62 +77,6 @@
         infinite-scroll-throttle-delay="100"
         ref="scrollContainer"
     > -->
-    <ul
-        class="info_vessel"
-        ref="infoContainer"
-        @click="handleClick"
-    >
-        <li
-            v-for="(item, index) of dataStore"
-            class="investqa_item"
-            :data-index="index"
-            :key="index"
-        >
-            <div
-                class="investqa_item_question"
-            >
-                <span
-                    class="investqa_ico investqa_ico_bgGray"
-                >
-                    问
-                </span>
-                <span
-                    class="investqa_item_question_text"
-                    :title="item.ask_title.replace(/\<br\>/, ' ')"
-                    v-html="item.ask_title"
-                ></span>
-            </div>
-            <div
-                 class="investqa_item_answewr"
-            >
-                <span
-                    class="investqa_ico investqa_ico_bgGray"
-                >
-                    答
-                </span>
-                <span
-                    class="investqa_item_answewr_text"
-                    :title="item.reply_content.replace(/\<br\>/, ' ')"
-                    v-html="item.reply_content">
-                </span>
-            </div>
-            <div
-                class="investqa_item_date"
-            >
-                <span
-                    class="investqa_ico"
-                >
-                </span>
-                <span  class="investqa_item_date_text">
-                    {{item.reply_time}}
-                </span>
-            </div>
-        </li>
-    </ul>
-    <div
-        v-if="noData"
-        class="extend_nodata"
-    >{{noDataMsg}}</div>
 </div>
 </template>
 
@@ -86,6 +89,7 @@ import {
 } from '@service/index.js'
 import {
     subDate,
+    isContainsNode,
 } from '../utility.js'
 import {
     openInvestment,
@@ -154,7 +158,7 @@ export default {
             let title = this.stock_name ? `${titleName}——${this.stock_name}(${this.$_showCode})` : titleName
             const param = {
                 listApi: 'v1/news/get_investment_qa',
-                position: (index + 1),
+                position: index,
                 contentId: data.id,
                 stock_code: this.stock_code,
                 stock_name: this.stock_name,
@@ -169,7 +173,7 @@ export default {
         },
         handleClick(event) {
             let target = event.target
-            if (!(this.$refs.infoContainer.compareDocumentPosition(target) & 16)) {
+            if (!isContainsNode(this.$refs.infoContainer, target)) {
                 return false
             }
 
