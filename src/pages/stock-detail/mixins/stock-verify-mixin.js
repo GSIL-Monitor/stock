@@ -57,12 +57,13 @@ const stockVerify = [
 
 export default {
     methods: {
-        $_itemVerify(arr, hash) {
-            return arr.regexp.test(hash)
-        },
         $_enSureStockType(hash) {
-            let ele = stockVerify.find(ele => {
-                return this.$_itemVerify(ele, hash)
+            const itemVerify = (arr, hash) => {
+                return arr.regexp.test(hash)
+            }
+
+            const ele = stockVerify.find(ele => {
+                return itemVerify(ele, hash)
             })
 
             return ele.type
