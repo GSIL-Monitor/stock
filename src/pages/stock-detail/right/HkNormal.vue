@@ -37,7 +37,7 @@
                 class="detail_head_btn_skip"
             >
                 <ButtonF10
-                    v-if="isShowF10"
+                    v-if="canLoadF10"
                 />
             </div>
             <div class="detail_head_btn_right">
@@ -270,15 +270,13 @@ export default {
         ]),
         ...mapGetters([
             'isHkStock',
+            'canLoadF10',
         ]),
         linkAddress() {
             return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
         },
         canLoadSelfIdentify() {
             return this.loadIdentify && this.isHkStock
-        },
-        isShowF10() {
-            return this.isHkStock
         },
         orderData() {
             return {

@@ -27,7 +27,7 @@
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
                     <ButtonF10
-                        v-if="isImportantCode"
+                        v-if="canLoadF10"
                     />
                 </div>
                 <IsMyStock
@@ -253,10 +253,8 @@ export default {
             'full_code',
             'current_type',
             'stock_name',
+            'canLoadF10',
         ]),
-        isImportantCode() {
-            return ['930715','000905','000133','399006','399005','000009','000904','399001','000906','000132','000300','000001','000010','000903','000016'].includes(this.stock_code)
-        },
         isBKIndex() {
             return Object.is(this.source, 'BK')
         },

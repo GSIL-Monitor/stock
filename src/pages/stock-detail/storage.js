@@ -39,7 +39,6 @@ export const SESSION_ASTOCK_FUNC_TAB = `${MODULE_NAME}-astock-funcTab`
 // 指数 右下最近选择的tab
 export const SESSION_INDEX_FUNC_TAB = `${MODULE_NAME}-index-funcTab`
 
-
 // ==============================================================================
 /**
  * GoGoal Event Name

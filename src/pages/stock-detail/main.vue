@@ -33,6 +33,10 @@ import {
     changeUrlParam,
 } from '@c/utils/util.js'
 import {
+    skipF1,
+    skipF10,
+} from './components/module-jump.js'
+import {
     CURRENT_TYPE,
     STOCK_CODE,
     SOURCE,
@@ -47,6 +51,7 @@ import {
     ADD_TO_RECENT_LIST
 } from '@store/stock-detail-store/config/action-types.js'
 import {
+    MODULE_NAME,
     LOCAL_LATEST_CODE,
     LOCAL_IS_LEFT_SHOW,
     LOCAL_IS_RIGHT_SHOW,
@@ -105,6 +110,8 @@ export default {
             'isHkWarrant',
             'isHkCbbc',
             'isFuture',
+            'canLoadF10',
+            'canLoadF1',
         ]),
         isShowTape() {
             return this.tapeState && (this.isAStock || this.isBStock)
@@ -445,10 +452,16 @@ export default {
             this.$_eventBus.$emit('setKlineStyle', 'left', state)
         },
         keyBoardF10() {
+            if (!this.canLoadF10) { return false }
 
+            let hash = location.hash.substr(1)
+            skipF10(hash, MODULE_NAME)
         },
         keyBoardF1() {
+            if (!this.canLoadF1) { return false }
 
+            let hash = location.hash.substr(1)
+            skipF1(hash, MODULE_NAME)
         },
         // 全局快捷键
         keyBoardEvent(data) {

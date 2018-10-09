@@ -20,12 +20,20 @@ export default {
     isBond(state) {
         return Object.is(TYPE.BOND, state.current_type)
     },
-    isHkNormal(state, getters) {
-        return getters.isHkStock
-            || getters.isHkFund
-            || getters.isHkBond
-            || getters.isHkWarrant
-            || getters.isHkCbbc
+    isHkNormal(state, {
+        isHkStock,
+        isHkFund,
+        isHkBond,
+        isHkWarrant,
+        isHkCbbc,
+    }) {
+        return (
+            isHkStock
+            || isHkFund
+            || isHkBond
+            || isHkWarrant
+            || isHkCbbc
+        )
     },
     // 港股股票
     isHkStock(state) {
@@ -55,9 +63,45 @@ export default {
     isFuture(state) {
         return Object.is(TYPE.FUTURES, state.current_type)
     },
-    hasInformation(state, getters) {
-        return getters.isAStock
-            || getters.isHSIndex
-            || getters.isHkStock
+    hasInformation(state, {
+        isAStock,
+        isHSIndex,
+        isHkStock,
+    }) {
+        return (
+            isAStock
+            || isHSIndex
+            || isHkStock
+        )
+    },
+    canLoadF10(state, {
+        isAStock,
+        isBStock,
+        isFund,
+        isBond,
+        isHkStock,
+        isHSIndex,
+    }) {
+        if (isAStock || isBStock || isFund || isBond || isHkStock) {
+            return true
+        } else if (isHSIndex
+            && Array.isArray(state.hsIndexCategory)
+            && state.hsIndexCategory.includes(state.stock_code)
+        ) {
+            return true
+        } else {
+            return false
+        }
+    },
+    canLoadF1(state, {
+        isAStock,
+        isFund,
+        isBond,
+    }) {
+        return (
+            isAStock
+            || isFund
+            || isBond
+        )
     },
 }
