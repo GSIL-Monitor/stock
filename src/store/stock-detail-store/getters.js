@@ -14,7 +14,6 @@ import {
     FUTURES,
 } from '@formatter/config/stock-type-config.js'
 
-// 计算属性
 export default {
     isAStock({
         current_type,

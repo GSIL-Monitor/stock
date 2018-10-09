@@ -9,8 +9,8 @@
             <div class="transa_title_right">
                 <LoadMore
                     class="transa_title_right_more"
+                    v-if="canLoadF1"
                     @on-click="toDetailPage"
-                    v-if="showMore"
                 />
             </div>
         </div>
@@ -92,12 +92,10 @@ export default {
             'isBond',
             'isHkIndex',
             'isHkNormal',
+            'canLoadF1',
         ]),
         isForbiddenHkLoad() {
             return this.isHkNormal && !isHkRealTime()
-        },
-        showMore() {
-            return this.isBStock || this.isFund || this.isBond
         },
         getCurrentApi() {
             if (this.isBStock || this.isFund || this.isBond) {
@@ -173,9 +171,8 @@ export default {
             api(param)
         },
         toDetailPage() {
-            if (this.isHkIndex || this.isHkNormal) {
-                return false
-            }
+            if (!this.canLoadF1) { return false }
+
             let hash = location.hash.substr(1)
             skipF1(hash, MODULE_NAME)
         },

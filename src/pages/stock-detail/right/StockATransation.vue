@@ -99,13 +99,13 @@ export default {
         LoadMore,
     },
     computed: {
-        ...mapGetters([
-            'isAStock',
-        ]),
         ...mapState([
             'stock_code',
             'current_type',
             'full_code',
+        ]),
+        ...mapGetters([
+            'isAStock',
         ]),
         isShowAll() {
             return Object.is(this.filterMsg, '全部')

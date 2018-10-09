@@ -1,4 +1,3 @@
-// 提交更改 store
 import {
     GET_STOCK_TAG,
     STOCK_GROUP_LIST,
