@@ -1,24 +1,48 @@
-import * as TYPE from '@formatter/config/stock-type-config.js'
+import {
+    ASTOCK,
+    SHBSTOCK,
+    SZBSTOCK,
+    INDEX,
+    FUND,
+    BOND,
+    HKSTOCK,
+    HKFUND,
+    HKBOND,
+    HKWARRANT,
+    HKCBBC,
+    HKINDEX,
+    FUTURES,
+} from '@formatter/config/stock-type-config.js'
 
 // 计算属性
 export default {
-    isAStock(state) {
-        return Object.is(TYPE.ASTOCK, state.current_type)
+    isAStock({
+        current_type,
+    }) {
+        return Object.is(ASTOCK, current_type)
     },
-    isBStock(state) {
-        return [TYPE.SHBSTOCK, TYPE.SZBSTOCK].includes(state.current_type)
+    isBStock({
+        current_type,
+    }) {
+        return [SHBSTOCK, SZBSTOCK].includes(current_type)
     },
     // 沪深指数
-    isHSIndex(state) {
-        return Object.is(TYPE.INDEX, state.current_type)
+    isHSIndex({
+        current_type,
+    }) {
+        return Object.is(INDEX, current_type)
     },
     // 沪深基金
-    isFund(state) {
-        return Object.is(TYPE.FUND, state.current_type)
+    isFund({
+        current_type,
+    }) {
+        return Object.is(FUND, current_type)
     },
     // 沪深债券
-    isBond(state) {
-        return Object.is(TYPE.BOND, state.current_type)
+    isBond({
+        current_type,
+    }) {
+        return Object.is(BOND, current_type)
     },
     isHkNormal(state, {
         isHkStock,
@@ -35,32 +59,46 @@ export default {
         )
     },
     // 港股股票
-    isHkStock(state) {
-        return Object.is(TYPE.HKSTOCK, state.current_type)
+    isHkStock({
+        current_type,
+    }) {
+        return Object.is(HKSTOCK, current_type)
     },
     // 港股基金
-    isHkFund(state) {
-        return Object.is(TYPE.HKFUND, state.current_type)
+    isHkFund({
+        current_type,
+    }) {
+        return Object.is(HKFUND, current_type)
     },
     // 港股债券
-    isHkBond(state) {
-        return Object.is(TYPE.HKBOND, state.current_type)
+    isHkBond({
+        current_type,
+    }) {
+        return Object.is(HKBOND, current_type)
     },
     // 港股涡轮
-    isHkWarrant(state) {
-        return Object.is(TYPE.HKWARRANT, state.current_type)
+    isHkWarrant({
+        current_type,
+    }) {
+        return Object.is(HKWARRANT, current_type)
     },
     // 港股牛熊证
-    isHkCbbc(state) {
-        return Object.is(TYPE.HKCBBC, state.current_type)
+    isHkCbbc({
+        current_type,
+    }) {
+        return Object.is(HKCBBC, current_type)
     },
     // 港股指数
-    isHkIndex(state) {
-        return Object.is(TYPE.HKINDEX, state.current_type)
+    isHkIndex({
+        current_type,
+    }) {
+        return Object.is(HKINDEX, current_type)
     },
     // 期货
-    isFuture(state) {
-        return Object.is(TYPE.FUTURES, state.current_type)
+    isFuture({
+        current_type,
+    }) {
+        return Object.is(FUTURES, current_type)
     },
     hasInformation(state, {
         isAStock,
@@ -72,7 +110,9 @@ export default {
             || isHkStock
         )
     },
-    canLoadF10(state, {
+    canLoadF10({
+        hsIndexCategory,
+    }, {
         isAStock,
         isBStock,
         isFund,
@@ -88,8 +128,8 @@ export default {
         ) {
             return true
         } else if (isHSIndex
-            && Array.isArray(state.hsIndexCategory)
-            && state.hsIndexCategory.includes(1)
+            && Array.isArray(hsIndexCategory)
+            && hsIndexCategory.includes(1)
         ) {
             // 沪深指数且为重要指数
             return true
