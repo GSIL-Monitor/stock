@@ -27,8 +27,7 @@ export default {
         isHkWarrant,
         isHkCbbc,
     }) {
-        return (
-            isHkStock
+        return (isHkStock
             || isHkFund
             || isHkBond
             || isHkWarrant
@@ -68,8 +67,7 @@ export default {
         isHSIndex,
         isHkStock,
     }) {
-        return (
-            isAStock
+        return (isAStock
             || isHSIndex
             || isHkStock
         )
@@ -82,12 +80,18 @@ export default {
         isHkStock,
         isHSIndex,
     }) {
-        if (isAStock || isBStock || isFund || isBond || isHkStock) {
+        if (isAStock
+            || isBStock
+            || isFund
+            || isBond
+            || isHkStock
+        ) {
             return true
         } else if (isHSIndex
             && Array.isArray(state.hsIndexCategory)
-            && state.hsIndexCategory.includes(state.stock_code)
+            && state.hsIndexCategory.includes(1)
         ) {
+            // 沪深指数且为重要指数
             return true
         } else {
             return false
@@ -98,8 +102,7 @@ export default {
         isFund,
         isBond,
     }) {
-        return (
-            isAStock
+        return (isAStock
             || isFund
             || isBond
         )

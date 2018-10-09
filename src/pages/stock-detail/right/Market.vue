@@ -156,6 +156,7 @@ import {
     mapState,
     mapActions,
     mapMutations,
+    mapGetters,
 } from 'vuex'
 import {
     SOCKET_HSINDEX_MARKET,
@@ -253,6 +254,8 @@ export default {
             'full_code',
             'current_type',
             'stock_name',
+        ]),
+        ...mapGetters([
             'canLoadF10',
         ]),
         isBKIndex() {
