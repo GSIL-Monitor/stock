@@ -62,8 +62,8 @@ export default {
                 return arr.regexp.test(hash)
             }
 
-            const ele = stockVerify.find(ele => {
-                return itemVerify(ele, hash)
+            const ele = stockVerify.find(el => {
+                return itemVerify(el, hash)
             })
 
             return ele.type
