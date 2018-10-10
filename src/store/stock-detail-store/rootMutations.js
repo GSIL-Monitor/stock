@@ -1,8 +1,6 @@
 import {
-    GET_STOCK_TAG,
     STOCK_GROUP_LIST,
     SELECT_GROUP_DATA,
-    STOCK_RECENT_LIST,
     CURRENT_TYPE,
     STOCK_CODE,
     SOURCE,
@@ -15,22 +13,13 @@ import {
     LEFT_SELECT_TAB,
     STOCK_NAME,
 } from './config/mutation-types.js'
-import {
-    LOCAL_LEFT_TAB,
-} from '@pages/stock-detail/storage.js'
 
 export default {
-    [GET_STOCK_TAG](state, payLoad) {
-        state.tag_data = Object.assign({}, payLoad)
-    },
     [STOCK_GROUP_LIST](state, payLoad) {
         state.group_data = [...payLoad]
     },
     [SELECT_GROUP_DATA](state, payLoad) {
         state.select_group_data = [...payLoad]
-    },
-    [STOCK_RECENT_LIST](state, payLoad) {
-        state.recent_list_data = [...payLoad]
     },
     [CURRENT_TYPE](state, payLoad) {
         state.current_type = payLoad
@@ -58,7 +47,6 @@ export default {
     },
     [LEFT_SELECT_TAB](state, payLoad) {
         state.leftActiveKey = payLoad
-        localStorage.setItem(LOCAL_LEFT_TAB, payLoad)
     },
     [STOCK_NAME](state, payLoad) {
         state.stock_name = payLoad

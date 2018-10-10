@@ -23,11 +23,11 @@ import {
 export default {
     name: 'OneTag',
     computed: {
-        ...mapState([
-            'tag_data',
-            'stock_code',
-            'full_code',
-        ]),
+        ...mapState({
+            tag_data: state => state.moduleTags.tag_data,
+            stock_code: state => state.stock_code,
+            full_code: state => state.full_code,
+        }),
         formatter() {
             if (!this.fields) return '--'
             return companyFormatter[this.fields](

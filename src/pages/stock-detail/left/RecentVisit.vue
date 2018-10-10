@@ -19,6 +19,7 @@
 <script>
 import {
     mapState,
+    mapGetters,
     mapActions,
     mapMutations,
 } from 'vuex'
@@ -30,9 +31,6 @@ import {
     switchToHashString,
     changePageStock,
 } from '../utility.js'
-import {
-    STOCK_RECENT_LIST,
-} from '@store/stock-detail-store/config/mutation-types.js'
 import {
     GET_RECENT_LIST_DATA,
 } from '@store/stock-detail-store/config/action-types.js'
@@ -51,67 +49,34 @@ export default {
         subMixin,
     ],
     watch: {
-        full_code() {
-            setTimeout(() => {
-                this.fetchRecentList()
-            }, 0)
+        recentVisitedSubFullCode(val) {
+            if (!val.length) { return false }
+
+            this.$nextTick(() => {
+                this.subScription(FRAME_RECENT_LIST, {
+                    code: val.join(';'),
+                    field: this.subFilterFields.join(';'),
+                })
+            })
         },
     },
     computed: {
-        ...mapState([
-            'recent_list_data',
-            'full_code',
-        ])
+        ...mapState({
+            recent_list_data: state => state.moduleRecent.recent_list_data,
+            full_code: state => state.full_code,
+        }),
+        ...mapGetters([
+            'recentVisitedSubFullCode',
+        ]),
     },
     methods: {
-        ...mapMutations([
-            STOCK_RECENT_LIST,
-        ]),
         ...mapActions([
-            'getRecentListData'
+            GET_RECENT_LIST_DATA,
         ]),
-        getSubCodeList() {
-            return this.recent_list_data.map((element) => {
-                return `${element.source}${element.code}`
-            })
-        },
-        fetchRecentList() {
-            let param = {
-                options: {},
-                callback0: response => {
-                    const selectData = response.map((element) => {
-                        let full_code = `${element.source}${element.code}`
-                        Reflect.set(element, 'price_change', element.change_value)
-                        Reflect.set(element, 'price_change_rate', element.change_rate)
-                        Reflect.set(element, 'stock_name', element.name)
-                        Reflect.set(element, 'symbol_type', element.type)
-                        Reflect.deleteProperty(element, 'change_value')
-                        Reflect.deleteProperty(element, 'change_rate')
-                        Reflect.deleteProperty(element, 'type')
-                        Reflect.deleteProperty(element, 'name')
-
-                        Reflect.set(element, 'full_code', full_code)
-                        Reflect.set(element, 'classColor', '')
-
-                        return element
-                    })
-
-                    this[STOCK_RECENT_LIST](selectData)
-
-                    this.$nextTick(() => {
-                        let codeList = this.getSubCodeList()
-                        this.subScription(FRAME_RECENT_LIST, {
-                            code: codeList.join(';'),
-                            field: this.subFilterFields.join(';'),
-                        })
-                    })
-                },
-            }
-            this.getRecentListData(param)
-        },
         receiveRecentList(d) {
             const data = JSON.parse(d)
             const changList = []
+
             data.forEach((element) => {
                 let full_code = element.full_code
                 let one = this.recent_list_data.find((el) => {
@@ -138,12 +103,12 @@ export default {
             if (target) {
                 let { source, symbol_type, stock_code } = target.dataset
                 let hash = switchToHashString(source, stock_code, symbol_type)
-                changePageStock(hash)
+                changePageStock(hash, true)
             }
         },
         subStockColor() {
             pushData(FRAME_STOCK_COLOR, {
-                code: this.getSubCodeList().join(';'),
+                code: this.recentVisitedSubFullCode.join(';'),
             })
         },
         changeStockColor(d) {
@@ -164,7 +129,7 @@ export default {
     created() {
         goGoal.event.listen(FRAME_RECENT_LIST, this.receiveRecentList)
         goGoal.event.listen(FRAME_STOCK_COLOR, this.changeStockColor)
-        this.fetchRecentList()
+        this[GET_RECENT_LIST_DATA]()
     },
     beforeDestroy() {
         goGoal.event.remove(FRAME_RECENT_LIST, this.receiveRecentList)

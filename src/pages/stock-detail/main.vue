@@ -15,8 +15,8 @@
         v-show="isShowTape"
         :is-hide="isBStock"
     />
-    <TransaFilter/>
-    <ShortElvesFilter/>
+    <TransaFilter />
+    <ShortElvesFilter />
 </div>
 </template>
 
@@ -48,7 +48,8 @@ import {
     LEFT_SELECT_TAB,
 } from '@store/stock-detail-store/config/mutation-types.js'
 import {
-    ADD_TO_RECENT_LIST
+    ADD_TO_RECENT_LIST,
+    GET_RECENT_LIST_DATA,
 } from '@store/stock-detail-store/config/action-types.js'
 import {
     MODULE_NAME,
@@ -64,6 +65,7 @@ import {
     SESSION_ASTOCK_FUNC_TAB,
     TAB_RECOMMEND_TAGS,
     TAB_MY_STOCK,
+    TAB_RECENT_VISITED,
 } from './storage.js'
 
 import stockVerifyMixin from './mixins/stock-verify-mixin.js'
@@ -98,6 +100,7 @@ export default {
             'rightState',
             'infoState',
             'full_code',
+            'leftActiveKey',
         ]),
         ...mapGetters([
             'isAStock',
@@ -131,6 +134,7 @@ export default {
         ]),
         ...mapActions([
             ADD_TO_RECENT_LIST,
+            GET_RECENT_LIST_DATA,
         ]),
         init() {
             let hash = location.hash.substr(1)
@@ -138,17 +142,17 @@ export default {
             if (hash) {
                 this.changeCurrentStockState(hash)
             } else {
-                let stock_code = getUrlParam('stock_code') || this.getLocalStorage(LOCAL_LATEST_CODE) || '000001'
+                let stock_code = getUrlParam('stock_code') || localStorage.getItem(LOCAL_LATEST_CODE) || '000001'
                 // 第一次无 hash 改写 hash，触发 hashchange 事件
                 window.location.hash = `#${stock_code}`
             }
 
             // 添加最近访问列表
-            this[ADD_TO_RECENT_LIST]({
-                options: {
-                    full_code: this.full_code,
-                }
-            })
+            // this[ADD_TO_RECENT_LIST]({
+            //     options: {
+            //         full_code: this.full_code,
+            //     }
+            // })
         },
         initUrlState() {
             this.initUrlKlineJump()
@@ -197,54 +201,6 @@ export default {
         },
         initState() {
             this.initUrlState()
-            this[LEFT_STATE](this.initLeftState())
-            this[RIGHT_STATE](this.initRightState())
-            this[INFO_STATE](this.initInforState())
-            this[LEFT_SELECT_TAB](this.initLeftActiveKey())
-        },
-        getLocalStorage(name) {
-            return localStorage.getItem(name)
-        },
-        initLeftActiveKey() {
-            let record = this.getLocalStorage(LOCAL_LEFT_TAB)
-
-            return record || TAB_MY_STOCK
-        },
-        initLeftState() {
-            let state = this.getLocalStorage(LOCAL_IS_LEFT_SHOW)
-            if (!state) {
-                // 第一次加载默认展开
-                const DEFAULT_STATE = true
-                localStorage.setItem(LOCAL_IS_LEFT_SHOW, DEFAULT_STATE)
-                return DEFAULT_STATE
-            } else {
-                // true 为 展开
-                return Object.is(state, 'true')
-            }
-        },
-        initRightState() {
-            let state = this.getLocalStorage(LOCAL_IS_RIGHT_SHOW)
-            if (!state) {
-                // 第一次加载默认展开
-                const DEFAULT_STATE = true
-                localStorage.setItem(LOCAL_IS_RIGHT_SHOW, DEFAULT_STATE)
-                return DEFAULT_STATE
-            } else {
-                // true 为 展开
-                return Object.is(state, 'true')
-            }
-        },
-        initInforState() {
-            let state = this.getLocalStorage(LOCAL_IS_INFO_FULL)
-            if (!state) {
-                // 第一次加载默认收起
-                const DEFAULT_STATE = false
-                localStorage.setItem(LOCAL_IS_INFO_FULL, DEFAULT_STATE)
-                return DEFAULT_STATE
-            } else {
-                // true 为 展开
-                return Object.is(state, 'true')
-            }
         },
         changeLeftRight(d) {
             let data = JSON.parse(d)
@@ -291,15 +247,12 @@ export default {
         },
         setLeftState(state) {
             this[LEFT_STATE](state)
-            localStorage.setItem(LOCAL_IS_LEFT_SHOW, state)
         },
         setRightState(state) {
             this[RIGHT_STATE](state)
-            localStorage.setItem(LOCAL_IS_RIGHT_SHOW, state)
         },
         setInfoState(state) {
             this[INFO_STATE](state)
-            localStorage.setItem(LOCAL_IS_INFO_FULL, state)
         },
         changeTapeSetState() {
             // 改变盘口设置状态
@@ -326,10 +279,10 @@ export default {
                 full_code = hash.replace(/fund|bond/, '')
                 source = full_code.substr(0, 2)
                 stock_code = full_code.substr(2)
-            } else if (this.isHkFund
-                || this.isHkBond
-                || this.isHkWarrant
-                || this.isHkCbbc
+            } else if (this.isHkFund ||
+                this.isHkBond ||
+                this.isHkWarrant ||
+                this.isHkCbbc
             ) {
                 // 抹去前缀
                 full_code = hash.replace(/fund_H|bond_H|warrants|cbbc/, '')
@@ -390,15 +343,36 @@ export default {
                 // TODO:设置K线图滚轮列表，与快捷键一起开发
 
             }
-            if (!data.isRencent) {
-                // 添加最近访问列表，等待hashchange事件触发之后执行
-                setTimeout(() => {
+            setTimeout(() => {
+                // 延迟到 hashchange 事件执行之后执行
+                this.recentVisitedRefresh(data.isRencent)
+            }, 0)
+        },
+        recentVisitedRefresh(isRencent) {
+            if (!isRencent) {
+                if (this.leftState &&
+                    Object.is(this.leftActiveKey, TAB_RECENT_VISITED)
+                ) {
+                    // 添加并刷新
+                    this[ADD_TO_RECENT_LIST]({
+                        options: {
+                            full_code: this.full_code,
+                        }
+                    }).then((response) => {
+                        if (!Object.is(response.code, 0)) {
+                            return false
+                        }
+
+                        this[GET_RECENT_LIST_DATA]()
+                    })
+                    // 左侧展开状态且最近访问列表为选中状态
+                } else {
                     this[ADD_TO_RECENT_LIST]({
                         options: {
                             full_code: this.full_code,
                         }
                     })
-                }, 0)
+                }
             }
         },
         getNewLink(client_id) {
@@ -452,13 +426,17 @@ export default {
             this.$_eventBus.$emit('setKlineStyle', 'left', state)
         },
         keyBoardF10() {
-            if (!this.canLoadF10) { return false }
+            if (!this.canLoadF10) {
+                return false
+            }
 
             let hash = location.hash.substr(1)
             skipF10(hash, MODULE_NAME)
         },
         keyBoardF1() {
-            if (!this.canLoadF1) { return false }
+            if (!this.canLoadF1) {
+                return false
+            }
 
             let hash = location.hash.substr(1)
             skipF1(hash, MODULE_NAME)

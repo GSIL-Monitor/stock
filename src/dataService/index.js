@@ -111,7 +111,7 @@ export const getSelfConsensus = param => {
 /**
  * @description 个股 -- 添加到最近访问
 */
-export const addMyRecent = param => {
+export const addMyRecent = (param = {}) => {
     const APIName = 'v1/mystock/add_recent'
     Reflect.set(param.options, 'token', getToken())
 

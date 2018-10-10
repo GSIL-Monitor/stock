@@ -113,10 +113,10 @@ export default {
         }
     },
     computed: {
-        ...mapState([
-            'group_data',
-            'select_group_data',
-        ]),
+        ...mapState({
+            group_data: state => state.moduleMystock.group_data,
+            select_group_data: state => state.moduleMystock.select_group_data,
+        }),
     },
     methods: {
         ...mapMutations([
