@@ -1,6 +1,4 @@
 import {
-    STOCK_GROUP_LIST,
-    SELECT_GROUP_DATA,
     CURRENT_TYPE,
     STOCK_CODE,
     SOURCE,
@@ -8,21 +6,17 @@ import {
     LEFT_STATE,
     RIGHT_STATE,
     INFO_STATE,
-    HSINDEX_CATEGORY,
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
     STOCK_NAME,
 } from './config/mutation-types.js'
 
 export default {
-    [STOCK_GROUP_LIST](state, payLoad) {
-        state.group_data = [...payLoad]
-    },
-    [SELECT_GROUP_DATA](state, payLoad) {
-        state.select_group_data = [...payLoad]
-    },
     [CURRENT_TYPE](state, payLoad) {
         state.current_type = payLoad
+    },
+    [STOCK_NAME](state, payLoad) {
+        state.stock_name = payLoad
     },
     [STOCK_CODE](state, payLoad) {
         state.stock_code = payLoad
@@ -42,16 +36,10 @@ export default {
     [INFO_STATE](state, payLoad) {
         state.infoState = payLoad
     },
-    [KLINE_JUMP_PARAM](state, payLoad) {
-        state.klineJumpState = payLoad
-    },
     [LEFT_SELECT_TAB](state, payLoad) {
         state.leftActiveKey = payLoad
     },
-    [STOCK_NAME](state, payLoad) {
-        state.stock_name = payLoad
-    },
-    [HSINDEX_CATEGORY](state, payLoad) {
-        state.hsIndexCategory = payLoad
+    [KLINE_JUMP_PARAM](state, payLoad) {
+        state.klineJumpState = payLoad
     },
 }

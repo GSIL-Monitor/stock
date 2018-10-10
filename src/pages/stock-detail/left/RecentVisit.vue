@@ -63,7 +63,7 @@ export default {
     computed: {
         ...mapState({
             recent_list_data: state => state.moduleRecent.recent_list_data,
-            full_code: state => state.full_code,
+            // full_code: state => state.full_code,
         }),
         ...mapGetters([
             'recentVisitedSubFullCode',

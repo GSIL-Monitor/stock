@@ -10,13 +10,13 @@ export const LOCAL_TAPE_SET_DFT = `${MODULE_NAME}-tapeSet-default`
 // 盘口设置 -- 功能显隐
 export const LOCAL_TAPE_SET_FUNC = `${MODULE_NAME}-tapeSet-func`
 // 左侧显隐
-export const LOCAL_IS_LEFT_SHOW = `${MODULE_NAME}-left-content-state`
-// 右侧显隐
-export const LOCAL_IS_RIGHT_SHOW = `${MODULE_NAME}-right-content-state`
-// 资讯栏显隐
-export const LOCAL_IS_INFO_FULL = `${MODULE_NAME}-info-content-state`
+// export const LOCAL_IS_LEFT_SHOW = `${MODULE_NAME}-left-content-state`
+// // 右侧显隐
+// export const LOCAL_IS_RIGHT_SHOW = `${MODULE_NAME}-right-content-state`
+// // 资讯栏显隐
+// export const LOCAL_IS_INFO_FULL = `${MODULE_NAME}-info-content-state`
 // 左侧 tab
-export const LOCAL_LEFT_TAB = `${MODULE_NAME}-left-tab`
+// export const LOCAL_LEFT_TAB = `${MODULE_NAME}-left-tab`
 // 股票代码
 export const LOCAL_LATEST_CODE = `${MODULE_NAME}-stock-code`
 // 行情图状态
