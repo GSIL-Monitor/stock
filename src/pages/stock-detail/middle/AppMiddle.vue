@@ -34,10 +34,6 @@ import {
     mapMutations,
 } from 'vuex'
 import {
-    getInfoState,
-    setInfoState,
-} from './info-storage-state.js'
-import {
     INFO_STATE,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
@@ -85,7 +81,6 @@ export default {
         changeInfoState(state) {
             this[INFO_STATE](state)
             this.$_eventBus.$emit('setKlineStyle', 'bottom', state)
-            setInfoState(state)
         },
     },
     components: {

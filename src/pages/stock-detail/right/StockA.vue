@@ -655,7 +655,6 @@ export default {
             const latest = this.getTabSession()
             if (latest) {
                 this[CHANGE_STOCK_A_ACTIVE_TAB](latest)
-                // this.bottomTabConfig.activeType = latest
             }
         },
         emitDataChange(parentType, type) {
@@ -683,7 +682,7 @@ export default {
         },
         changeBottomActiveTab(type) {
             // 单击改变选中的左下侧的底部tab
-            this.bottomTabConfig.activeType = type
+            this[CHANGE_STOCK_A_ACTIVE_TAB](type)
             this.setTabSession(type)
         },
         skipDiagnose() {
