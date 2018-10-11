@@ -139,7 +139,9 @@
                 label="其他指数"
                 :type="otherIndex"
             >
-                <OtherIndex v-if="loadOtherIndex"/>
+                <OtherIndex
+                    v-if="loadOtherIndex"
+                />
             </TabPane>
             <TabPane
                 label="短线精灵"
