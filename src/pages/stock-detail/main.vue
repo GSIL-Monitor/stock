@@ -46,6 +46,7 @@ import {
     INFO_STATE,
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
+    CHANGE_TAPE_DISPLAY,
 } from '@store/stock-detail-store/config/mutation-types.js'
 import {
     ADD_TO_RECENT_LIST,
@@ -69,6 +70,7 @@ import {
 } from './storage.js'
 
 import stockVerifyMixin from './mixins/stock-verify-mixin.js'
+import tapeDisplayMixin from './mixins/tape-display-mixin.js'
 
 import AppLeft from './left/AppLeft.vue'
 import AppMiddle from './middle/AppMiddle.vue'
@@ -84,11 +86,11 @@ export default {
     name: 'App',
     mixins: [
         stockVerifyMixin,
+        tapeDisplayMixin,
     ],
     data() {
         return {
-            tapeState: false,
-            tapeSetName: 'tapeSet',
+            // tapeSetName: 'tapeSet',
             sendClientId: false,
             client_id: null,
             keyBoardTimer: null,
@@ -116,9 +118,9 @@ export default {
             'canLoadF10',
             'canLoadF1',
         ]),
-        isShowTape() {
-            return this.tapeState && (this.isAStock || this.isBStock)
-        },
+        ...mapGetters([
+            'isShowTape',
+        ]),
     },
     methods: {
         ...mapMutations([
@@ -131,6 +133,7 @@ export default {
             INFO_STATE,
             KLINE_JUMP_PARAM,
             LEFT_SELECT_TAB,
+            // CHANGE_TAPE_DISPLAY,
         ]),
         ...mapActions([
             ADD_TO_RECENT_LIST,
@@ -210,7 +213,7 @@ export default {
                 this.$_eventBus.$emit('setKlineStyle', 'left', state)
             } else if (data.right) {
                 let state = Object.is(data.right, 'true')
-                if (Object.is(state, false) && this.tapeState) {
+                if (Object.is(state, false) && this.$_tapeState) {
                     this.changeTapeSetState()
                 }
                 this.setRightState(state)
@@ -228,7 +231,7 @@ export default {
                     if (this.infoState) {
                         this.setInfoState(state)
                     }
-                    if (this.tapeState) {
+                    if (this.$_tapeState) {
                         this.changeTapeSetState()
                     }
                 } else if (Object.is(nextState, 'false')) {
@@ -256,7 +259,7 @@ export default {
         },
         changeTapeSetState() {
             // 改变盘口设置状态
-            this.tapeState = !this.tapeState
+            this.$_changeTapeDisplay()
         },
         getSource(stock_code) {
             // 获取 A、B 股证券前缀
@@ -480,7 +483,6 @@ export default {
     },
     created() {
         goGoal.ws.onmessage = this.socketOnMessage
-        this.$_eventBus.$on(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
@@ -491,7 +493,6 @@ export default {
     },
     beforeDestroy() {
         // goGoal.ws.onmessage = null
-        this.$_eventBus.$off(this.tapeSetName, this.changeTapeSetState)
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.remove(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.remove(EVENT_KEY_BOARD, this.keyBoardEvent)

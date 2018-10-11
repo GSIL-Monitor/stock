@@ -7,7 +7,7 @@
                 <div class="tape_header_title">盘口设置</div>
                 <span
                     class="tape_header_close"
-                    @click="tapeComplete"
+                    @click="$_changeTapeDisplay"
                 >
                     X
                 </span>
@@ -33,7 +33,7 @@
         </div>
         <div class="set_tape_bottom">
             <default-btn
-                @on-click="tapeComplete"
+                @on-click="$_changeTapeDisplay"
                 class="tape_btn tape_btn_Sure"
             >
                 完成
@@ -51,6 +51,7 @@
 <script>
 import {
     mapState,
+    mapMutations,
     mapActions,
 } from 'vuex'
 import {
@@ -71,12 +72,17 @@ import {
     TAPE_RESET_STATE,
 } from '@store/stock-detail-store/config/action-types.js'
 
+import tapeDisplayMixin from '../mixins/tape-display-mixin.js'
+
 import DefaultBtn from '../components/DefaultBtn.vue'
 import TapeSectionItem from './TapeSectionItem.vue'
 import TapeFuncStyle from './TapeFuncStyle.vue'
 
 export default {
     name: 'TapeSet',
+    mixins: [
+        tapeDisplayMixin,
+    ],
     props: {
         isHide: {
             type: Boolean,
@@ -101,9 +107,6 @@ export default {
         ...mapActions([
             TAPE_RESET_STATE,
         ]),
-        tapeComplete() {
-            this.$_eventBus.$emit('tapeSet')
-        },
         tapeReset() {
             this[TAPE_RESET_STATE]()
         },

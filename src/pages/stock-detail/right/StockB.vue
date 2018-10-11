@@ -17,7 +17,7 @@
                 </div>
                 <SetIco
                     class="title_right_set"
-                    @click="tapeSettings"
+                    @click="$_changeTapeDisplay"
                 />
             </div>
             <TitleTopMarket
@@ -253,6 +253,7 @@ import {
 import socketMixin from '../mixins/socket-mixin.js'
 import fiveOrderMixin from '../mixins/five-order-mixin.js'
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
+import tapeDisplayMixin from '../mixins/tape-display-mixin.js'
 
 import SetIco from '../components/SetIco.vue'
 import TitleTopMarket from './TitleTopMarket.vue'
@@ -331,6 +332,7 @@ export default {
         socketMixin,
         fiveOrderMixin,
         rightResizeMixin,
+        tapeDisplayMixin,
     ],
     created() {
         this.$_eventBus.$on(SOCKET_B_MARKET, this.receiveSocketData)
@@ -406,18 +408,6 @@ export default {
             STOCK_NAME,
             CHANGE_TAPE_SET,
         ]),
-        tapeSettings() {
-            this.$_eventBus.$emit('tapeSet')
-        },
-        // emitDataChange(parentType, type) {
-        //     this.$_eventBus.$emit('dataChanged', {
-        //         parentType: parentType,
-        //         type,
-        //         changed: {
-        //             activeType: type,
-        //         },
-        //     })
-        // },
         detailInfoToggleHeight() {
             let val = this[TAPE_STYLE] === 'on' ? 'off' : 'on'
             this[CHANGE_TAPE_SET]([{

@@ -24,7 +24,7 @@
                 </div>
                 <SetIco
                     class="title_right_set"
-                    @click="tapeSettings"
+                    @click="$_changeTapeDisplay"
                 />
             </div>
             <TitleTopMarket
@@ -309,6 +309,7 @@ import {
 import socketMixin from '../mixins/socket-mixin.js'
 import fiveOrderMixin from '../mixins/five-order-mixin.js'
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
+import tapeDisplayMixin from '../mixins/tape-display-mixin.js'
 
 import CompanyHonorBtn from './CompanyHonorBtn.vue'
 import BelongIndustry from './BelongIndustry.vue'
@@ -402,10 +403,10 @@ export default {
         socketMixin,
         fiveOrderMixin,
         rightResizeMixin,
+        tapeDisplayMixin,
     ],
     created() {
-        // 根据 localStorage 设置初始状态
-        this.initState()
+        // this.initState()
 
         this.$_eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
 
@@ -642,30 +643,21 @@ export default {
                 this.$refs.transactionComponent.pushData(one)
             }
        },
-        initState() {
-            this.initBottomTabState()
-        },
-        getTabSession() {
-            return sessionStorage.getItem(SESSION_ASTOCK_FUNC_TAB)
-        },
-        setTabSession(type) {
-            sessionStorage.setItem(SESSION_ASTOCK_FUNC_TAB, type)
-        },
-        initBottomTabState() {
-            const latest = this.getTabSession()
-            if (latest) {
-                this[CHANGE_STOCK_A_ACTIVE_TAB](latest)
-            }
-        },
-        emitDataChange(parentType, type) {
-            this.$_eventBus.$emit('dataChanged', {
-                parentType: parentType,
-                type,
-                changed: {
-                    activeType: type,
-                },
-            })
-        },
+        // initState() {
+        //     this.initBottomTabState()
+        // },
+        // getTabSession() {
+        //     return sessionStorage.getItem(SESSION_ASTOCK_FUNC_TAB)
+        // },
+        // setTabSession(type) {
+        //     sessionStorage.setItem(SESSION_ASTOCK_FUNC_TAB, type)
+        // },
+        // initBottomTabState() {
+        //     const latest = this.getTabSession()
+        //     if (latest) {
+        //         this[CHANGE_STOCK_A_ACTIVE_TAB](latest)
+        //     }
+        // },
         detailInfoToggleHeight() {
             let val = this[TAPE_STYLE] === 'on' ? 'off' : 'on'
             this[CHANGE_TAPE_SET]([{
@@ -683,7 +675,6 @@ export default {
         changeBottomActiveTab(type) {
             // 单击改变选中的左下侧的底部tab
             this[CHANGE_STOCK_A_ACTIVE_TAB](type)
-            this.setTabSession(type)
         },
         skipDiagnose() {
             const params = JSON.stringify({
@@ -702,9 +693,6 @@ export default {
             })
 
             sendEvent('reportCenter', 'searchReport', params, true)
-        },
-        tapeSettings() {
-            this.$_eventBus.$emit('tapeSet')
         },
         $_resizeWindow() {
             let ele = this.$refs.detailExtend

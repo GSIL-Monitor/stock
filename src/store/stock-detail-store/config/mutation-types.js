@@ -38,3 +38,5 @@ export const RESET_TAPE_FUNC = 'RESET_TAPE_FUNC'
 export const RESET_TAPE_CONTENT = 'RESET_TAPE_CONTENT'
 // 改写 A股 右下角激活的 Tab
 export const CHANGE_STOCK_A_ACTIVE_TAB = 'CHANGE_STOCK_A_ACTIVE_TAB'
+// 改变盘口设置显隐状态
+export const CHANGE_TAPE_DISPLAY = 'CHANGE_TAPE_DISPLAY'
