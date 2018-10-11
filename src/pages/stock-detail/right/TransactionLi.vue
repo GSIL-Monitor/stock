@@ -1,6 +1,8 @@
 <template>
     <li>
-        <ul class="transac_item">
+        <ul
+            class="transac_item"
+        >
             <li class="transac_item_time">{{time}}</li>
             <li class="transac_item_price">
                 <Price
@@ -60,6 +62,11 @@ export default {
         count() {
             return formatCount(this.item.deal_count)
         },
+        // itemClasses() {
+        //     return {
+        //         transaction_amimation: Object.is(this.item.animation, 1)
+        //     }
+        // },
     },
     props: {
         item: {
@@ -70,11 +77,31 @@ export default {
             type: String,
             default: 'aStock'
         },
-    }
+    },
+    // watch: {
+    //     item() {
+    //         let step = 700
+    //         setTimeout(() => {
+    //             this.item.animation = 0
+    //         }, step)
+    //     },
+    // },
 }
 </script>
 
 <style lang="less">
+@keyframes move_blue {
+    from {
+        background-color: var(--color-selected-bg);
+    }
+    to {
+        background-color: var(--body-bg);
+    }
+}
+.transaction_amimation {
+    animation: move_blue .7s linear infinite;
+}
+
 .transac_item {
     display: flex;
     align-items: center;

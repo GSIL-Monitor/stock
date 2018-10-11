@@ -42,6 +42,7 @@
                 :key="index"
                 :item="item"
                 :current_type="current_type"
+                :class="itemClasses(index)"
             />
         </ul>
         <div
@@ -82,6 +83,7 @@ export default {
     },
     data() {
         return {
+            canAnimation: false,
             latestTime: 0,
             dataStore: [],
             filterMsg: '全部',
@@ -112,6 +114,11 @@ export default {
         },
     },
     methods: {
+        itemClasses(index) {
+            return {
+                transaction_amimation: Object.is(index, 0) && this.canAnimation
+            }
+        },
         getTimeStamp(time) {
             return new Date(time.replace(/\-/g, '/'))
                    .getTime()
@@ -275,6 +282,15 @@ export default {
             }
             if (nowTimeStamp > this.latestTime) {
                 this.dataStore.unshift(Object.freeze(data))
+                // animation
+                this.$nextTick(() => {
+                    this.canAnimation = true
+                    let step = 600
+                    setTimeout(() => {
+                        this.canAnimation = false
+                    }, step)
+                })
+
                 this.latestTime = nowTimeStamp
             }
         },
