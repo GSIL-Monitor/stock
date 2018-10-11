@@ -15,20 +15,27 @@
 </template>
 
 <script>
+import {
+    mapMutations,
+} from 'vuex'
+import {
+    CHANGE_TAPE_SET,
+} from '@store/stock-detail-store/config/mutation-types.js'
+
 export default {
     name: 'TapeSectionItem',
     methods: {
+        ...mapMutations([
+            CHANGE_TAPE_SET,
+        ]),
         itemClick(type) {
-            if (this.activeType === type) {
+            if (Object.is(this.activeType, type)) {
                 return false
             } else {
-                this.$_eventBus.$emit('dataChanged', {
-                    parentType: this.type,
-                    type,
-                    changed: {
-                        activeType: type
-                    },
-                })
+                this[CHANGE_TAPE_SET]([{
+                    type: this.type,
+                    val: type,
+                }])
             }
         },
     },

@@ -28,3 +28,13 @@ export const KLINE_JUMP_PARAM = 'KLINE_JUMP_PARAM'
 export const LEFT_SELECT_TAB = 'LEFT_SELECT_TAB'
 // 当前选中股票名字
 export const STOCK_NAME = 'STOCK_NAME'
+// 改变盘口设置 委托明细/默认盘口内容/默认盘口样式/
+export const CHANGE_TAPE_SET = 'CHANGE_TAPE_SET'
+// 改变盘口设置 功能显隐
+export const CHANGE_TAPE_FUNC = 'CHANGE_TAPE_FUNC'
+// 重置盘口设置
+export const RESET_TAPE_FUNC = 'RESET_TAPE_FUNC'
+// 重置盘口功能显隐
+export const RESET_TAPE_CONTENT = 'RESET_TAPE_CONTENT'
+// 改写 A股 右下角激活的 Tab
+export const CHANGE_STOCK_A_ACTIVE_TAB = 'CHANGE_STOCK_A_ACTIVE_TAB'

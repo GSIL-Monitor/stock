@@ -50,6 +50,10 @@
 
 <script>
 import {
+    mapState,
+    mapActions,
+} from 'vuex'
+import {
     initTapeDefault,
     initTapeFunc,
 } from './tape-public-func.js'
@@ -63,6 +67,9 @@ import {
     TAPE_STYLE,
     FUNC_PERFORMANCE,
 } from './tape-set-config.js'
+import {
+    TAPE_RESET_STATE,
+} from '@store/stock-detail-store/config/action-types.js'
 
 import DefaultBtn from '../components/DefaultBtn.vue'
 import TapeSectionItem from './TapeSectionItem.vue'
@@ -70,101 +77,19 @@ import TapeFuncStyle from './TapeFuncStyle.vue'
 
 export default {
     name: 'TapeSet',
-    created() {
-        this.initState()
-
-        this.$_eventBus.$on('dataChanged', (o) => {
-            this.changed(o)
-        })
-    },
-    data() {
-        return {
-            [TAPE_ROWS]: {
-                type: TAPE_ROWS,
-                title: '委托明细',
-                className: 'tape-case-entrust',
-                activeType: '5',
-                list: [
-                    {
-                        text: '五档',
-                        type: '5',
-                    },
-                    {
-                        text: '三档',
-                        type: '3',
-                    },
-                    {
-                        text: '隐藏',
-                        type: '0',
-                    },
-                ],
-            },
-            [TAPE_CONTENT]: {
-                type: TAPE_CONTENT,
-                title: '默认盘口内容',
-                className: 'tape-case-content',
-                activeType: 'market',
-                list: [
-                    {
-                        text: '行情数据',
-                        type: 'market',
-                    },
-                    {
-                        text: '一致预期',
-                        type: 'entrust',
-                    },
-                ],
-            },
-            [TAPE_STYLE]: {
-                type: TAPE_STYLE,
-                title: '默认盘口样式',
-                className: 'tape-case-style',
-                activeType: 'off',
-                list: [
-                    {
-                        text: '展开',
-                        type: 'on',
-                    },
-                    {
-                        text: '收起',
-                        type: 'off',
-                    },
-                ],
-            },
-            [FUNC_PERFORMANCE]: {
-                type: [FUNC_PERFORMANCE],
-                title: '功能显隐',
-                list: [
-                    {
-                        text: '分价表',
-                        type: 'price_table',
-                        on: true,
-                    },
-                    {
-                        text: '资金流向',
-                        type: 'fund_flow',
-                        on: true,
-                    },
-                    {
-                        text: '短线精灵',
-                        type: 'short_line',
-                        on: true,
-                    },
-                    {
-                        text: '简易财务',
-                        type: 'simple_finance',
-                        on: true,
-                    },
-                ],
-            },
+    props: {
+        isHide: {
+            type: Boolean,
+            default: false,
         }
     },
-    components: {
-        TapeSectionItem,
-        TapeFuncStyle,
-        DefaultBtn,
-    },
     computed: {
+        ...mapState({
+            [TAPE_ROWS]: state => state.moduleTape[TAPE_ROWS],
+            [TAPE_CONTENT]: state => state.moduleTape[TAPE_CONTENT],
+            [TAPE_STYLE]: state => state.moduleTape[TAPE_STYLE],
+            [FUNC_PERFORMANCE]: state => state.moduleTape[FUNC_PERFORMANCE],
+        }),
         setOrder() {
             return [this[TAPE_ROWS], this[TAPE_CONTENT], this[TAPE_STYLE]]
         },
@@ -173,110 +98,20 @@ export default {
         },
     },
     methods: {
-        initState() {
-            initTapeDefault((key, val) => {
-                this[key].activeType = val
-            })
-            initTapeFunc((val) => {
-                let item = this.find(FUNC_PERFORMANCE, val)
-                item.on = false
-            })
-        },
-        find(parentType, type) {
-            return this[parentType].list.find((el) => {
-                return Object.is(Reflect.get(el, 'type'), type)
-            })
-        },
-        changed(o) {
-            this.changeState(o)
-            this.setStorage(o)
-            this.emitChanged(o)
-        },
-        changeState(o) {
-            let parentType = o.parentType
-            if (o.isList) {
-                // 修改子数据
-                o.changed.forEach((el) => {
-                    let item = this.find(parentType, el.type)
-                    if (item) {
-                        Object.assign(item, el)
-                    }
-                })
-            } else {
-                Object.assign(this[parentType], o.changed)
-            }
-        },
-        setStorage(o) {
-            if (Reflect.has(o, 'isList')) {
-                this.setFuncStore(o)
-            } else {
-                this.setDefultStore(o)
-            }
-        },
-        setDefultStore(o) {
-            let store = localStorage.getItem(LOCAL_TAPE_SET_DFT)
-            let parseStore = store ? JSON.parse(store) : {}
-            let parentType = Reflect.get(o, 'parentType')
-            let type = Reflect.get(o, 'type')
-            Reflect.set(parseStore, parentType, type)
-            localStorage.setItem(LOCAL_TAPE_SET_DFT, JSON.stringify(parseStore))
-        },
-        setFuncStore(o) {
-            let store = localStorage.getItem(LOCAL_TAPE_SET_FUNC)
-            let parseStore = store ? JSON.parse(store) : []
-            o.changed.forEach((ele)=> {
-                if (ele.on === false) {
-                    parseStore.push(ele.type)
-                } else {
-                    let index = parseStore.indexOf(ele.type)
-                    if (index > -1) {
-                        parseStore.splice(index, 1)
-                    }
-                }
-            })
-            localStorage.setItem(LOCAL_TAPE_SET_FUNC, JSON.stringify(parseStore))
-        },
-        emitChanged(o) {
-            if (Reflect.has(o, 'isList')) {
-                // function
-                let item = o.changed[0]
-                this.$_eventBus.$emit('bottomSwitch', item.type, item.on)
-            } else {
-                // default
-                this.$_eventBus.$emit('tapeDefaultChanged', o.parentType, o.type)
-            }
-        },
+        ...mapActions([
+            TAPE_RESET_STATE,
+        ]),
         tapeComplete() {
             this.$_eventBus.$emit('tapeSet')
         },
         tapeReset() {
-            const resetDefault = {
-                [TAPE_ROWS]: '5',
-                [TAPE_CONTENT]: 'market',
-                [TAPE_STYLE]: 'off',
-            }
-            Object.entries(resetDefault).forEach(([key, value]) => {
-                let nowType = Reflect.get(this[key], 'activeType')
-                if (nowType !== value) {
-                    Reflect.set(this[key], 'activeType', value)
-                }
-            })
-            this[FUNC_PERFORMANCE].list.forEach((ele) => {
-                if (!ele.on) {
-                    ele.on = true
-                }
-            })
-            localStorage.setItem(LOCAL_TAPE_SET_DFT, JSON.stringify(resetDefault))
-            localStorage.setItem(LOCAL_TAPE_SET_FUNC, JSON.stringify([]))
-            this.$_eventBus.$emit('resetTapeState')
+            this[TAPE_RESET_STATE]()
         },
     },
-
-    props: {
-        isHide: {
-            type: Boolean,
-            default: false,
-        }
+    components: {
+        TapeSectionItem,
+        TapeFuncStyle,
+        DefaultBtn,
     },
 }
 </script>

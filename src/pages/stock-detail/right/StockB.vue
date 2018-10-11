@@ -239,9 +239,6 @@ import {
     getLimitStockData,
 } from '@service/index.js'
 import {
-    initTapeDefault,
-} from '../tape/tape-public-func.js'
-import {
     TAPE_ROWS,
     TAPE_STYLE,
 } from '../tape/tape-set-config.js'
@@ -250,6 +247,7 @@ import {
 } from '../storage.js'
 import {
     STOCK_NAME,
+    CHANGE_TAPE_SET,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
 import socketMixin from '../mixins/socket-mixin.js'
@@ -335,17 +333,12 @@ export default {
         rightResizeMixin,
     ],
     created() {
-        this.initState()
-
         this.$_eventBus.$on(SOCKET_B_MARKET, this.receiveSocketData)
-        this.$_eventBus.$on('tapeDefaultChanged', this.tapeDefaultChanged)
 
         this.getInfoData()
     },
     data() {
         return {
-            [TAPE_ROWS]: '5',
-            [TAPE_STYLE]: 'off',
             socketData: {},
             linkIndex: 0,
             symbol_type: null,
@@ -392,6 +385,10 @@ export default {
             'stock_name',
             'current_type',
         ]),
+        ...mapState({
+            [TAPE_ROWS]: state => state.moduleTape[TAPE_ROWS].activeType,
+            [TAPE_STYLE]: state => state.moduleTape[TAPE_STYLE].activeType,
+        }),
         row() {
             return this[TAPE_ROWS]
         },
@@ -407,33 +404,26 @@ export default {
     methods: {
         ...mapMutations([
             STOCK_NAME,
+            CHANGE_TAPE_SET,
         ]),
-        initState() {
-            initTapeDefault((key, val) => {
-                if ([TAPE_ROWS, TAPE_STYLE].includes(key)) {
-                    this[key] = val
-                }
-            })
-        },
-        tapeDefaultChanged(key, val) {
-            this[key] = val
-            this.$_nextResizeWindow()
-        },
         tapeSettings() {
             this.$_eventBus.$emit('tapeSet')
         },
-        emitDataChange(parentType, type) {
-            this.$_eventBus.$emit('dataChanged', {
-                parentType: parentType,
-                type,
-                changed: {
-                    activeType: type,
-                },
-            })
-        },
+        // emitDataChange(parentType, type) {
+        //     this.$_eventBus.$emit('dataChanged', {
+        //         parentType: parentType,
+        //         type,
+        //         changed: {
+        //             activeType: type,
+        //         },
+        //     })
+        // },
         detailInfoToggleHeight() {
-            let type = Object.is(this[TAPE_STYLE], 'on') ? 'off' : 'on'
-            this.emitDataChange(TAPE_STYLE, type)
+            let val = this[TAPE_STYLE] === 'on' ? 'off' : 'on'
+            this[CHANGE_TAPE_SET]([{
+                type: TAPE_STYLE,
+                val,
+            }])
         },
         getInfoData() {
             const params = {
@@ -566,13 +556,17 @@ export default {
         this.$_eventBus.$off(SOCKET_B_MARKET, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
-
-        this.$_eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
     },
     watch: {
         full_code() {
             this.resetComponent()
             this.getInfoData()
+        },
+        [TAPE_ROWS]() {
+            this.$_nextResizeWindow()
+        },
+        [TAPE_STYLE]() {
+            this.$_nextResizeWindow()
         },
     },
 }

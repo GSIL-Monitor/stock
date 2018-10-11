@@ -12,3 +12,5 @@ export const GET_HS_INDEX_MARKET_DATA = 'getHSIndexMarketData'
 export const GET_HS_INDEX_CONSTITUENT_LIST = 'getHSIndexConstituentList'
 // 添加最进访问列表
 export const ADD_TO_RECENT_LIST = 'ADD_TO_RECENT_LIST'
+// 重置盘口设置
+export const TAPE_RESET_STATE = 'TAPE_RESET_STATE'

@@ -14,21 +14,25 @@
 </template>
 
 <script>
+import {
+    mapMutations,
+} from 'vuex'
+import {
+    CHANGE_TAPE_FUNC,
+} from '@store/stock-detail-store/config/mutation-types.js'
+
 export default {
     name: 'FuncStyleItem',
     methods: {
+        ...mapMutations([
+            CHANGE_TAPE_FUNC,
+        ]),
         icoClick() {
             let emitOn = !this.on
-            this.$_eventBus.$emit('dataChanged', {
-                parentType: this.parentType,
-                isList: true,
-                changed: [
-                    {
-                        type: this.type,
-                        on: emitOn,
-                    },
-                ],
-            })
+            this[CHANGE_TAPE_FUNC]([{
+                type: this.type,
+                on: emitOn,
+            }])
         },
     },
     props: [

@@ -252,11 +252,22 @@
         />
         <!-- 分笔、分价表、资金流向、短线精灵、简易财务 -->
         <div class="detail_extend" :style="$_extendStyles" ref="detailExtend">
-            <SimpleFinancial v-if="bottomTabConfig.activeType === 'simple_finance'"/>
-            <StockTransaction v-if="isTransationShow" ref="transactionComponent"/>
-            <PricePoint v-if="bottomTabConfig.activeType === 'price_table'"/>
-            <FundFlow v-if="bottomTabConfig.activeType === 'fund_flow'"/>
-            <ShortElves v-if="bottomTabConfig.activeType === 'short_line'"/>
+            <StockTransaction
+                v-if="isTransationShow"
+                ref="transactionComponent"
+            />
+            <PricePoint
+                v-if="bottomTabConfig.activeType === 'price_table'"
+            />
+            <FundFlow
+                v-if="bottomTabConfig.activeType === 'fund_flow'"
+            />
+            <ShortElves
+                v-if="bottomTabConfig.activeType === 'short_line'"
+            />
+            <SimpleFinancial
+                v-if="bottomTabConfig.activeType === 'simple_finance'"
+            />
         </div>
         <TabSwitch
             :config-arr="tabSwitchList.list"
@@ -270,15 +281,12 @@
 <script>
 import {
     mapState,
+    mapGetters,
     mapMutations,
 } from 'vuex'
 import {
     getLimitStockData,
 } from '@service/index.js'
-import {
-    initTapeDefault,
-    initTapeFunc,
-} from '../tape/tape-public-func.js'
 import {
     sendEvent,
 } from '@c/utils/callQt.js'
@@ -294,6 +302,8 @@ import {
 } from '../storage.js'
 import {
     STOCK_NAME,
+    CHANGE_TAPE_SET,
+    CHANGE_STOCK_A_ACTIVE_TAB,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
 import socketMixin from '../mixins/socket-mixin.js'
@@ -398,18 +408,13 @@ export default {
         this.initState()
 
         this.$_eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
-        this.$_eventBus.$on('tapeDefaultChanged', this.tapeDefaultChanged)
-        this.$_eventBus.$on('bottomSwitch', this.bottomSwitch)
-        this.$_eventBus.$on('resetTapeState', this.resetTapeState)
+
         if (this.stock_code) {
             this.getInfoData()
         }
     },
     data() {
         return {
-            [TAPE_ROWS]: '5',
-            [TAPE_CONTENT]: 'market',
-            [TAPE_STYLE]: 'off',
             linkIndex: 0,
             industry_name: '',
             loadIdentify: false,
@@ -428,31 +433,6 @@ export default {
 
             showFilterPopUp: true,
             bottomHideList: [],
-            bottomTabConfig: {
-                activeType: 'transaction',
-                list: [
-                    {
-                        text: '分笔',
-                        type: 'transaction',
-                    },
-                    {
-                        text: '分价表',
-                        type: 'price_table',
-                    },
-                    {
-                        text: '资金流向',
-                        type: 'fund_flow',
-                    },
-                    {
-                        text: '短线精灵',
-                        type: 'short_line',
-                    },
-                    {
-                        text: '简易财务',
-                        type: 'simple_finance',
-                    },
-                ],
-            }
         }
     },
     components: {
@@ -503,28 +483,27 @@ export default {
             'current_type',
             'stock_name',
         ]),
+        ...mapState({
+            [TAPE_ROWS]: state => state.moduleTape[TAPE_ROWS].activeType,
+            [TAPE_CONTENT]: state => state.moduleTape[TAPE_CONTENT].activeType,
+            [TAPE_STYLE]: state => state.moduleTape[TAPE_STYLE].activeType,
+            bottomTabConfig: state => state.moduleStockA.bottomTabConfig,
+        }),
+        ...mapGetters([
+            'tabSwitchList',
+            'isAllTabsFalse',
+            'filterList',
+        ]),
         row() {
             return this[TAPE_ROWS]
         },
         detailInfoClass() {
-            return this[TAPE_STYLE] === 'off' ? 'detail_info_Limit' :
-                   this[TAPE_STYLE] === 'on' ? 'detail_info_Full' :
+            return Object.is(this[TAPE_STYLE], 'off') ? 'detail_info_Limit' :
+                   Object.is(this[TAPE_STYLE], 'on') ? 'detail_info_Full' :
                    ''
         },
         detailInfo() {
             return this[TAPE_CONTENT]
-        },
-        tabSwitchList() {
-            let list = this.bottomTabConfig.list.filter((ele) => {
-                return !this.bottomHideList.some((n) => {
-                    return n === ele.type
-                })
-            })
-
-            return {
-                activeType: this.bottomTabConfig.activeType,
-                list,
-            }
         },
         isTransationShow() {
             return Object.is(this.bottomTabConfig.activeType, 'transaction')
@@ -539,32 +518,9 @@ export default {
     methods: {
         ...mapMutations([
             STOCK_NAME,
+            CHANGE_TAPE_SET,
+            CHANGE_STOCK_A_ACTIVE_TAB,
         ]),
-        tapeDefaultChanged(key, val) {
-            this[key] = val
-            this.$_nextResizeWindow()
-        },
-        bottomSwitch(key, val) {
-            if (val === false) {
-                // 若它是激活状态，切换回分笔
-                if (this.bottomTabConfig.activeType === key) {
-                    let defaults = 'transaction'
-                    this.bottomTabConfig.activeType = defaults
-                    this.setTabSession(defaults)
-                }
-                // 删除 tab
-                let index = this.bottomHideList.indexOf(key)
-                if (index === -1) {
-                    this.bottomHideList.push(key)
-                }
-            } else {
-                let index = this.bottomHideList.indexOf(key)
-                if (index > -1) {
-                    this.bottomHideList.splice(index, 1)
-                }
-            }
-            this.$_nextResizeWindow()
-        },
         getInfoData() {
             let param = {
                 options: {
@@ -687,12 +643,6 @@ export default {
             }
        },
         initState() {
-            initTapeDefault((key, val) => {
-                this[key] = val
-            })
-            initTapeFunc((val) => {
-                this.bottomHideList.push(val)
-            })
             this.initBottomTabState()
         },
         getTabSession() {
@@ -704,7 +654,8 @@ export default {
         initBottomTabState() {
             const latest = this.getTabSession()
             if (latest) {
-                this.bottomTabConfig.activeType = latest
+                this[CHANGE_STOCK_A_ACTIVE_TAB](latest)
+                // this.bottomTabConfig.activeType = latest
             }
         },
         emitDataChange(parentType, type) {
@@ -717,12 +668,18 @@ export default {
             })
         },
         detailInfoToggleHeight() {
-            let type = this[TAPE_STYLE] === 'on' ? 'off' : 'on'
-            this.emitDataChange(TAPE_STYLE, type)
+            let val = this[TAPE_STYLE] === 'on' ? 'off' : 'on'
+            this[CHANGE_TAPE_SET]([{
+                type: TAPE_STYLE,
+                val,
+            }])
         },
         toggle() {
-            let type = this[TAPE_CONTENT] === 'market' ? 'entrust' : 'market'
-            this.emitDataChange(TAPE_CONTENT, type)
+            let val = this[TAPE_CONTENT] === 'market' ? 'entrust' : 'market'
+            this[CHANGE_TAPE_SET]([{
+                type: TAPE_CONTENT,
+                val,
+            }])
         },
         changeBottomActiveTab(type) {
             // 单击改变选中的左下侧的底部tab
@@ -759,13 +716,6 @@ export default {
 
             this.extendHeight = residue
         },
-        resetTapeState() {
-            this[TAPE_ROWS] = '5'
-            this[TAPE_CONTENT] = 'market'
-            this[TAPE_STYLE] = 'off'
-            this.bottomHideList = []
-            this.$_nextResizeWindow()
-        },
         resetComponent() {
             this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
@@ -784,15 +734,29 @@ export default {
         this.$_eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
         this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
-
-        this.$_eventBus.$off('tapeDefaultChanged', this.tapeDefaultChanged)
-        this.$_eventBus.$off('bottomSwitch', this.bottomSwitch)
-        this.$_eventBus.$off('resetTapeState', this.resetTapeState)
     },
     watch: {
         full_code() {
             this.resetComponent()
             this.getInfoData()
+        },
+        isAllTabsFalse(val, oldValue) {
+            if (Object.is(oldValue, false)
+                && Object.is(val, true)
+            ) {
+                this[CHANGE_STOCK_A_ACTIVE_TAB]('transaction')
+            }
+        },
+        [TAPE_ROWS]() {
+            this.$_nextResizeWindow()
+        },
+        [TAPE_STYLE]() {
+            this.$_nextResizeWindow()
+        },
+        filterList(val, oldValue) {
+            if (Object.is(val.length, 1) || Object.is(oldValue.length, 1)) {
+                this.$_nextResizeWindow()
+            }
         },
     },
 }
