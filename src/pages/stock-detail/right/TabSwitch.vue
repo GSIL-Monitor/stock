@@ -13,10 +13,6 @@
 </template>
 
 <script>
-import {
-    initTapeFunc,
-} from '../tape/tape-public-func.js'
-
 import TabSwitchItem from './TabSwitchItem.vue'
 
 export default {

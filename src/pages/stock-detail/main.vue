@@ -46,7 +46,6 @@ import {
     INFO_STATE,
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
-    CHANGE_TAPE_DISPLAY,
 } from '@store/stock-detail-store/config/mutation-types.js'
 import {
     ADD_TO_RECENT_LIST,
@@ -90,7 +89,6 @@ export default {
     ],
     data() {
         return {
-            // tapeSetName: 'tapeSet',
             sendClientId: false,
             client_id: null,
             keyBoardTimer: null,
@@ -133,7 +131,6 @@ export default {
             INFO_STATE,
             KLINE_JUMP_PARAM,
             LEFT_SELECT_TAB,
-            // CHANGE_TAPE_DISPLAY,
         ]),
         ...mapActions([
             ADD_TO_RECENT_LIST,

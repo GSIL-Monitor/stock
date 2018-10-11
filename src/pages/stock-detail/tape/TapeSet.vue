@@ -55,14 +55,6 @@ import {
     mapActions,
 } from 'vuex'
 import {
-    initTapeDefault,
-    initTapeFunc,
-} from './tape-public-func.js'
-import {
-    LOCAL_TAPE_SET_DFT,
-    LOCAL_TAPE_SET_FUNC,
-} from '../storage.js'
-import {
     TAPE_ROWS,
     TAPE_CONTENT,
     TAPE_STYLE,

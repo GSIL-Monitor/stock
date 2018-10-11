@@ -5,7 +5,7 @@
     <div
         class="stock_chart"
     >
-        <!-- <KLine/> -->
+        <KLine/>
     </div>
     <div
         class="stock_info"

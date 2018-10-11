@@ -6,9 +6,9 @@ export const MODULE_NAME = 'stockDetail'
  * Local Storage
 */
 // 盘口设置 -- 委托明细、默认盘口内容、样式
-export const LOCAL_TAPE_SET_DFT = `${MODULE_NAME}-tapeSet-default`
-// 盘口设置 -- 功能显隐
-export const LOCAL_TAPE_SET_FUNC = `${MODULE_NAME}-tapeSet-func`
+// export const LOCAL_TAPE_SET_DFT = `${MODULE_NAME}-tapeSet-default`
+// // 盘口设置 -- 功能显隐
+// export const LOCAL_TAPE_SET_FUNC = `${MODULE_NAME}-tapeSet-func`
 // 左侧显隐
 // export const LOCAL_IS_LEFT_SHOW = `${MODULE_NAME}-left-content-state`
 // // 右侧显隐
