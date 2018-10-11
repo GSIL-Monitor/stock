@@ -115,6 +115,7 @@ export default {
             'isFuture',
             'canLoadF10',
             'canLoadF1',
+            'hasInformation',
         ]),
         ...mapGetters([
             'isShowTape',
@@ -221,12 +222,15 @@ export default {
                     let state = false
                     if (this.leftState) {
                         this.setLeftState(state)
+                        this.$_eventBus.$emit('setKlineStyle', 'left', state)
                     }
                     if (this.rightState) {
                         this.setRightState(state)
+                        this.$_eventBus.$emit('setKlineStyle', 'right', state)
                     }
-                    if (this.infoState) {
+                    if (this.hasInformation && this.infoState) {
                         this.setInfoState(state)
+                        this.$_eventBus.$emit('setKlineStyle', 'bottom', state)
                     }
                     if (this.$_tapeState) {
                         this.changeTapeSetState()
@@ -235,12 +239,15 @@ export default {
                     let state = true
                     if (!this.leftState) {
                         this.setLeftState(state)
+                        this.$_eventBus.$emit('setKlineStyle', 'left', state)
                     }
                     if (!this.rightState) {
                         this.setRightState(state)
+                        this.$_eventBus.$emit('setKlineStyle', 'right', state)
                     }
-                    if (!this.infoState) {
+                    if (this.hasInformation && !this.infoState) {
                         this.setInfoState(state)
+                        this.$_eventBus.$emit('setKlineStyle', 'bottom', state)
                     }
                 }
             }

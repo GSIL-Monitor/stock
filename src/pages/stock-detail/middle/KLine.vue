@@ -52,11 +52,7 @@ export default {
         ]),
         klineBottomState() {
             if (this.hasInformation) {
-                if (this.infoState) {
-                    return false
-                } else {
-                    return true
-                }
+                return this.infoState
             } else {
                 return false
             }
@@ -238,6 +234,10 @@ export default {
     watch: {
         full_code() {
             this.setKlineCode()
+        },
+        // 股票种类切换，重设底部状态
+        hasInformation(val, oldValue) {
+            this.isShowBottom(this.klineBottomState)
         },
     },
 }
