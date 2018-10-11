@@ -62,11 +62,6 @@ export default {
         count() {
             return formatCount(this.item.deal_count)
         },
-        // itemClasses() {
-        //     return {
-        //         transaction_amimation: Object.is(this.item.animation, 1)
-        //     }
-        // },
     },
     props: {
         item: {
@@ -78,14 +73,6 @@ export default {
             default: 'aStock'
         },
     },
-    // watch: {
-    //     item() {
-    //         let step = 700
-    //         setTimeout(() => {
-    //             this.item.animation = 0
-    //         }, step)
-    //     },
-    // },
 }
 </script>
 
@@ -95,7 +82,7 @@ export default {
         background-color: var(--color-selected-bg);
     }
     to {
-        background-color: var(--body-bg);
+        background-color: var(--color-card-background);
     }
 }
 .transaction_amimation {
