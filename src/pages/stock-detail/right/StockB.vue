@@ -248,7 +248,7 @@ import {
 } from '../tape/tape-set-config.js'
 import {
     FRAME_B_MARKET,
-    SOCKET_B_MARKET,
+    // SOCKET_B_MARKET,
 } from '../storage.js'
 import {
     STOCK_NAME,
@@ -405,9 +405,9 @@ export default {
                    this[TAPE_STYLE] === 'on' ? 'detail_info_Full' :
                    ''
         },
-        linkAddress() {
-            return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_B_MARKET}|first_push:true`
-        },
+        // linkAddress() {
+        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_B_MARKET}|first_push:true`
+        // },
     },
     methods: {
         ...mapMutations([

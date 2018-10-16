@@ -165,7 +165,7 @@ import {
 } from '@c/utils/callQt.js'
 import {
     FRAME_FUND_MARKET,
-    SOCKET_FUND_MARKET,
+    // SOCKET_FUND_MARKET,
 } from '../storage.js'
 import {
     STOCK_NAME,
@@ -241,9 +241,9 @@ export default {
             'stock_name',
             'current_type',
         ]),
-        linkAddress() {
-            return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_FUND_MARKET}|first_push:true`
-        },
+        // linkAddress() {
+        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_FUND_MARKET}|first_push:true`
+        // },
     },
     methods: {
         ...mapMutations([

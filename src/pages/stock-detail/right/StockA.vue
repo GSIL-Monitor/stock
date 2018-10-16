@@ -300,7 +300,7 @@ import {
 } from '../tape/tape-set-config.js'
 import {
     SESSION_ASTOCK_FUNC_TAB,
-    SOCKET_A_MARKET,
+    // SOCKET_A_MARKET,
     FRAME_A_MARKET,
 } from '../storage.js'
 import {
@@ -515,9 +515,9 @@ export default {
         arrowDirection() {
             return Object.is(this[TAPE_CONTENT], 'market')
         },
-        linkAddress() {
-            return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_A_MARKET}|first_push:true`
-        },
+        // linkAddress() {
+        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_A_MARKET}|first_push:true`
+        // },
     },
     methods: {
         ...mapMutations([

@@ -165,7 +165,7 @@ import {
     UnSubscriptSockets,
 } from '@c/utils/callQt.js'
 import {
-    SOCKET_HSINDEX_MARKET,
+    // SOCKET_HSINDEX_MARKET,
     SESSION_INDEX_FUNC_TAB,
     FRAME_HS_INDEX,
 } from '../storage.js'
@@ -269,9 +269,9 @@ export default {
         isBKIndex() {
             return Object.is(this.source, 'BK')
         },
-        linkAddress() {
-            return `request_name:push/hq/list_info|first_push:true|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HSINDEX_MARKET}`
-        },
+        // linkAddress() {
+        //     return `request_name:push/hq/list_info|first_push:true|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HSINDEX_MARKET}`
+        // },
         isConstituentActive() {
             return Object.is(this.activeKey, this.constituent)
         },

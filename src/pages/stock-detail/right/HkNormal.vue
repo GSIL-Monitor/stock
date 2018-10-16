@@ -198,7 +198,7 @@ import {
     UnSubscriptSockets,
 } from '@c/utils/callQt.js'
 import {
-    SOCKET_HKSTOCK_MARKET,
+    // SOCKET_HKSTOCK_MARKET,
     FRAME_HK_STOCK,
 } from '../storage.js'
 import {
@@ -278,9 +278,9 @@ export default {
             'isHkStock',
             'canLoadF10',
         ]),
-        linkAddress() {
-            return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
-        },
+        // linkAddress() {
+        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
+        // },
         canLoadSelfIdentify() {
             return this.loadIdentify && this.isHkStock
         },
