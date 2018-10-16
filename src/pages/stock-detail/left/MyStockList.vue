@@ -22,15 +22,6 @@
                 <div class="market_title_num">{{item.sum}}</div>
                 <div>)</div>
             </div>
-            <!-- <virtual-scroller
-                v-if="isGroupActive(item.group_id)"
-                class="market_list"
-                :items="getListData(item.group_id)"
-                emit-update
-                @update="listScroll"
-                item-height="liItemHeight"
-                content-tag="ul"
-            > -->
             <virtual-scroller
                 v-if="isGroupActive(item.group_id)"
                 @scroll.native="listScroll"
