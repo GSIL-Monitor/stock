@@ -289,6 +289,8 @@ import {
 } from '@service/index.js'
 import {
     sendEvent,
+    pushData,
+    UnSubscriptSockets,
 } from '@c/utils/callQt.js'
 import {
     TAPE_ROWS,
@@ -299,6 +301,7 @@ import {
 import {
     SESSION_ASTOCK_FUNC_TAB,
     SOCKET_A_MARKET,
+    FRAME_A_MARKET,
 } from '../storage.js'
 import {
     STOCK_NAME,
@@ -407,8 +410,8 @@ export default {
     ],
     created() {
         // this.initState()
-
-        this.$_eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
+        goGoal.event.listen(FRAME_A_MARKET, this.receiveSocketData)
+        // this.$_eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
 
         if (this.stock_code) {
             this.getInfoData()
@@ -563,8 +566,13 @@ export default {
 
                     this.socketData = Object.assign({}, data)
 
-                    this.$_sendLink(this.linkAddress)
-                    this.$_rememberLink(this.linkAddress, this.linkIndex)
+                    pushData(FRAME_A_MARKET, {
+                        code: this.full_code,
+                        request_name: 'list_info',
+                    })
+
+                    // this.$_sendLink(this.linkAddress)
+                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                     // 获取基础属性信息
                     this.loadIdentify = true
                 },
@@ -572,8 +580,8 @@ export default {
 
             getLimitStockData(param)
         },
-        receiveSocketData(...args) {
-            let data = args[0][0]
+        receiveSocketData(args) {
+            let data = JSON.parse(args)[0]
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
@@ -704,7 +712,8 @@ export default {
             this.extendHeight = residue
         },
         resetComponent() {
-            this.$_cancleSocket(this.linkIndex)
+            UnSubscriptSockets(FRAME_A_MARKET)
+            // this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
             this.stock_type = null
             this.close_price = null
@@ -718,8 +727,10 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
-        this.$_cancleSocket(this.linkIndex)
+        goGoal.event.remove(FRAME_A_MARKET, this.receiveSocketData)
+        UnSubscriptSockets(FRAME_A_MARKET)
+        // this.$_eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
+        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

@@ -144,6 +144,11 @@ import {
     getBondData,
 } from '@service/index.js'
 import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
+import {
+    FRAME_BOND_MARKET,
     SOCKET_BOND_MARKET,
 } from '../storage.js'
 import {
@@ -178,7 +183,8 @@ export default {
         rightResizeMixin,
     ],
     created() {
-        this.$_eventBus.$on(SOCKET_BOND_MARKET, this.receiveSocketData)
+        goGoal.event.listen(FRAME_BOND_MARKET, this.receiveSocketData)
+        // this.$_eventBus.$on(SOCKET_BOND_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
@@ -256,15 +262,20 @@ export default {
                     // 回购
                     this.is_buy_back =  Array.isArray(data.category) ? data.category.includes(3) : false
 
-                    this.$_sendLink(this.linkAddress)
-                    this.$_rememberLink(this.linkAddress, this.linkIndex)
+                    pushData(FRAME_BOND_MARKET, {
+                        code: this.full_code,
+                        request_name: 'list_info',
+                    })
+                    // this.$_sendLink(this.linkAddress)
+                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
             getBondData(params)
         },
-        receiveSocketData(...args) {
-            let data = args[0][0]
+        receiveSocketData(args) {
+            let data = JSON.parse(args)[0]
+            // let data = args[0][0]
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
@@ -301,15 +312,18 @@ export default {
             }
         },
         resetComponent() {
-            this.$_cancleSocket(this.linkIndex)
+            UnSubscriptSockets(FRAME_BOND_MARKET)
+            // this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
             this.close_price = null
             this.$_clearFiveOrder()
         },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_BOND_MARKET, this.receiveSocketData)
-        this.$_cancleSocket(this.linkIndex)
+        goGoal.event.remove(FRAME_BOND_MARKET, this.receiveSocketData)
+        UnSubscriptSockets(FRAME_BOND_MARKET)
+        // this.$_eventBus.$off(SOCKET_BOND_MARKET, this.receiveSocketData)
+        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

@@ -198,6 +198,7 @@ export default {
         receiveFrameData(d) {
             const data = JSON.parse(d)
             let changList = []
+
             data.forEach((element) => {
                 let full_code = element.full_code
                 let one = this.select_group_data.find((el) => {

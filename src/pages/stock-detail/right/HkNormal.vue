@@ -194,7 +194,12 @@ import {
     getHkStockData,
 } from '@service/index.js'
 import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
+import {
     SOCKET_HKSTOCK_MARKET,
+    FRAME_HK_STOCK,
 } from '../storage.js'
 import {
     STOCK_NAME,
@@ -228,7 +233,8 @@ export default {
         rightResizeMixin,
     ],
     created() {
-        this.$_eventBus.$on(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
+        goGoal.event.listen(FRAME_HK_STOCK, this.receiveSocketData)
+        // this.$_eventBus.$on(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
@@ -322,16 +328,20 @@ export default {
 
                     this.socketData = Object.assign({}, data)
 
-                    this.$_sendLink(this.linkAddress)
-                    this.$_rememberLink(this.linkAddress, this.linkIndex)
+                    pushData(FRAME_HK_STOCK, {
+                        code: this.full_code,
+                        request_name: 'list_info',
+                    })
+                    // this.$_sendLink(this.linkAddress)
+                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                     this.loadIdentify = true
                 },
             }
 
             getHkStockData(params)
         },
-        receiveSocketData(...args) {
-            let data = args[0][0]
+        receiveSocketData(args) {
+            let data = JSON.parse(args)[0]
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
@@ -362,7 +372,8 @@ export default {
         },
         resetComponent() {
             this.loadIdentify = false
-            this.$_cancleSocket(this.linkIndex)
+            // this.$_cancleSocket(this.linkIndex)
+            UnSubscriptSockets(FRAME_HK_STOCK)
             this.socketData = {}
             this.close_price = null
             this.symbol_type = null
@@ -371,8 +382,10 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
-        this.$_cancleSocket(this.linkIndex)
+        goGoal.event.remove(FRAME_HK_STOCK, this.receiveSocketData)
+        UnSubscriptSockets(FRAME_HK_STOCK)
+        // this.$_eventBus.$off(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
+        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

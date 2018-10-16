@@ -161,8 +161,13 @@ import {
     mapGetters,
 } from 'vuex'
 import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
+import {
     SOCKET_HSINDEX_MARKET,
     SESSION_INDEX_FUNC_TAB,
+    FRAME_HS_INDEX,
 } from '../storage.js'
 import {
     GET_HS_INDEX_MARKET_DATA,
@@ -206,7 +211,8 @@ export default {
     ],
     created() {
         this.initState()
-        this.$_eventBus.$on(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
+        goGoal.event.listen(FRAME_HS_INDEX, this.receiveSocketData)
+        // this.$_eventBus.$on(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
@@ -314,15 +320,21 @@ export default {
                 },
                 afterResponse: () => {
                     this.loadOtherIndex = true
-                    this.$_sendLink(this.linkAddress)
-                    this.$_rememberLink(this.linkAddress, this.linkIndex)
+
+                    pushData(FRAME_HS_INDEX, {
+                        code: this.full_code,
+                        request_name: 'list_info',
+                    })
+                    // this.$_sendLink(this.linkAddress)
+                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
             this.getIndexData(params)
         },
-        receiveSocketData(...args) {
-            let data = args[0][0]
+        receiveSocketData(args) {
+            let data = JSON.parse(args)[0]
+
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
@@ -341,16 +353,21 @@ export default {
             this.activeKey = type
             sessionStorage.setItem(SESSION_INDEX_FUNC_TAB, type)
         },
+        resetComponent() {
+            this.loadOtherIndex = false
+            UnSubscriptSockets(FRAME_HS_INDEX)
+            this.socketData = {}
+            this.$_nextResizeWindow()
+        },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
+        goGoal.event.remove(FRAME_HS_INDEX, this.receiveSocketData)
+        UnSubscriptSockets(FRAME_HS_INDEX)
+        // this.$_eventBus.$off(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
     },
     watch: {
         full_code() {
-            this.loadOtherIndex = false
-            this.$_cancleSocket(this.linkIndex)
-            this.socketData = {}
-            this.$_nextResizeWindow()
+            this.resetComponent()
             this.getInfoData()
         }
     },

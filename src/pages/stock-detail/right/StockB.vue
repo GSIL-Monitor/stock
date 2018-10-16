@@ -239,10 +239,15 @@ import {
     getLimitStockData,
 } from '@service/index.js'
 import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
+import {
     TAPE_ROWS,
     TAPE_STYLE,
 } from '../tape/tape-set-config.js'
 import {
+    FRAME_B_MARKET,
     SOCKET_B_MARKET,
 } from '../storage.js'
 import {
@@ -335,7 +340,8 @@ export default {
         tapeDisplayMixin,
     ],
     created() {
-        this.$_eventBus.$on(SOCKET_B_MARKET, this.receiveSocketData)
+        goGoal.event.listen(FRAME_B_MARKET, this.receiveSocketData)
+        // this.$_eventBus.$on(SOCKET_B_MARKET, this.receiveSocketData)
 
         this.getInfoData()
     },
@@ -455,15 +461,20 @@ export default {
 
                     this.socketData = Object.assign({}, data)
 
-                    this.$_sendLink(this.linkAddress)
-                    this.$_rememberLink(this.linkAddress, this.linkIndex)
+                    pushData(FRAME_B_MARKET, {
+                        code: this.full_code,
+                        request_name: 'list_info',
+                    })
+                    // this.$_sendLink(this.linkAddress)
+                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
             getLimitStockData(params)
         },
-        receiveSocketData(...args) {
-            let data = args[0][0]
+        receiveSocketData(args) {
+            let data = JSON.parse(args)[0]
+            // let data = args[0][0]
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
                 this.mark = true
@@ -530,7 +541,8 @@ export default {
             }
         },
         resetComponent() {
-            this.$_cancleSocket(this.linkIndex)
+            // this.$_cancleSocket(this.linkIndex)
+            UnSubscriptSockets(FRAME_B_MARKET)
             this.socketData = {}
             this.stock_type = null
             this.close_price = null
@@ -543,8 +555,10 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_B_MARKET, this.receiveSocketData)
-        this.$_cancleSocket(this.linkIndex)
+        goGoal.event.remove(FRAME_B_MARKET, this.receiveSocketData)
+        UnSubscriptSockets(FRAME_B_MARKET)
+        // this.$_eventBus.$off(SOCKET_B_MARKET, this.receiveSocketData)
+        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

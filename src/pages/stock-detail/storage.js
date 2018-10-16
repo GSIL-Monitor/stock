@@ -77,6 +77,20 @@ export const FRAME_OTHER_INDEXS = `${MODULE_NAME}-index-list`
 export const FRAME_TRADE_STOCK = `${MODULE_NAME}-trade-stock`
 // 关联品种
 export const FRAME_RELATED_STOCK = `${MODULE_NAME}-related-stock`
+// A 股行情
+export const FRAME_A_MARKET = `${MODULE_NAME}-a-market`
+// 沪深指数
+export const FRAME_HS_INDEX = `${MODULE_NAME}-hs-index`
+// B 股行情
+export const FRAME_B_MARKET = `${MODULE_NAME}-b-market`
+// 基金行情
+export const FRAME_FUND_MARKET = `${MODULE_NAME}-fund-market`
+// 债券行情
+export const FRAME_BOND_MARKET = `${MODULE_NAME}-bond-market`
+// 港股行情
+export const FRAME_HK_STOCK = `${MODULE_NAME}-hk-stock`
+// 港股指数
+export const FRAME_HK_INDEX = `${MODULE_NAME}-hk-index`
 
 /*--------------------------------------------------------------------------*/
 
