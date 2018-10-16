@@ -1,7 +1,8 @@
 
 export const MODULE_NAME = 'stockDetail'
 
-// ==============================================================================
+/*--------------------------------------------------------------------------*/
+
 /**
  * Local Storage
 */
@@ -20,13 +21,14 @@ export const MODULE_NAME = 'stockDetail'
 // 股票代码
 export const LOCAL_LATEST_CODE = `${MODULE_NAME}-stock-code`
 // 行情图状态
-export const LOCAL_MAP_STATE = `${MODULE_NAME}-map-state`
+// export const LOCAL_MAP_STATE = `${MODULE_NAME}-map-state`
 // 成交明细过滤
 export const LOCAL_TRANSATION_STORE = `${MODULE_NAME}-transation-store`
 // 短信精灵设置
 export const LOCAL_SHORT_LINE_SET = `${MODULE_NAME}-short-line-set`
 
-// ==============================================================================
+/*--------------------------------------------------------------------------*/
+
 /**
  * Session Storage
 */
@@ -39,7 +41,8 @@ export const SESSION_ASTOCK_FUNC_TAB = `${MODULE_NAME}-astock-funcTab`
 // 指数 右下最近选择的tab
 export const SESSION_INDEX_FUNC_TAB = `${MODULE_NAME}-index-funcTab`
 
-// ==============================================================================
+/*--------------------------------------------------------------------------*/
+
 /**
  * GoGoal Event Name
 */
@@ -49,7 +52,8 @@ export const EVENT_CHANGE_STOCK = `changeMystock`
 export const EVENT_TRANSATION_CHANGE = `transcation-change`
 export const EVENT_CHANGE_LEFT_RIGHT = `${MODULE_NAME}-leftRight`
 
-// ==============================================================================
+/*--------------------------------------------------------------------------*/
+
 /**
  * Frame SubScription Id
 */
@@ -74,7 +78,8 @@ export const FRAME_TRADE_STOCK = `${MODULE_NAME}-trade-stock`
 // 关联品种
 export const FRAME_RELATED_STOCK = `${MODULE_NAME}-related-stock`
 
-// ==============================================================================
+/*--------------------------------------------------------------------------*/
+
 /**
  * WebSocket Request Id
 */
@@ -99,7 +104,8 @@ export const SOCKET_SHORT_LINE = `${MODULE_NAME}-short-line`
 // 沪深指数 -- 涨跌分布
 export const SOCKET_RANGE_SCOPE = `${MODULE_NAME}-range-scope`
 
-// ==============================================================================
+/*--------------------------------------------------------------------------*/
+
 /**
  * Tabs Key
 */

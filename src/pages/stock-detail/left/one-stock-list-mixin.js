@@ -19,9 +19,7 @@ import {
 import {
     GET_SELECT_GROUP_DATA,
 } from '@store/stock-detail-store/config/action-types.js'
-import {
-    throttle,
-} from 'lodash'
+import throttle from 'lodash/throttle'
 
 let listTimeoutTimer = null
 

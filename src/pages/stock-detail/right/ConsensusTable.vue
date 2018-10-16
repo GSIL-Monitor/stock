@@ -70,9 +70,7 @@ import {
     JsToQtEventInterface,
     sendEvent,
 } from '@c/utils/callQt.js'
-import {
-    cloneDeep,
-} from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 
 export default {
     name: 'ConsensusTable',
