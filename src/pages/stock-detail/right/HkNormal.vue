@@ -198,14 +198,12 @@ import {
     UnSubscriptSockets,
 } from '@c/utils/callQt.js'
 import {
-    // SOCKET_HKSTOCK_MARKET,
     FRAME_HK_STOCK,
 } from '../storage.js'
 import {
     STOCK_NAME,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin.js'
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
 
 import HkTimeBox from './HkTimeBox.vue'
@@ -229,17 +227,14 @@ import ClosePrice from '@formatter/market-base/ClosePrice.vue'
 export default {
     name: 'HkNormal',
     mixins: [
-        socketMixin,
         rightResizeMixin,
     ],
     created() {
         goGoal.event.listen(FRAME_HK_STOCK, this.receiveSocketData)
-        // this.$_eventBus.$on(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
         return {
-            linkIndex: 0,
             socketData: {},
             symbol_type: null,
             close_price: null,
@@ -278,9 +273,6 @@ export default {
             'isHkStock',
             'canLoadF10',
         ]),
-        // linkAddress() {
-        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKSTOCK_MARKET}|first_push:true`
-        // },
         canLoadSelfIdentify() {
             return this.loadIdentify && this.isHkStock
         },
@@ -332,8 +324,6 @@ export default {
                         code: this.full_code,
                         request_name: 'list_info',
                     })
-                    // this.$_sendLink(this.linkAddress)
-                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                     this.loadIdentify = true
                 },
             }
@@ -372,7 +362,6 @@ export default {
         },
         resetComponent() {
             this.loadIdentify = false
-            // this.$_cancleSocket(this.linkIndex)
             UnSubscriptSockets(FRAME_HK_STOCK)
             this.socketData = {}
             this.close_price = null
@@ -384,8 +373,6 @@ export default {
     beforeDestroy() {
         goGoal.event.remove(FRAME_HK_STOCK, this.receiveSocketData)
         UnSubscriptSockets(FRAME_HK_STOCK)
-        // this.$_eventBus.$off(SOCKET_HKSTOCK_MARKET, this.receiveSocketData)
-        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

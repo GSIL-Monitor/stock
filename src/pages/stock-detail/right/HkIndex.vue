@@ -106,13 +106,11 @@ import {
 } from '@c/utils/callQt.js'
 import {
     FRAME_HK_INDEX,
-    // SOCKET_HKINDEX_MARKET,
 } from '../storage.js'
 import {
     STOCK_NAME,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin.js'
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
 
 import IsMyStock from './IsMyStock.vue'
@@ -130,16 +128,13 @@ export default {
     name: 'HkIndex',
     created() {
         goGoal.event.listen(FRAME_HK_INDEX, this.receiveSocketData)
-        // this.$_eventBus.$on(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     mixins: [
-        socketMixin,
         rightResizeMixin,
     ],
     data() {
         return {
-            linkIndex: 0,
             socketData: {},
 
             symbol_type: null,
@@ -166,9 +161,6 @@ export default {
             'stock_name',
             'current_type',
         ]),
-        // linkAddress() {
-        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HKINDEX_MARKET}|first_push:true`
-        // },
     },
     methods: {
         ...mapMutations([
@@ -201,8 +193,6 @@ export default {
                         code: this.full_code,
                         request_name: 'list_info',
                     })
-                    // this.$_sendLink(this.linkAddress)
-                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
@@ -211,7 +201,6 @@ export default {
         receiveSocketData(args) {
             let data = JSON.parse(args)[0]
 
-            // let data = args[0][0]
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
@@ -241,7 +230,6 @@ export default {
         },
         resetComponent() {
             UnSubscriptSockets(FRAME_HK_INDEX)
-            // this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
             this.close_price = null
         },
@@ -249,8 +237,6 @@ export default {
     beforeDestroy() {
         goGoal.event.remove(FRAME_HK_INDEX, this.receiveSocketData)
         UnSubscriptSockets(FRAME_HK_INDEX)
-        // this.$_eventBus.$off(SOCKET_HKINDEX_MARKET, this.receiveSocketData)
-        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

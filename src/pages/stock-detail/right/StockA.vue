@@ -300,7 +300,6 @@ import {
 } from '../tape/tape-set-config.js'
 import {
     SESSION_ASTOCK_FUNC_TAB,
-    // SOCKET_A_MARKET,
     FRAME_A_MARKET,
 } from '../storage.js'
 import {
@@ -309,7 +308,6 @@ import {
     CHANGE_STOCK_A_ACTIVE_TAB,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin.js'
 import fiveOrderMixin from '../mixins/five-order-mixin.js'
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
 import tapeDisplayMixin from '../mixins/tape-display-mixin.js'
@@ -403,7 +401,6 @@ const fiveFields = [
 export default {
     name: 'StockATemp',
     mixins: [
-        socketMixin,
         fiveOrderMixin,
         rightResizeMixin,
         tapeDisplayMixin,
@@ -411,7 +408,6 @@ export default {
     created() {
         // this.initState()
         goGoal.event.listen(FRAME_A_MARKET, this.receiveSocketData)
-        // this.$_eventBus.$on(SOCKET_A_MARKET, this.receiveSocketData)
 
         if (this.stock_code) {
             this.getInfoData()
@@ -419,7 +415,6 @@ export default {
     },
     data() {
         return {
-            linkIndex: 0,
             industry_name: '',
             loadIdentify: false,
             socketData: {},
@@ -515,9 +510,6 @@ export default {
         arrowDirection() {
             return Object.is(this[TAPE_CONTENT], 'market')
         },
-        // linkAddress() {
-        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_A_MARKET}|first_push:true`
-        // },
     },
     methods: {
         ...mapMutations([
@@ -571,8 +563,6 @@ export default {
                         request_name: 'list_info',
                     })
 
-                    // this.$_sendLink(this.linkAddress)
-                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                     // 获取基础属性信息
                     this.loadIdentify = true
                 },
@@ -713,7 +703,6 @@ export default {
         },
         resetComponent() {
             UnSubscriptSockets(FRAME_A_MARKET)
-            // this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
             this.stock_type = null
             this.close_price = null
@@ -729,8 +718,6 @@ export default {
     beforeDestroy() {
         goGoal.event.remove(FRAME_A_MARKET, this.receiveSocketData)
         UnSubscriptSockets(FRAME_A_MARKET)
-        // this.$_eventBus.$off(SOCKET_A_MARKET, this.receiveSocketData)
-        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

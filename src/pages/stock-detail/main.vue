@@ -390,6 +390,7 @@ export default {
                 let preLink = goGoal.sockets[index]
                 let accountName = getCookie('accountName')
                 let newLink = `${preLink}|client_id:${accountName}-${client_id}`
+
                 return {
                     link: newLink,
                     index,
@@ -401,6 +402,7 @@ export default {
         socketOnMessage(event) {
             const data = JSON.parse(event.data)
             const client_id = data.client_id
+
             if (data.code && data.code == '4') {
                 return false
             }
@@ -410,6 +412,7 @@ export default {
             if (!this.sendClientId && this.client_id) {
                 // 将此 ID 传回服务端
                 let newLink = this.getNewLink(this.client_id)
+
                 if (newLink) {
                     goGoal.sockets[newLink.index] = newLink.link
                     goGoal.ws.send(newLink.link)
@@ -421,9 +424,9 @@ export default {
             } else {
                 // 处理推送内容
                 let id = data.request_id
-
                 let receiveContent = JSON.parse(data.receive_content)
                 let requestContent = data.request_content
+
                 this.$_eventBus.$emit(id, receiveContent, requestContent)
             }
         },
@@ -450,6 +453,8 @@ export default {
         },
         // 全局快捷键
         keyBoardEvent(data) {
+            const TIMER_STEP = 100
+
             clearTimeout(this.keyBoardTimer)
             this.keyBoardTimer = setTimeout(() => {
                 if (['Up', 'Down'].includes(data)) {
@@ -462,7 +467,7 @@ export default {
                 } else if (Object.is(data, 'F1')) {
                     this.keyBoardF1()
                 }
-            }, 50)
+            }, TIMER_STEP)
         },
         changeMystock(data) {
             this.$_eventBus.$emit('refeatchMyStockGroup')

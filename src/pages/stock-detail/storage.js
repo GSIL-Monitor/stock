@@ -77,6 +77,7 @@ export const FRAME_OTHER_INDEXS = `${MODULE_NAME}-index-list`
 export const FRAME_TRADE_STOCK = `${MODULE_NAME}-trade-stock`
 // 关联品种
 export const FRAME_RELATED_STOCK = `${MODULE_NAME}-related-stock`
+
 // A 股行情
 export const FRAME_A_MARKET = `${MODULE_NAME}-a-market`
 // 沪深指数
@@ -97,20 +98,6 @@ export const FRAME_HK_INDEX = `${MODULE_NAME}-hk-index`
 /**
  * WebSocket Request Id
 */
-// A股 -- 行情字段
-export const SOCKET_A_MARKET = `${MODULE_NAME}-stockData-astock`
-// B股 -- 行情字段
-export const SOCKET_B_MARKET = `${MODULE_NAME}-stockData-bstock`
-// 沪深指数 -- 行情字段
-export const SOCKET_HSINDEX_MARKET = `${MODULE_NAME}-stockData-hsindex`
-// 基金 -- 行情字段
-export const SOCKET_FUND_MARKET = `${MODULE_NAME}-stockData-fund`
-// 债券 -- 行情字段
-export const SOCKET_BOND_MARKET = `${MODULE_NAME}-stockData-bond`
-// 港股股票、基金、涡轮、债券、牛熊证 -- 行情字段
-export const SOCKET_HKSTOCK_MARKET = `${MODULE_NAME}-stockData-hkstock`
-// 港股指数 -- 行情字段
-export const SOCKET_HKINDEX_MARKET = `${MODULE_NAME}-stockData-hkindex`
 // A股 -- 资金流向
 export const SOCKET_A_FLOW = `${MODULE_NAME}-stock-money`
 // A股 / 指数 -- 短线精灵

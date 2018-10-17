@@ -149,13 +149,11 @@ import {
 } from '@c/utils/callQt.js'
 import {
     FRAME_BOND_MARKET,
-    // SOCKET_BOND_MARKET,
 } from '../storage.js'
 import {
     STOCK_NAME,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin.js'
 import fiveOrderMixin from '../mixins/five-order-mixin.js'
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
 
@@ -178,19 +176,16 @@ import VolumeInner from '@formatter/market-base/VolumeInner.vue'
 export default {
     name: 'BondTemp',
     mixins: [
-        socketMixin,
         fiveOrderMixin,
         rightResizeMixin,
     ],
     created() {
         goGoal.event.listen(FRAME_BOND_MARKET, this.receiveSocketData)
-        // this.$_eventBus.$on(SOCKET_BOND_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
         return {
             socketData: {},
-            linkIndex: 0,
             is_buy_back: false, // 是否是回购 (回购无均价字段)
 
             symbol_type: null,
@@ -222,9 +217,6 @@ export default {
             'stock_name',
             'current_type',
         ]),
-        // linkAddress() {
-        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_BOND_MARKET}|first_push:true`
-        // },
     },
     methods: {
         ...mapMutations([
@@ -266,8 +258,6 @@ export default {
                         code: this.full_code,
                         request_name: 'list_info',
                     })
-                    // this.$_sendLink(this.linkAddress)
-                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
@@ -313,7 +303,6 @@ export default {
         },
         resetComponent() {
             UnSubscriptSockets(FRAME_BOND_MARKET)
-            // this.$_cancleSocket(this.linkIndex)
             this.socketData = {}
             this.close_price = null
             this.$_clearFiveOrder()
@@ -322,8 +311,6 @@ export default {
     beforeDestroy() {
         goGoal.event.remove(FRAME_BOND_MARKET, this.receiveSocketData)
         UnSubscriptSockets(FRAME_BOND_MARKET)
-        // this.$_eventBus.$off(SOCKET_BOND_MARKET, this.receiveSocketData)
-        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

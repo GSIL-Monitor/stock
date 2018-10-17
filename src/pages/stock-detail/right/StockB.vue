@@ -248,14 +248,12 @@ import {
 } from '../tape/tape-set-config.js'
 import {
     FRAME_B_MARKET,
-    // SOCKET_B_MARKET,
 } from '../storage.js'
 import {
     STOCK_NAME,
     CHANGE_TAPE_SET,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
-import socketMixin from '../mixins/socket-mixin.js'
 import fiveOrderMixin from '../mixins/five-order-mixin.js'
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
 import tapeDisplayMixin from '../mixins/tape-display-mixin.js'
@@ -334,21 +332,18 @@ const fiveFields = [
 export default {
     name: 'StockBTemp',
     mixins: [
-        socketMixin,
         fiveOrderMixin,
         rightResizeMixin,
         tapeDisplayMixin,
     ],
     created() {
         goGoal.event.listen(FRAME_B_MARKET, this.receiveSocketData)
-        // this.$_eventBus.$on(SOCKET_B_MARKET, this.receiveSocketData)
 
         this.getInfoData()
     },
     data() {
         return {
             socketData: {},
-            linkIndex: 0,
             symbol_type: null,
             stock_type: null,
             close_price: null,
@@ -405,9 +400,6 @@ export default {
                    this[TAPE_STYLE] === 'on' ? 'detail_info_Full' :
                    ''
         },
-        // linkAddress() {
-        //     return `request_name:push/hq/list_info|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_B_MARKET}|first_push:true`
-        // },
     },
     methods: {
         ...mapMutations([
@@ -465,8 +457,6 @@ export default {
                         code: this.full_code,
                         request_name: 'list_info',
                     })
-                    // this.$_sendLink(this.linkAddress)
-                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
@@ -474,7 +464,6 @@ export default {
         },
         receiveSocketData(args) {
             let data = JSON.parse(args)[0]
-            // let data = args[0][0]
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
                 this.mark = true
@@ -541,7 +530,6 @@ export default {
             }
         },
         resetComponent() {
-            // this.$_cancleSocket(this.linkIndex)
             UnSubscriptSockets(FRAME_B_MARKET)
             this.socketData = {}
             this.stock_type = null
@@ -557,8 +545,6 @@ export default {
     beforeDestroy() {
         goGoal.event.remove(FRAME_B_MARKET, this.receiveSocketData)
         UnSubscriptSockets(FRAME_B_MARKET)
-        // this.$_eventBus.$off(SOCKET_B_MARKET, this.receiveSocketData)
-        // this.$_cancleSocket(this.linkIndex)
         this.socketData = {}
     },
     watch: {

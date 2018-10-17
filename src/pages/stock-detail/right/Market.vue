@@ -165,7 +165,6 @@ import {
     UnSubscriptSockets,
 } from '@c/utils/callQt.js'
 import {
-    // SOCKET_HSINDEX_MARKET,
     SESSION_INDEX_FUNC_TAB,
     FRAME_HS_INDEX,
 } from '../storage.js'
@@ -180,7 +179,6 @@ import {
 } from '@store/stock-detail-store/config/mutation-types.js'
 
 import rightResizeMixin from '../mixins/right-resize-mixin.js'
-import socketMixin from '../mixins/socket-mixin.js'
 
 import Tabs from '../components/tabs/index.js'
 import TabPane from '../components/tab-pane/index.js'
@@ -207,12 +205,10 @@ export default {
     name: 'MarketTemp',
     mixins: [
         rightResizeMixin,
-        socketMixin,
     ],
     created() {
         this.initState()
         goGoal.event.listen(FRAME_HS_INDEX, this.receiveSocketData)
-        // this.$_eventBus.$on(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
         this.getInfoData()
     },
     data() {
@@ -225,7 +221,6 @@ export default {
             activeKey: null,
             category_type: null,
 
-            linkIndex: 0,
             socketData: {},
             symbol_type: null,
             close_price: null,
@@ -269,9 +264,6 @@ export default {
         isBKIndex() {
             return Object.is(this.source, 'BK')
         },
-        // linkAddress() {
-        //     return `request_name:push/hq/list_info|first_push:true|request_param:fullcodes=${this.full_code}|request_id:${SOCKET_HSINDEX_MARKET}`
-        // },
         isConstituentActive() {
             return Object.is(this.activeKey, this.constituent)
         },
@@ -325,8 +317,6 @@ export default {
                         code: this.full_code,
                         request_name: 'list_info',
                     })
-                    // this.$_sendLink(this.linkAddress)
-                    // this.$_rememberLink(this.linkAddress, this.linkIndex)
                 },
             }
 
@@ -363,7 +353,6 @@ export default {
     beforeDestroy() {
         goGoal.event.remove(FRAME_HS_INDEX, this.receiveSocketData)
         UnSubscriptSockets(FRAME_HS_INDEX)
-        // this.$_eventBus.$off(SOCKET_HSINDEX_MARKET, this.receiveSocketData)
     },
     watch: {
         full_code() {
