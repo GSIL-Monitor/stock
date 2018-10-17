@@ -6,7 +6,7 @@ const httpProxy = require('http-proxy-middleware')
 liveServer.start({
     port: 8081, // 本地打开的端口
     host: 'localhost', // 打开的网址
-    root: 'cdn', // 代理的目录
+    root: 'cdn/stocks', // 代理的目录
     open: true, // 是否打开你的默认浏览器
     ignore: 'less,ico,images,fonts', //不监听的改动
     wait: 500, // 更改保存后多少秒自动刷新浏览器

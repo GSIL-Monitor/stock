@@ -2,8 +2,10 @@ export default {
     methods: {
         $_cancleSocket(index) {
             let preLink = goGoal.sockets[index]
+
             if (preLink) {
-                this.$_sendLink(this.$_getCancelLinkAddress(preLink))
+                let cancelLink = this.$_getCancelLinkAddress(preLink)
+                this.$_sendLink(cancelLink)
             }
             goGoal.sockets[index] = null
         },

@@ -7,7 +7,7 @@
 const { resolve } = require('path')
 
 module.exports = {
-    outputDir: 'cdn',
+    outputDir: 'cdn/stocks',
 
     productionSourceMap: false,
 
@@ -40,7 +40,6 @@ module.exports = {
     },
 
     configureWebpack: {
-        // devtool: 'cheap-module-eval-source-map',
         optimization: {
             // just split js
             splitChunks: {
