@@ -68,7 +68,7 @@ export default {
     ],
     data() {
         return {
-            linkIndex: 1, // 位于goGoal.sockets数组的下标
+            linkIndex: 0, // 位于goGoal.sockets数组的下标
             socketData: {},
             buy: 'buy_',
             sell: 'sell_',

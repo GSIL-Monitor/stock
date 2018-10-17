@@ -96,7 +96,7 @@ export default {
             rows: 50,
             end_date: null,
             noData: false,
-            linkIndex: 1,
+            linkIndex: 0,
             type: null,
         }
     },

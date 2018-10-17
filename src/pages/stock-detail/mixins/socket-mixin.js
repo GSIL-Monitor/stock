@@ -22,7 +22,7 @@ export default {
                 // OPEN
                 goGoal.ws.send(link)
             } else {
-                goGoal.ws.onopen = function(){
+                goGoal.ws.onopen = function() {
                     goGoal.ws.send(link)
                 }
             }

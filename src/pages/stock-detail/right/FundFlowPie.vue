@@ -122,6 +122,7 @@ export default {
         defaultOptions() {
             let flowNumber = this.inflow
             let color = flowNumber >= 0 ? 'red' : 'green'
+
             return {
                 tooltip: {
                     trigger: 'item',

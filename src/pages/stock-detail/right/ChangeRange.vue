@@ -62,7 +62,7 @@ export default {
     data() {
         return {
             socketData: {},
-            linkIndex: 1,
+            linkIndex: 0,
             mark: null,
         }
     },
