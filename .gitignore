@@ -24,14 +24,10 @@ ofcupload
 *.ids
 *.bak
 
-modules
-**/modules
 **/tmp
 
-*/*/modules
 */*/tmp
 */tmp
-*/modules
 
 
 server.pid
@@ -49,7 +45,6 @@ module/sales/conf/test/solr/goods/collection1/data/
 .idea/
 public/.idea/
 precompiled
-/modules
 /tmp
 /public/less/**/*.css
 sonar-project.properties
