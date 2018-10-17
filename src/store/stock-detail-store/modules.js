@@ -9,7 +9,7 @@ import moduleMarket from './modules/module-market.js'
 // 盘口设置
 import moduleTape from './modules/module-tape.js'
 // A 股
-import moduleStockA from './modules/module-stock-a'
+import moduleStockA from './modules/module-stock-a.js'
 
 export default {
     moduleRecent,
