@@ -133,7 +133,6 @@ export default {
                         type: 'pie',
                         radius: ['60%','90%'],
                         center: ['50%', '50%'],
-                        // data:pushData,
                         startAngle: '-90',
                         avoidLabelOverlap: false,
                         stillShowZeroSum: false,
@@ -144,8 +143,12 @@ export default {
                                 position: 'center',
                                 formatter(data) {
                                     if (data.dataIndex === 0) {
-                                        let value = Math.abs(flowNumber) >= 100 ? flowNumber.toFixed(0) : flowNumber.toFixed(1)
-                                        return '净流入\n' + value + '\n万元'
+                                        if (flowNumber) {
+                                            let value = Math.abs(flowNumber) >= 100 ? flowNumber.toFixed(0) : flowNumber.toFixed(1)
+                                            return ('净流入\n' + value + '\n万元')
+                                        } else {
+                                            return ''
+                                        }
                                     } else {
                                         return ''
                                     }
@@ -160,8 +163,13 @@ export default {
                                 position: 'center',
                                 formatter(data) {
                                     if (data.dataIndex === 0) {
-                                        let value = Math.abs(flowNumber) >= 100 ? flowNumber.toFixed(0) : flowNumber.toFixed(1)
-                                        return '净流入\n' + value + '\n万元'
+                                        if (flowNumber) {
+                                            let value = Math.abs(flowNumber) >= 100 ? flowNumber.toFixed(0) : flowNumber.toFixed(1)
+
+                                            return ('净流入\n' + value + '\n万元')
+                                        } else {
+                                            return ''
+                                        }
                                     } else {
                                         return ''
                                     }

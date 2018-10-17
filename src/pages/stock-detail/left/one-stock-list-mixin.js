@@ -188,12 +188,14 @@ export default {
                     value < prevValue ? 'background-green' : ''
         },
         removeBgColor(arr) {
+            const TIMER_STEP = 700
+
             setTimeout(() => {
                 arr.forEach((element) => {
                     element.classColor = ''
                 })
                 arr = null
-            }, 700)
+            }, TIMER_STEP)
         },
         receiveFrameData(d) {
             const data = JSON.parse(d)

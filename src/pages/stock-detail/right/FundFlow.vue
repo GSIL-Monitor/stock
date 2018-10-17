@@ -139,6 +139,11 @@ export default {
     methods: {
         receiveSocketData(...args) {
             let data = args[0][0]
+            let requestUrl = args[1]
+
+            if (!requestUrl.includes(this.full_code)) {
+                return false
+            }
             if (Object.is(data.mark, 1)) {
                 // clear
                 this.socketData = {}
@@ -164,7 +169,7 @@ export default {
                 }
             }
         },
-        // 资金选股
+        // 资金选股点击
         selectStock() {
             const FUNC_NAME = 'MainFundSelStock'
             JsToQtEventInterface(JSON.stringify({
@@ -179,6 +184,7 @@ export default {
     watch: {
         full_code() {
             this.$_cancleSocket(this.linkIndex)
+            this.socketData = {}
             this.$_sendLink(this.linkAddress)
             this.$_rememberLink(this.linkAddress, this.linkIndex)
         },
