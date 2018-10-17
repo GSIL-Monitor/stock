@@ -360,7 +360,7 @@ export const exchangeReport = (param) => {
 
 export const userOperation = (param) => {
     const APIName = 'v1/userop/add'
-    return get(APIName, param)
+    return post(APIName, param)
 }
 
 export const contactServer = (param) => {
