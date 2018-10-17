@@ -20,6 +20,7 @@
             <tbody>
                 <tr
                     v-for="(item, index) of dataStore"
+                    :class="infoClasses(item.has_read)"
                     :key="index"
                     class="info_tr"
                 >
@@ -193,6 +194,7 @@ export default {
                 callback0: (data) => {
                     data.forEach((element) => {
                         element.date = formatInfoDate(element.date, true)
+                        element.has_read = 0
                     })
                     this.dataStore = this.dataStore.concat(data)
                     this.$_setBusyState(data.length)
@@ -210,6 +212,11 @@ export default {
                 }
             }
             api(params)
+        },
+        readAlready(data) {
+            if (Object.is(data.has_read, 0)) {
+                data.has_read = 1
+            }
         },
         openContent(index, data) {
             let title = this.stock_name ? `${this.titleName}——${this.stock_name}(${this.$_showCode})` : this.titleName
@@ -229,7 +236,15 @@ export default {
                 const targetData = this.dataStore[index]
 
                 this.openContent(index, targetData)
+                this.readAlready(targetData)
             }
+        },
+         infoClasses(hasRead) {
+            return [
+                {
+                    'info_visited': hasRead,
+                }
+            ]
         },
     },
     watch: {
