@@ -93,17 +93,12 @@ export const FRAME_HK_STOCK = `${MODULE_NAME}-hk-stock`
 // 港股指数
 export const FRAME_HK_INDEX = `${MODULE_NAME}-hk-index`
 
-/*--------------------------------------------------------------------------*/
-
-/**
- * WebSocket Request Id
-*/
-// A股 -- 资金流向
-export const SOCKET_A_FLOW = `${MODULE_NAME}-stock-money`
-// A股 / 指数 -- 短线精灵
-export const SOCKET_SHORT_LINE = `${MODULE_NAME}-short-line`
-// 沪深指数 -- 涨跌分布
-export const SOCKET_RANGE_SCOPE = `${MODULE_NAME}-range-scope`
+// 资金流向
+export const FRAME_FUND_FLOW = `${MODULE_NAME}-fund-flow`
+// 短线精灵
+export const FRAME_SHORT_LINE = `${MODULE_NAME}-short-line`
+// 涨跌分布
+export const FRAME_CHANGE_DISTRIBUTION = `${MODULE_NAME}-change-distribution`
 
 /*--------------------------------------------------------------------------*/
 

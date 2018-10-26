@@ -376,6 +376,12 @@ export const readNotice = (param) => {
     return get(APIName, param)
 }
 
+export const getStaticInfo = (param) => {
+    const APIName = 'v1/userop/add'
+
+    return get(APIName, param)
+}
+
 export const readReport = (param) => {
     const APIName = 'v1/report/marks'
     Reflect.set(param.options, 'token', getToken())

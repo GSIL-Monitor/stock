@@ -51,10 +51,12 @@ import {
     JsToQtEventInterface,
 } from '@c/utils/callQt.js'
 import {
-    SOCKET_A_FLOW,
+    FRAME_FUND_FLOW,
 } from '../storage.js'
-
-import socketMixin from "../mixins/socket-mixin.js"
+import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
 
 import DefaultBtn from '../components/DefaultBtn.vue'
 import FundFlowPie from './FundFlowPie.vue'
@@ -63,12 +65,8 @@ import FundFlowList from './FundFlowList.vue'
 
 export default {
     name: 'FundFlow',
-    mixins: [
-        socketMixin,
-    ],
     data() {
         return {
-            linkIndex: 0, // 位于goGoal.sockets数组的下标
             socketData: {},
             buy: 'buy_',
             sell: 'sell_',
@@ -83,11 +81,8 @@ export default {
         FundFlowList,
     },
     created() {
-        if (this.full_code) {
-            this.$_sendLink(this.linkAddress)
-            this.$_rememberLink(this.linkAddress, this.linkIndex)
-        }
-        this.$_eventBus.$on(SOCKET_A_FLOW, this.receiveSocketData)
+        goGoal.event.listen(FRAME_FUND_FLOW, this.receiveSocketData)
+        this.subToFrame()
     },
     computed: {
         ...mapState([
@@ -132,16 +127,22 @@ export default {
 
             return o
         },
-        linkAddress() {
-            return `request_name:push/distribute/capital|request_param:fullcode=${this.full_code}|request_id:${SOCKET_A_FLOW}|first_push:true`
-        },
     },
     methods: {
-        receiveSocketData(...args) {
-            let data = args[0][0]
-            let requestUrl = args[1]
+        subToFrame() {
+            pushData(FRAME_FUND_FLOW, {
+                code: this.full_code,
+                request_name: 'distribute/capital',
+            })
+        },
+        unSubToFrame() {
+            UnSubscriptSockets(FRAME_FUND_FLOW)
+        },
+        receiveSocketData(args) {
+            const { receive_content, request_content } = JSON.parse(args)
+            const data = receive_content[0]
 
-            if (!requestUrl.includes(this.full_code)) {
+            if (!request_content.includes(this.full_code)) {
                 return false
             }
             if (Object.is(data.mark, 1)) {
@@ -178,15 +179,14 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_A_FLOW, this.receiveSocketData)
-        this.$_cancleSocket(this.linkIndex)
+        goGoal.event.remove(FRAME_FUND_FLOW, this.receiveSocketData)
+        this.unSubToFrame()
     },
     watch: {
         full_code() {
-            this.$_cancleSocket(this.linkIndex)
+            this.unSubToFrame()
             this.socketData = {}
-            this.$_sendLink(this.linkAddress)
-            this.$_rememberLink(this.linkAddress, this.linkIndex)
+            this.subToFrame()
         },
     },
 }

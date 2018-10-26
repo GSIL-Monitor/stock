@@ -64,28 +64,23 @@ import {
     changePageStock,
 } from '../utility.js'
 import {
-    SOCKET_SHORT_LINE,
+    FRAME_SHORT_LINE,
     LOCAL_SHORT_LINE_SET,
 } from '../storage.js'
 import {
-    ASTOCK,
-    INDEX,
-} from '@formatter/config/stock-type-config.js'
-
-import socketMixin from '../mixins/socket-mixin.js'
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
 
 import SetIco from '../components/SetIco.vue'
 import ShortElvesItem from './ShortElvesItem.vue'
 
 export default {
     name: 'ShortElves',
-    mixins: [
-        socketMixin,
-    ],
     created() {
         this.initType()
         this.getInfo()
-        this.$_eventBus.$on(SOCKET_SHORT_LINE, this.receiveSocketData)
+        goGoal.event.listen(FRAME_SHORT_LINE, this.receiveSocketData)
         this.$_eventBus.$on('shortFilterChanged', this.shortFilterChanged)
     },
     data() {
@@ -96,8 +91,8 @@ export default {
             rows: 50,
             end_date: null,
             noData: false,
-            linkIndex: 0,
             type: null,
+            isFirstRequest: true,
         }
     },
     components: {
@@ -129,37 +124,35 @@ export default {
         isStockOnly() {
             return this.stock_only
         },
-        baseLink() {
-            let type = this.type ? `|type=${this.type}` : ''
-            return `request_name:push/dynamic/list_info|first_push:true|request_id:${SOCKET_SHORT_LINE}${type}`
-        },
-        stockLink() {
-            if (this.isStockOnly) {
-                return `${this.baseLink}|request_param:fullcode=${this.full_code}`
-            } else {
-                return `${this.baseLink}|request_param:fullcode=`
+        subParams() {
+            const o = {
+                request_name: 'dynamic/list_info',
             }
+
+            if (this.type) {
+                o.type = this.type
+            }
+            if (this.isAStock && this.isStockOnly) {
+                o.code = this.full_code
+            } else if (this.isHSIndex && this.isStockOnly) {
+                o.group_code = this.full_code
+                o.group_type = this.indexGroupType
+            }
+
+            return o
         },
         indexGroupType() {
             return Object.is(this.source, 'BK') ? '3' : '5'
         },
-        indexLink() {
-            if (this.isStockOnly) {
-                let group_type = this.indexGroupType
-                return `${this.baseLink}|request_param:group_code=${this.full_code}&group_type=${group_type}`
-            } else {
-                return `${this.baseLink}|request_param:group_code=`
-            }
-        },
-        linkAddress() {
-            if (this.isAStock) {
-                return this.stockLink
-            } else if (this.isHSIndex) {
-                return this.indexLink
-            }
-        },
     },
     methods: {
+        subToFrame() {
+            console.log(this.subParams)
+            pushData(FRAME_SHORT_LINE, this.subParams)
+        },
+        unSubToFrame() {
+            UnSubscriptSockets(FRAME_SHORT_LINE)
+        },
         getStore() {
             let store = localStorage.getItem(LOCAL_SHORT_LINE_SET)
             return store ? JSON.parse(store) : null
@@ -194,6 +187,7 @@ export default {
         resetComponent() {
             this.busy = true
             this.end_date = null
+            this.isFirstRequest = true
             if (Object.is(this.noData, false)) {
                 this.$refs.scrollContainer.scrollTop = 0
             }
@@ -225,20 +219,23 @@ export default {
                     }
                 },
                 afterResponse: () => {
-                    this.$_sendLink(this.linkAddress)
-                    this.$_rememberLink(this.linkAddress, this.linkIndex)
+                    if (this.isFirstRequest) {
+                        this.subToFrame()
+                        this.isFirstRequest = false
+                    }
                 },
             }
             getShortLine(param)
         },
-        receiveSocketData(...args) {
-            let data = args[0]
-            if (Object.is(data[0].mark, 1)) {
+        receiveSocketData(args) {
+            const { receive_content, request_content } = JSON.parse(args)
+            if (Object.is(receive_content[0].mark, 1)) {
                 this.resetComponent()
                 this.noData = true
                 return false
             }
-            let requestContent = args[1]
+            const data = receive_content
+            let requestContent = request_content
             let isFullCodeIn = requestContent.includes(this.full_code)
             // 处理异常数据
             if (this.isStockOnly && !isFullCodeIn) {
@@ -281,22 +278,22 @@ export default {
         },
         shortFilterChanged(type) {
             this.type = type
-            this.$_cancleSocket(this.linkIndex)
+            this.unSubToFrame()
             this.resetStockData()
         },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_SHORT_LINE, this.receiveSocketData)
-        this.$_cancleSocket(this.linkIndex)
+        goGoal.event.remove(FRAME_SHORT_LINE, this.receiveSocketData)
+        this.unSubToFrame()
         this.$_eventBus.$off('shortFilterChanged', this.shortFilterChanged)
     },
     watch: {
         full_code() {
-            this.$_cancleSocket(this.linkIndex)
+            this.unSubToFrame()
             this.resetStockData()
         },
         stock_only() {
-            this.$_cancleSocket(this.linkIndex)
+            this.unSubToFrame()
             this.resetStockData()
         },
     },

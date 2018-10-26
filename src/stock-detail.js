@@ -22,7 +22,7 @@ Vue.use(infiniteScroll)
 Vue.use(eventBus)
 
 window.goGoal = goGoal
-goGoal.sockets = []
+// goGoal.sockets = []
 
 new Vue({
     store,

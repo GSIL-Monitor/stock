@@ -1,7 +1,7 @@
 import {
     getCookie,
 } from '@c/utils/util'
-import ReconnectingWebSocket from './web-socket'
+// import ReconnectingWebSocket from './web-socket'
 
 const goGoal = window.goGoal || {}
 
@@ -98,95 +98,95 @@ goGoal.subEvent = function(event, params) {
     }
 }
 
-const getSocketLink = () => {
-    let socketAddr
-    if (Number(getCookie('hk_now'))) {
-        socketAddr = 'ws:ggservice-ws-now.go-goal.cn:5188';
-    } else if(location.pathname === '/html/stockMarket.html'){
-        socketAddr = 'ws://ggservice-ws.pre.gofund.cn:8093';
-    } else {
-        socketAddr = 'ws://ggservice-ws.go-goal.cn:5188';
-    }
+// const getSocketLink = () => {
+//     let socketAddr
+//     if (Number(getCookie('hk_now'))) {
+//         socketAddr = 'ws:ggservice-ws-now.go-goal.cn:5188';
+//     } else if(location.pathname === '/html/stockMarket.html'){
+//         socketAddr = 'ws://ggservice-ws.pre.gofund.cn:8093';
+//     } else {
+//         socketAddr = 'ws://ggservice-ws.go-goal.cn:5188';
+//     }
 
-    return socketAddr
-}
+//     return socketAddr
+// }
 
-goGoal.ws = new ReconnectingWebSocket(getSocketLink());
+// goGoal.ws = new ReconnectingWebSocket(getSocketLink());
 
-const sendSocketLink = (isCancel) => {
-    goGoal.sockets.forEach((element, index) => {
-        if (element) {
-            let link
-            if (isCancel) {
-                link = `${element}|status:0`
-                goGoal.sockets[index] = link
-            } else {
-                if (element.includes('status:0')) {
-                    link = element.split('|status:0')[0]
-                    goGoal.sockets[index] = link
-                } else {
-                    link = element
-                }
-            }
-            goGoal.ws.send(link)
-        }
-    })
-}
+// const sendSocketLink = (isCancel) => {
+//     goGoal.sockets.forEach((element, index) => {
+//         if (element) {
+//             let link
+//             if (isCancel) {
+//                 link = `${element}|status:0`
+//                 goGoal.sockets[index] = link
+//             } else {
+//                 if (element.includes('status:0')) {
+//                     link = element.split('|status:0')[0]
+//                     goGoal.sockets[index] = link
+//                 } else {
+//                     link = element
+//                 }
+//             }
+//             goGoal.ws.send(link)
+//         }
+//     })
+// }
 
-const isForbiddenState = () => {
-    if (!goGoal.sockets || Object.is(goGoal.sockets.length, 0)) {
-        return true
-    } else if (goGoal.ws.readyState !== 1) {
-        return true
-    } else {
-        return false
-    }
-}
+// const isForbiddenState = () => {
+//     if (!goGoal.sockets || Object.is(goGoal.sockets.length, 0)) {
+//         return true
+//     } else if (goGoal.ws.readyState !== 1) {
+//         return true
+//     } else {
+//         return false
+//     }
+// }
 
-const isLinkCanceled = () => {
-    return goGoal.sockets.some((element) => {
-        if (typeof element === 'string') {
-            return element.includes('status:0')
-        } else {
-            return false
-        }
-    })
-}
+// const isLinkCanceled = () => {
+//     return goGoal.sockets.some((element) => {
+//         if (typeof element === 'string') {
+//             return element.includes('status:0')
+//         } else {
+//             return false
+//         }
+//     })
+// }
 
-goGoal.ws.onopen = function () {
-    if (isForbiddenState()) {
-        return false
-    }
+// goGoal.ws.onopen = function () {
+//     if (isForbiddenState()) {
+//         return false
+//     }
 
-    sendSocketLink()
-}
+//     sendSocketLink()
+// }
 
-goGoal.creatNewSocket = () => {
-    if (isForbiddenState()) {
-        return false
-    }
+// goGoal.creatNewSocket = () => {
+//     if (isForbiddenState()) {
+//         return false
+//     }
 
-    sendSocketLink()
-}
+//     sendSocketLink()
+// }
 
-goGoal.closeSocket = () => {
-    if (isForbiddenState()) {
-        return false
-    }
+// goGoal.closeSocket = () => {
+//     if (isForbiddenState()) {
+//         return false
+//     }
 
-    sendSocketLink(true)
-}
+//     sendSocketLink(true)
+// }
 
-// websocket 重连
-const INTERVAL_STEP = 1000 * 60
-setInterval(() => {
-    if (isForbiddenState()) {
-        return false
-    } else if (isLinkCanceled()) { //判断是否是取消的订阅，取消的订阅不用轮询连接
-        return false
-    } else {
-        goGoal.ws.send('')
-    }
-}, INTERVAL_STEP)
+// // websocket 重连
+// const INTERVAL_STEP = 1000 * 60
+// setInterval(() => {
+//     if (isForbiddenState()) {
+//         return false
+//     } else if (isLinkCanceled()) { //判断是否是取消的订阅，取消的订阅不用轮询连接
+//         return false
+//     } else {
+//         goGoal.ws.send('')
+//     }
+// }, INTERVAL_STEP)
 
 export default goGoal

@@ -322,7 +322,7 @@ export default {
 
                     pushData(FRAME_HK_STOCK, {
                         code: this.full_code,
-                        request_name: 'list_info',
+                        request_name: 'hq/list_info',
                     })
                     this.loadIdentify = true
                 },
@@ -331,7 +331,9 @@ export default {
             getHkStockData(params)
         },
         receiveSocketData(args) {
-            let data = JSON.parse(args)[0]
+            const { receive_content } = JSON.parse(args)
+            const data = receive_content[0]
+
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}

@@ -89,8 +89,8 @@ export default {
     ],
     data() {
         return {
-            sendClientId: false,
-            client_id: null,
+            // sendClientId: false,
+            // client_id: null,
             keyBoardTimer: null,
         }
     },
@@ -382,54 +382,54 @@ export default {
                 }
             }
         },
-        getNewLink(client_id) {
-            let index = goGoal.sockets.findIndex((element) => {
-                return !!element
-            })
-            if (index > -1) {
-                let preLink = goGoal.sockets[index]
-                let accountName = getCookie('accountName')
-                let newLink = `${preLink}|client_id:${accountName}-${client_id}`
+        // getNewLink(client_id) {
+        //     let index = goGoal.sockets.findIndex((element) => {
+        //         return !!element
+        //     })
+        //     if (index > -1) {
+        //         let preLink = goGoal.sockets[index]
+        //         let accountName = getCookie('accountName')
+        //         let newLink = `${preLink}|client_id:${accountName}-${client_id}`
 
-                return {
-                    link: newLink,
-                    index,
-                }
-            } else {
-                return null
-            }
-        },
-        socketOnMessage(event) {
-            const data = JSON.parse(event.data)
-            const client_id = data.client_id
+        //         return {
+        //             link: newLink,
+        //             index,
+        //         }
+        //     } else {
+        //         return null
+        //     }
+        // },
+        // socketOnMessage(event) {
+        //     const data = JSON.parse(event.data)
+        //     const client_id = data.client_id
 
-            if (data.code && data.code == '4') {
-                return false
-            }
-            if (client_id) {
-                this.client_id = client_id
-            }
-            if (!this.sendClientId && this.client_id) {
-                // 将此 ID 传回服务端
-                let newLink = this.getNewLink(this.client_id)
+        //     if (data.code && data.code == '4') {
+        //         return false
+        //     }
+        //     if (client_id) {
+        //         this.client_id = client_id
+        //     }
+        //     if (!this.sendClientId && this.client_id) {
+        //         // 将此 ID 传回服务端
+        //         let newLink = this.getNewLink(this.client_id)
 
-                if (newLink) {
-                    goGoal.sockets[newLink.index] = newLink.link
-                    goGoal.ws.send(newLink.link)
+        //         if (newLink) {
+        //             goGoal.sockets[newLink.index] = newLink.link
+        //             goGoal.ws.send(newLink.link)
 
-                    this.sendClientId = true
-                    this.client_id = null
-                }
-                return false
-            } else {
-                // 处理推送内容
-                let id = data.request_id
-                let receiveContent = JSON.parse(data.receive_content)
-                let requestContent = data.request_content
+        //             this.sendClientId = true
+        //             this.client_id = null
+        //         }
+        //         return false
+        //     } else {
+        //         // 处理推送内容
+        //         let id = data.request_id
+        //         let receiveContent = JSON.parse(data.receive_content)
+        //         let requestContent = data.request_content
 
-                this.$_eventBus.$emit(id, receiveContent, requestContent)
-            }
-        },
+        //         this.$_eventBus.$emit(id, receiveContent, requestContent)
+        //     }
+        // },
         keyBoardSpace() {
             let state = !this.leftState
             this.setLeftState(state)
@@ -491,7 +491,7 @@ export default {
         }
     },
     created() {
-        goGoal.ws.onmessage = this.socketOnMessage
+        // goGoal.ws.onmessage = this.socketOnMessage
         goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)

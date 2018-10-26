@@ -41,28 +41,25 @@ import {
     evenRound,
 } from '@c/utils/util.js'
 import {
-    SOCKET_RANGE_SCOPE,
+    FRAME_CHANGE_DISTRIBUTION,
 } from '../storage.js'
-
-import socketMixin from '../mixins/socket-mixin.js'
+import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
 
 import RangeBodyItem from './ChangeRangeBodyItem.vue'
 import RangeListItem from './ChangeRangeListItem.vue'
 
 export default {
     name: 'ChangeRange',
-    mixins: [
-        socketMixin,
-    ],
     created() {
-        this.$_eventBus.$on(SOCKET_RANGE_SCOPE, this.receiveSocketData)
-        this.$_sendLink(this.linkAddress)
-        this.$_rememberLink(this.linkAddress, this.linkIndex)
+        goGoal.event.listen(FRAME_CHANGE_DISTRIBUTION, this.receiveSocketData)
+        this.subToFrame()
     },
     data() {
         return {
             socketData: {},
-            linkIndex: 0,
             mark: null,
         }
     },
@@ -71,9 +68,6 @@ export default {
         RangeListItem,
     },
     computed: {
-        linkAddress() {
-            return `request_name:push/distribute/p_change_a|request_id:${SOCKET_RANGE_SCOPE}|first_push:true`
-        },
         bodyOrder() {
             return [
                 {
@@ -258,15 +252,24 @@ export default {
         }
     },
     methods: {
-        receiveSocketData(...args) {
-            let data = args[0]
-            this.mark = data.mark
+        subToFrame() {
+            pushData(FRAME_CHANGE_DISTRIBUTION, {
+                request_name: 'distribute/p_change_a',
+            })
+        },
+        unSubToFrame() {
+            UnSubscriptSockets(FRAME_CHANGE_DISTRIBUTION)
+        },
+        receiveSocketData(args) {
+            const { receive_content } = JSON.parse(args)
 
-            if (Object.is(data.mark, 1)) {
+            this.mark = receive_content.mark
+
+            if (Object.is(receive_content.mark, 1)) {
                 // 清空
                 this.socketData = {}
             } else {
-                this.socketData = Object.assign({}, data)
+                this.socketData = Object.assign({}, receive_content)
             }
         },
         evenRoundRatio(num, total) {
@@ -295,8 +298,8 @@ export default {
         },
     },
     beforeDestroy() {
-        this.$_eventBus.$off(SOCKET_RANGE_SCOPE, this.receiveSocketData)
-        this.$_cancleSocket(this.linkIndex)
+        goGoal.event.remove(FRAME_CHANGE_DISTRIBUTION, this.receiveSocketData)
+        this.unSubToFrame()
     },
 }
 </script>

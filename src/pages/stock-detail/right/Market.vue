@@ -315,7 +315,7 @@ export default {
 
                     pushData(FRAME_HS_INDEX, {
                         code: this.full_code,
-                        request_name: 'list_info',
+                        request_name: 'hq/list_info',
                     })
                 },
             }
@@ -323,7 +323,8 @@ export default {
             this.getIndexData(params)
         },
         receiveSocketData(args) {
-            let data = JSON.parse(args)[0]
+            const { receive_content } = JSON.parse(args)
+            const data = receive_content[0]
 
             // 清空
             if (Object.is(data.mark, 1)) {

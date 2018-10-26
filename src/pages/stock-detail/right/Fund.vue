@@ -269,14 +269,15 @@ export default {
 
                     pushData(FRAME_FUND_MARKET, {
                         code: this.full_code,
-                        request_name: 'list_info',
+                        request_name: 'hq/list_info',
                     })
                 },
             }
             getFundData(params)
         },
         receiveSocketData(args) {
-            let data = JSON.parse(args)[0]
+            const { receive_content } = JSON.parse(args)
+            const data = receive_content[0]
 
             // 清空
             if (Object.is(data.mark, 1)) {

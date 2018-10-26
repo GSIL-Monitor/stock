@@ -560,7 +560,7 @@ export default {
 
                     pushData(FRAME_A_MARKET, {
                         code: this.full_code,
-                        request_name: 'list_info',
+                        request_name: 'hq/list_info',
                     })
 
                     // 获取基础属性信息
@@ -571,7 +571,8 @@ export default {
             getLimitStockData(param)
         },
         receiveSocketData(args) {
-            let data = JSON.parse(args)[0]
+            const { receive_content } = JSON.parse(args)
+            const data = receive_content[0]
             // 清空
             if (Object.is(data.mark, 1)) {
                 this.socketData = {}
