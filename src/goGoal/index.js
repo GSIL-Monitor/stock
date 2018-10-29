@@ -169,6 +169,9 @@ goGoal.subEvent = function(event, params) {
 //     sendSocketLink()
 // }
 
+// 防止报错
+goGoal.closeSocket = () => {}
+goGoal.creatNewSocket = () => {}
 // goGoal.closeSocket = () => {
 //     if (isForbiddenState()) {
 //         return false

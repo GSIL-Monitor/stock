@@ -234,6 +234,7 @@ export default {
                 this.noData = true
                 return false
             }
+            console.log(request_content)
             const data = receive_content
             let requestContent = request_content
             let isFullCodeIn = requestContent.includes(this.full_code)
