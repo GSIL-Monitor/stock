@@ -9,6 +9,10 @@ const { resolve } = require('path')
 module.exports = {
     outputDir: 'cdn/stocks',
 
+    baseUrl:  process.env.NODE_ENV === 'production'
+        ? '/stocks/'
+        : '/',
+
     productionSourceMap: false,
 
     runtimeCompiler: true,
