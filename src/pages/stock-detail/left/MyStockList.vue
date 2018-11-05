@@ -65,6 +65,7 @@ import {
 import {
     pushData,
     UnSubscriptSockets,
+    JsToQtEventInterface,
 } from '@c/utils/callQt.js'
 import {
     switchToHashString,
@@ -74,6 +75,8 @@ import {
 import {
     SESSION_SELECT_STOCK_GROUP,
     FRAME_MYSTOCK_GROUP,
+    MODULE_NAME,
+    MY_STOCK_CACHE,
 } from '../storage.js'
 import {
     GET_STOCK_GROUP_DATA,
@@ -151,9 +154,9 @@ export default {
                 this.fetchSelectGroup()
             }
         },
-        receiveMystockGroupCache(d) {
+        receiveMystockGroupCache(data) {
             this.stopPullingGroupData()
-            const data = JSON.parse(d)
+            // const data = JSON.parse(d)
             this.commitGroupList(data)
             // 获取选中分组数据
             this.fetchSelectGroup()
@@ -184,12 +187,20 @@ export default {
         },
         // 获取本地缓存分组
         fetchMyStockGroupCache() {
-            pushData(FRAME_MYSTOCK_GROUP, {})
+            const FUNC_NAME = 'PrivateStockTags'
+
+            JsToQtEventInterface(JSON.stringify({
+                fun: FUNC_NAME,
+                data: {
+                    operate: 6,
+                    destId: MODULE_NAME,
+                },
+            }))
             this.cacheGroupErrorHandle()
         },
         // 调取 api 获取分组
         fetchMyStockGroupData() {
-            let param = {
+            const param = {
                 options: {
                     get_sum: 1,
                 },
@@ -249,22 +260,39 @@ export default {
                 }
             }, STEP)
         },
+        frameData(d) {
+            const { Code, Operate, Tags } = JSON.parse(d)
+            if (Object.is(Operate, 6)) {
+                // 自选股分组数据
+                if (Object.is(Code, 200)) {
+                    this.receiveMystockGroupCache(Tags)
+                }
+            } else if (Object.is(Operate, 7)) {
+                // 单一分组数据
+                if (Object.is(Code, 200)) {
+                    this.receiveSelectGroupCache(Tags)
+                }
+            }
+        },
     },
     components: {
         StockItem,
     },
     created() {
-        if (this.myStockCache) {
-            goGoal.event.listen(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
-        }
+        goGoal.event.listen(MY_STOCK_CACHE, this.frameData)
+
+        // if (this.myStockCache) {
+        //     goGoal.event.listen(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
+        // }
         this.$_eventBus.$on('refeatchMyStockGroup', this.refeatchMyStockGroup)
         this.$_eventBus.$on('correctionData', this.correctionData)
         this.fetchMyStockGroup()
     },
     beforeDestroy() {
-        if (this.myStockCache) {
-            goGoal.event.remove(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
-        }
+        goGoal.event.remove(MY_STOCK_CACHE, this.frameData)
+        // if (this.myStockCache) {
+        //     goGoal.event.remove(FRAME_MYSTOCK_GROUP, this.receiveMystockGroupCache)
+        // }
         this.$_eventBus.$off('refeatchMyStockGroup', this.refeatchMyStockGroup)
     },
 }

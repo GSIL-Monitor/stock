@@ -12,7 +12,11 @@
 <script>
 import {
     mapState,
+    mapGetters,
 } from 'vuex'
+import {
+    JsToQtEventInterface,
+} from '@c/utils/callQt.js'
 import {
     getMyStockIsAdd,
     addStock,
@@ -21,6 +25,9 @@ import {
 import {
     syncMyStockState,
 } from '../utility.js'
+import {
+    MODULE_NAME,
+} from '../storage.js'
 
 import DefaultBtn from '../components/DefaultBtn.vue'
 
@@ -48,7 +55,10 @@ export default {
         ...mapState([
             'full_code',
             'symbol_type',
-
+            // 'stock_name',
+        ]),
+        ...mapGetters([
+            'firstGroupId'
         ]),
         showState() {
             return {
@@ -96,6 +106,20 @@ export default {
             this.show = Object.assign({}, this.sure)
             this.inMyStockList = false
         },
+        notifyFrame(state) {
+            const FUNC_NAME = 'PrivateStockTags'
+            let operate = state === 'add' ? 3 : 1
+
+            JsToQtEventInterface(JSON.stringify({
+                fun: FUNC_NAME,
+                data: {
+                    operate,
+                    groupId: this.firstGroupId,
+                    fullcode: [this.full_code],
+                    destId: MODULE_NAME,
+                },
+            }))
+        },
         delFromMyStock() {
             const params = {
                 options: {
@@ -103,6 +127,7 @@ export default {
                 },
                 callback0: data => {
                     this.setNotInMyStockState()
+                    this.notifyFrame('del')
                     // 模块同步
                     syncMyStockState()
                     // 更新左侧状态
@@ -128,6 +153,7 @@ export default {
                     } else {
                         this.setInMyStockState()
                         // 模块同步
+                        this.notifyFrame('add')
                         syncMyStockState()
                         // 更新左侧状态
                         this.$_eventBus.$emit('correctionData', this.inMyStockList)
@@ -136,6 +162,7 @@ export default {
                     }
                 },
             }
+
             addStock(params)
         },
         changeMyStock() {

@@ -5,7 +5,7 @@ let stack = []
 const callStack = function() {
     let args
     while ((args = stack.shift())) {
-        result.apply(null, args)
+        executeQt.apply(null, args)
     }
     stack = null
 }

@@ -2,6 +2,10 @@
 export const MODULE_NAME = 'stockDetail'
 
 /*--------------------------------------------------------------------------*/
+/**
+ * 自选缓存 Id
+*/
+export const MY_STOCK_CACHE = `operate-stock-tags`
 
 /**
  * Local Storage

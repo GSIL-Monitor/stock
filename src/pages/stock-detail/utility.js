@@ -125,5 +125,5 @@ export const changePageStock = (hash, isRecent = false) => {
  * @return {boolean}
 */
 export const isContainsNode = (container, target) => {
-    return container.compareDocumentPosition(target) & 16
+    return !!(container.compareDocumentPosition(target) & 16)
 }

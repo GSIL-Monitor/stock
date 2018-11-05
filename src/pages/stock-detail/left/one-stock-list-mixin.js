@@ -11,7 +11,8 @@ import {
 } from '@c/utils/callQt.js'
 import {
     FRAME_MY_STOCK,
-    FRAME_MYSTOCK_LIST,
+    // FRAME_MYSTOCK_LIST,
+    MODULE_NAME,
 } from '../storage.js'
 import {
     SELECT_GROUP_DATA,
@@ -24,12 +25,6 @@ import throttle from 'lodash/throttle'
 let listTimeoutTimer = null
 
 export default {
-    created() {
-        if (this.myStockCache) {
-            goGoal.event.listen(FRAME_MYSTOCK_LIST, this.receiveSelectGroupCache)
-        }
-        goGoal.event.listen(FRAME_MY_STOCK, this.receiveFrameData)
-    },
     computed: {
         paramGroupId() {
             return this.medianGroupId || this.activeGroupId
@@ -102,9 +97,19 @@ export default {
             }
         },
         fetchSelectGroupCache() {
-            pushData(FRAME_MYSTOCK_LIST, {
-                group_id: this.paramGroupId,
-            })
+            // pushData(FRAME_MYSTOCK_LIST, {
+            //     group_id: this.paramGroupId,
+            // })
+            const FUNC_NAME = 'PrivateStockTags'
+            JsToQtEventInterface(JSON.stringify({
+                fun: FUNC_NAME,
+                data: {
+                    operate: 7,
+                    destId: MODULE_NAME,
+                    groupId: this.paramGroupId,
+                },
+            }))
+
             this.cacheListErrorHandle()
         },
         stopPullingList() {
@@ -120,19 +125,26 @@ export default {
                 this.fetchSelectGroupData()
             }, TIMEOUT)
         },
-        receiveSelectGroupCache(d) {
+        receiveSelectGroupCache(data) {
             this.stopPullingList()
-            const data = JSON.parse(d)
-
+            // const data = JSON.parse(d)
             const selectData = data.map((element) => {
-                Reflect.set(element, 'classColor', '')
-                Reflect.set(element, 'full_code', element.fullcode)
-                Reflect.set(element, 'stock_name', element.name)
+                const el = {
+                    source: element.source,
+                    code: element.stock_code,
+                    stock_name: element.stock_name,
+                    symbol_type: element.symbol_type,
+                    price: element.price,
+                    price_change: element.change_value,
+                    price_change_rate: element.change_rate,
+                    full_code: element.full_code,
+                    classColor: '',
+                }
+                if (element.type) {
+                    el.stock_type = element.type
+                }
 
-                Reflect.deleteProperty(element, 'fullcode')
-                Reflect.deleteProperty(element, 'name')
-
-                return element
+                return el
             })
 
             this.commitSelectData(selectData)
@@ -220,10 +232,16 @@ export default {
             this.removeBgColor(changList)
         },
     },
+    created() {
+        // if (this.myStockCache) {
+        //     goGoal.event.listen(FRAME_MYSTOCK_LIST, this.receiveSelectGroupCache)
+        // }
+        goGoal.event.listen(FRAME_MY_STOCK, this.receiveFrameData)
+    },
     beforeDestroy() {
-        if (this.myStockCache) {
-            goGoal.event.remove(FRAME_MYSTOCK_LIST, this.receiveSelectGroupCache)
-        }
+        // if (this.myStockCache) {
+        //     goGoal.event.remove(FRAME_MYSTOCK_LIST, this.receiveSelectGroupCache)
+        // }
         goGoal.event.remove(FRAME_MY_STOCK, this.receiveFrameData)
         this.unSubScriptionList()
     },
