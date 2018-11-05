@@ -6,11 +6,13 @@
  */
 const { resolve } = require('path')
 
+const BASE_DIR = 'stocks'
+
 module.exports = {
-    outputDir: 'cdn/stocks',
+    outputDir: `cdn/${BASE_DIR}`,
 
     baseUrl:  process.env.NODE_ENV === 'production'
-        ? '/stocks/'
+        ? `/${BASE_DIR}/`
         : '/',
 
     productionSourceMap: false,

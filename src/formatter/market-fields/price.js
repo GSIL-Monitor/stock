@@ -103,7 +103,7 @@ const formatTypePrice = (type, price, list) => {
 }
 
 const formatPrice = (price, list, current_type) => {
-    if (!isNumber(price) || Object.is(price, 0) || Object.is(String(list.mark), '1')) {
+    if (!isNumber(price) || Object.is(Number(price), 0) || Object.is(String(list.mark), '1')) {
         return getClearVal()
     } else {
         let type = current_type || stockToType(
