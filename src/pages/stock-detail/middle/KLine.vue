@@ -45,7 +45,7 @@ export default {
             'klineJumpState',
         ]),
         ...mapGetters([
-            'isAStock',
+            // 'isAStock',
             // 'isHSIndex',
             // 'isHkStock',
             'hasInformation',
@@ -93,29 +93,23 @@ export default {
             // TODO: 跳转指标设置
             let curIndex,
                 indicator;
-            if (this.isAStock) {
+            if (this.klineJumpState) {
                 const TURN_NINE = 'turnNine' // 九转指标
                 const SHORT_TRADER = 'shortTrader' // 多空操盘
                 const FLOW = 'flow' // 资金流向
                 const TIME_SHARE = 'timeShare' // 资金流向
-
-                if (this.klineJumpState) {
-                    if (Object.is(this.klineJumpState, TIME_SHARE)) {
-                        curIndex = 'ONE_DAY_MINUTE'
-                        indicator = ''
-                    } else if (Object.is(this.klineJumpState, TURN_NINE)) {
-                        curIndex = ''
-                        indicator = 'NINE_TURN'
-                    } else if (Object.is(this.klineJumpState, SHORT_TRADER)) {
-                        curIndex = ''
-                        indicator = 'BBTRADING'
-                    } else if (Object.is(this.klineJumpState, FLOW)) {
-                        curIndex = 'ONE_DAY_MINUTE'
-                        indicator = 'MAIN_FUND'
-                    }
-                } else {
-                    curIndex = ''
+                if (Object.is(this.klineJumpState, TIME_SHARE)) {
+                    curIndex = 'ONE_DAY_MINUTE'
                     indicator = ''
+                } else if (Object.is(this.klineJumpState, TURN_NINE)) {
+                    curIndex = ''
+                    indicator = 'NINE_TURN'
+                } else if (Object.is(this.klineJumpState, SHORT_TRADER)) {
+                    curIndex = ''
+                    indicator = 'BBTRADING'
+                } else if (Object.is(this.klineJumpState, FLOW)) {
+                    curIndex = 'ONE_DAY_MINUTE'
+                    indicator = 'MAIN_FUND'
                 }
             } else {
                 curIndex = ''
