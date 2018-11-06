@@ -7,7 +7,7 @@
         </div>
         <div class="pages" v-show="passed">
             <div class="urlBox">
-                <a class="link" href="stocks/stockDetail.html">个股</a><br><br>
+                <a class="link" href="./stockDetail.html">个股</a><br><br>
             </div>
         </div>
     </div>
