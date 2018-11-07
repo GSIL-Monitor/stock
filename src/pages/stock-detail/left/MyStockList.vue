@@ -260,17 +260,18 @@ export default {
                 }
             }, STEP)
         },
-        frameData(d) {
-            const { Code, Operate, Tags } = JSON.parse(d)
-            if (Object.is(Operate, 6)) {
+        frameData(data) {
+            const { code, operate, tags } = JSON.parse(data)
+
+            if (Object.is(operate, 6)) {
                 // 自选股分组数据
-                if (Object.is(Code, 200)) {
-                    this.receiveMystockGroupCache(Tags)
+                if (Object.is(code, 200)) {
+                    this.receiveMystockGroupCache(tags)
                 }
-            } else if (Object.is(Operate, 7)) {
+            } else if (Object.is(operate, 7)) {
                 // 单一分组数据
-                if (Object.is(Code, 200)) {
-                    this.receiveSelectGroupCache(Tags)
+                if (Object.is(code, 200)) {
+                    this.receiveSelectGroupCache(tags)
                 }
             }
         },

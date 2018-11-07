@@ -4,9 +4,7 @@
     :class="myStockClasses"
     :title="showState.title"
     @on-click="changeMyStock"
->
-    {{showState.label}}
-</default-btn>
+>{{showState.label}}</default-btn>
 </template>
 
 <script>
