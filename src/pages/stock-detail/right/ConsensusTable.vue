@@ -74,10 +74,13 @@ import cloneDeep from 'lodash/cloneDeep'
 
 export default {
     name: 'ConsensusTable',
-    created() {
-        if (this.stock_code) {
+    watch: {
+        full_code() {
             this.getConsensusData()
-        }
+        },
+    },
+    created() {
+        this.getConsensusData()
     },
     data() {
         return {
@@ -137,6 +140,8 @@ export default {
     computed: {
         ...mapState([
             'stock_name',
+            'stock_code',
+            'full_code',
         ]),
         fieldsOrder() {
             return this.tbodyOrder.map((ele) => {
@@ -204,7 +209,7 @@ export default {
             }
         } ,
         getConsensusData() {
-            let param = {
+            const param = {
                 options: {
                     stock_code: this.stock_code
                 },
@@ -258,9 +263,6 @@ export default {
             getSelfConsensus(param)
         }
     },
-    props: [
-        'stock_code'
-    ]
 }
 </script>
 
