@@ -98,12 +98,14 @@ export default {
                         show: true,
                         textStyle: {
                             color(value) {
+                                value = Number(value)
+                                let formattedClosePrice = Number(closePrice.toFixed(2))
                                 let color = '#c0c0c0';
-                                if(value > closePrice.toFixed(2)){
+                                if(value > formattedClosePrice){
                                     color = '#f51d27';
-                                }else if(value<closePrice.toFixed(2)){
+                                }else if(value < formattedClosePrice){
                                     color = '#29B81E';
-                                }else if(value == closePrice.toFixed(2)){
+                                }else if(value === formattedClosePrice){
                                     color = '#c0c0c0';
                                 }
                                 return color;
