@@ -21,9 +21,7 @@ import {
 import {
     verifyPermission,
 } from '@c/utils/permission/index.js'
-import {
-    openCompanyHonor,
-} from '../left/open-tags-protogenesis.js'
+import moduleJump from '@c/moduleJump'
 
 export default {
     name: 'CompanyHonorBtn',
@@ -85,7 +83,7 @@ export default {
         showCompanyHonorDetail() {
             if (verifyPermission(this.myStockPermissionCode)) {
                 // 打开远端页面
-                openCompanyHonor({
+                moduleJump('stockTag', {
                     stock_code: this.stock_code,
                     stock_name: this.stock_name,
                 })
