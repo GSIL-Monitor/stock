@@ -7,7 +7,7 @@ import {
 
 /**
  * @description 判断类型，返回一个有效的、全小写字符串
- * @return {string}
+ * @return { string }
  */
 export const toType = obj => {
     return Object.prototype.toString
@@ -19,7 +19,7 @@ export const toType = obj => {
 
 /**
  * @description 判断是否是数字(包含字符串数字)
- * @return {boolean}
+ * @return { boolean }
  */
 export const isNumber = obj => {
     const type = toType(obj)
@@ -58,7 +58,7 @@ export const stockToType = (source, symbol_type) => {
 
 /**
  * @description 获取该类型股票部分字段需要保留位数
- * @param {string} type
+ * @param { string } type
  */
 export const getRetainBits = type => {
     if ([TYPE.ASTOCK, TYPE.INDEX, TYPE.SZBSTOCK, TYPE.HKINDEX].includes(type)) {
@@ -120,9 +120,9 @@ export const getClearVal = () => {
 
 /**
  * @description 金融字段处理(包含异常处理)
- * @param {number} num
- * @param {boolean} isInteger
- * @return {string}
+ * @param { number } num
+ * @param { boolean } isInteger
+ * @return { string }
  */
 export const formatFigure = (num, isInteger) => {
     if (isNumber(num) && Number(num) !== 0) {
@@ -134,9 +134,9 @@ export const formatFigure = (num, isInteger) => {
 
 /**
  * @description 金融字段处理(正常数字)
- * @param {number} num 第一个参数
- * @param {boolean} isInteger 第二个参数
- * @return {string}
+ * @param { number } num 第一个参数
+ * @param { boolean } isInteger 第二个参数
+ * @return { string }
  */
 export const formatNumber = (...args) => {
     // 金融字段区间
