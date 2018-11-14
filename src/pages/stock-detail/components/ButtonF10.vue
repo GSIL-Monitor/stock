@@ -2,9 +2,7 @@
 <default-btn
     class="btn-content"
     @on-click="skipF10"
->
-    F10
-</default-btn>
+>F10</default-btn>
 </template>
 
 <script>
