@@ -198,17 +198,25 @@ export default {
     justify-content: space-between;
 }
 .fund_flow_top_buyList {
-    .flow_item_desc:nth-child(1) {
-        background-color: rgba(255,43,72,0.4);
+    .flow_item:nth-child(1) {
+        .flow_item_desc {
+            background-color: rgba(255,43,72,0.4);
+        }
     }
-    .flow_item_desc:nth-child(2) {
-        background-color: rgba(255,43,72,0.6);
+    .flow_item:nth-child(2) {
+        .flow_item_desc {
+            background-color: rgba(255,43,72,0.6);
+        }
     }
-    .flow_item_desc:nth-child(3) {
-        background-color: rgba(255,43,72,0.8);
+    .flow_item:nth-child(3) {
+        .flow_item_desc {
+            background-color: rgba(255,43,72,0.8);
+        }
     }
-    .flow_item_desc:nth-child(4) {
-        background-color: rgba(255,43,72,1);
+    .flow_item:nth-child(4) {
+        .flow_item_desc {
+            background-color: rgba(255,43,72,1);
+        }
     }
     .flow_item_desc {
         margin-left: 5px;
@@ -216,17 +224,25 @@ export default {
     }
 }
 .fund_flow_top_sellList {
-    .flow_item_desc:nth-child(1) {
-        background-color: rgba(6,180,95,0.4);
+    .flow_item:nth-child(1) {
+        .flow_item_desc {
+            background-color: rgba(6,180,95,0.4);
+        }
     }
-    .flow_item_desc:nth-child(2) {
-        background-color: rgba(6,180,95,0.6);
+    .flow_item:nth-child(2) {
+        .flow_item_desc {
+            background-color: rgba(6,180,95, 0.6);
+        }
     }
-    .flow_item_desc:nth-child(3) {
-        background-color: rgba(6,180,95,0.8);
+    .flow_item:nth-child(3) {
+        .flow_item_desc {
+            background-color: rgba(6,180,95,0.8);
+        }
     }
-    .flow_item_desc:nth-child(4) {
-        background-color: rgba(6,180,95,1);
+    .flow_item:nth-child(4) {
+        .flow_item_desc {
+            background-color: rgba(6,180,95,1);
+        }
     }
     .flow_item_desc {
         margin-right: 5px;
