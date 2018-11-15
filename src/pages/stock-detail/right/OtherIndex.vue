@@ -210,13 +210,12 @@ export default {
 
             // 找出相同的股票
             let index = this.findSameCodeIndex(data)
+
             if (index > -1) {
                 data.splice(index, 1)
             }
-            let start = data[0].index
-            let len = data.length
 
-            this.dataStore.splice(start, len, ...data)
+            this.dataStore = data
         },
         resetState() {
             this.noData = false
