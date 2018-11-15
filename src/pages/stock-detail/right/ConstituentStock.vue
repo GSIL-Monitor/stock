@@ -24,9 +24,9 @@
                     :symbol_type="scope.rowData.symbol_type"
                 />
             </template>
-            <template slot="mcap" slot-scope="scope">
+            <template slot="tcap" slot-scope="scope">
                 <MarketValue
-                    :val="scope.rowData.mcap"
+                    :val="scope.rowData.tcap"
                 />
             </template>
             <template slot="price_change_rate" slot-scope="scope">
@@ -79,9 +79,9 @@ const configData = () => {
             width: 80,
             canSort: true,
         },
-        mcap: {
+        tcap: {
             title: '总市值',
-            field: 'mcap',
+            field: 'tcap',
             align: 'left',
             width: 80,
             canSort: true,
@@ -99,7 +99,7 @@ const configData = () => {
 const fieldData = () => {
     return [
         'name',
-        'mcap',
+        'tcap',
         'price_change_rate',
     ]
 }
@@ -129,7 +129,7 @@ export default {
             fields: fieldData(),
             subFields: [
                 'source', 'symbol_type', 'name', 'code',
-                'price_change', 'price_change_rate', 'mcap',
+                'price_change', 'price_change_rate', 'tcap',
                 'stock_type',
             ],
         }
@@ -172,7 +172,7 @@ export default {
                 },
                 callback0: data => {
                     data.forEach((n) => {
-                        n.mcap = n.mcap ? n.mcap * 10000 : n.mcap
+                        n.tcap = n.tcap ? n.tcap * 10000 : n.tcap
                     })
                     this.dataStore = this.dataStore.concat(data)
 
@@ -234,8 +234,8 @@ export default {
             let start = data[0].index
             let len = data.length
             data.forEach((element) => {
-                if (element.mcap) {
-                    element.mcap = element.mcap * 10000
+                if (element.tcap) {
+                    element.tcap = element.tcap * 10000
                 }
             })
 
