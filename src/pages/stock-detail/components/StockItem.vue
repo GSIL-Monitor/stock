@@ -221,6 +221,7 @@ export default {
 
     .item_right_top_price {
         font-size: 14px;
+        font-weight: bold;
     }
 }
 </style>
