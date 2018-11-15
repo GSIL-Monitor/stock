@@ -286,6 +286,11 @@ export default {
             for (let element of data) {
                 let index = element.index
                 element.code = element.full_code.replace(element.source, '')
+
+                if (['sh', 'sz', 'BK', 'csi'].includes(element.source)) {
+                    element.volume = element.volume / 100
+                }
+
                 if (element.turnover) {
                     element.turnover = element.turnover * 10000
                 }
