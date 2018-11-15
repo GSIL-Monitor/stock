@@ -184,7 +184,8 @@ export default {
     },
     watch: {
         full_code() {
-            this.unSubToFrame()
+            this.noData = true
+            // this.unSubToFrame()
             this.socketData = {}
             this.subToFrame()
         },
