@@ -170,7 +170,7 @@ export default {
                     this.dataStore = data
                     this.$nextTick(() => {
                         pushData(FRAME_OTHER_INDEXS, {
-                            index: '0;' + (this.dataStore.length - 1),
+                            index: '0;' + (this.dataStore.length),
                             field: 'code;price_change;price_change_rate;price;name;source',
                             sort: this.sortOBJ.order,
                             sortType: this.sortOBJ.order_type,
