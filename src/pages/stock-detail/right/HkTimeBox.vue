@@ -66,7 +66,7 @@ export default {
             if (minute < 10) {
                 minute = `0${minute}`
             }
-            return `${month}/${day} ${hour}:${minute}`
+            return `${month}/${day} ${hour}:${minute} (北京)`
         },
         getRealTimeHint() {
             let nowTimeStamp = new Date().getTime()

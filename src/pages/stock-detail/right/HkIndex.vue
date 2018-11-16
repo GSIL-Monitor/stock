@@ -1,5 +1,5 @@
 <template>
-<div class="detail">
+<div class="detail detail_HkIndex">
     <div class="detail_head">
         <div class="detail_head_title">
             <div class="title_left">
@@ -252,5 +252,11 @@ export default {
 <style lang="less" scoped>
     .detail_head_btn {
         justify-content: flex-end;
+    }
+    .detail_HkIndex {
+        .detail_head {
+            padding-left: 6px;
+            padding-right: 6px;
+        }
     }
 </style>

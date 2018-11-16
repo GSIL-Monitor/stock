@@ -1,6 +1,6 @@
 <template>
 <div
-    class="detail"
+    class="detail detail_HkNormal"
 >
     <div
         class="detail_head"
@@ -396,5 +396,10 @@ export default {
 </script>
 
 <style lang="less">
-
+    .detail_HkNormal {
+        .detail_head {
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+    }
 </style>
