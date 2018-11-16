@@ -264,7 +264,6 @@ export default {
         width: 14px;
         height: 14px;
         cursor: pointer;
-        background-color: #267;
         background: url('~@assets/select-box.png') no-repeat center center;
         margin-right: 2px;
         &.on {
