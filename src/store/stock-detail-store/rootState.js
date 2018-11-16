@@ -13,4 +13,5 @@ export default {
     infoState: false, // 资讯栏，默认收起
     leftActiveKey: TAB_MY_STOCK, // 左侧选中 tab，默认自选股
     klineJumpState: null,
+    hsIndexCategory: null,
 }

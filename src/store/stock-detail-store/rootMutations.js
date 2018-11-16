@@ -9,6 +9,7 @@ import {
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
     STOCK_NAME,
+    HSINDEX_CATEGORY,
 } from './config/mutation-types.js'
 
 export default {
@@ -41,5 +42,8 @@ export default {
     },
     [KLINE_JUMP_PARAM](state, payLoad) {
         state.klineJumpState = payLoad
+    },
+    [HSINDEX_CATEGORY](state, payLoad) {
+        state.hsIndexCategory = payLoad
     },
 }

@@ -3,9 +3,6 @@ import {
     getIndexStocks,
 } from '@service/index.js'
 import {
-    HSINDEX_CATEGORY,
-} from '../config/mutation-types.js'
-import {
     GET_HS_INDEX_MARKET_DATA,
     GET_HS_INDEX_CONSTITUENT_LIST,
 } from '../config/action-types.js'
@@ -13,13 +10,7 @@ import {
 export default {
     state() {
         return {
-            hsIndexCategory: null,
         }
-    },
-    mutations: {
-        [HSINDEX_CATEGORY](state, payLoad) {
-            state.hsIndexCategory = payLoad
-        },
     },
     actions: {
         async [GET_HS_INDEX_MARKET_DATA](context, param) {
