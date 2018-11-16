@@ -138,10 +138,12 @@ export default {
     },
     canLoadF1(state, {
         isAStock,
+        isBStock,
         isFund,
         isBond,
     }) {
         return (isAStock
+            || isBStock
             || isFund
             || isBond
         )
