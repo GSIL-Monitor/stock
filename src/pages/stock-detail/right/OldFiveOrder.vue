@@ -131,6 +131,7 @@ export default {
         font-weight: bold;
         align-items: center;
         border-top: 1px solid var(--color-dividers);
+        color: var(--color-table-header-text);
         li {
             flex: 1;
             padding: 0 10px;
