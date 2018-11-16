@@ -298,6 +298,8 @@ export default {
                 },
                 callback0: data => {
                     this[HSINDEX_CATEGORY](data.category)
+                    this.$_nextResizeWindow()
+
                     this[STOCK_NAME](data.name)
                     this.symbol_type = data.symbol_type
                     this.close_price = data.close_price
