@@ -311,6 +311,8 @@ export default {
                     data.price_change = data.change_value
                     data.price_change_rate = data.change_rate
                     data.turnover && (data.turnover = data.turnover * 10000)
+                    data.hk_tcap && (data.hk_tcap = data.hk_tcap * 10000)
+                    data.tcap && (data.tcap = data.tcap * 10000)
                     data.turnover_rate && (data.turnover_rate = data.turnover_rate * 100)
                     Reflect.deleteProperty(data, 'change_value')
                     Reflect.deleteProperty(data, 'change_rate')
@@ -345,6 +347,13 @@ export default {
             if (transferData.turnover) {
                 transferData.turnover = transferData.turnover * 10000
             }
+            if (transferData.hk_tcap) {
+                transferData.hk_tcap = transferData.hk_tcap * 10000
+            }
+            if (transferData.tcap) {
+                transferData.tcap = transferData.tcap * 10000
+            }
+
             // 继承推送数据
             this.socketData = Object.assign({}, this.socketData, transferData)
             // 不清空数据
