@@ -126,10 +126,8 @@ export default {
         ...mapState([
             'full_code',
             'current_type',
+            'hsIndexCategory',
         ]),
-        ...mapState({
-            hsIndexCategory: state => state.moduleMarket.hsIndexCategory,
-        }),
     },
     components: {
         htTable,

@@ -140,10 +140,8 @@ export default {
             'full_code',
             'source',
             'stock_name',
+            'hsIndexCategory',
         ]),
-        ...mapState({
-            hsIndexCategory: state => state.moduleMarket.hsIndexCategory,
-        }),
         paramType() {
             return Object.is(this.source, 'BK') ? 3 : 9
         },
