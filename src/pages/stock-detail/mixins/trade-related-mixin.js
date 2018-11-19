@@ -1,7 +1,15 @@
 import {
     mapState,
     mapGetters,
+    mapMutations,
 } from 'vuex'
+import {
+    switchToHashString,
+    changePageStock,
+} from '../utility.js'
+import {
+    JUMP_FROM_TRADE,
+} from '@store/stock-detail-store/config/mutation-types.js'
 
 import loaddingStyleMixin from './loadding-style-mixin.js'
 
@@ -30,6 +38,8 @@ const template = `<div
         :fixedColCount="3"
         @clickTheadCell="sortChange"
         @indexChanged="indexChanged"
+        @clickTbodyCell="$_clickTbodyCell"
+        @dblClickTableRow="dblClickTableRow"
         :class="tableClasses"
     >
         <span slot="index" slot-scope="scope">{{ scope.index + 1 }}</span>
@@ -258,6 +268,7 @@ export default {
             'stock_code',
             'full_code',
             'current_type',
+            'isTradeStock',
         ]),
         ...mapGetters([
             'isAStock',
@@ -265,6 +276,9 @@ export default {
         ]),
     },
     methods: {
+        ...mapMutations([
+            JUMP_FROM_TRADE,
+        ]),
         $_resetState() {
             this.page = 1
             this.noData = false
@@ -296,6 +310,23 @@ export default {
                 }
                 this.dataStore.splice(index, 1, element)
             }
+        },
+        $_clickTbodyCell(...args) {
+            let { field } = args[2]
+            if (['name', 'code'].includes(field)) {
+                let { source, code, symbol_type } = args[1]
+                this.changeStock(source, code, symbol_type)
+            }
+        },
+        changeStock(source, code, symbol_type) {
+            this[JUMP_FROM_TRADE](true)
+            let hash = switchToHashString(source, code, symbol_type)
+
+            changePageStock(hash)
+        },
+        dblClickTableRow(...args) {
+            let { source, code, symbol_type } = args[1]
+            this.changeStock(source, code, symbol_type)
         },
     },
     components: {

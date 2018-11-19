@@ -10,6 +10,7 @@ import {
     LEFT_SELECT_TAB,
     STOCK_NAME,
     HSINDEX_CATEGORY,
+    JUMP_FROM_TRADE,
 } from './config/mutation-types.js'
 
 export default {
@@ -45,5 +46,8 @@ export default {
     },
     [HSINDEX_CATEGORY](state, payLoad) {
         state.hsIndexCategory = payLoad
+    },
+    [JUMP_FROM_TRADE](state, payLoad) {
+        state.isTradeStock = payLoad
     },
 }

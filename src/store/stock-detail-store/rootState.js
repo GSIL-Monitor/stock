@@ -14,4 +14,5 @@ export default {
     leftActiveKey: TAB_MY_STOCK, // 左侧选中 tab，默认自选股
     klineJumpState: null,
     hsIndexCategory: null,
+    isTradeStock: false, // 是否从同业股票跳转过来
 }

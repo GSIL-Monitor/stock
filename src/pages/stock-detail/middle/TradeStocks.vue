@@ -1,16 +1,18 @@
-
 <script>
 import {
     getSameIndustryStock,
     getHKSameIndustryStock,
 } from '@service/index.js'
 import {
-    FRAME_TRADE_STOCK,
-} from '../storage.js'
-import {
     pushData,
     UnSubscriptSockets,
 } from '@c/utils/callQt.js'
+import {
+    FRAME_TRADE_STOCK,
+} from '../storage.js'
+import {
+    JUMP_FROM_TRADE,
+} from '@store/stock-detail-store/config/mutation-types.js'
 
 import tradeRelatedMixin from '../mixins/trade-related-mixin.js'
 
@@ -40,6 +42,10 @@ export default {
     },
     watch: {
         full_code() {
+            if (this.isTradeStock) {
+                this[JUMP_FROM_TRADE](false)
+                return false
+            }
             this.$_resetState()
             this.fetchData()
         },

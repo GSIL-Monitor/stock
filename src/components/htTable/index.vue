@@ -232,7 +232,7 @@
             <table :style="{marginBottom: endMargin + 'px', marginTop: startMargin +'px', width: fixedTableWidth + 'px'}">
                 <tbody>
                     <tr v-for="(item, i) in tableData" :key="i" v-if="i >= startIndex && i < endIndex" :class="['row_'+i, activeRowIndex == i ? 'ht-tr-active' : '', hoverRowIndex == i ? 'ht-tr-hover' : '']" @click="clickTableRow($event, item, i)" @dblclick="dblClickTableRow($event, item, i)" @mouseenter="mouseenterTableRow(i)">
-                        <td class="threeDots" v-for="(n, index) in _ht_config" :key="index" v-if="index < fixedColCount" :class="[n.class || '', n.width? 'htWidth'+ n.width: '']" @click="clickTbodyCell($event, item)" :style="{textAlign: n.align || ''}">
+                        <td class="threeDots" v-for="(n, index) in _ht_config" :key="index" v-if="index < fixedColCount" :class="[n.class || '', n.width? 'htWidth'+ n.width: '']" @click="clickTbodyCell($event, item, n)" :style="{textAlign: n.align || ''}">
                             <span v-if="n.isPlain">{{item[n.field] || '--'}}</span>
                             <slot v-else :name="n.field" :rowData="item" :index="i">
                                 <!-- 这里写入备用内容 -->
@@ -272,7 +272,7 @@
                     'without-data': tableData.length == 0
                 }">
                     <tr v-for="(item, i) in tableData" :key="i" v-if="i >= startIndex && i < endIndex" :class="['row_'+i, activeRowIndex == i ? 'ht-tr-active' : '', hoverRowIndex == i ? 'ht-tr-hover' : '', rowClass(item)]"  @click="clickTableRow($event, item, i)" @dblclick="dblClickTableRow($event, item, i)" @mouseenter="mouseenterTableRow(i)">
-                        <td class="threeDots" v-for="(n, index) in _ht_config" :key="index" v-if="index >= fixedColCount" :class="[n.class, n.bodyClass, n.width? 'htWidth'+ n.width: '']" @click="clickTbodyCell($event, item)" :style="{textAlign: n.align || ''}">
+                        <td class="threeDots" v-for="(n, index) in _ht_config" :key="index" v-if="index >= fixedColCount" :class="[n.class, n.bodyClass, n.width? 'htWidth'+ n.width: '']" @click="clickTbodyCell($event, item, n)" :style="{textAlign: n.align || ''}">
                             <span v-if="n.isPlain">{{item[n.field] || '--'}}</span>
                             <template v-else-if="n.name === '__checkbox'">
                                 <check-box :check="item.checked" @tap="toggleCheckboxItem(item)"></check-box>
@@ -544,8 +544,8 @@ export default {
         clickTheadCell(e, conf) {
             this.$emit('clickTheadCell', e, conf)
         },
-        clickTbodyCell(e, data) {
-            this.$emit('clickTbodyCell', e, data)
+        clickTbodyCell(e, data, n) {
+            this.$emit('clickTbodyCell', e, data, n)
         },
         clickTableRow(e, data, i) {
             this.activeRowIndex = i
