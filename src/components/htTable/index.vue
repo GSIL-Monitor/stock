@@ -53,7 +53,7 @@
     top: 50%;
     margin-top: 26px;
     transform: translate(-50%, 0);
-    color: @color-gray1;
+    // color: @color-gray1;
   }
 }
 .ht-table-container {
