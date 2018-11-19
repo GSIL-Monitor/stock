@@ -62,7 +62,6 @@ export default {
     .top_market {
         display: flex;
         align-items: baseline;
-        color: rgba(255, 255, 255, 0.75);
         cursor: default;
     }
     .top_market_price, .top_market_value {
