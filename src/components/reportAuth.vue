@@ -190,9 +190,6 @@
                         token: getToken()
                     }
                 }
-                if(!isNotice){
-                    options.product_line = 901;
-                }
                 if(isNotice){
                     getNoticeUrl({
                         options:options,

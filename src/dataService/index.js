@@ -349,6 +349,7 @@ export const getNoticeUrl = (param) => {
 
 export const getReportAuth = (param) => {
     const APIName = 'v1/gpoints/get_gpoint_report_read'
+    param.product_line = getReportLine();
 
     return get(APIName, param)
 }
