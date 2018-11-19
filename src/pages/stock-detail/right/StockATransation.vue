@@ -156,6 +156,7 @@ export default {
         changeMsg() {
             let min = this.min
             let max = this.max
+
             if (!max && !min) {
                 this.filterMsg = `全部`
                 this.filterType = 1
@@ -223,11 +224,12 @@ export default {
             getTransaction(param)
         },
         filterParams(o) {
+            this.resetAll()
+
             this.min = o.min
             this.max = o.max
 
             this.changeMsg()
-            this.resetAll()
             this.fetchData()
         },
         filterTransation() {
