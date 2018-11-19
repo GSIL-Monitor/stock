@@ -131,7 +131,7 @@ const configData = () => {
             title: '名称',
             field: 'name',
             align: 'left',
-            width: 80,
+            width: 120,
             canSort: true,
         },
         price: {

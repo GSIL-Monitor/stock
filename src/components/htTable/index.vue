@@ -219,7 +219,10 @@
                 <thead>
                     <tr v-for="(item, index) in _head_config" :key="index">
                         <td v-for="(n, i) in item" :key="i" v-if="n.colIndex < fixedColCount" :colspan="n.col" :rowspan="n.row" :class="[n.class || '', n.width? 'htWidth'+ n.width: '']" :style="{textAlign: n.align || ''}" @click="clickTheadCell($event, n)">
-                            <div v-html="n.title"></div>
+                            <div :class="headCellClass(n)">
+                                <span v-html="n.title"></span>
+                                <i></i>
+                            </div>
                         </td>
                     </tr>
                 </thead>
@@ -571,7 +574,11 @@ export default {
             this.$nextTick(() => {
                 this.$refs.htTableBodyContainer.scrollTop = 0
             })
-        }
+        },
+
+        clearTableRow() {
+            this.activeRowIndex = null
+        },
     },
     watch: {
         tableData: function (newData) {
