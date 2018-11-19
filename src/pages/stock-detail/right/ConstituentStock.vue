@@ -15,6 +15,7 @@
             @loadmore="loadMore"
             @clickTheadCell="sortChange"
             @indexChanged="indexChanged"
+            @dblClickTableRow="dblClick"
         >
             <template slot="name" slot-scope="scope">
                 <StockName
@@ -53,16 +54,20 @@ import {
     mapActions,
 } from 'vuex'
 import {
+    pushData,
+    UnSubscriptSockets,
+    JsToQtEventInterface,
+} from '@c/utils/callQt.js'
+import {
+    switchToHashString,
+    changePageStock,
+} from '../utility.js'
+import {
     GET_HS_INDEX_CONSTITUENT_LIST,
 } from '@store/stock-detail-store/config/action-types.js'
 import {
     FRAME_CONSTITUENT_STOCK,
 } from '../storage.js'
-import {
-    pushData,
-    UnSubscriptSockets,
-    JsToQtEventInterface,
-} from '@c/utils/callQt.js'
 
 import LoadMore from '../components/LoadMore.vue'
 import htTable from '@c/htTable/index.vue'
@@ -203,9 +208,10 @@ export default {
             // 加载数据
             this.fetchData()
         },
-        dblClick(args) {
-            console.log(args)
-            console.log('dblclick')
+        dblClick(...args) {
+            let { source, code, symbol_type } = args[1]
+            let hash = switchToHashString(source, code, symbol_type)
+            changePageStock(hash)
         },
         sortChange(...args) {
             let { field, canSort} = args[1]

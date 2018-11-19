@@ -9,6 +9,7 @@
             :tableData="dataStore || []"
             :sortParams="sortOBJ"
             @clickTheadCell="sortChange"
+            @dblClickTableRow="dblClick"
         >
             <template slot="code" slot-scope="scope">
                 <StockCode
@@ -49,12 +50,16 @@ import {
     getOtherIndicators,
 } from '@service/index.js'
 import {
-    FRAME_OTHER_INDEXS,
-} from '../storage.js'
+    switchToHashString,
+    changePageStock,
+} from '../utility.js'
 import {
     pushData,
     UnSubscriptSockets,
 } from '@c/utils/callQt'
+import {
+    FRAME_OTHER_INDEXS,
+} from '../storage.js'
 
 import htTable from '@c/htTable/index.vue'
 import StockCode from '@formatter/market-base/StockCode.vue'
@@ -218,6 +223,11 @@ export default {
         resetState() {
             this.noData = false
             this.dataStore = []
+        },
+        dblClick(...args) {
+            let { source, code, symbol_type } = args[1]
+            let hash = switchToHashString(source, code, symbol_type)
+            changePageStock(hash)
         },
     },
     beforeDestroy() {
