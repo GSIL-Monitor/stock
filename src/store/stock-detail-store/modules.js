@@ -10,6 +10,10 @@ import moduleMarket from './modules/module-market.js'
 import moduleTape from './modules/module-tape.js'
 // A 股
 import moduleStockA from './modules/module-stock-a.js'
+// 分价表
+import modulePricePoint from './modules/module-point.js'
+// 短线精灵
+import moduleShortElves from './modules/module-short-elves.js'
 
 export default {
     moduleRecent,
@@ -18,4 +22,6 @@ export default {
     moduleMarket,
     moduleTape,
     moduleStockA,
+    modulePricePoint,
+    moduleShortElves,
 }

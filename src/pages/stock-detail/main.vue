@@ -89,8 +89,6 @@ export default {
     ],
     data() {
         return {
-            // sendClientId: false,
-            // client_id: null,
             keyBoardTimer: null,
         }
     },
@@ -116,8 +114,6 @@ export default {
             'canLoadF10',
             'canLoadF1',
             'hasInformation',
-        ]),
-        ...mapGetters([
             'isShowTape',
         ]),
     },

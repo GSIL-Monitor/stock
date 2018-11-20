@@ -33,6 +33,7 @@
 <script>
 import {
     mapState,
+    mapMutations,
 } from 'vuex'
 import {
     pushData,
@@ -41,15 +42,17 @@ import {
 import {
     FRAME_PRICE_POINT,
 } from '../storage.js'
+import {
+    SWITCH_PRICE_POINT,
+} from '@store/stock-detail-store/config/mutation-types.js'
 
 import PricePointSimple from './PricePointSimple.vue'
 import PricePointDetail from './PricePointDetail.vue'
 
 export default {
-    name: 'pricePoint',
+    name: 'PricePoint',
     data() {
         return {
-            isSimple: true, // 默认简化模式
             close_price: null,
             volume_list: [],
         }
@@ -66,6 +69,9 @@ export default {
             'current_type',
             'full_code',
         ]),
+        ...mapState({
+            isSimple: state => state.modulePricePoint.isSimple,
+        }),
         fieldsArr() {
             return [
                 'total_volume',
@@ -86,6 +92,9 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            SWITCH_PRICE_POINT,
+        ]),
         sendFrame() {
             pushData(FRAME_PRICE_POINT, {
                 code: this.full_code,
@@ -103,7 +112,7 @@ export default {
             }
         },
         switchChange() {
-            this.isSimple = !this.isSimple
+            this[SWITCH_PRICE_POINT]()
         },
     },
     components: {

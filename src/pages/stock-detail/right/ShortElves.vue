@@ -56,6 +56,7 @@
 import {
     mapState,
     mapGetters,
+    mapMutations,
 } from 'vuex'
 import {
     getShortLine,
@@ -64,13 +65,16 @@ import {
     changePageStock,
 } from '../utility.js'
 import {
+    pushData,
+    UnSubscriptSockets,
+} from '@c/utils/callQt.js'
+import {
     FRAME_SHORT_LINE,
     LOCAL_SHORT_LINE_SET,
 } from '../storage.js'
 import {
-    pushData,
-    UnSubscriptSockets,
-} from '@c/utils/callQt.js'
+    SWITCH_ELVES_WATCH_ONLY,
+} from '@store/stock-detail-store/config/mutation-types.js'
 
 import SetIco from '../components/SetIco.vue'
 import ShortElvesItem from './ShortElvesItem.vue'
@@ -85,7 +89,6 @@ export default {
     },
     data() {
         return {
-            stock_only: false,
             dataStore: [],
             busy: true,
             rows: 50,
@@ -100,14 +103,17 @@ export default {
         SetIco,
     },
     computed: {
-        ...mapGetters([
-            'isAStock',
-            'isHSIndex',
-        ]),
         ...mapState([
             'current_type',
             'full_code',
             'source',
+        ]),
+        ...mapState({
+            isStockOnly: state => state.moduleShortElves.isStockOnly,
+        }),
+        ...mapGetters([
+            'isAStock',
+            'isHSIndex',
         ]),
         classes() {
             return [{
@@ -120,9 +126,6 @@ export default {
             } else if (this.isHSIndex) {
                 return `只看成分股`
             }
-        },
-        isStockOnly() {
-            return this.stock_only
         },
         subParams() {
             const o = {
@@ -146,6 +149,9 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            SWITCH_ELVES_WATCH_ONLY,
+        ]),
         subToFrame() {
             console.log(this.subParams)
             pushData(FRAME_SHORT_LINE, this.subParams)
@@ -170,7 +176,7 @@ export default {
             if (this.end_date) {
                 o.end_date = this.end_date
             }
-            if (this.stock_only) {
+            if (this.isStockOnly) {
                 if (this.isAStock) {
                     o.fullcode = this.full_code
                 } else if (this.isHSIndex) {
@@ -195,7 +201,8 @@ export default {
             this.dataStore = []
         },
         watchOnly() {
-            this.stock_only = !this.stock_only
+            this[SWITCH_ELVES_WATCH_ONLY]()
+            // this.isStockOnly = !this.isStockOnly
         },
         getInfo() {
             const p = this.getParams()
@@ -292,7 +299,7 @@ export default {
             this.unSubToFrame()
             this.resetStockData()
         },
-        stock_only() {
+        isStockOnly() {
             this.unSubToFrame()
             this.resetStockData()
         },
