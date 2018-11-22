@@ -218,6 +218,10 @@ export default {
 
     .item_right_top_name {
         font-size: 13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 85px;
     }
 
     .item_right_top_price {
