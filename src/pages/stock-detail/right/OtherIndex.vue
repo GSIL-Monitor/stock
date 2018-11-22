@@ -22,6 +22,7 @@
                     :val="scope.rowData.name"
                     :is_defined="scope.rowData.is_defined"
                     :current_type="current_type"
+                    :title="scope.rowData.name"
                 />
             </template>
             <template slot="price" slot-scope="scope">
