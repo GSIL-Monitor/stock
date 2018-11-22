@@ -78,14 +78,14 @@ const configData = () => {
             title: '代码',
             field: 'code',
             align: 'left',
-            width: 80,
+            width: 60,
             canSort: true,
         },
         name: {
             title: '名称',
             field: 'name',
             align: 'left',
-            width: 80,
+            width: 95,
             canSort: true,
         },
         price: {
