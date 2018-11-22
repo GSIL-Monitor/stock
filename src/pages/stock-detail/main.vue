@@ -46,6 +46,7 @@ import {
     INFO_STATE,
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
+    CHANGE_WINDOW_CODE_LIST,
 } from '@store/stock-detail-store/config/mutation-types.js'
 import {
     ADD_TO_RECENT_LIST,
@@ -128,6 +129,7 @@ export default {
             INFO_STATE,
             KLINE_JUMP_PARAM,
             LEFT_SELECT_TAB,
+            CHANGE_WINDOW_CODE_LIST,
         ]),
         ...mapActions([
             ADD_TO_RECENT_LIST,
@@ -328,6 +330,7 @@ export default {
         },
         changeScode(d) {
             const data = JSON.parse(d)
+
             if (data.jump) {
                 this.setJumpStoreState(data.jump)
                 if (Object.is(location.hash.substr(1), data.stock_code)) {
@@ -335,17 +338,20 @@ export default {
                     this.$_eventBus.$emit('setKlineTabs')
                 }
             }
+
             // 触发 hashchange 事件
             if (data.stock_code) {
                 location.hash = data.stock_code
             }
+
             if (data.positionModule) {
                 this.setPositionModule(data.positionModule, true)
             }
-            if (data.codeList) {
-                // TODO:设置K线图滚轮列表，与快捷键一起开发
 
+            if (data.codeList) {
+                this[CHANGE_WINDOW_CODE_LIST](data.codeList)
             }
+
             setTimeout(() => {
                 // 延迟到 hashchange 事件执行之后执行
                 this.recentVisitedRefresh(data.isRencent)

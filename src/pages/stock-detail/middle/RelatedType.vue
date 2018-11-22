@@ -23,7 +23,7 @@ export default {
     ],
     watch: {
         full_code() {
-            if (this.isTradeStock) {
+            if (this.isJumpFromTradeStock) {
                 this[JUMP_FROM_TRADE](false)
                 return false
             }
@@ -62,6 +62,8 @@ export default {
         },
         fetchData() {
             this.$_addLoadding()
+            const filterFields = ['code', 'symbol_type', 'source', 'full_code']
+
             const params = {
                 options: {
                     order: this.sortOBJ.order,
@@ -69,7 +71,7 @@ export default {
                     page: this.page,
                     full_code: this.full_code,
                     rows: this.ROWS,
-                    fields: 'full_code',
+                    fields: filterFields.join(';'),
                 },
                 callback0: (data) => {
                     this.apiData = data

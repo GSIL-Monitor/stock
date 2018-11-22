@@ -13,11 +13,38 @@
 import {
     mapState,
     mapGetters,
+    mapMutations,
 } from 'vuex'
+import {
+    CHANGE_WINDOW_CODE_LIST,
+} from '@store/stock-detail-store/config/mutation-types.js'
 import * as TYPE from '@formatter/config/stock-type-config.js'
 
 export default {
     name: 'KLine',
+    watch: {
+        full_code() {
+            this.setKlineCode()
+        },
+
+        // 股票种类切换，重设底部状态
+        hasInformation(val, oldValue) {
+            this.isShowBottom(this.klineBottomState)
+        },
+
+        klineCodeList(val) {
+            if (val === null) return false
+
+            if (!this.$refs.stockKline) {
+                this.$nextTick(() => {
+                    this.setKlineList()
+                })
+            } else {
+                this.setKlineList()
+            }
+            this[CHANGE_WINDOW_CODE_LIST](null)
+        },
+    },
     created() {
         this.$_eventBus.$on('setKlineTabs', this.setKlineTabs)
         this.$_eventBus.$on('setKlineStyle', this.changeKlineState)
@@ -44,10 +71,11 @@ export default {
             'infoState',
             'klineJumpState',
         ]),
+        ...mapState({
+            klineJumpState: state => state.moduleKlineState.klineJumpState,
+            klineCodeList: state => state.moduleKlineState.klineCodeList,
+        }),
         ...mapGetters([
-            // 'isAStock',
-            // 'isHSIndex',
-            // 'isHkStock',
             'hasInformation',
         ]),
         klineBottomState() {
@@ -77,6 +105,15 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            CHANGE_WINDOW_CODE_LIST,
+        ]),
+        changeKlineState(direction, status) {
+            this.setKlineState(direction, status)
+        },
+        setKlineTabs() {
+            this.setKlineCode()
+        },
         isShowLeft(state) {
             const KLINE_LEFT = 'left'
             this.setKlineState(KLINE_LEFT, state)
@@ -121,6 +158,7 @@ export default {
                 indicator,
             }
         },
+        // 初始化
         initKLine() {
             try {
                 const FUNC_NAME = 'SetVisibelOption'
@@ -143,6 +181,7 @@ export default {
                 console.error(error)
             }
         },
+        // 展开收起状态
         setKlineState(direction, status) {
             try {
                 const FUNC_NAME = 'SetElementVisibleState'
@@ -160,6 +199,7 @@ export default {
                 console.error(error)
             }
         },
+        // 自选股添加
         setAddStock() {
             try {
                 const FUNC_NAME = 'MyStockAdd'
@@ -176,6 +216,7 @@ export default {
                 console.error(error)
             }
         },
+        // 自选股删除
         setDelStock() {
             try {
                 const FUNC_NAME = 'MyStockDel'
@@ -192,6 +233,7 @@ export default {
                 console.error(error)
             }
         },
+        // K线图 stock_code
         setKlineCode() {
             try {
                 const FUNC_NAME = 'SetCurrentStock'
@@ -217,11 +259,24 @@ export default {
                 console.error(error)
             }
         },
-        changeKlineState(direction, status) {
-            this.setKlineState(direction, status)
-        },
-        setKlineTabs() {
-            this.setKlineCode()
+        // pageUp / pageDown 键
+        setKlineList() {
+            try {
+                const FUNC_NAME = 'SetCodeList'
+                try {
+                    const options = {
+                        fun: FUNC_NAME,
+                        ...this.klineCodeList,
+                    }
+                    this.$refs.stockKline.postMessage(options)
+                } catch (error) {
+                    this.$refs.stockKline[FUNC_NAME](
+                        this.klineCodeList,
+                    )
+                }
+            } catch(error)  {
+                console.error(error)
+            }
         },
     },
     beforeDestroy() {
@@ -229,15 +284,6 @@ export default {
         this.$_eventBus.$off('setKlineStyle', this.changeKlineState)
         this.$_eventBus.$off('setKlineStockAdd', this.setAddStock)
         this.$_eventBus.$off('setKlineStockDel', this.setDelStock)
-    },
-    watch: {
-        full_code() {
-            this.setKlineCode()
-        },
-        // 股票种类切换，重设底部状态
-        hasInformation(val, oldValue) {
-            this.isShowBottom(this.klineBottomState)
-        },
     },
 }
 </script>

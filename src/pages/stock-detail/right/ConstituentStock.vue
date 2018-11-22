@@ -52,6 +52,7 @@
 import {
     mapState,
     mapActions,
+    mapMutations,
 } from 'vuex'
 import {
     pushData,
@@ -62,6 +63,9 @@ import {
     switchToHashString,
     changePageStock,
 } from '../utility.js'
+import {
+    CHANGE_WINDOW_CODE_LIST,
+} from '@store/stock-detail-store/config/mutation-types.js'
 import {
     GET_HS_INDEX_CONSTITUENT_LIST,
 } from '@store/stock-detail-store/config/action-types.js'
@@ -158,6 +162,9 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            CHANGE_WINDOW_CODE_LIST
+        ]),
         ...mapActions({
             getIndexStocks: GET_HS_INDEX_CONSTITUENT_LIST,
         }),
@@ -209,6 +216,13 @@ export default {
             this.fetchData()
         },
         dblClick(...args) {
+            this[CHANGE_WINDOW_CODE_LIST]({
+                indexCode: this.full_code,
+                getConstituentStocks: true,
+                sort: this.sortOBJ.order,
+                sortType: this.sortOBJ.order_type,
+            })
+
             let { source, code, symbol_type } = args[1]
             let hash = switchToHashString(source, code, symbol_type)
             changePageStock(hash)

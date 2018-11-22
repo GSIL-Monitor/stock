@@ -45,6 +45,7 @@
 <script>
 import {
     mapState,
+    mapMutations,
 } from 'vuex'
 import {
     getOtherIndicators,
@@ -57,6 +58,9 @@ import {
     pushData,
     UnSubscriptSockets,
 } from '@c/utils/callQt'
+import {
+    CHANGE_WINDOW_CODE_LIST,
+} from '@store/stock-detail-store/config/mutation-types.js'
 import {
     FRAME_OTHER_INDEXS,
 } from '../storage.js'
@@ -142,6 +146,9 @@ export default {
         PriceChangeRate,
     },
     methods: {
+        ...mapMutations([
+            CHANGE_WINDOW_CODE_LIST,
+        ]),
         findSameCodeIndex(data) {
             return data.findIndex((element) => {
                 return Object.is(`${element.source}${element.code}`, this.full_code)
@@ -225,6 +232,13 @@ export default {
             this.dataStore = []
         },
         dblClick(...args) {
+            this[CHANGE_WINDOW_CODE_LIST]({
+                indexCode: this.full_code,
+                getConstituentStocks: true,
+                sort: this.sortOBJ.order,
+                sortType: this.sortOBJ.order_type,
+            })
+
             let { source, code, symbol_type } = args[1]
             let hash = switchToHashString(source, code, symbol_type)
             changePageStock(hash)

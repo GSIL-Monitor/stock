@@ -14,6 +14,8 @@ import moduleStockA from './modules/module-stock-a.js'
 import modulePricePoint from './modules/module-point.js'
 // 短线精灵
 import moduleShortElves from './modules/module-short-elves.js'
+// K线相关状态
+import moduleKlineState from './modules/module-kline-state.js'
 
 export default {
     moduleRecent,
@@ -24,4 +26,5 @@ export default {
     moduleStockA,
     modulePricePoint,
     moduleShortElves,
+    moduleKlineState,
 }

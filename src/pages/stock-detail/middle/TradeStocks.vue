@@ -42,7 +42,7 @@ export default {
     },
     watch: {
         full_code() {
-            if (this.isTradeStock) {
+            if (this.isJumpFromTradeStock) {
                 this[JUMP_FROM_TRADE](false)
                 return false
             }
@@ -70,7 +70,10 @@ export default {
         fetchData() {
             let api = this.listTradeApi
             if (!api) { return false }
+
             this.$_addLoadding()
+            const filterFields = ['code', 'symbol_type', 'source', 'fullcode', 'plate_code']
+
             const params = {
                 options: {
                     order: this.sortOBJ.order,
@@ -78,7 +81,7 @@ export default {
                     page: this.page,
                     stock_code: this.stock_code,
                     rows: this.ROWS,
-                    fields: this.isAStock ? 'fullcode;plate_code' : 'fullcode',
+                    fields: filterFields.join(';'),
                 },
                 callback0: (data) => {
                     this.apiData = Object.freeze(data)

@@ -46,4 +46,5 @@ export const JUMP_FROM_TRADE = 'JUMP_FROM_TRADE'
 export const SWITCH_PRICE_POINT = 'SWITCH_PRICE_POINT'
 // 短线精灵，只看该股/成分股 切换
 export const SWITCH_ELVES_WATCH_ONLY = 'SWITCH_ELVES_WATCH_ONLY'
-
+// pageUp/pageDown
+export const CHANGE_WINDOW_CODE_LIST = 'CHANGE_WINDOW_CODE_LIST'

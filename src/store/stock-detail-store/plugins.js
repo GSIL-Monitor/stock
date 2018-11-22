@@ -1,5 +1,7 @@
 import createPersistedState from 'vuex-persistedstate'
 
 export default [
-    createPersistedState()
+    createPersistedState({
+        key: 'stockDetail-store',
+    })
 ]

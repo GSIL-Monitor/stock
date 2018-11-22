@@ -9,6 +9,7 @@ import {
 } from '../utility.js'
 import {
     JUMP_FROM_TRADE,
+    CHANGE_WINDOW_CODE_LIST,
 } from '@store/stock-detail-store/config/mutation-types.js'
 
 import loaddingStyleMixin from './loadding-style-mixin.js'
@@ -268,7 +269,7 @@ export default {
             'stock_code',
             'full_code',
             'current_type',
-            'isTradeStock',
+            'isJumpFromTradeStock',
         ]),
         ...mapGetters([
             'isAStock',
@@ -276,8 +277,18 @@ export default {
         ]),
     },
     methods: {
+        jumpCollection() {
+            return this.apiData.map((element) => {
+                let symbol_type = element.symbol_type || 1
+                let source = element.source || element.fullcode.replace(element.code, '')
+                let stock_code = element.code
+
+                return switchToHashString(source, stock_code, symbol_type)
+            })
+        },
         ...mapMutations([
             JUMP_FROM_TRADE,
+            CHANGE_WINDOW_CODE_LIST,
         ]),
         $_resetState() {
             this.page = 1
@@ -314,9 +325,18 @@ export default {
         $_clickTbodyCell(...args) {
             let { field } = args[2]
             if (['name', 'code'].includes(field)) {
+                this.setCodeList()
+
                 let { source, code, symbol_type } = args[1]
                 this.changeStock(source, code, symbol_type)
             }
+        },
+        setCodeList() {
+            this[CHANGE_WINDOW_CODE_LIST]({
+                sort: this.sortOBJ.order,
+                sortType: this.sortOBJ.order_type,
+                codeList: this.jumpCollection().join(';')
+            })
         },
         changeStock(source, code, symbol_type) {
             this[JUMP_FROM_TRADE](true)
@@ -325,6 +345,8 @@ export default {
             changePageStock(hash)
         },
         dblClickTableRow(...args) {
+            this.setCodeList()
+
             let { source, code, symbol_type } = args[1]
             this.changeStock(source, code, symbol_type)
         },

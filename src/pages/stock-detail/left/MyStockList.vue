@@ -73,19 +73,20 @@ import {
     isContainsNode,
 } from '../utility.js'
 import {
+    STOCK_GROUP_LIST,
+    STOCK_CODE,
+    STOCK_NAME,
+    CHANGE_WINDOW_CODE_LIST,
+} from '@store/stock-detail-store/config/mutation-types.js'
+import {
+    GET_STOCK_GROUP_DATA,
+} from '@store/stock-detail-store/config/action-types.js'
+import {
     SESSION_SELECT_STOCK_GROUP,
     FRAME_MYSTOCK_GROUP,
     MODULE_NAME,
     MY_STOCK_CACHE,
 } from '../storage.js'
-import {
-    GET_STOCK_GROUP_DATA,
-} from '@store/stock-detail-store/config/action-types.js'
-import {
-    STOCK_GROUP_LIST,
-    STOCK_CODE,
-    STOCK_NAME,
-} from '@store/stock-detail-store/config/mutation-types.js'
 
 import oneStockList from './one-stock-list-mixin.js'
 
@@ -117,6 +118,7 @@ export default {
             STOCK_GROUP_LIST,
             STOCK_CODE,
             STOCK_NAME,
+            CHANGE_WINDOW_CODE_LIST,
         ]),
         ...mapActions({
             getStockGroupData: GET_STOCK_GROUP_DATA,
@@ -253,6 +255,9 @@ export default {
                     target = target.parentNode
                 }
                 if (target) {
+                    this[CHANGE_WINDOW_CODE_LIST]({
+                        groupId: String(this.activeGroupId),
+                    })
                     let { source, symbol_type, stock_code, stock_name } = target.dataset
                     let hash = switchToHashString(source, stock_code, symbol_type)
                     this[STOCK_NAME](stock_name)

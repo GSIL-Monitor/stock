@@ -32,6 +32,9 @@ import {
     changePageStock,
 } from '../utility.js'
 import {
+    CHANGE_WINDOW_CODE_LIST,
+} from'@store/stock-detail-store/config/mutation-types.js'
+import {
     GET_RECENT_LIST_DATA,
 } from '@store/stock-detail-store/config/action-types.js'
 import {
@@ -63,13 +66,15 @@ export default {
     computed: {
         ...mapState({
             recent_list_data: state => state.moduleRecent.recent_list_data,
-            // full_code: state => state.full_code,
         }),
         ...mapGetters([
             'recentVisitedSubFullCode',
         ]),
     },
     methods: {
+        ...mapMutations([
+            CHANGE_WINDOW_CODE_LIST
+        ]),
         ...mapActions([
             GET_RECENT_LIST_DATA,
         ]),
@@ -101,6 +106,10 @@ export default {
                 target = target.parentNode
             }
             if (target) {
+                this[CHANGE_WINDOW_CODE_LIST]({
+                    req: FRAME_RECENT_LIST,
+                })
+
                 let { source, symbol_type, stock_code } = target.dataset
                 let hash = switchToHashString(source, stock_code, symbol_type)
                 changePageStock(hash, true)

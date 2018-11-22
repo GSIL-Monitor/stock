@@ -6,7 +6,6 @@ import {
     LEFT_STATE,
     RIGHT_STATE,
     INFO_STATE,
-    KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
     STOCK_NAME,
     HSINDEX_CATEGORY,
@@ -41,13 +40,10 @@ export default {
     [LEFT_SELECT_TAB](state, payLoad) {
         state.leftActiveKey = payLoad
     },
-    [KLINE_JUMP_PARAM](state, payLoad) {
-        state.klineJumpState = payLoad
-    },
     [HSINDEX_CATEGORY](state, payLoad) {
         state.hsIndexCategory = payLoad
     },
     [JUMP_FROM_TRADE](state, payLoad) {
-        state.isTradeStock = payLoad
+        state.isJumpFromTradeStock = payLoad
     },
 }
