@@ -132,6 +132,7 @@ export default {
         right: 14px;
         top: 50%;
         transform: translateY(-50%);
+        color: var(--color-blue-7);
     }
 }
 
