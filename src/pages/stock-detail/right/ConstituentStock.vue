@@ -167,6 +167,9 @@ export default {
                 this.loadding ? 'loadingStyle' : ''
             ]
         },
+        isFirstLoadding() {
+            return Object.is(this.page, 1)
+        },
     },
     methods: {
         ...mapMutations([
@@ -176,7 +179,9 @@ export default {
             getIndexStocks: GET_HS_INDEX_CONSTITUENT_LIST,
         }),
         fetchData() {
-            this.loadding = true
+            if (this.isFirstLoadding) {
+                this.loadding = true
+            }
             const param = {
                 options: {
                     rows: this.ROWS,
@@ -211,7 +216,9 @@ export default {
                     }
                 },
                 afterResponse: () => {
-                    this.loadding = false
+                    if (this.isFirstLoadding) {
+                        this.loadding = false
+                    }
                 },
             }
 
