@@ -12,6 +12,7 @@
             :config="config"
             :tableData="dataStore || []"
             :sortParams="sortOBJ"
+            :class="htTableClasses"
             @loadmore="loadMore"
             @clickTheadCell="sortChange"
             @indexChanged="indexChanged"
@@ -130,6 +131,7 @@ export default {
             dataStore: [],
             noData: false,
             ROWS: 30,
+            loadding: true,
             sortOBJ: {
                 order: 'price_change_rate',
                 order_type: -1,
@@ -160,6 +162,11 @@ export default {
         disableInfiniteScroll() {
             return this.busy
         },
+        htTableClasses() {
+            return [
+                this.loadding ? 'loadingStyle' : ''
+            ]
+        },
     },
     methods: {
         ...mapMutations([
@@ -169,6 +176,7 @@ export default {
             getIndexStocks: GET_HS_INDEX_CONSTITUENT_LIST,
         }),
         fetchData() {
+            this.loadding = true
             const param = {
                 options: {
                     rows: this.ROWS,
@@ -201,6 +209,9 @@ export default {
                     if (Object.is(this.page, 1)) {
                         this.noData = true
                     }
+                },
+                afterResponse: () => {
+                    this.loadding = false
                 },
             }
 

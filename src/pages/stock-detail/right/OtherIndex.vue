@@ -8,6 +8,7 @@
             :config="config"
             :tableData="dataStore || []"
             :sortParams="sortOBJ"
+            :class="htTableClasses"
             @clickTheadCell="sortChange"
             @dblClickTableRow="dblClick"
         >
@@ -127,6 +128,7 @@ export default {
                 order: 'price_change_rate',
                 order_type: -1,
             },
+            loadding: true,
             config: configData(),
             fields: fieldData(),
             ROWS: 21,
@@ -138,6 +140,11 @@ export default {
             'current_type',
             'hsIndexCategory',
         ]),
+        htTableClasses() {
+            return [
+                this.loadding ? 'loadingStyle' : ''
+            ]
+        },
     },
     components: {
         htTable,
@@ -156,6 +163,7 @@ export default {
             })
         },
         fetchData() {
+            this.loadding = true
             const param = {
                 options: {
                     full_codes: this.full_code,
@@ -188,6 +196,9 @@ export default {
                             pool: 'pushIndex_' + (this.hsIndexCategory[0] - 1),
                         })
                     })
+                },
+                afterResponse: () => {
+                    this.loadding = false
                 },
             }
 
