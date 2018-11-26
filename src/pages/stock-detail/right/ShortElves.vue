@@ -153,7 +153,6 @@ export default {
             SWITCH_ELVES_WATCH_ONLY,
         ]),
         subToFrame() {
-            console.log(this.subParams)
             pushData(FRAME_SHORT_LINE, this.subParams)
         },
         unSubToFrame() {
@@ -241,6 +240,7 @@ export default {
                 this.noData = true
                 return false
             }
+            console.log(receive_content)
             const data = receive_content
             let requestContent = request_content
             let isFullCodeIn = requestContent.includes(this.full_code)

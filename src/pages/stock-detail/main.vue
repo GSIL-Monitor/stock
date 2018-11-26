@@ -137,16 +137,18 @@ export default {
             ADD_TO_RECENT_LIST,
             GET_RECENT_LIST_DATA,
         ]),
+
+        initState() {
+            this.initUrlState()
+        },
         initMain() {
             let hash = location.hash.substr(1)
+            // 若第一次无 hash 则改写 hash，触发 hashchange 事件
 
-            if (hash) {
-                this.changeCurrentStockState(hash)
-            } else {
-                // 第一次无 hash 改写 hash，触发 hashchange 事件
-                window.location.hash = `#${this.stockHash}`
-            }
+            hash ? this.changeCurrentStockState(hash) :
+                   window.location.hash = `#${this.stockHash}`
         },
+
         initUrlState() {
             // K线状态
             this.initUrlKlineJump()
@@ -155,36 +157,32 @@ export default {
             // 股票代码
             this.initUrlStockParam()
         },
+        initUrlStateCommon(key, callback) {
+            let param = getUrlParam(key)
+            if (param) {
+                // 提交到 vuex
+                callback(param)
+                // 将 url 中的参数置空
+                changeUrlParam(key, '')
+            }
+        },
         initUrlKlineJump() {
             const URL_KLINE_JUMP_PARAMS = 'jump'
-            let klineJump = getUrlParam(URL_KLINE_JUMP_PARAMS)
-
-            if (klineJump) {
-                this.setJumpStoreState(klineJump)
-                changeUrlParam(URL_KLINE_JUMP_PARAMS, '')
-            }
+            this.initUrlStateCommon(URL_KLINE_JUMP_PARAMS, this.setJumpStoreState)
         },
         initUrlPositionModule() {
             const URL_POSITION_MODULE = 'positionModule'
-            let position = getUrlParam(URL_POSITION_MODULE)
-
-            if (position) {
-                this.setPositionModule(position.positionModule)
-                changeUrlParam(URL_POSITION_MODULE, '')
-            }
+            this.initUrlStateCommon(URL_POSITION_MODULE, this.setPositionModule)
         },
         initUrlStockParam() {
             const URL_STOCK_PARAM = 'stock_code'
-            let stock_code = getUrlParam(URL_STOCK_PARAM)
-
-            if (stock_code) {
-                this[CHANGE_HASH](stock_code)
-                changeUrlParam(URL_STOCK_PARAM, '')
-            }
+            this.initUrlStateCommon(URL_STOCK_PARAM, this[CHANGE_HASH])
         },
+
         setPositionModule(data, sendState) {
             const PARAM_TAG = 'tags'
-            if (Object.is(data, PARAM_TAG)) {
+            let positionModule = data.positionModule
+            if (Object.is(positionModule, PARAM_TAG)) {
                 // 若左侧为收起状态，则设置为展开状态
                 if (Object.is(this.leftState, false)) {
                     let state = true
@@ -206,9 +204,6 @@ export default {
                 const FLOW_PARAM = 'fund_flow'
                 this[CHANGE_STOCK_A_ACTIVE_TAB](FLOW_PARAM)
             }
-        },
-        initState() {
-            this.initUrlState()
         },
         changeLeftRight(d) {
             let data = JSON.parse(d)
@@ -350,7 +345,7 @@ export default {
             }
 
             if (data.positionModule) {
-                this.setPositionModule(data.positionModule, true)
+                this.setPositionModule(data, true)
             }
 
             if (data.codeList) {

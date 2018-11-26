@@ -1,6 +1,6 @@
 <template>
-    <div class="set_tape"
-        :class="{'set_tape_Hide': isHide}"
+    <div
+        :class="containerClasses"
     >
         <div class="set_tape_top">
             <div class="tape_header">
@@ -88,6 +88,16 @@ export default {
             [TAPE_STYLE]: state => state.moduleTape[TAPE_STYLE],
             [FUNC_PERFORMANCE]: state => state.moduleTape[FUNC_PERFORMANCE],
         }),
+        containerClasses() {
+            let prefix = 'set_tape'
+
+            return [
+                prefix,
+                {
+                    [`${prefix}_Hide`]: this.isHide,
+                },
+            ]
+        },
         setOrder() {
             return [this[TAPE_ROWS], this[TAPE_CONTENT], this[TAPE_STYLE]]
         },
