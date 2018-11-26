@@ -13,7 +13,7 @@
             :tableData="dataStore || []"
             :sortParams="sortOBJ"
             :class="htTableClasses"
-            @loadmore="loadMore"
+            @loadmore="loadMoreData"
             @clickTheadCell="sortChange"
             @indexChanged="indexChanged"
             @dblClickTableRow="dblClick"
@@ -224,7 +224,7 @@ export default {
 
             this.getIndexStocks(param)
         },
-        loadMore() {
+        loadMoreData() {
             if (this.busy) {
                 return false
             }

@@ -38,17 +38,6 @@
                     />
                 </template>
             </virtual-scroller>
-            <!-- <ul
-                class="market_list"
-                @scroll="listScroll"
-                ref="scrollContainer"
-            >
-                <StockItem
-                    v-for="(listItem, i) of getListData(item.group_id)"
-                    :key="i"
-                    :item="listItem"
-                />
-            </ul> -->
         </div>
     </div>
 </template>
@@ -59,9 +48,9 @@ import {
     mapActions,
     mapMutations,
 } from 'vuex'
-import {
-    hasMyStockCache,
-} from '@c/utils/util.js'
+// import {
+//     hasMyStockCache,
+// } from '@c/utils/util.js'
 import {
     pushData,
     UnSubscriptSockets,
@@ -103,7 +92,8 @@ export default {
             activeGroupId: null, // 当前选中 id
             medianGroupId: null, // 中转 id
             clickTimer: null,
-            myStockCache: hasMyStockCache(),
+            // myStockCache: hasMyStockCache(),
+            myStockCache: true,
             liItemHeight: 45,
         }
     },
