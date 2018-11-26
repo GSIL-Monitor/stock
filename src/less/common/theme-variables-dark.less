@@ -162,7 +162,16 @@
         .information-ico();
         background: var(--pdf-img);
     }
-
+    .pdf-no-ico {
+        .information-ico();
+        width: auto;
+        height: auto;
+        white-space: nowrap;
+        cursor: default;
+        &:after {
+            content: '--',
+        }
+    }
     .readingPDF-img {
         .information-ico();
         background: var(--pdf-img);

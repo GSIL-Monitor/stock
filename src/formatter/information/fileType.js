@@ -6,7 +6,7 @@ const fileType = (_fileType) => {
     }
     if (!type || Object.is(type, 'null')) {
         file_type = ''
-        imgClass = ''
+        imgClass = 'pdf-no-ico'
         text = '--'
     } else {
         if (Object.is(type, 'pdf')) {
