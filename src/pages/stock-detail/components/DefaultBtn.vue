@@ -3,9 +3,7 @@
         class="btn-link-default"
         @click.stop="emitClick"
         type="button"
-    >
-        <slot></slot>
-    </button>
+    ><slot></slot></button>
 </template>
 
 <script>
