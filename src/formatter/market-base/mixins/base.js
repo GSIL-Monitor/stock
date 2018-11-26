@@ -26,9 +26,7 @@ export default {
             return [`${color}`, `${prefixCls}`]
         },
     },
-    template: `<span :class="$_classes">
-            {{$_display}}
-         </span>`,
+    template: `<span :class="$_classes">{{$_display}}</span>`,
     props: {
         val: {
             required: true,

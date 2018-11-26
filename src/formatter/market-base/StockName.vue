@@ -1,7 +1,7 @@
 <template>
-<span :class="classes">
-    {{display}}
-</span>
+    <span
+        :class="classes"
+    >{{display}}</span>
 </template>
 
 <script>

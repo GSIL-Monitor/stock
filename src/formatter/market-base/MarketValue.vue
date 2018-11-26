@@ -1,9 +1,7 @@
 <template>
     <span
         :class="classes"
-    >
-        {{display}}
-    </span>
+    >{{display}}</span>
 </template>
 
 <script>
