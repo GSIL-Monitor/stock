@@ -20,7 +20,7 @@ export default {
             let residue = window.innerHeight - top
 
             this.extendHeight = residue
-        }, 200),
+        }, 100),
         $_nextResizeWindow() {
             this.$nextTick(() => {
                 this.$_resizeWindow()
