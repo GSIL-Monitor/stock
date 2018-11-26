@@ -13,6 +13,7 @@ import App from './pages/stock-detail/index.js'
 import goGoal from './goGoal/index.js'
 import eventBus from './plugins/eventBus/index.js'
 
+import './sw-register.js'
 import '@less/common/theme.less'
 import '@less/stockDetail.less'
 
