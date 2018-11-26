@@ -88,6 +88,7 @@ export const debounce = function(fn, wait) {
         }, wait)
     }
 }
+
 /**
  * 修改url中的queryString部分
  * @param queryString
@@ -113,6 +114,7 @@ export const changeQueryString = function(queryString, isAppend) {
         window.location.hash
     history.pushState('', '', newHref)
 }
+
 //获取HTTP GET请求参数
 export const getUrlParam = function(key) {
     var reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)')
@@ -122,6 +124,7 @@ export const getUrlParam = function(key) {
     }
     return null
 }
+
 //判断变量是否为空
 export const isVariableBlank = function(variable) {
     var str = /^ /
@@ -159,6 +162,7 @@ export const getCookie = function(name, encodeUrl) {
         return null
     }
 }
+
 //数据处理
 export const dataFixed = function(params, unit, type) {
     var dataResult
@@ -220,15 +224,15 @@ export const evenRound = (num, decimalPlaces) => {
     return d ? r / m : r
 }
 
-/**
- * @description 判断是否有自选股缓存
-*/
-export const hasMyStockCache = () => {
-    const MYSTOCK_CACHE = 'mystock_cache'
-    const cache = getCookie(MYSTOCK_CACHE)
+// /**
+//  * @description 判断是否有自选股缓存
+// */
+// export const hasMyStockCache = () => {
+//     const MYSTOCK_CACHE = 'mystock_cache'
+//     const cache = getCookie(MYSTOCK_CACHE)
 
-    return Object.is(String(cache), '1')
-}
+//     return Object.is(String(cache), '1')
+// }
 
 export const isZyzt = () => {
     const ZYZT = 'zyzt'
@@ -329,14 +333,15 @@ export const getEnvironment = () => {
 */
 export const getUrlDomain = () => {
     const env = getEnvironment()
+    const protocol = location.protocol
 
     if (Object.is(env, 'pro')) {
-      return 'http://zyzt.66966.cn'
+      return `${protocol}//zyzt.66966.cn`
     } else if (Object.is(env, 'pre')) {
-      return 'http://investpre.gofund.cn:8093'
+      return `${protocol}//investpre.gofund.cn:8093`
     } else if (Object.is(env, 'sandbox')) {
-      return 'http://investtest.gofund.cn:8093'
+      return `${protocol}//investtest.gofund.cn:8093`
     } else if (Object.is(env, 'localhost')) {
-      return 'http://investpre.gofund.cn:8093'
+      return `${protocol}//investpre.gofund.cn:8093`
     }
 }

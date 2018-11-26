@@ -20,7 +20,7 @@
     >
       <img
         v-if="dataStore.length === 0"
-        src="../assets/default-no-permission.jpg"
+        src="~@assets/default-no-permission.jpg"
         width="100%"
         height="100%"
       >
@@ -54,14 +54,14 @@ import {
 } from 'vue-awesome-swiper'
 import {
     getNewsAd,
-} from '@service/'
+} from '@service/index.js'
 import {
     getToken,
-} from '@c/utils/util'
+} from '@c/utils/util.js'
 import {
     JsToQtEventInterface,
     openBrowser,
-} from '@c/utils/callQt'
+} from '@c/utils/callQt.js'
 
 export default {
     props: {
