@@ -1,56 +1,71 @@
-import * as TYPE from '@formatter/config/stock-type-config.js'
+import {
+    ASTOCK,
+    SHBSTOCK,
+    SZBSTOCK,
+    FUND,
+    BOND,
+    HKSTOCK,
+    HKINDEX,
+    HKFUND,
+    HKBOND,
+    HKWARRANT,
+    HKCBBC,
+    INDEX,
+    FUTURES,
+} from '@formatter/config/stock-type-config.js'
 
 const stockVerify = [
     {
-        type: TYPE.ASTOCK,
+        type: ASTOCK,
         regexp: /^[01345678][0-9]{5}/,
     },
     {
-        type: TYPE.SHBSTOCK,
+        type: SHBSTOCK,
         regexp: /^900\d{3}$/,
     },
     {
-        type: TYPE.SZBSTOCK,
+        type: SZBSTOCK,
         regexp: /^200\d{3}$/,
     },
     {
-        type: TYPE.FUND,
+        type: FUND,
         regexp: /^fund([a-z]{2})(\d{6})$/,
     },
     {
-        type: TYPE.BOND,
+        type: BOND,
         regexp: /^bond[a-z]{2}[0-9]{6}$/,
     },
     {
-        type: TYPE.HKSTOCK,
+        type: HKSTOCK,
         regexp: /^hk[0-9]{1,}/,
     },
     {
-        type: TYPE.HKINDEX,
+        type: HKINDEX,
         regexp: /^hk[a-zA-Z]+[0-9]*/,
     },
     {
-        type: TYPE.HKFUND,
+        type: HKFUND,
         regexp: /^fund_H\w+/,
     },
     {
-        type: TYPE.HKBOND,
+        type: HKBOND,
         regexp: /^bond_H\w+/,
     },
     {
-        type: TYPE.HKWARRANT,
+        type: HKWARRANT,
         regexp: /^warrants\w+/,
     },
     {
-        type: TYPE.HKCBBC,
+        type: HKCBBC,
         regexp: /^cbbc\w+/,
     },
     {
-        type: TYPE.INDEX,
+        type: INDEX,
+        // sh sz BK csi
         regexp: /^[a-zA-Z]{2,}[0-9]{1,}$/,
     },
     {
-        type: TYPE.FUTURES,
+        type: FUTURES,
         regexp: /^qh_\w+/,
     },
 ]

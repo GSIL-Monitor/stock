@@ -98,8 +98,8 @@ export default {
             'leftState',
             'rightState',
             'infoState',
-            'full_code',
             'leftActiveKey',
+            'full_code',
         ]),
         ...mapGetters([
             'isAStock',
@@ -158,30 +158,35 @@ export default {
             this.initUrlStockParam()
         },
         initUrlStateCommon(key, callback) {
-            let param = getUrlParam(key)
-            if (param) {
+            let val = getUrlParam(key)
+
+            if (val) {
                 // 提交到 vuex
-                callback(param)
+                callback(val)
                 // 将 url 中的参数置空
                 changeUrlParam(key, '')
             }
         },
         initUrlKlineJump() {
             const URL_KLINE_JUMP_PARAMS = 'jump'
+
             this.initUrlStateCommon(URL_KLINE_JUMP_PARAMS, this.setJumpStoreState)
         },
         initUrlPositionModule() {
             const URL_POSITION_MODULE = 'positionModule'
+
             this.initUrlStateCommon(URL_POSITION_MODULE, this.setPositionModule)
         },
         initUrlStockParam() {
             const URL_STOCK_PARAM = 'stock_code'
+
             this.initUrlStateCommon(URL_STOCK_PARAM, this[CHANGE_HASH])
         },
 
         setPositionModule(data, sendState) {
             const PARAM_TAG = 'tags'
             let positionModule = data.positionModule
+
             if (Object.is(positionModule, PARAM_TAG)) {
                 // 若左侧为收起状态，则设置为展开状态
                 if (Object.is(this.leftState, false)) {
@@ -192,27 +197,31 @@ export default {
                         this.$_eventBus.$emit('setKlineStyle', 'left', state)
                     }
                 }
+
                 // 左侧选中设置为推荐标签
                 this[LEFT_SELECT_TAB](TAB_RECOMMEND_TAGS)
             }
         },
         setJumpStoreState(jump) {
+            const POSITION_FLOW_PARAM = 'flow'
+
             this[KLINE_JUMP_PARAM](jump)
             // 若为资金流向，A股右下方定位到资金流向
-            const POSITION_FLOW_PARAM = 'flow'
             if (Object.is(jump, POSITION_FLOW_PARAM)) {
                 const FLOW_PARAM = 'fund_flow'
                 this[CHANGE_STOCK_A_ACTIVE_TAB](FLOW_PARAM)
             }
         },
-        changeLeftRight(d) {
-            let data = JSON.parse(d)
+        changeLeftRight(receiveData) {
+            const data = JSON.parse(receiveData)
+
             if (data.left) {
                 let state = Object.is(data.left, 'true')
                 this.setLeftState(state)
                 this.$_eventBus.$emit('setKlineStyle', 'left', state)
             } else if (data.right) {
                 let state = Object.is(data.right, 'true')
+                // 若盘口设置是展开的，则收起
                 if (Object.is(state, false) && this.$_tapeState) {
                     this.changeTapeSetState()
                 }
@@ -267,6 +276,7 @@ export default {
             // 改变盘口设置状态
             this.$_changeTapeDisplay()
         },
+
         getSource(stock_code) {
             // 获取 A、B 股证券前缀
             let code = stock_code.substr(0, 2)
@@ -284,6 +294,11 @@ export default {
                 source = this.getSource(hash)
                 stock_code = hash
                 full_code = `${source}${stock_code}`
+            } else if (this.isHSIndex) {
+                // 沪深指数里 source 有 sh sz BK csi
+                full_code = hash
+                source = hash.match(/[A-Za-z]{2,}/)[0]
+                stock_code = hash.replace(source, '')
             } else if (this.isFund || this.isBond) {
                 full_code = hash.replace(/fund|bond/, '')
                 source = full_code.substr(0, 2)
@@ -299,11 +314,6 @@ export default {
                 full_code = splitArr.join('')
                 source = splitArr[0]
                 stock_code = splitArr[1]
-            } else if (this.isHSIndex) {
-                // 沪深指数里 source 有 sh sz BK csi
-                full_code = hash
-                source = hash.match(/[A-Za-z]{2,}/)[0]
-                stock_code = hash.replace(source, '')
             } else {
                 // 默认
                 full_code = hash
@@ -328,6 +338,7 @@ export default {
             this[FULL_CODE](info.full_code)
             this[CHANGE_HASH](hash)
         },
+
         changeScode(d) {
             const data = JSON.parse(d)
 
@@ -357,6 +368,49 @@ export default {
                 this.recentVisitedRefresh(data.isRencent)
             }, 0)
         },
+        // 全局快捷键
+        keyBoardEvent(data) {
+            const TIMER_STEP = 100
+
+            clearTimeout(this.keyBoardTimer)
+            this.keyBoardTimer = setTimeout(() => {
+                if (['Up', 'Down'].includes(data)) {
+                    return false
+                }
+                if (Object.is(data, 'Space')) {
+                    this.keyBoardSpace()
+                } else if (Object.is(data, 'F10')) {
+                    this.keyBoardF10()
+                } else if (Object.is(data, 'F1')) {
+                    this.keyBoardF1()
+                }
+            }, TIMER_STEP)
+        },
+        keyBoardSpace() {
+            let state = !this.leftState
+            this.setLeftState(state)
+            this.$_eventBus.$emit('setKlineStyle', 'left', state)
+        },
+        keyBoardF10() {
+            if (!this.canLoadF10) {
+                return false
+            }
+
+            let hash = location.hash.substr(1)
+            skipF10(hash, MODULE_NAME)
+        },
+        keyBoardF1() {
+            if (!this.canLoadF1) {
+                return false
+            }
+
+            let hash = location.hash.substr(1)
+            skipF1(hash, MODULE_NAME)
+        },
+        changeMystock(data) {
+            this.$_eventBus.$emit('refeatchMyStockGroup')
+            this.$_eventBus.$emit('revalidateIsMyStock')
+        },
         recentVisitedRefresh(isRencent) {
             if (!isRencent) {
                 if (this.leftState
@@ -383,49 +437,6 @@ export default {
                     })
                 }
             }
-        },
-        keyBoardSpace() {
-            let state = !this.leftState
-            this.setLeftState(state)
-            this.$_eventBus.$emit('setKlineStyle', 'left', state)
-        },
-        keyBoardF10() {
-            if (!this.canLoadF10) {
-                return false
-            }
-
-            let hash = location.hash.substr(1)
-            skipF10(hash, MODULE_NAME)
-        },
-        keyBoardF1() {
-            if (!this.canLoadF1) {
-                return false
-            }
-
-            let hash = location.hash.substr(1)
-            skipF1(hash, MODULE_NAME)
-        },
-        // 全局快捷键
-        keyBoardEvent(data) {
-            const TIMER_STEP = 100
-
-            clearTimeout(this.keyBoardTimer)
-            this.keyBoardTimer = setTimeout(() => {
-                if (['Up', 'Down'].includes(data)) {
-                    return false
-                }
-                if (Object.is(data, 'Space')) {
-                    this.keyBoardSpace()
-                } else if (Object.is(data, 'F10')) {
-                    this.keyBoardF10()
-                } else if (Object.is(data, 'F1')) {
-                    this.keyBoardF1()
-                }
-            }, TIMER_STEP)
-        },
-        changeMystock(data) {
-            this.$_eventBus.$emit('refeatchMyStockGroup')
-            this.$_eventBus.$emit('revalidateIsMyStock')
         },
     },
     components: {
