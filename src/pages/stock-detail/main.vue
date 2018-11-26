@@ -446,7 +446,6 @@ export default {
         }
     },
     created() {
-        // goGoal.ws.onmessage = this.socketOnMessage
         goGoal.event.listen(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.listen(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.listen(EVENT_KEY_BOARD, this.keyBoardEvent)
@@ -456,7 +455,6 @@ export default {
         this.init()
     },
     beforeDestroy() {
-        // goGoal.ws.onmessage = null
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)
         goGoal.event.remove(EVENT_CHANGE_LEFT_RIGHT, this.changeLeftRight)
         goGoal.event.remove(EVENT_KEY_BOARD, this.keyBoardEvent)
