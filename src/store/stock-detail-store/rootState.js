@@ -3,6 +3,7 @@ import {
 } from '@pages/stock-detail/storage.js'
 
 export default {
+    stockHash: '000001', // 默认平安银行
     current_type: null, // 当前类型
     stock_code: null,
     source: null,

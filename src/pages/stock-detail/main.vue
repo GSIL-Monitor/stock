@@ -29,7 +29,6 @@ import {
 } from 'vuex'
 import {
     getUrlParam,
-    getCookie,
     changeUrlParam,
 } from '@c/utils/util.js'
 import {
@@ -37,6 +36,7 @@ import {
     skipF10,
 } from './components/module-jump.js'
 import {
+    CHANGE_HASH,
     CURRENT_TYPE,
     STOCK_CODE,
     SOURCE,
@@ -55,7 +55,6 @@ import {
 } from '@store/stock-detail-store/config/action-types.js'
 import {
     MODULE_NAME,
-    LOCAL_LATEST_CODE,
     LOCAL_IS_LEFT_SHOW,
     LOCAL_IS_RIGHT_SHOW,
     LOCAL_IS_INFO_FULL,
@@ -64,7 +63,6 @@ import {
     EVENT_CHANGES_CODE,
     EVENT_KEY_BOARD,
     EVENT_CHANGE_STOCK,
-    // SESSION_ASTOCK_FUNC_TAB,
     TAB_RECOMMEND_TAGS,
     TAB_MY_STOCK,
     TAB_RECENT_VISITED,
@@ -96,6 +94,7 @@ export default {
     },
     computed: {
         ...mapState([
+            'stockHash',
             'leftState',
             'rightState',
             'infoState',
@@ -124,6 +123,7 @@ export default {
             STOCK_CODE,
             SOURCE,
             FULL_CODE,
+            CHANGE_HASH,
             CURRENT_TYPE,
             LEFT_STATE,
             RIGHT_STATE,
@@ -137,31 +137,28 @@ export default {
             ADD_TO_RECENT_LIST,
             GET_RECENT_LIST_DATA,
         ]),
-        init() {
+        initMain() {
             let hash = location.hash.substr(1)
 
             if (hash) {
                 this.changeCurrentStockState(hash)
             } else {
-                let stock_code = getUrlParam('stock_code') || localStorage.getItem(LOCAL_LATEST_CODE) || '000001'
                 // 第一次无 hash 改写 hash，触发 hashchange 事件
-                window.location.hash = `#${stock_code}`
+                window.location.hash = `#${this.stockHash}`
             }
-
-            // 添加最近访问列表
-            // this[ADD_TO_RECENT_LIST]({
-            //     options: {
-            //         full_code: this.full_code,
-            //     }
-            // })
         },
         initUrlState() {
+            // K线状态
             this.initUrlKlineJump()
+            // 模块定位
             this.initUrlPositionModule()
+            // 股票代码
+            this.initUrlStockParam()
         },
         initUrlKlineJump() {
             const URL_KLINE_JUMP_PARAMS = 'jump'
             let klineJump = getUrlParam(URL_KLINE_JUMP_PARAMS)
+
             if (klineJump) {
                 this.setJumpStoreState(klineJump)
                 changeUrlParam(URL_KLINE_JUMP_PARAMS, '')
@@ -170,18 +167,29 @@ export default {
         initUrlPositionModule() {
             const URL_POSITION_MODULE = 'positionModule'
             let position = getUrlParam(URL_POSITION_MODULE)
+
             if (position) {
                 this.setPositionModule(position.positionModule)
                 changeUrlParam(URL_POSITION_MODULE, '')
             }
         },
+        initUrlStockParam() {
+            const URL_STOCK_PARAM = 'stock_code'
+            let stock_code = getUrlParam(URL_STOCK_PARAM)
+
+            if (stock_code) {
+                this[CHANGE_HASH](stock_code)
+                changeUrlParam(URL_STOCK_PARAM, '')
+            }
+        },
         setPositionModule(data, sendState) {
-            if (Object.is(data, 'tags')) {
+            const PARAM_TAG = 'tags'
+            if (Object.is(data, PARAM_TAG)) {
                 // 若左侧为收起状态，则设置为展开状态
                 if (Object.is(this.leftState, false)) {
                     let state = true
                     this.setLeftState(state)
-                    // 行情图状态
+                    // TODO:行情图状态
                     if (sendState) {
                         this.$_eventBus.$emit('setKlineStyle', 'left', state)
                     }
@@ -285,11 +293,7 @@ export default {
                 full_code = hash.replace(/fund|bond/, '')
                 source = full_code.substr(0, 2)
                 stock_code = full_code.substr(2)
-            } else if (this.isHkFund ||
-                this.isHkBond ||
-                this.isHkWarrant ||
-                this.isHkCbbc
-            ) {
+            } else if (this.isHkFund || this.isHkBond || this.isHkWarrant || this.isHkCbbc) {
                 // 抹去前缀
                 full_code = hash.replace(/fund_H|bond_H|warrants|cbbc/, '')
                 source = full_code.substr(0, 2)
@@ -322,12 +326,12 @@ export default {
             let type = this.$_enSureStockType(hash)
             this[CURRENT_TYPE](type)
 
-            let info = this.getInfo(hash)
+            const info = this.getInfo(hash)
             // 提交到 vuex
             this[STOCK_CODE](info.stock_code)
             this[SOURCE](info.source)
             this[FULL_CODE](info.full_code)
-            localStorage.setItem(LOCAL_LATEST_CODE, hash)
+            this[CHANGE_HASH](hash)
         },
         changeScode(d) {
             const data = JSON.parse(d)
@@ -335,7 +339,7 @@ export default {
             if (data.jump) {
                 this.setJumpStoreState(data.jump)
                 if (Object.is(location.hash.substr(1), data.stock_code)) {
-                    // 与之前相同的股票，设置 K 线图状态，不同的股票则等到full_code改变时设置
+                    // 与之前相同的股票，设置 K 线图状态，不同的股票则等到 full_code 改变时设置
                     this.$_eventBus.$emit('setKlineTabs')
                 }
             }
@@ -439,7 +443,7 @@ export default {
     },
     beforeCreate() {
         goGoal.detectSelectedTheme()
-        // 监听 hash 改变
+
         window.onhashchange = event => {
             let hash = location.hash.substr(1)
             this.changeCurrentStockState(hash)
@@ -452,7 +456,7 @@ export default {
         goGoal.event.listen(EVENT_CHANGE_STOCK, this.changeMystock)
 
         this.initState()
-        this.init()
+        this.initMain()
     },
     beforeDestroy() {
         goGoal.event.remove(EVENT_CHANGES_CODE, this.changeScode)

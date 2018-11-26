@@ -1,3 +1,5 @@
+// 改写 hash
+export const CHANGE_HASH = 'CHANGE_HASH'
 // 推荐标签
 export const GET_STOCK_TAG = 'GET_STOCK_TAG'
 // 自选股分组

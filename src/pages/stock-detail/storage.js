@@ -23,7 +23,7 @@ export const MY_STOCK_CACHE = `operate-stock-tags`
 // 左侧 tab
 // export const LOCAL_LEFT_TAB = `${MODULE_NAME}-left-tab`
 // 股票代码
-export const LOCAL_LATEST_CODE = `${MODULE_NAME}-stock-code`
+// export const LOCAL_LATEST_CODE = `${MODULE_NAME}-stock-code`
 // 行情图状态
 // export const LOCAL_MAP_STATE = `${MODULE_NAME}-map-state`
 // 成交明细过滤

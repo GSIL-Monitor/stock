@@ -1,4 +1,5 @@
 import {
+    CHANGE_HASH,
     CURRENT_TYPE,
     STOCK_CODE,
     SOURCE,
@@ -13,6 +14,9 @@ import {
 } from './config/mutation-types.js'
 
 export default {
+    [CHANGE_HASH](state, payLoad) {
+        state.stockHash = payLoad
+    },
     [CURRENT_TYPE](state, payLoad) {
         state.current_type = payLoad
     },
