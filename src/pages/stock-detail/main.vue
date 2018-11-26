@@ -364,8 +364,8 @@ export default {
         },
         recentVisitedRefresh(isRencent) {
             if (!isRencent) {
-                if (this.leftState &&
-                    Object.is(this.leftActiveKey, TAB_RECENT_VISITED)
+                if (this.leftState
+                    && Object.is(this.leftActiveKey, TAB_RECENT_VISITED)
                 ) {
                     // 添加并刷新
                     this[ADD_TO_RECENT_LIST]({

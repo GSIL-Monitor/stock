@@ -133,6 +133,8 @@ export default {
         top: 50%;
         transform: translateY(-50%);
         color: var(--color-blue-7);
+        background-color: var(--color-card-background);
+        padding-left: 2px;
     }
 }
 

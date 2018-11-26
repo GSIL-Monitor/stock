@@ -130,7 +130,6 @@ export default {
             this.setKlineState(KLINE_BOTTOM, state)
         },
         lineParams() {
-            // TODO: 跳转指标设置
             let curIndex,
                 indicator;
             if (this.klineJumpState) {
