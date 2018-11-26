@@ -13,12 +13,12 @@ import openBuyPrice from './open-buy-right.js'
 const COMPANY_TAG_CODE = ['TG_002', 'ZT_stocks']
 
 const getUserType = (function() {
-    var type
+    let type
     return () => {
         if (type !== void 0) {
             return type
         } else {
-            var userType = getCookie('userType')
+            let userType = getCookie('userType')
             userType = userType ? JSON.parse(userType) : {}
             type = Number(userType.user_type)
             return type
@@ -27,21 +27,24 @@ const getUserType = (function() {
 })()
 
 const isFreeOrTrialVersion = () => {
-    var type = getUserType()
+    let type = getUserType()
 
     return [1, 2].includes(type)
 }
+
 /**
  * @description 是否是经典版用户
 */
 const isClassfiyVersion = () => {
     const type = getUserType()
+
     return Object.is(type, 10)
 }
 
 const zyztScoreManage = () => {
     const SUN_SCORE_CODE = 'TG_020'
     let isHaveCertaintyPermission = isHavePermission(SUN_SCORE_CODE)
+
     if (isFreeOrTrialVersion()) {
         if (!isHaveCertaintyPermission) {
             // 打开购买页面
@@ -66,7 +69,8 @@ const zyztScoreManage = () => {
 
 const zyztPermissionControlCommon = () => {
     // 是否拥有自选股权限
-    var isHaveMyStockPermission = isHavePermission(COMPANY_TAG_CODE)
+    let isHaveMyStockPermission = isHavePermission(COMPANY_TAG_CODE)
+
     if (!isHaveMyStockPermission) {
         zyztNoPermission()
         return false
@@ -86,7 +90,8 @@ const zyztPermissionControl = (tagName) => {
 
 const zytgPermissionControl = () => {
     // 是否拥有自选股权限
-    var isHaveMyStockPermission = isHavePermission(COMPANY_TAG_CODE)
+    let isHaveMyStockPermission = isHavePermission(COMPANY_TAG_CODE)
+
     if (!isHaveMyStockPermission) {
         zytgNoPermission()
         return false
