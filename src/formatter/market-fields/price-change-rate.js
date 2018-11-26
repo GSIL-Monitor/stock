@@ -3,7 +3,13 @@
  * @see Interface::formatPriceChangeRate()
  * @return {function}
 */
-import * as TYPE from '../config/stock-type-config.js'
+import {
+    HKSTOCK,
+    HKFUND,
+    HKBOND,
+    HKWARRANT,
+    HKCBBC,
+} from '../config/stock-type-config.js'
 import {
     DEFAULT,
 } from '../config/color-config.js'
@@ -67,7 +73,7 @@ const formatPriceChangeRate = (price_change_rate, list, current_type) => {
         list.source,
         list.symbol_type,
     )
-    if ([TYPE.HKSTOCK, TYPE.HKFUND, TYPE.HKBOND, TYPE.HKWARRANT, TYPE.HKCBBC].includes(type)) {
+    if ([HKSTOCK, HKFUND, HKBOND, HKWARRANT, HKCBBC].includes(type)) {
         // 港股股票，港股基金，港股债券，港股涡轮，港股牛熊证
         return formatHKStock(price_change_rate, list)
     } else if (isClearCase(price_change_rate, list)) {

@@ -19,7 +19,20 @@ import {
     KLINE_JUMP_PARAM,
     CHANGE_WINDOW_CODE_LIST,
 } from '@store/stock-detail-store/config/mutation-types.js'
-import * as TYPE from '@formatter/config/stock-type-config.js'
+import {
+    ASTOCK,
+    SHBSTOCK,
+    SZBSTOCK,
+    INDEX,
+    FUND,
+    BOND,
+    HKSTOCK,
+    HKFUND,
+    HKBOND,
+    HKWARRANT,
+    HKCBBC,
+    FUTURES,
+} from '@formatter/config/stock-type-config.js'
 
 export default {
     name: 'KLine',
@@ -89,18 +102,18 @@ export default {
         },
         codeType() {
             const maps = {
-                [TYPE.ASTOCK]: 'stock',
-                [TYPE.SHBSTOCK]: 'stock_B',
-                [TYPE.SZBSTOCK]: 'stock_B',
-                [TYPE.INDEX]: 'index',
-                [TYPE.FUND]: 'fund',
-                [TYPE.BOND]: 'bond',
-                [TYPE.HKSTOCK]: 'stock_H',
-                [TYPE.HKFUND]: 'fund_H',
-                [TYPE.HKBOND]: 'bond_H',
-                [TYPE.HKWARRANT]: 'warrants',
-                [TYPE.HKCBBC]: 'cbbc',
-                [TYPE.FUTURES]: this.source,
+                [ASTOCK]: 'stock',
+                [SHBSTOCK]: 'stock_B',
+                [SZBSTOCK]: 'stock_B',
+                [INDEX]: 'index',
+                [FUND]: 'fund',
+                [BOND]: 'bond',
+                [HKSTOCK]: 'stock_H',
+                [HKFUND]: 'fund_H',
+                [HKBOND]: 'bond_H',
+                [HKWARRANT]: 'warrants',
+                [HKCBBC]: 'cbbc',
+                [FUTURES]: this.source,
             }
 
             return maps[this.current_type]
