@@ -7,9 +7,7 @@
             class="belong_industry_name"
             @click.stop="fetchData"
             :stock_code="stock_code"
-        >
-            {{industry_name}}
-        </button>
+        >{{industry_name}}</button>
         <ul
             v-if="showSelectList"
             class="belong_industry_list"
@@ -19,9 +17,7 @@
                 v-for="(item, index) of plateData"
                 :data-index="index"
                 :key="index"
-            >
-                {{item.name}}
-            </li>
+            >{{item.name}}</li>
         </ul>
     </div>
 </template>
@@ -42,9 +38,6 @@ import {
 
 export default {
     name: "BelongIndustry",
-    mounted() {
-        document.addEventListener('click', this.hideSelectListState)
-    },
     data() {
         return {
             plateData: [],
@@ -134,6 +127,9 @@ export default {
         hideSelectListState() {
             this.flag = false
         },
+    },
+    mounted() {
+        document.addEventListener('click', this.hideSelectListState)
     },
     beforeDestroy() {
         document.removeEventListener('click', this.hideSelectListState)
