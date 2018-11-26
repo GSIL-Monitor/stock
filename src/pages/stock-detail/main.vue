@@ -47,6 +47,7 @@ import {
     KLINE_JUMP_PARAM,
     LEFT_SELECT_TAB,
     CHANGE_WINDOW_CODE_LIST,
+    CHANGE_STOCK_A_ACTIVE_TAB,
 } from '@store/stock-detail-store/config/mutation-types.js'
 import {
     ADD_TO_RECENT_LIST,
@@ -63,7 +64,7 @@ import {
     EVENT_CHANGES_CODE,
     EVENT_KEY_BOARD,
     EVENT_CHANGE_STOCK,
-    SESSION_ASTOCK_FUNC_TAB,
+    // SESSION_ASTOCK_FUNC_TAB,
     TAB_RECOMMEND_TAGS,
     TAB_MY_STOCK,
     TAB_RECENT_VISITED,
@@ -130,6 +131,7 @@ export default {
             KLINE_JUMP_PARAM,
             LEFT_SELECT_TAB,
             CHANGE_WINDOW_CODE_LIST,
+            CHANGE_STOCK_A_ACTIVE_TAB,
         ]),
         ...mapActions([
             ADD_TO_RECENT_LIST,
@@ -173,9 +175,6 @@ export default {
                 changeUrlParam(URL_POSITION_MODULE, '')
             }
         },
-        // setKlineJumpState() {
-
-        // },
         setPositionModule(data, sendState) {
             if (Object.is(data, 'tags')) {
                 // 若左侧为收起状态，则设置为展开状态
@@ -195,7 +194,7 @@ export default {
             this[KLINE_JUMP_PARAM](jump)
             // 若为资金流向，A股右下方定位到资金流向
             if (Object.is(jump, 'flow')) {
-                sessionStorage.setItem(SESSION_ASTOCK_FUNC_TAB, 'fund_flow')
+                this[CHANGE_STOCK_A_ACTIVE_TAB]('fund_flow')
             }
         },
         initState() {
@@ -384,54 +383,6 @@ export default {
                 }
             }
         },
-        // getNewLink(client_id) {
-        //     let index = goGoal.sockets.findIndex((element) => {
-        //         return !!element
-        //     })
-        //     if (index > -1) {
-        //         let preLink = goGoal.sockets[index]
-        //         let accountName = getCookie('accountName')
-        //         let newLink = `${preLink}|client_id:${accountName}-${client_id}`
-
-        //         return {
-        //             link: newLink,
-        //             index,
-        //         }
-        //     } else {
-        //         return null
-        //     }
-        // },
-        // socketOnMessage(event) {
-        //     const data = JSON.parse(event.data)
-        //     const client_id = data.client_id
-
-        //     if (data.code && data.code == '4') {
-        //         return false
-        //     }
-        //     if (client_id) {
-        //         this.client_id = client_id
-        //     }
-        //     if (!this.sendClientId && this.client_id) {
-        //         // 将此 ID 传回服务端
-        //         let newLink = this.getNewLink(this.client_id)
-
-        //         if (newLink) {
-        //             goGoal.sockets[newLink.index] = newLink.link
-        //             goGoal.ws.send(newLink.link)
-
-        //             this.sendClientId = true
-        //             this.client_id = null
-        //         }
-        //         return false
-        //     } else {
-        //         // 处理推送内容
-        //         let id = data.request_id
-        //         let receiveContent = JSON.parse(data.receive_content)
-        //         let requestContent = data.request_content
-
-        //         this.$_eventBus.$emit(id, receiveContent, requestContent)
-        //     }
-        // },
         keyBoardSpace() {
             let state = !this.leftState
             this.setLeftState(state)

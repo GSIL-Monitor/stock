@@ -41,7 +41,7 @@ export const SESSION_SELECT_STOCK_GROUP = `${MODULE_NAME}-select-group`
 // A 股 成交明细过滤
 // export const SESSION_TRANSCATION_FILTER = `${MODULE_NAME}-transcation-filter`
 // A 股 右下最近选择的tab
-export const SESSION_ASTOCK_FUNC_TAB = `${MODULE_NAME}-astock-funcTab`
+// export const SESSION_ASTOCK_FUNC_TAB = `${MODULE_NAME}-astock-funcTab`
 // 指数 右下最近选择的tab
 export const SESSION_INDEX_FUNC_TAB = `${MODULE_NAME}-index-funcTab`
 
