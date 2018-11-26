@@ -11,7 +11,6 @@ import {
 } from '@c/utils/callQt.js'
 import {
     FRAME_MY_STOCK,
-    // FRAME_MYSTOCK_LIST,
     MODULE_NAME,
 } from '../storage.js'
 import {
@@ -20,7 +19,7 @@ import {
 import {
     GET_SELECT_GROUP_DATA,
 } from '@store/stock-detail-store/config/action-types.js'
-import throttle from 'lodash/throttle'
+import debounce from 'lodash/debounce'
 
 let listTimeoutTimer = null
 
@@ -70,11 +69,12 @@ export default {
 
             return arr
         },
-        listScroll: throttle(function() {
+        listScroll: debounce(function() {
             const edges = this.getSubScriptionEdge()
             const codeList = this.getSubScriptionFullCode(edges.start, edges.end)
+
             this.subScriptionList(codeList)
-        }, 400),
+        }, 100),
         subScriptionList(codeList) {
             const subFilterFields = [
                 'full_code', 'source', 'code', 'stock_name', 'symbol_type',

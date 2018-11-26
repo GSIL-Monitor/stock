@@ -58,5 +58,6 @@ export default {
         font-size: 12px;
         height: 30px;
         background: var(--color-smallcard-background);
+        border-top: 1px solid var(--color-dividers);
     }
 </style>

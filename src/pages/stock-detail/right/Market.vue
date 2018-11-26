@@ -373,7 +373,7 @@ export default {
     }
     .gg_tabs_wrap {
         height: 30px;
-        border-top: none;
+        border-top: 1px solid var(--color-dividers);
         border-bottom: none;
         background: var(--color-smallcard-background);
     }
