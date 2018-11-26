@@ -193,8 +193,10 @@ export default {
         setJumpStoreState(jump) {
             this[KLINE_JUMP_PARAM](jump)
             // 若为资金流向，A股右下方定位到资金流向
-            if (Object.is(jump, 'flow')) {
-                this[CHANGE_STOCK_A_ACTIVE_TAB]('fund_flow')
+            const POSITION_FLOW_PARAM = 'flow'
+            if (Object.is(jump, POSITION_FLOW_PARAM)) {
+                const FLOW_PARAM = 'fund_flow'
+                this[CHANGE_STOCK_A_ACTIVE_TAB](FLOW_PARAM)
             }
         },
         initState() {
