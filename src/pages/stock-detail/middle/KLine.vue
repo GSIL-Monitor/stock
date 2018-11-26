@@ -16,6 +16,7 @@ import {
     mapMutations,
 } from 'vuex'
 import {
+    KLINE_JUMP_PARAM,
     CHANGE_WINDOW_CODE_LIST,
 } from '@store/stock-detail-store/config/mutation-types.js'
 import * as TYPE from '@formatter/config/stock-type-config.js'
@@ -44,6 +45,7 @@ export default {
             }
             this[CHANGE_WINDOW_CODE_LIST](null)
         },
+
     },
     created() {
         this.$_eventBus.$on('setKlineTabs', this.setKlineTabs)
@@ -107,6 +109,7 @@ export default {
     methods: {
         ...mapMutations([
             CHANGE_WINDOW_CODE_LIST,
+            KLINE_JUMP_PARAM,
         ]),
         changeKlineState(direction, status) {
             this.setKlineState(direction, status)
@@ -257,6 +260,11 @@ export default {
                 }
             } catch(error) {
                 console.error(error)
+            }
+
+            // 清掉跳转状态
+            if (this.klineJumpState) {
+                this[KLINE_JUMP_PARAM](null)
             }
         },
         // pageUp / pageDown 键
