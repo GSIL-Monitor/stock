@@ -1,8 +1,22 @@
-import * as TYPE from './config/stock-type-config.js'
 import {
-    DEFAULT,
+    ASTOCK,
+    SHBSTOCK,
+    SZBSTOCK,
+    FUND,
+    BOND,
+    INDEX,
+    HKSTOCK,
+    HKFUND,
+    HKBOND,
+    HKWARRANT,
+    HKCBBC,
+    HKINDEX,
+    FUTURES,
+} from './config/stock-type-config.js'
+import {
     RED,
     GREEN,
+    DEFAULT,
 } from './config/color-config.js'
 
 /**
@@ -34,25 +48,25 @@ export const stockToType = (source, symbol_type) => {
     const type = String(symbol_type)
     if (['sh', 'sz', 'csi', 'BK'].includes(source)) {
         // 大陆品种
-        if (Object.is(type, '1')) { return TYPE.ASTOCK }
-        else if (Object.is(type, '2')) { return TYPE.INDEX }
-        else if (Object.is(type, '3')) { return TYPE.FUND }
-        else if (Object.is(type, '4')) { return TYPE.BOND }
+        if (Object.is(type, '1')) { return ASTOCK }
+        else if (Object.is(type, '2')) { return INDEX }
+        else if (Object.is(type, '3')) { return FUND }
+        else if (Object.is(type, '4')) { return BOND }
         else if (Object.is(type, '5')) {
-            if (Object.is(source, 'sh')) { return TYPE.SHBSTOCK }
-            else if (Object.is(source, 'sz')) { return TYPE.SZBSTOCK }
+            if (Object.is(source, 'sh')) { return SHBSTOCK }
+            else if (Object.is(source, 'sz')) { return SZBSTOCK }
         }
     } else if (Object.is(source, 'hk')) {
         // 港股
-        if (Object.is(type, '1')) { return TYPE.HKSTOCK }
-        else if (Object.is(type, '2')) { return TYPE.HKINDEX }
-        else if (Object.is(type, '3')) { return TYPE.HKFUND }
-        else if (Object.is(type, '4')) { return TYPE.HKBOND }
-        else if (Object.is(type, '5')) { return TYPE.HKWARRANT }
-        else if (Object.is(type, '6')) { return TYPE.HKCBBC }
+        if (Object.is(type, '1')) { return HKSTOCK }
+        else if (Object.is(type, '2')) { return HKINDEX }
+        else if (Object.is(type, '3')) { return HKFUND }
+        else if (Object.is(type, '4')) { return HKBOND }
+        else if (Object.is(type, '5')) { return HKWARRANT }
+        else if (Object.is(type, '6')) { return HKCBBC }
     } else if (/qh_/.test(source)) {
         // 期货
-        return TYPE.FUTURES
+        return FUTURES
     }
 }
 
@@ -61,11 +75,11 @@ export const stockToType = (source, symbol_type) => {
  * @param { string } type
  */
 export const getRetainBits = type => {
-    if ([TYPE.ASTOCK, TYPE.INDEX, TYPE.SZBSTOCK, TYPE.HKINDEX].includes(type)) {
+    if ([ASTOCK, INDEX, SZBSTOCK, HKINDEX].includes(type)) {
         return 2
-    } else if ([TYPE.SHBSTOCK, TYPE.FUND, TYPE.BOND, TYPE.HKSTOCK, TYPE.HKFUND, TYPE.HKBOND, TYPE.HKWARRANT, TYPE.HKCBBC].includes(type)) {
+    } else if ([SHBSTOCK, FUND, BOND, HKSTOCK, HKFUND, HKBOND, HKWARRANT, HKCBBC].includes(type)) {
         return 3
-    } else if ([TYPE.FUTURES].includes(type)) {
+    } else if ([FUTURES].includes(type)) {
         // 期货无固定位数
         return void 0
     } else {

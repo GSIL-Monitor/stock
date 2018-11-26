@@ -3,10 +3,22 @@
  * @see Interface::formatPrice()
  * @return {function}
 */
-import * as TYPE from '../config/stock-type-config.js'
 import {
-    RED,
-    GREEN,
+    ASTOCK,
+    SHBSTOCK,
+    SZBSTOCK,
+    FUND,
+    BOND,
+    INDEX,
+    HKSTOCK,
+    HKFUND,
+    HKBOND,
+    HKWARRANT,
+    HKCBBC,
+    HKINDEX,
+    FUTURES,
+} from '../config/stock-type-config.js'
+import {
     DEFAULT,
 } from '../config/color-config.js'
 import {
@@ -68,31 +80,31 @@ const formatFutures = (value, price_change) => {
  */
 const format = {
     // 沪深 A 股
-    [TYPE.ASTOCK]: formatAStock,
+    [ASTOCK]: formatAStock,
     // 沪深指数
-    [TYPE.INDEX]: formatNormal,
+    [INDEX]: formatNormal,
     // 基金
-    [TYPE.FUND]: formatNormal,
+    [FUND]: formatNormal,
     // 债券
-    [TYPE.BOND]: formatNormal,
+    [BOND]: formatNormal,
     // 沪深 B 股 (上海)
-    [TYPE.SHBSTOCK]: formatBStock,
+    [SHBSTOCK]: formatBStock,
     // 沪深 B 股 (深圳)
-    [TYPE.SZBSTOCK]: formatBStock,
+    [SZBSTOCK]: formatBStock,
     // 港股股票
-    [TYPE.HKSTOCK]: formatNormal,
+    [HKSTOCK]: formatNormal,
     // 港股基金
-    [TYPE.HKFUND]: formatNormal,
+    [HKFUND]: formatNormal,
     // 港股债券
-    [TYPE.HKBOND]: formatNormal,
+    [HKBOND]: formatNormal,
     // 港股涡轮
-    [TYPE.HKWARRANT]: formatNormal,
+    [HKWARRANT]: formatNormal,
     // 港股牛熊证
-    [TYPE.HKCBBC]: formatNormal,
+    [HKCBBC]: formatNormal,
     // 港股指数
-    [TYPE.HKINDEX]: formatNormal,
+    [HKINDEX]: formatNormal,
     // 期货
-    [TYPE.FUTURES]: formatFutures,
+    [FUTURES]: formatFutures,
 }
 
 const formatTypePrice = (type, price, list) => {

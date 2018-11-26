@@ -1,9 +1,15 @@
 /**
  * @file 名称(stock_name|name)
  * @see Interface::formatStockName()
- * @return {function}
+ * @return { function }
  */
-import * as TYPE from '../config/stock-type-config.js'
+import {
+    HKSTOCK,
+    HKFUND,
+    HKBOND,
+    HKCBBC,
+    HKWARRANT,
+} from '../config/stock-type-config.js'
 import { stockToType } from '../utility.js'
 
 const formatHK = name => {
@@ -49,7 +55,8 @@ const formatStockName = (name, list, current_type) => {
         list.source,
         list.symbol_type,
     )
-    if ([TYPE.HKSTOCK, TYPE.HKFUND, TYPE.HKBOND, TYPE.HKCBBC, TYPE.HKWARRANT].includes(type)) {
+
+    if ([HKSTOCK, HKFUND, HKBOND, HKCBBC, HKWARRANT].includes(type)) {
         return formatHK(name)
     } else {
         return formatNormal(name)

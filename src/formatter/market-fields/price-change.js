@@ -1,9 +1,16 @@
 /**
  * @file 涨跌额(price_change|change_value)
  * @see Interface::formatPriceChange()
- * @return {function}
+ * @return { function }
 */
-import * as TYPE from '../config/stock-type-config.js'
+import {
+    HKSTOCK,
+    HKFUND,
+    HKBOND,
+    HKWARRANT,
+    HKCBBC,
+    FUTURES,
+} from '../config/stock-type-config.js'
 import {
     DEFAULT,
 } from '../config/color-config.js'
@@ -86,13 +93,12 @@ const formatPriceChange = (price_change, list, current_type) => {
         list.symbol_type,
     )
 
-    if ([TYPE.HKSTOCK, TYPE.HKFUND, TYPE.HKBOND, TYPE.HKWARRANT, TYPE.HKCBBC].includes(type)) {
+    if ([HKSTOCK, HKFUND, HKBOND, HKWARRANT, HKCBBC].includes(type)) {
         // 港股股票，港股基金，港股债券，港股涡轮，港股牛熊证
         return formatHKStock(price_change, list)
     } else if (isClearCase(price_change, list)) {
         return getClearVal()
-    }
-    else if (type === TYPE.FUTURES) {
+    } else if (Object.is(type, FUTURES)) {
         return formatFutures(price_change, list)
     } else {
         const bit = getRetainBits(type)
