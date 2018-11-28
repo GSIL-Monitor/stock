@@ -333,15 +333,14 @@ export const getEnvironment = () => {
 */
 export const getUrlDomain = () => {
     const env = getEnvironment()
-    const protocol = location.protocol
 
     if (Object.is(env, 'pro')) {
-      return `${protocol}//zyzt.66966.cn`
+      return `http://zyzt.66966.cn`
     } else if (Object.is(env, 'pre')) {
-      return `${protocol}//investpre.gofund.cn:8093`
+      return `http://investpre.gofund.cn:8093`
     } else if (Object.is(env, 'sandbox')) {
-      return `${protocol}//investtest.gofund.cn:8093`
+      return `http://investtest.gofund.cn:8093`
     } else if (Object.is(env, 'localhost')) {
-      return `${protocol}//investpre.gofund.cn:8093`
+      return `http://investpre.gofund.cn:8093`
     }
 }
