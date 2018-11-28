@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["css/index.309d8b83.css","7ab470d3b86b209768e77280e948b9b4"],["css/stockDetail.5f60b457.css","1292122a70aac7b6886a602d44d6704d"],["index.html","774064c171a2348577a2ecf3d32ff5c8"],["js/chunk-common.bfe0c02e.js","e5f248a4e1dc8c5b4563b54fe419ad7e"],["js/chunk-vendors.79089207.js","543e006b3141bb779495753b7744c49f"],["js/index.d8d73923.js","d6dfd5b01061b3fa4def637bcf9d54dc"],["js/stockDetail.cd90e80b.js","e35d5546f7b4e5471966b6c31133562a"],["stockDetail.html","9635883ca2ebfe860ec0d2f77a1dd4e2"]];
+var precacheConfig = [["css/index.309d8b83.css","7ab470d3b86b209768e77280e948b9b4"],["css/stockDetail.5f60b457.css","1292122a70aac7b6886a602d44d6704d"],["index.html","d3d51b779d6ecf4616feb3d8abd68978"],["js/chunk-common.3b673768.js","148bd867d71e4a218e6b482487c8a86e"],["js/chunk-vendors.79089207.js","543e006b3141bb779495753b7744c49f"],["js/index.d8d73923.js","d6dfd5b01061b3fa4def637bcf9d54dc"],["js/stockDetail.cd90e80b.js","e35d5546f7b4e5471966b6c31133562a"],["stockDetail.html","b0390ded588bfec00c629143c5004635"]];
 var cacheName = 'sw-precache-v3-GoGoal-' + (self.registration ? self.registration.scope : '');
 
 
@@ -285,8 +285,8 @@ self.addEventListener('fetch', function(event) {
 
 // Runtime cache configuration, using the sw-toolbox library.
 
-toolbox.router.get(/http:\/\/sunstock\.go\-goal\.cn.*(\.png|\.gif|\.jpg|\.jpeg|\.svg)/, toolbox.cacheFirst, {"cache":{"name":"img-cache","maxEntries":100}});
-toolbox.router.get(/http:\/\/sunstock\.go\-goal\.cn.*(api\/v1)/, toolbox.networkFirst, {"cache":{"name":"api-cache","maxEntries":100,"maxAgeSeconds":60}});
+toolbox.router.get(/https:\/\/sunstock\.go\-goal\.cn.*(\.png|\.gif|\.jpg|\.jpeg|\.svg)/, toolbox.cacheFirst, {"cache":{"name":"img-cache","maxEntries":100}});
+toolbox.router.get(/https:\/\/sunstock\.go\-goal\.cn.*(api\/v1)/, toolbox.networkFirst, {"cache":{"name":"api-cache","maxEntries":100,"maxAgeSeconds":60}});
 
 
 
