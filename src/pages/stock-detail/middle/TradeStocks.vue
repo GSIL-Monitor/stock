@@ -84,18 +84,28 @@ export default {
                     fields: filterFields.join(';'),
                 },
                 callback0: (data) => {
-                    this.apiData = Object.freeze(data)
-                    if (this.isAStock) {
-                        this.$_eventBus.$emit('tradeCode', {
-                            plate_code: data[0].plate_code,
+                    let code = data[0].code
+                    let plate_code = data[0].plate_code
+
+                    if (code === 200) {
+                        // 无申万二级行业
+                    } else if (code === 300) {
+                        // 无同业股票
+                    } else {
+                        // 正常情况
+                        this.apiData = Object.freeze(data)
+                        this.dataStore = data.map((element, index) => {
+                            return {
+                                index: index,
+                            }
                         })
                     }
 
-                    this.dataStore = data.map((element, index) => {
-                        return {
-                            index: index,
-                        }
-                    })
+                    if (this.isAStock) {
+                        this.$_eventBus.$emit('tradeCode', {
+                            plate_code: plate_code,
+                        })
+                    }
                 },
                 callback1001: () => {
                     if (this.isAStock) {

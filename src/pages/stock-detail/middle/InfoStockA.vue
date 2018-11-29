@@ -191,11 +191,11 @@ export default {
             sendEvent('reportCenter', 'searchReport', params, true)
         },
         jumpStockMarket() {
-            let plate_code = this.tradeCode.plate_code
-            if (!plate_code) {
+            if (!this.tradeCode || !this.tradeCode.plate_code) {
                 alert('暂无申万二级行业')
                 return false
             }
+            let plate_code = this.tradeCode.plate_code
             const params = JSON.stringify({
                 plate_code: plate_code
             })
