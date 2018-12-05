@@ -139,24 +139,12 @@ export default {
             const param = {
                 options: this.getCurrentParams(),
                 callback0: data => {
-                    if (!this.update_time && Object.is(this.dataStore.length, 0)) {
-                        this.latestTime = this.getTimeStamp(data[0].update_time)
-                    }
-
-                    // 剔重(首次由于网络请求数据可能晚于推送数据回来)
-                    if (!this.update_time && this.dataStore.length) {
-                        let latestTimeStamp = this.getTimeStamp(this.dataStore[this.dataStore.length - 1].update_time)
-
-                        for (let i = 0; i < 3; i++) {
-                            let n = data[i]
-                            if (!n) {
-                                break
-                            }
-
-                            let update_time = n.update_time
-                            if (this.getTimeStamp(update_time) >= latestTimeStamp) {
-                                data.splice(i, 1)
-                            }
+                    if (!this.update_time) {
+                        if (this.dataStore.length) {
+                            // 首次由于网络请求数据可能晚于推送数据回来
+                            this.dataStore.length = 0
+                        } else {
+                            this.latestTime = this.getTimeStamp(data[0].update_time)
                         }
                     }
 
