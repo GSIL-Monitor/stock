@@ -143,6 +143,23 @@ export default {
                         this.latestTime = this.getTimeStamp(data[0].update_time)
                     }
 
+                    // 剔重(首次由于网络请求数据可能晚于推送数据回来)
+                    if (!this.update_time && this.dataStore.length) {
+                        let latestTimeStamp = this.getTimeStamp(this.dataStore[this.dataStore.length - 1].update_time)
+
+                        for (let i = 0; i < 3; i++) {
+                            let n = data[i]
+                            if (!n) {
+                                break
+                            }
+
+                            let update_time = n.update_time
+                            if (this.getTimeStamp(update_time) >= latestTimeStamp) {
+                                data.splice(i, 1)
+                            }
+                        }
+                    }
+
                     this.dataStore = this.dataStore.concat(data.map((element) => {
                         return Object.freeze(element)
                     }))
@@ -193,10 +210,10 @@ export default {
         pushData(data) {
             // 推送
             let nowTimeStamp = this.getTimeStamp(data.update_time)
-            if (this.noData) {
-                this.noData = false
-            }
             if (nowTimeStamp > this.latestTime) {
+                if (this.noData) {
+                    this.noData = false
+                }
                 this.dataStore.unshift(Object.freeze(data))
                 // 港股非实时行情保留4条数据
                 if (this.isForbiddenHkLoad) {

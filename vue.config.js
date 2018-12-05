@@ -33,9 +33,9 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                // target: 'http://investtest.gofund.cn:8093',
-                // target: 'http://investpre.gofund.cn:8093',
-                target: 'http://zyzt.66966.cn',
+                // target: 'http://zyzt-test.gofund.cn:8093',
+                target: 'http://zyzt-pre.gofund.cn:8093',
+                // target: 'http://zyzt.66966.cn',
                 // ws: true, // proxy websockets
                 changeOrigin: true,
                 pathRewrite: {

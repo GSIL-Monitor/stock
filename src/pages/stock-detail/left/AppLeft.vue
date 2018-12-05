@@ -55,7 +55,7 @@ import TabPane from '../components/tab-pane/index.js'
 import StockTag from './StockTag.vue'
 import MyStockList from './MyStockList.vue'
 import RecentVisit from './RecentVisit.vue'
-console.log(StockTag)
+
 export default {
     name: 'Left',
     watch: {
