@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "build": "vue-cli-service build && npm run postbuild",
+        "build": "vue-cli-service build",
         "postbuild": "sw-precache --root cdn/stocks --config sw/sw-config.js",
         "dev": "vue-cli-service serve --open",
         "prereport": "vue-cli-service build --report",
