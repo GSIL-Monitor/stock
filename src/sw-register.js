@@ -48,6 +48,16 @@ if (
                                 console.error(
                                     'The installing service worker became redundant.'
                                 )
+                                navigator.serviceWorker
+                                    .getRegistrations()
+                                    .then(function(registrations) {
+                                        for (let registration of registrations) {
+                                            registration.unregister()
+                                        }
+                                    })
+                                    .catch(function(err) {
+                                        console.log('Service Worker registration failed: ', err)
+                                    })
                                 break
                         }
                     }
