@@ -10,8 +10,6 @@ const getOpenUrl = (openParams) => {
     let baseUrl = getUrlDomain()
     let token = getToken()
     let address = `${baseUrl}/html/window-openContent.html?openParams=${openParams}&token=${token}`
-    console.log(baseUrl)
-    console.log(address)
     return address
 }
 

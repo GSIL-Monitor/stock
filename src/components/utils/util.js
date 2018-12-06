@@ -328,8 +328,6 @@ export const getEnvironment = () => {
     }
 }
 
-
-
 /**
  * @description 获取远程主域地址
 */
@@ -345,6 +343,6 @@ export const getUrlDomain = () => {
     } else if (Object.is(env, 'sandbox')) {
       return `${protocol}//zyzt-test.gofund.cn:${port}`
     } else if (Object.is(env, 'localhost')) {
-      return `${protocol}//zyzt-pre.gofund.cn:${port}`
+      return `http://zyzt-pre.gofund.cn:8093`
     }
 }
