@@ -336,7 +336,7 @@ export const getEnvironment = () => {
 export const getUrlDomain = () => {
     const env = getEnvironment()
     let protocol = location.protocol
-    let port = protocol = 'https:' ? '8094' : '8093'
+    let port = protocol === 'https:' ? '8094' : '8093'
 
     if (Object.is(env, 'pro')) {
       return `${protocol}//zyzt.66966.cn`
