@@ -328,19 +328,23 @@ export const getEnvironment = () => {
     }
 }
 
+
+
 /**
  * @description 获取远程主域地址
 */
 export const getUrlDomain = () => {
     const env = getEnvironment()
+    let protocol = location.protocol
+    let port = protocol = 'https:' ? '8094' : '8093'
 
     if (Object.is(env, 'pro')) {
-      return `http://zyzt.66966.cn`
+      return `${protocol}//zyzt.66966.cn`
     } else if (Object.is(env, 'pre')) {
-      return `http://investpre.gofund.cn:8093`
+      return `${protocol}//zyzt-pre.gofund.cn:${port}`
     } else if (Object.is(env, 'sandbox')) {
-      return `http://investtest.gofund.cn:8093`
+      return `${protocol}//zyzt-test.gofund.cn:${port}`
     } else if (Object.is(env, 'localhost')) {
-      return `http://investpre.gofund.cn:8093`
+      return `${protocol}//zyzt-pre.gofund.cn:${port}`
     }
 }
