@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["css/index.309d8b83.css","7ab470d3b86b209768e77280e948b9b4"],["css/stockDetail.39ae3efa.css","5b725205172a910842ab3f9972f94ae4"],["index.html","f305ba09f948dd0fa7b077d319370fa0"],["js/chunk-common.58b91e3c.js","0b80462d51b06da4457d34e5faea3202"],["js/chunk-vendors.79089207.js","543e006b3141bb779495753b7744c49f"],["js/index.d8d73923.js","d6dfd5b01061b3fa4def637bcf9d54dc"],["js/stockDetail.8fdc9b38.js","cf9e23a6373e55b701f9bc52994206f1"],["stockDetail.html","f9b8742a9b7697fc78c7d03b2d9b6a1d"]];
+var precacheConfig = [["css/index.309d8b83.css","7ab470d3b86b209768e77280e948b9b4"],["css/stockDetail.39ae3efa.css","5b725205172a910842ab3f9972f94ae4"],["index.html","e296a196385e35cfaa81af0f91cd9cae"],["js/chunk-common.fecb1132.js","1217990231e96a0fc1d5b4dcedcd2a2d"],["js/chunk-vendors.79089207.js","543e006b3141bb779495753b7744c49f"],["js/index.d8d73923.js","d6dfd5b01061b3fa4def637bcf9d54dc"],["js/stockDetail.97df9c0c.js","523c6ee249bdf3458606b33eb678c19f"],["stockDetail.html","5c935d6e9a5515650ae55dc22d4bf361"]];
 var cacheName = 'sw-precache-v3-GoGoal-' + (self.registration ? self.registration.scope : '');
 
 
