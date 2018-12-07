@@ -94,7 +94,8 @@ export const isClearCase = (value, list) => {
     } else if (
         Reflect.has(list, 'stock_type') &&
         isNumber(Reflect.get(list, 'stock_type')) &&
-        String(Reflect.get(list, 'stock_type')) !== '1'
+        !['1', '3'].includes(String(Reflect.get(list, 'stock_type')))
+        // String(Reflect.get(list, 'stock_type')) !== '1'
     ) {
         return true
     } else if (

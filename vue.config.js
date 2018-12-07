@@ -34,8 +34,8 @@ module.exports = {
         proxy: {
             '/api': {
                 // target: 'http://zyzt-test.gofund.cn:8093',
-                target: 'http://zyzt-pre.gofund.cn:8093',
-                // target: 'http://zyzt.66966.cn',
+                // target: 'http://zyzt-pre.gofund.cn:8093',
+                target: 'http://zyzt.66966.cn',
                 // ws: true, // proxy websockets
                 changeOrigin: true,
                 pathRewrite: {

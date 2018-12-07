@@ -33,7 +33,23 @@
                 :price="socketData.price"
                 :price_change="socketData.price_change"
                 :price_change_rate="socketData.price_change_rate"
-            />
+            >
+                <template slot="price">
+                    <SpecialHandlingPrice
+                        :options="{
+                            close_price: close_price,
+                            current_type: current_type,
+                            price: socketData.price,
+                            price_change: socketData.price_change,
+                            stock_type: stock_type
+                        }"
+                    />
+                </template>
+                <StopBusiness
+                    :stock_type="stock_type"
+                    slot="next"
+                />
+            </TitleTopMarket>
             <div class="detail_head_btn">
                 <div class="detail_head_btn_skip">
                     <default-btn
@@ -351,6 +367,8 @@ import VolumeOuter from '@formatter/market-base/VolumeOuter.vue'
 import VolumeInner from '@formatter/market-base/VolumeInner.vue'
 import HighLimit from '@formatter/market-base/HighLimit.vue'
 import LowLimit from '@formatter/market-base/LowLimit.vue'
+import SpecialHandlingPrice from '../components/SpecialHandlingPrice.vue'
+import StopBusiness from '../components/StopBusiness.vue'
 
 const apiFields = [
     'symbol_type',
@@ -438,6 +456,8 @@ export default {
         CompanyHonorBtn,
         BelongIndustry,
         TitleTopMarket,
+        SpecialHandlingPrice,
+        StopBusiness,
         DefaultBtn,
         ButtonF10,
         IsMyStock,

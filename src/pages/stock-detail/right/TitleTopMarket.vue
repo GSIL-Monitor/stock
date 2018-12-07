@@ -1,12 +1,14 @@
 <template>
     <div class="top_market">
-        <Price
-            class="top_market_price"
-            :val="price"
-            :price_change="price_change"
-            :current_type="current_type"
-            :stock_type="stock_type"
-        ></Price>
+        <slot name="price">
+            <Price
+                class="top_market_price"
+                :val="price"
+                :price_change="price_change"
+                :current_type="current_type"
+                :stock_type="stock_type"
+            ></Price>
+        </slot>
         <PriceChange
             class="top_market_value"
             :val="price_change"
@@ -22,6 +24,7 @@
             :current_type="current_type"
             :stock_type="stock_type"
         ></PriceChangeRate>
+        <slot name="next"></slot>
     </div>
 </template>
 

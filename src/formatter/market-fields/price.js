@@ -51,7 +51,8 @@ const formatAStock = (value, price_change, list, num = 2) => {
         const val = Object.is(stock_type, '0') ? '停牌' :
                     Object.is(stock_type, '-1') ? '退市' :
                     Object.is(stock_type, '-2') ? '未上市' :
-                    Object.is(stock_type, '2') ? '暂停上市' : '--'
+                    Object.is(stock_type, '2') ? '暂停上市' :
+                    Object.is(stock_type, '3') ? '临停' : '--'
         return {
             val,
             color: DEFAULT,
