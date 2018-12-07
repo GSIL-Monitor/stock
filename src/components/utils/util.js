@@ -346,3 +346,20 @@ export const getUrlDomain = () => {
       return `http://zyzt-pre.gofund.cn:8093`
     }
 }
+/**
+ * @description 公告地址
+ */
+export const getGGnewsHost = () => {
+    const env = getEnvironment()
+    const protocol = location.protocol
+    const port = location.port;
+    if (Object.is(env, 'pro')) {
+        return `${protocol}//inforinvest.go-goal.cn`
+    } else if (Object.is(env, 'pre')) {
+        return `${protocol}//inforinvest-pre.gofund.cn:${port}`
+    } else if (Object.is(env, 'sandbox')) {
+        return `${protocol}//inforinvest-pre.gofund.cn:${port}`
+    } else if (Object.is(env, 'localhost')) {
+        return `http://inforinvest-pre.gofund.cn:8093`
+    }
+}

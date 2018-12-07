@@ -67,7 +67,9 @@ import {
 import {
     sendEvent,
 } from '@c/utils/callQt.js'
-
+import {
+    getGGnewsHost,
+} from '@c/utils/util.js'
 import inforJumpMixin from '../mixins/information-jump-mixin.js'
 import informationMixin from '../mixins/information-mixin.js'
 
@@ -174,12 +176,12 @@ export default {
                 this.jumpStockMarket()
             }
         },
-        jumpMoreNotice() {
-            const params = JSON.stringify({
-                stockCode: this.stock_code,
-                stockName: encodeURIComponent(this.stock_name),
-            })
-            sendEvent('bulletinCenter', 'bulletinCenter', params, true)
+        jumpMoreNotice() {   
+            const host = getGGnewsHost()
+            const url = `${ host }/html/bulletinCenter.html?stockCode=${this.stock_code}&stockName=${ encodeURIComponent(this.stock_name) }`
+            sendEvent('hidden', '', JSON.stringify({
+                url
+            }), true)
         },
         jumpMoreReport() {
             let hash = location.hash.substr(1)
