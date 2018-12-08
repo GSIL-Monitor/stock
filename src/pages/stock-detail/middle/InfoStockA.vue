@@ -177,11 +177,11 @@ export default {
             }
         },
         jumpMoreNotice() {   
-            const host = getGGnewsHost()
-            const url = `${ host }/html/bulletinCenter.html?stockCode=${this.stock_code}&stockName=${ encodeURIComponent(this.stock_name) }`
-            sendEvent('hidden', '', JSON.stringify({
-                url
-            }), true)
+            const params = JSON.stringify({
+                stockCode: this.stock_code,
+                stockName: encodeURIComponent(this.stock_name),
+            })
+            sendEvent('bulletinCenter', 'bulletinCenter', params, true)
         },
         jumpMoreReport() {
             let hash = location.hash.substr(1)
